@@ -1,0 +1,38 @@
+.flag {
+  border-radius: 0.375rem;
+  border: 0.5px solid rgba(255, 255, 255, 0.2);
+  width: 2rem;
+  height: 2rem;
+  object-fit: cover;
+}
+
+.flag_input {
+  margin: 30px 0 20px 0;
+  position: absolute;
+  left: 13px;
+  top: 13px;
+  z-index: 999;
+  border-radius: 50%;
+  object-fit: cover;
+  width: 3rem;
+  height: 3rem;
+}
+
+.textfield {
+  margin-left: 100px;
+}
+
+.arrow {
+  position: absolute;
+  right: 13px;
+  top: 50px;
+  margin-right: 10px;
+  transform: rotate(90deg);
+}
+
+.search {
+  position: absolute;
+  right: 13px;
+  top: 50px;
+  margin-right: 10px;
+}

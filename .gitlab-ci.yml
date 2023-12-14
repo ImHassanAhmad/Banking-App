@@ -1,0 +1,115 @@
+image: node:18.17.0
+
+
+# And to cache them as well.
+cache:
+  paths:
+    - node_modules/
+    - .yarn
+
+before_script:  
+  - apt-get update -qq && apt-get install
+
+stages:
+  - build
+  - deploy
+
+Build-stage:
+  stage: build
+  before_script:
+    - yarn set version 1.22.19
+    - yarn config set cache-folder .yarn
+    - yarn install 
+    - yarn lint
+    - yarn test
+  script:
+    - yarn build:stage
+  artifacts:
+    untracked: true
+  rules:
+    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE == "web" && $CI_COMMIT_REF_NAME != $CI_DEFAULT_BRANCH'
+      when: always
+    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE == "merge_request_event" && $CI_COMMIT_REF_NAME != $CI_DEFAULT_BRANCH'
+      when: manual
+    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME != $CI_DEFAULT_BRANCH'
+      when: manual
+
+
+
+  
+
+Build-uat:
+  stage: build
+  before_script:
+    - yarn set version 1.22.19
+    - yarn config set cache-folder .yarn
+    - yarn install 
+    - yarn lint
+    - yarn test
+  script:
+    - yarn build:uat
+  artifacts:
+    untracked: true
+  rules:
+    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE == "web" && $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH'
+      when: always
+    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH'
+      when: always
+
+.aws_login: &aws_login |
+  unset AWS_SESSION_TOKEN
+  session_name="${CI_BUILD_ID}-`date +%Y%m%d`"
+  temp_role=$(aws sts assume-role \
+                      --role-arn ${AWS_ROLE_ARN} \
+                      --role-session-name ${session_name})
+  export AWS_ACCESS_KEY_ID=$(echo $temp_role | jq -r .Credentials.AccessKeyId)
+  export AWS_SECRET_ACCESS_KEY=$(echo $temp_role | jq -r .Credentials.SecretAccessKey)
+  export AWS_SESSION_TOKEN=$(echo $temp_role | jq -r .Credentials.SessionToken)
+
+
+Deploy-stage:
+  image: 
+    name: amazon/aws-cli
+    entrypoint: [""]
+  stage: deploy
+  variables:
+    AWS_ROLE_ARN: arn:aws:iam::095060800788:role/eks-superuser
+    AWS_DEFAULT_REGION: eu-central-1
+    AWS_REGION: eu-central-1
+  script:
+    - yum install -y jq
+    - *aws_login
+    - aws s3 cp --recursive build s3://fr-dev-sme/
+  when: always  
+  dependencies:
+    - Build-stage
+  rules:
+    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE == "web" && $CI_COMMIT_REF_NAME != $CI_DEFAULT_BRANCH'
+      when: manual
+    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE == "merge_request_event" && $CI_COMMIT_REF_NAME != $CI_DEFAULT_BRANCH'
+      when: manual
+    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME != $CI_DEFAULT_BRANCH'
+      when: manual
+
+
+Deploy-uat:
+  image: 
+    name: amazon/aws-cli
+    entrypoint: [""]
+  stage: deploy
+  variables:
+    AWS_ROLE_ARN: arn:aws:iam::026794723363:role/eks-superuser
+    AWS_DEFAULT_REGION: eu-central-1
+    AWS_REGION: eu-central-1
+  script:
+    - yum install -y jq
+    - *aws_login
+    - aws s3 cp --recursive build s3://fr-uat-sme/
+  when: always  
+  dependencies:
+    - Build-uat
+  rules:
+    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE == "web" && $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH'
+      when: on_success
+    - if: '$CI_COMMIT_TAG == null && $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH'
+      when: on_success
