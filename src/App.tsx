@@ -19,6 +19,7 @@ import { store } from './store';
 const App: React.FC = () => {
   const { themeMode } = useAppSelector((state) => state.userData);
   const theme = React.useMemo(() => getTheme(themeMode), [themeMode]);
+
   return (
     <React.StrictMode>
       <BrowserRouter>
