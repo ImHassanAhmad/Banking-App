@@ -3,7 +3,7 @@ import {
   type VerifyPhoneResponseDto,
   type VerifyPhoneRequestDto,
   type FieldErrorsDto
-} from '../MobileCodeVerification/types';
+} from '../InvestorSignUp/MobileCodeVerification/types';
 
 export type VerifyEmailRequestDto = VerifyPhoneRequestDto;
 export type VerifyEmailResponseDto = VerifyPhoneResponseDto;

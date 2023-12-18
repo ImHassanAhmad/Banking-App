@@ -1,4 +1,4 @@
-import { type FieldErrorDto } from '@app/pages/MobileCodeVerification/types';
+import { type FieldErrorDto } from '@app/pages/InvestorSignUp/MobileCodeVerification//types';
 import { type ICountryData, type TCountryCode } from 'countries-list';
 import { type CaptchaTokenRequest } from 'types';
 
