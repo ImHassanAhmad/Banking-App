@@ -20,7 +20,7 @@ export const handlers = [
   }),
   http.post('*/v1/sme/onboarding/authentication/login', ({ request }: any): HttpResponse => {
     const { email, password, captchaToken }: LoginRequest = request.body;
-
+    console.log(email, password);
     if (
       email === constants.onBoardingConstants.MOCK_LOGIN_EMAIL &&
       password === constants.onBoardingConstants.MOCK_LOGIN_PASSWORD &&
