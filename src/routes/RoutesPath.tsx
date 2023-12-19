@@ -1,6 +1,7 @@
 import { lazy } from 'react';
 import type { IRouteConfig } from './types';
 import { RouteNames } from '@app/constants/routes';
+import BusinessCategory from '@app/pages/BusinessCategory';
 const Welcome = lazy(async () => await import('@app/pages/Welcome'));
 const Login = lazy(async () => await import('@app/layout/LoginStepper'));
 const InvestorSignUpStepper = lazy(async () => await import('@app/layout/InvestorSignUpStepper'));
@@ -10,6 +11,9 @@ const EmailCodeVerification = lazy(
   async () => await import('@app/pages/LoginEmailCodeVerification')
 );
 const SourceOfFunding = lazy(async () => await import('@app/pages/SourceOfFunding'));
+const PersonalInformation = lazy(async () => await import('@app/pages/PersonalInformation'));
+const Address = lazy(async () => await import('@app/pages/Address'));
+const QuestionsList = lazy(async () => await import('@app/pages/QuestionsList'));
 
 export const publicRoutes: IRouteConfig[] = [
   {
@@ -22,6 +26,11 @@ export const publicRoutes: IRouteConfig[] = [
   { path: RouteNames.LOGIN, element: Login },
   { path: RouteNames.NOT_FOUND, element: NotFound },
   { path: RouteNames.SOURCE_OF_FUNDING, element: SourceOfFunding }
+  { path: RouteNames.BUSINESS_CATEGORY, element: BusinessCategory },
+  { path: RouteNames.SOURCE_OF_FUNDING, element: SourceOfFunding },
+  { path: RouteNames.PERSONAL_INFORMATION, element: PersonalInformation },
+  { path: RouteNames.ADDRESS, element: Address },
+  { path: RouteNames.QUESTIONS_LIST, element: QuestionsList }
 ];
 
 export const privateRoutes: IRouteConfig[] = [];

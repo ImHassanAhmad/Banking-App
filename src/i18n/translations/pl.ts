@@ -26,7 +26,10 @@ const pl: LanguageResource = {
   'business-description': {},
   'business-regulation': {},
   'business-revenue': {},
-  'business-turnover': {}
+  'business-turnover': {},
+  'personal-information': {},
+  address: {},
+  'questions-list': {}
 };
 
 export default pl;

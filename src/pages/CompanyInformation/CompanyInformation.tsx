@@ -77,7 +77,7 @@ const CompanyInformation: FC<SignUpStepperContextProps> = ({
       <Stack mt={4}>
         <Heading
           title={t(`${translationNamespace}.title`)}
-          subTitle={t(`${translationNamespace}.subTitle`)}
+          subTitle={t(`${translationNamespace}.subtitle`)}
         />
       </Stack>
       <Grid item xs={12} sm={10} md={8} lg={8}>
@@ -115,23 +115,22 @@ const CompanyInformation: FC<SignUpStepperContextProps> = ({
                       )
                     }}
                     fullWidth
-                    label={t(`${translationNamespace}.companyName`)}
+                    label={t(`${translationNamespace}.company_name`)}
                   />
                 )}
               />
 
               <Textfield
-                name={t(`${translationNamespace}.registrationNumber`)}
-                label={t(`${translationNamespace}.registrationNumber`)}
+                name="registrationNumber"
+                label={t(`${translationNamespace}.registration_number`)}
                 register={register}
                 errorValue={errors?.registrationNumber ?? fieldErrors}
                 fullWidth
               />
 
               <Calendar
-                name={t(`${translationNamespace}.dateOfRegister`)}
-                label={t(`${translationNamespace}.dateOfRegister`)}
-                register={register}
+                name="dateOfRegister"
+                label={t(`${translationNamespace}.date_of_register`)}
                 errorValue={errors?.dateOfRegister ?? fieldErrors}
               />
             </Stack>
@@ -144,13 +143,6 @@ const CompanyInformation: FC<SignUpStepperContextProps> = ({
               {t(`${translationNamespace}.continue`)} {isLoading && <Loader />}
             </Button>
           </form>
-          {/* <EmailAlreadyRegisteredModal
-            open={open}
-            handleClose={() => {
-              setOpen(false);
-            }}
-          /> */}
-
           <PrivacyTerms />
         </Stack>
       </Grid>
