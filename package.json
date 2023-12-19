@@ -106,7 +106,8 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
-    "start:dev": "env-cmd -f ./.env.development yarn start",
+    "json-server": "json-server --watch mock/db.json --port 3001",
+    "start:dev": "env-cmd -f ./.env.development yarn start json-server",
     "start:stage": "env-cmd -f ./.env.stage yarn start",
     "start:uat": "env-cmd -f ./.env.uat yarn start",
     "build": "node scripts/build.js",
@@ -117,8 +118,7 @@
     "cypress": "cypress open",
     "lint": "eslint --ignore-path .gitignore src/**/*.{ts,tsx} && exit 0",
     "lint:fix": "eslint --fix --ignore-path .gitignore src/**/*.{ts,tsx} && exit 0",
-    "format": "prettier --write 'src/**/*.{ts,tsx,js}' --config ./.prettierrc",
-    "json-server": "json-server --watch mock/db.json --port 3001"
+    "format": "prettier --write 'src/**/*.{ts,tsx,js}' --config ./.prettierrc"
   },
   "pre-commit": [
     "lint"
