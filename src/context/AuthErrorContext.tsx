@@ -1,9 +1,10 @@
 import { type LoginFlowSteps } from '@app/layout/LoginStepper/types';
-import { type SignUpFlowSteps } from '@app/layout/SignUpStepper/types';
+import { type IssuerSignUpFlowSteps } from '@app/layout/IssuerSignUpStepper/types';
 import { createContext, useState, useContext, type FC, type PropsWithChildren } from 'react';
 import { type IErrorMessage } from 'types';
+import { type InvestorSignUpFlowSteps } from '@app/layout/InvestorSignUpStepper/types';
 
-export type AuthPageSteps = SignUpFlowSteps | LoginFlowSteps;
+export type AuthPageSteps = LoginFlowSteps | IssuerSignUpFlowSteps | InvestorSignUpFlowSteps | any;
 
 interface AuthErrorContextProps {
   findError: (step: AuthPageSteps) => IErrorMessage | undefined;

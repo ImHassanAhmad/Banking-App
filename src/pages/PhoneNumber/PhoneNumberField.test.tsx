@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { en } from '@app/i18n/translations';
 import { RouteNames } from '@app/constants/routes';
 import transformation from '@app/utils/LanguageTransformation';
+import { useInvestorSignUpStepper } from '@app/context/InvestorSignUpStepperContext';
 
 jest.mock('react-router', () => ({
   useNavigate: () => jest.fn()
@@ -30,10 +31,20 @@ jest.mock('react-i18next', () => ({
   })
 }));
 
+jest.mock(
+  '@app/context/InvestorSignUpStepperContext.tsx',
+  () =>
+    ({
+      useInvestorSignUpStepper: () => ({ userPayload: {} }) as any
+    }) as any
+);
+
 const setup = (): SetupResult => {
+  const props = useInvestorSignUpStepper();
+
   const result = render(
     <Provider store={store}>
-      <PhoneNumberField />
+      <PhoneNumberField {...props} />
     </Provider>
   );
   const phoneInput = result.getByTestId('phone-input').querySelector('input') as HTMLInputElement;

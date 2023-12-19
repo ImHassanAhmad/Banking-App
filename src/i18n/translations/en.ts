@@ -9,7 +9,13 @@ const en: LanguageResource = {
     create_option_title: 'Create a new business account',
     create_option_subtitle: 'Get your company onto W1TTY'
   },
-  register: {
+  'investor-register': {
+    title: 'Create a W1TTY business account',
+    subtitle: 'Already have an account?  ',
+    signin: 'Sign In',
+    continue: 'Continue'
+  },
+  'issuer-register': {
     title: 'Create a W1TTY business account',
     subtitle: 'Already have an account?  ',
     signin: 'Sign In',

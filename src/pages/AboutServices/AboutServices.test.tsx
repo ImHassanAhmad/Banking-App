@@ -5,6 +5,7 @@ import { en } from '@app/i18n/translations';
 import { RouteNames } from '@app/constants/routes';
 import transformation from '@app/utils/LanguageTransformation';
 import { type SetupResult } from './types';
+import { useInvestorSignUpStepper } from '@app/context/InvestorSignUpStepperContext';
 
 jest.mock('react-router', () => ({
   useNavigate: () => jest.fn()
@@ -32,8 +33,17 @@ const clickCheckboxByLabel = (renderResult: RenderResult, labelText: string): vo
   checkbox && fireEvent.click(checkbox);
 };
 
+jest.mock(
+  '@app/context/InvestorSignUpStepperContext.tsx',
+  () =>
+    ({
+      useInvestorSignUpStepper: () => ({}) as any
+    }) as any
+);
+
 const setup = (): SetupResult => {
-  const renderComponent: RenderResult = render(<AboutServices />);
+  const props = useInvestorSignUpStepper();
+  const renderComponent: RenderResult = render(<AboutServices {...props} />);
 
   return {
     ...renderComponent,

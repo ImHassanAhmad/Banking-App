@@ -3,8 +3,6 @@ import Heading from '@app/components/Heading';
 import { useState, type FC } from 'react';
 import { RouteNames } from '@app/constants/routes';
 import { useTranslation } from 'react-i18next';
-import { SignUpFlowSteps } from '@app/layout/SignUpStepper/types';
-import { useSignUpStepper } from '@app/context/SignupStepperContext';
 import PrivacyTerms from '@app/components/PrivacyTerms';
 // import { EmailAlreadyRegisteredModal } from '@app/components/Modals';
 import { type SubmitHandler, useForm, type FieldError } from 'react-hook-form';
@@ -15,6 +13,7 @@ import Textfield from '@app/components/Textfield';
 import Loader from '@app/components/Loader';
 import { SEARCH_ICON2 } from '@app/assets/images';
 import Calendar from '@app/components/Calendar';
+import { type SignUpStepperContextProps } from '@app/common/types';
 
 interface IForm {
   companyName: string;
@@ -24,9 +23,13 @@ interface IForm {
 
 const translationNamespace = RouteNames.COMPANY_INFORMATION;
 
-const CompanyInformation: FC = () => {
+const CompanyInformation: FC<SignUpStepperContextProps> = ({
+  updateActiveStep,
+  registerUser,
+  isLoading,
+  userPayload
+}) => {
   const { t } = useTranslation();
-  const { updateActiveStep, registerUser, isLoading, userPayload } = useSignUpStepper();
   // const [open, setOpen] = useState<boolean>(false);
   const [fieldErrors] = useState<FieldError>();
 
@@ -63,7 +66,7 @@ const CompanyInformation: FC = () => {
         dryRun: true
       },
       onSuccess: () => {
-        updateActiveStep(SignUpFlowSteps.Mobile);
+        updateActiveStep();
       }
     });
   };

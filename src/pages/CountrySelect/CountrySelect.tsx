@@ -3,12 +3,10 @@ import Heading from '@app/components/Heading';
 import { useState, type FC } from 'react';
 import { RouteNames } from '@app/constants/routes';
 import { useTranslation } from 'react-i18next';
-import { SignUpFlowSteps } from '@app/layout/SignUpStepper/types';
-import { useSignUpStepper } from '@app/context/SignupStepperContext';
 import PrivacyTerms from '@app/components/PrivacyTerms';
 import { NotSupportedModal } from '@app/components/Modals';
 import { useAppSelector } from '@app/store/hooks';
-import { type CountrySelectOption } from '@app/common/types';
+import { type SignUpStepperContextProps, type CountrySelectOption } from '@app/common/types';
 import { NOT_SUPPORTED_MODES } from '@app/constants';
 import BackButton from '@app/components/BackButton';
 import CountrySelector from '@app/components/CountrySelector';
@@ -16,9 +14,14 @@ import { ALL_COUNTRIES } from '@app/constants/countries';
 
 const translationNamespace = RouteNames.COUNTRY;
 
-const CountrySelect: FC = () => {
+const CountrySelect: FC<SignUpStepperContextProps> = ({
+  activeStep,
+  updateActiveStep,
+  registerUser,
+  isLoading,
+  userPayload
+}) => {
   const { t } = useTranslation();
-  const { updateActiveStep, registerUser, isLoading, userPayload } = useSignUpStepper();
   const [open, setOpen] = useState<boolean>(false);
   const [country, setCountry] = useState<CountrySelectOption | undefined>(
     ALL_COUNTRIES
@@ -33,7 +36,6 @@ const CountrySelect: FC = () => {
   const {
     supportedCountries: { supportedCountriesOfIncorporation }
   } = useAppSelector((state) => state.userData);
-
   const submit = (): void => {
     const isExist: boolean = supportedCountriesOfIncorporation.includes(country?.iso2);
     if (!isExist) {
@@ -46,7 +48,7 @@ const CountrySelect: FC = () => {
         dryRun: true
       },
       onSuccess: () => {
-        updateActiveStep(SignUpFlowSteps.Email);
+        updateActiveStep();
       }
     });
   };

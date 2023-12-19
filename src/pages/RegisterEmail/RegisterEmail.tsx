@@ -3,8 +3,7 @@ import Heading from '@app/components/Heading';
 import { useState, type FC } from 'react';
 import { RouteNames } from '@app/constants/routes';
 import { useTranslation } from 'react-i18next';
-import { SignUpFlowSteps } from '@app/layout/SignUpStepper/types';
-import { useSignUpStepper } from '@app/context/SignupStepperContext';
+// import { IssuerSignUpFlowSteps } from '@app/layout/IssuerSignUpStepper/types';
 import PrivacyTerms from '@app/components/PrivacyTerms';
 import { InfoModal } from '@app/components/Modals';
 import { type SubmitHandler, useForm, type FieldError } from 'react-hook-form';
@@ -13,7 +12,7 @@ import * as yup from 'yup';
 import BackButton from '@app/components/BackButton';
 import EmailField from '@app/components/EmailField/EmailField';
 import Loader from '@app/components/Loader';
-import { type AuthFetchQueryError } from '@app/common/types';
+import { type SignUpStepperContextProps, type AuthFetchQueryError } from '@app/common/types';
 import { ModalNames } from '@app/constants/modals';
 
 interface IForm {
@@ -23,9 +22,14 @@ interface IForm {
 const translationNamespace = RouteNames.REGISTER_EMAIL;
 const emailAlreadyRegisteredNamespace = ModalNames.EMAIL_ALREADY_REGISTERED;
 
-const SignUp: FC = () => {
+const SignUp: FC<SignUpStepperContextProps> = ({
+  activeStep,
+  updateActiveStep,
+  registerUser,
+  isLoading,
+  userPayload
+}) => {
   const { t } = useTranslation();
-  const { updateActiveStep, registerUser, isLoading, userPayload } = useSignUpStepper();
   const [open, setOpen] = useState<boolean>(false);
   const [fieldErrors, setFieldErrors] = useState<FieldError>();
 
@@ -56,7 +60,7 @@ const SignUp: FC = () => {
         dryRun: true
       },
       onSuccess: () => {
-        updateActiveStep(SignUpFlowSteps.Mobile);
+        updateActiveStep();
       },
       onError: (error: AuthFetchQueryError) => {
         setFieldErrors({
@@ -71,7 +75,7 @@ const SignUp: FC = () => {
     <Stack mt={4}>
       <BackButton
         onClick={() => {
-          updateActiveStep(SignUpFlowSteps.Country);
+          updateActiveStep();
         }}
       />
       <Stack mt={4}>

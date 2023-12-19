@@ -3,7 +3,8 @@ import { type LanguageResource } from '@app/i18n/types';
 const pl: LanguageResource = {
   home: {},
   login: {},
-  register: {},
+  'investor-register': {},
+  'issuer-register': {},
   'select-country': {},
   'register-mobile': {},
   'verify-mobile': {},

@@ -7,7 +7,6 @@ import transformation from '@app/utils/LanguageTransformation';
 import MobileCodeVerification from './MobileCodeVerification';
 import { Provider } from 'react-redux';
 import { store } from '@app/store';
-import { useInvestorSignUpStepper } from '@app/context/InvestorSignUpStepperContext';
 
 const mockLanguage = en;
 const mockRoutes = RouteNames;
@@ -24,27 +23,14 @@ jest.mock('react-i18next', () => ({
   })
 }));
 
-jest.mock(
-  '@app/context/InvestorSignUpStepperContext.tsx',
-  () =>
-    ({
-      useInvestorSignUpStepper: () => ({}) as any
-    }) as any
-);
-
-const rendersComponent = (): RenderResult => {
-  const props = useInvestorSignUpStepper();
-
-  const renderResult: RenderResult = render(
+const rendersComponent = (): RenderResult =>
+  render(
     <Provider store={store}>
       <Router>
-        <MobileCodeVerification {...props} />
+        <MobileCodeVerification />
       </Router>
     </Provider>
   );
-
-  return renderResult;
-};
 
 describe('MobileCodeVerification page', () => {
   it('matches snapshot', () => {
