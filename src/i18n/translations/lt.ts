@@ -25,7 +25,8 @@ const lt: LanguageResource = {
   'business-description': {},
   'business-regulation': {},
   'business-revenue': {},
-  'business-turnover': {}
+  'business-turnover': {},
+  'upload-documents': {}
 };
 
 export default lt;

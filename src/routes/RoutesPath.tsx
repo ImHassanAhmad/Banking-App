@@ -1,6 +1,7 @@
 import { lazy } from 'react';
 import type { IRouteConfig } from './types';
 import { RouteNames } from '@app/constants/routes';
+import UploadDocuments from '@app/pages/UploadDocuments';
 const Welcome = lazy(async () => await import('@app/pages/Welcome'));
 const Email = lazy(async () => await import('@app/pages/RegisterEmail'));
 const Login = lazy(async () => await import('@app/layout/LoginStepper'));
@@ -35,7 +36,8 @@ export const publicRoutes: IRouteConfig[] = [
   { path: RouteNames.LOGIN, element: Login },
   { path: RouteNames.NOT_FOUND, element: NotFound },
   { path: RouteNames.BUSINESS_CATEGORY, element: BusinessCategory },
-  { path: RouteNames.SOURCE_OF_FUNDING, element: SourceOfFunding }
+  { path: RouteNames.SOURCE_OF_FUNDING, element: SourceOfFunding },
+  { path: RouteNames.UPLOAD_DOCUMENTS, element: UploadDocuments }
 ];
 
 export const privateRoutes: IRouteConfig[] = [];

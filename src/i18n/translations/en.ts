@@ -291,7 +291,8 @@ const en: LanguageResource = {
   'business-turnover': {
     incoming_title: 'Turnover for incoming transactions',
     outgoing_title: 'Turnover for outgoing transactions'
-  }
+  },
+  'upload-documents': {}
 };
 
 export default en;
