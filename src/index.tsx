@@ -12,7 +12,7 @@ async function enableMocking() {
     return;
   }
 
-  const { worker } = await import('./store/api/mock/index');
+  const { worker } = await import('./server/index');
 
   // `worker.start()` returns a Promise that resolves
   // once the Service Worker is up and ready to intercept requests.
