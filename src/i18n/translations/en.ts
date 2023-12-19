@@ -307,6 +307,19 @@ const en: LanguageResource = {
     street: 'Street',
     houseNo: 'House No.',
     continue: 'Continue'
+  },
+  'questions-list': {
+    title: 'Questions',
+    subtitle: '',
+    news_promotions:
+      'I would like to keep up with W1TTY news, promotions and personalised deals via any of my provided information.',
+    agree: 'I’ve read and agree to ',
+    terms_conditions: 'Terms and Conditions',
+    privacy_policy: 'Privacy Policy',
+    visa_card_policy: 'VISA Card Terms & Conditions',
+    prices_limits: 'Prices & Limits',
+    select_all: 'Select All',
+    confirm: 'Confirm'
   }
 };
 

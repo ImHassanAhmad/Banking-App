@@ -27,7 +27,8 @@ const lt: LanguageResource = {
   'business-revenue': {},
   'business-turnover': {},
   'personal-information': {},
-  address: {}
+  address: {},
+  'questions-list': {}
 };
 
 export default lt;
