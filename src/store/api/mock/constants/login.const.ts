@@ -32,3 +32,5 @@ export const RESEND_OTP_ERROR_RESPONSE: FieldErrorsDto = {
 };
 
 export type MockLoginResponse = VerifyLoginOTPResponseDto | ErrorMessage | AccountError;
+export type VerifyLoginOtpResponse = RefreshSessionDto | FieldErrorsDto;
+export type ResendOtpResponse = ResendLoginOtpResponseDto | FieldErrorsDto;

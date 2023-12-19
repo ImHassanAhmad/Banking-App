@@ -4,10 +4,17 @@ import {
   type VerifyLoginOTPRequestDto,
   type LoginRequest,
   type ResendLoginOtpRequestDto,
-  type VerifyLoginOTPResponseDto
+  type VerifyLoginOTPResponseDto,
+  type RefreshSessionDto,
+  type ResendLoginOtpResponseDto
 } from 'types';
 import { type AccountError, type ErrorMessage } from '@app/common/types';
-import { type MockLoginResponse } from '../constants/login.const';
+import {
+  type VerifyLoginOtpResponse,
+  type MockLoginResponse,
+  type ResendOtpResponse
+} from '../constants/login.const';
+import { type FieldErrorsDto } from '@app/pages/MobileCodeVerification/types';
 
 let INCORRECT_LOGINS_COUNT: number = 0;
 
@@ -50,27 +57,39 @@ const loginHandler: HttpHandler = http.post<PathParams, LoginRequest, MockLoginR
   }
 );
 
-const verifyLoginHandler: HttpHandler = http.post(
+const verifyLoginHandler: HttpHandler = http.post<
+  PathParams,
+  VerifyLoginOTPRequestDto,
+  VerifyLoginOtpResponse
+>(
   '*/v1/sme/onboarding/authentication/verify-login-otp',
-  async ({ request }): Promise<HttpResponse> => {
-    const { otpCode }: VerifyLoginOTPRequestDto =
-      (await request.json()) as VerifyLoginOTPRequestDto;
+  async ({ request }): Promise<StrictResponse<VerifyLoginOtpResponse>> => {
+    const { otpCode }: VerifyLoginOTPRequestDto = await request.json();
     if (otpCode === '444444')
-      return HttpResponse.json(constants.loginConstants.VERIFY_LOGIN_RESPONSE);
+      return HttpResponse.json<RefreshSessionDto>(constants.loginConstants.VERIFY_LOGIN_RESPONSE);
 
-    return HttpResponse.json(constants.loginConstants.VERIFY_LOGIN_ERROR_RESPONSE, {
+    return HttpResponse.json<FieldErrorsDto>(constants.loginConstants.VERIFY_LOGIN_ERROR_RESPONSE, {
       status: 400
     });
   }
 );
 
-const resendLoginHandler: HttpHandler = http.post(
+const resendLoginHandler: HttpHandler = http.post<
+  PathParams,
+  ResendLoginOtpRequestDto,
+  ResendOtpResponse
+>(
   '*/v1/sme/onboarding/authentication/resend-login-otp',
-  async ({ request }): Promise<HttpResponse> => {
-    const { otpId }: ResendLoginOtpRequestDto = (await request.json()) as ResendLoginOtpRequestDto;
-    if (otpId) return HttpResponse.json(constants.loginConstants.NEW_OTP_ID_RESPONSE);
+  async ({ request }): Promise<StrictResponse<ResendOtpResponse>> => {
+    const { otpId }: ResendLoginOtpRequestDto = await request.json();
+    if (otpId)
+      return HttpResponse.json<ResendLoginOtpResponseDto>(
+        constants.loginConstants.NEW_OTP_ID_RESPONSE
+      );
 
-    return HttpResponse.json(constants.loginConstants.RESEND_OTP_ERROR_RESPONSE, { status: 400 });
+    return HttpResponse.json<FieldErrorsDto>(constants.loginConstants.RESEND_OTP_ERROR_RESPONSE, {
+      status: 400
+    });
   }
 );
 
