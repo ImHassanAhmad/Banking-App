@@ -1,3 +1,4 @@
+import { type AccountError, type ErrorMessage } from '@app/common/types';
 import { type FieldErrorsDto } from '@app/pages/MobileCodeVerification/types';
 import {
   type ResendLoginOtpResponseDto,
@@ -29,3 +30,5 @@ export const NEW_OTP_ID_RESPONSE: ResendLoginOtpResponseDto = {
 export const RESEND_OTP_ERROR_RESPONSE: FieldErrorsDto = {
   errors: [{ fieldName: 'otpCode', errorMessage: 'Invalid otpId provided.' }]
 };
+
+export type MockLoginResponse = VerifyLoginOTPResponseDto | ErrorMessage | AccountError;
