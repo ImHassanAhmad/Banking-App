@@ -268,10 +268,10 @@ const en: LanguageResource = {
   help: {},
   'company-information': {
     title: 'Company informations',
-    subTitle: 'We need your business details to open your account',
-    registrationNumber: 'Registration number',
-    companyName: 'Company name',
-    dateOfRegister: 'Date of register',
+    subtitle: 'We need your business details to open your account',
+    registration_number: 'Registration number',
+    company_name: 'Company name',
+    date_of_register: 'Date of register',
     continue: 'Continue'
   },
   'business-description': {
@@ -291,6 +291,22 @@ const en: LanguageResource = {
   'business-turnover': {
     incoming_title: 'Turnover for incoming transactions',
     outgoing_title: 'Turnover for outgoing transactions'
+  },
+  'personal-information': {
+    title: 'Personal Information',
+    subtitle: '',
+    first_name: 'First Name',
+    last_name: 'Last Name',
+    DOB: 'DOB',
+    continue: 'Continue'
+  },
+  address: {
+    title: 'Personal Information',
+    postal_code: 'Postal Code',
+    city: 'City',
+    street: 'Street',
+    houseNo: 'House No.',
+    continue: 'Continue'
   }
 };
 

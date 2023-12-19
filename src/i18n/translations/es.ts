@@ -25,7 +25,9 @@ const es: LanguageResource = {
   'business-description': {},
   'business-regulation': {},
   'business-revenue': {},
-  'business-turnover': {}
+  'business-turnover': {},
+  'personal-information': {},
+  address: {}
 };
 
 export default es;

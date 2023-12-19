@@ -16,6 +16,8 @@ const EmailCodeVerification = lazy(
 );
 const BusinessCategory = lazy(async () => await import('@app/pages/BusinessCategory'));
 const SourceOfFunding = lazy(async () => await import('@app/pages/SourceOfFunding'));
+const PersonalInformation = lazy(async () => await import('@app/pages/PersonalInformation'));
+const Address = lazy(async () => await import('@app/pages/Address'));
 
 export const publicRoutes: IRouteConfig[] = [
   {
@@ -35,7 +37,9 @@ export const publicRoutes: IRouteConfig[] = [
   { path: RouteNames.LOGIN, element: Login },
   { path: RouteNames.NOT_FOUND, element: NotFound },
   { path: RouteNames.BUSINESS_CATEGORY, element: BusinessCategory },
-  { path: RouteNames.SOURCE_OF_FUNDING, element: SourceOfFunding }
+  { path: RouteNames.SOURCE_OF_FUNDING, element: SourceOfFunding },
+  { path: RouteNames.PERSONAL_INFORMATION, element: PersonalInformation },
+  { path: RouteNames.ADDRESS, element: Address }
 ];
 
 export const privateRoutes: IRouteConfig[] = [];
