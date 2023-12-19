@@ -1,8 +1,8 @@
-import { type DocumentType } from '../types';
+import { type DocumentType, UploadDocumentTypesID } from '../types';
 
 export const UploadDocumentsTypes: DocumentType[] = [
-  { id: 'idCard', displayName: 'ID Card', icon: '' },
-  { id: 'passport', displayName: 'Passport', icon: '' },
-  { id: 'drivingLicense', displayName: 'Driving License', icon: '' },
-  { id: 'residencePermit', displayName: 'ID Residence Permit', icon: '' }
+  { id: UploadDocumentTypesID.ID_CARD, displayName: 'ID Card', icon: '' },
+  { id: UploadDocumentTypesID.PASSPORT, displayName: 'Passport', icon: '' },
+  { id: UploadDocumentTypesID.DRIVING_LICENSE, displayName: 'Driving License', icon: '' },
+  { id: UploadDocumentTypesID.RESIDENCE_PERMIT, displayName: 'ID Residence Permit', icon: '' }
 ];

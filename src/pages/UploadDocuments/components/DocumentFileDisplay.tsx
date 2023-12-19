@@ -8,10 +8,6 @@ const SelectedFileStyle = {
 
 export const FileDisplay: React.FC<FileDisplayProps> = ({ selectedFile }) => (
   <Box ml={2} flexGrow={1}>
-    {selectedFile ? (
-      <span style={SelectedFileStyle}>{selectedFile?.name}</span>
-    ) : (
-      <span style={SelectedFileStyle}>No file choosen</span>
-    )}
+    <span style={SelectedFileStyle}>{selectedFile?.name ?? 'No File Choosen'}</span>
   </Box>
 );

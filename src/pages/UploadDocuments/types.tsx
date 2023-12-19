@@ -15,3 +15,10 @@ export interface FileInputProps {
 export interface FileDisplayProps {
   selectedFile: File | null;
 }
+
+export enum UploadDocumentTypesID {
+  ID_CARD = 'idCard',
+  PASSPORT = 'passport',
+  DRIVING_LICENSE = 'drivingLicense',
+  RESIDENCE_PERMIT = 'residencePermit'
+}
