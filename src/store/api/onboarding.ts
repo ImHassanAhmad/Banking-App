@@ -19,7 +19,7 @@ import {
   type VerifyPhoneRequestDto,
   type VerifyPhoneResponseDto,
   type ResendPhoneConfirmationRequestDto
-} from '@app/pages/InvestorSignUp/MobileCodeVerification/types';
+} from '@app/pages/MobileCodeVerification/types';
 
 type AuthingDictionaryResponseType = SupportedCountriesPhone & SupportedCountriesIncorporation;
 

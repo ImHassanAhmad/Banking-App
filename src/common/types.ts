@@ -1,4 +1,6 @@
-import { type FieldErrorDto } from '@app/pages/InvestorSignUp/MobileCodeVerification//types';
+import { type InvestorSignUpStepperContextProps } from '@app/context/InvestorSignUpStepperContext';
+import { type IssuerSignUpStepperContextProps } from '@app/context/IssuerSignUpStepperContext';
+import { type FieldErrorDto } from '@app/pages/MobileCodeVerification//types';
 import { type ICountryData, type TCountryCode } from 'countries-list';
 import { type CaptchaTokenRequest } from 'types';
 
@@ -195,3 +197,7 @@ export const transformErrorResponse = (
     errorLevel: AuthErrorLevel.System
   };
 };
+
+export type SignUpStepperContextProps =
+  | InvestorSignUpStepperContextProps
+  | IssuerSignUpStepperContextProps;

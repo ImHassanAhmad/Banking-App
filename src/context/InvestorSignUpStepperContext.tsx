@@ -24,6 +24,7 @@ import {
 import { useAuthError } from './AuthErrorContext';
 import { type IErrorMessage } from 'types';
 import AuthErrorWrapper from '@app/layout/AuthErrorWrapper';
+import { enumToIndexRecord, indexToEnumKeyRecord } from '@app/utils/enum';
 
 export interface RegisterUserCallBackParams {
   payload: RegisterUserRequestDto;
@@ -31,7 +32,7 @@ export interface RegisterUserCallBackParams {
   onError?: (error: AuthFetchQueryError) => void;
 }
 
-interface InvestorSignUpStepperContextProps {
+export interface InvestorSignUpStepperContextProps {
   activeStep: InvestorSignUpFlowSteps;
   userId: string;
   isLoading: boolean;
@@ -39,7 +40,7 @@ interface InvestorSignUpStepperContextProps {
   activeStepError?: IErrorMessage;
   registerUser: (params: RegisterUserCallBackParams) => void;
   setUserId: Dispatch<SetStateAction<string>>;
-  updateActiveStep: (step: InvestorSignUpFlowSteps) => void;
+  updateActiveStep: () => void;
 }
 
 const InvestorSignUpStepperContext = createContext<InvestorSignUpStepperContextProps>({
@@ -79,10 +80,14 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
     }
   };
 
-  const updateActiveStep = (activeStep: InvestorSignUpFlowSteps): void => {
-    updateError(activeStep, undefined);
+  const updateActiveStep = (): void => {
+    const nextActiveStep: InvestorSignUpFlowSteps = indexToEnumKeyRecord(InvestorSignUpFlowSteps)[
+      enumToIndexRecord(InvestorSignUpFlowSteps)[activeStep] + 1
+    ] as InvestorSignUpFlowSteps;
 
-    setActiveStep(activeStep);
+    updateError(nextActiveStep, undefined);
+
+    setActiveStep(nextActiveStep);
   };
 
   const registerUser = ({

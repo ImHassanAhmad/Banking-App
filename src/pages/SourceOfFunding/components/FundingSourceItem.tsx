@@ -2,7 +2,7 @@ import React from 'react';
 import { Checkbox, FormControlLabel, Box } from '@mui/material';
 import { type FundingSourceItemProps } from '../types';
 import CustomChecbox from '@app/components/CustomChecbox';
-import { type CheckIconProps } from '@app/pages/InvestorSignUp/AboutServices/types';
+import { type CheckIconProps } from '@app/pages/AboutServices/types';
 import { UNCHECHK_ICON } from '@app/assets/images';
 
 const labelStyle = {

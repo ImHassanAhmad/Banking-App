@@ -1,47 +1,53 @@
 import { Stepper } from '@mui/material';
 import { type FC, type ReactNode } from 'react';
 
-import CountrySelect from '@app/pages/IssuerSignUp/CountrySelect';
-import SignUp from '@app/pages/IssuerSignUp/RegisterEmail';
-import Password from '@app/pages/IssuerSignUp/Password';
-import PhoneNumber from '@app/pages/IssuerSignUp/PhoneNumber';
-import MobileCodeVerification from '@app/pages/IssuerSignUp/MobileCodeVerification';
+import CountrySelect from '@app/pages/CountrySelect';
+import SignUp from '@app/pages/RegisterEmail';
+import Password from '@app/pages/Password';
+import PhoneNumber from '@app/pages/PhoneNumber';
+import MobileCodeVerification from '@app/pages/MobileCodeVerification';
 import { IssuerSignUpFlowSteps, IssuerFlowStepsIndices } from './types';
-import AboutServices from '@app/pages/IssuerSignUp/AboutServices';
-import RegisterEmailCodeVerification from '@app/pages/IssuerSignUp/RegisterEmailCodeVerification';
-import BusinessCategory from '@app/pages/IssuerSignUp/BusinessCategory';
-import BusinessDescription from '@app/pages/IssuerSignUp/BusinessDescription';
-import BusinessRegulation from '@app/pages/IssuerSignUp/BusinessRegulation';
-import BusinessRevenue from '@app/pages/IssuerSignUp/BusinessRevenue';
-import CompanyInformation from '@app/pages/IssuerSignUp/CompanyInformation';
-import { useIssuerSignUpStepper } from '@app/context/IssuerSignUpStepperContext';
+import AboutServices from '@app/pages/AboutServices';
+import RegisterEmailCodeVerification from '@app/pages/RegisterEmailCodeVerification';
+import BusinessCategory from '@app/pages/BusinessCategory';
+import BusinessDescription from '@app/pages/BusinessDescription';
+import BusinessRegulation from '@app/pages/BusinessRegulation';
+import BusinessRevenue from '@app/pages/BusinessRevenue';
+import CompanyInformation from '@app/pages/CompanyInformation';
+import {
+  type IssuerSignUpStepperContextProps,
+  useIssuerSignUpStepper
+} from '@app/context/IssuerSignUpStepperContext';
 
-const issuerFlowComponent = (activeStep: IssuerSignUpFlowSteps): ReactNode => {
+const issuerFlowComponent = (
+  activeStep: IssuerSignUpFlowSteps,
+  props: IssuerSignUpStepperContextProps
+): ReactNode => {
   switch (activeStep) {
     case IssuerSignUpFlowSteps.BusinessCategory:
-      return <BusinessCategory />;
+      return <BusinessCategory {...props} />;
     case IssuerSignUpFlowSteps.Country:
-      return <CountrySelect />;
+      return <CountrySelect {...props} />;
     case IssuerSignUpFlowSteps.Email:
-      return <SignUp />;
+      return <SignUp {...props} />;
     case IssuerSignUpFlowSteps.CompanyBasicInfo:
-      return <CompanyInformation />;
+      return <CompanyInformation {...props} />;
     case IssuerSignUpFlowSteps.Mobile:
-      return <PhoneNumber />;
+      return <PhoneNumber {...props} />;
     case IssuerSignUpFlowSteps.AboutOurServices:
-      return <AboutServices />;
+      return <AboutServices {...props} />;
     case IssuerSignUpFlowSteps.CreatePassword:
-      return <Password />;
+      return <Password {...props} />;
     case IssuerSignUpFlowSteps.EmailVerify:
-      return <RegisterEmailCodeVerification />;
+      return <RegisterEmailCodeVerification {...props} />;
     case IssuerSignUpFlowSteps.MobileVerify:
-      return <MobileCodeVerification />;
+      return <MobileCodeVerification {...props} />;
     case IssuerSignUpFlowSteps.BusinessDescription:
-      return <BusinessDescription />;
+      return <BusinessDescription {...props} />;
     case IssuerSignUpFlowSteps.BusinessRegulation:
-      return <BusinessRegulation />;
+      return <BusinessRegulation {...props} />;
     case IssuerSignUpFlowSteps.BusinessRevenue:
-      return <BusinessRevenue />;
+      return <BusinessRevenue {...props} />;
 
     default:
       return <></>;
@@ -49,7 +55,8 @@ const issuerFlowComponent = (activeStep: IssuerSignUpFlowSteps): ReactNode => {
 };
 
 const IssuerSignUpStepper: FC = () => {
-  const { activeStep } = useIssuerSignUpStepper();
+  const props = useIssuerSignUpStepper();
+  const { activeStep } = props;
 
   return (
     <Stepper
@@ -60,7 +67,7 @@ const IssuerSignUpStepper: FC = () => {
           alignItems: 'flex-start'
         }
       }}>
-      {issuerFlowComponent(activeStep)}
+      {issuerFlowComponent(activeStep, props)}
     </Stepper>
   );
 };

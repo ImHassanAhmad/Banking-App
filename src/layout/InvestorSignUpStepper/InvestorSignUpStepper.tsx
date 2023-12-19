@@ -1,32 +1,38 @@
 import { Stepper } from '@mui/material';
 import { type FC, type ReactNode } from 'react';
 
-import CountrySelect from '@app/pages/InvestorSignUp/CountrySelect';
-import SignUp from '@app/pages/InvestorSignUp/RegisterEmail';
-import Password from '@app/pages/InvestorSignUp/Password';
-import PhoneNumber from '@app/pages/InvestorSignUp/PhoneNumber';
-import MobileCodeVerification from '@app/pages/InvestorSignUp/MobileCodeVerification';
+import CountrySelect from '@app/pages/CountrySelect';
+import SignUp from '@app/pages/RegisterEmail';
+import Password from '@app/pages/Password';
+import PhoneNumber from '@app/pages/PhoneNumber';
+import MobileCodeVerification from '@app/pages/MobileCodeVerification';
 import { InvestorSignUpFlowSteps, InvestorSignUpFlowStepsIndices } from './types';
-import AboutServices from '@app/pages/InvestorSignUp/AboutServices';
-import RegisterEmailCodeVerification from '@app/pages/InvestorSignUp/RegisterEmailCodeVerification';
-import { useInvestorSignUpStepper } from '@app/context/InvestorSignUpStepperContext';
+import AboutServices from '@app/pages/AboutServices';
+import RegisterEmailCodeVerification from '@app/pages/RegisterEmailCodeVerification';
+import {
+  type InvestorSignUpStepperContextProps,
+  useInvestorSignUpStepper
+} from '@app/context/InvestorSignUpStepperContext';
 
-const investorFlowComponent = (activeStep: InvestorSignUpFlowSteps): ReactNode => {
+const investorFlowComponent = (
+  activeStep: InvestorSignUpFlowSteps,
+  props: InvestorSignUpStepperContextProps
+): ReactNode => {
   switch (activeStep) {
     case InvestorSignUpFlowSteps.Country:
-      return <CountrySelect />;
+      return <CountrySelect {...props} />;
     case InvestorSignUpFlowSteps.Email:
-      return <SignUp />;
+      return <SignUp {...props} />;
     case InvestorSignUpFlowSteps.Mobile:
-      return <PhoneNumber />;
+      return <PhoneNumber {...props} />;
     case InvestorSignUpFlowSteps.AboutOurServices:
-      return <AboutServices />;
+      return <AboutServices {...props} />;
     case InvestorSignUpFlowSteps.CreatePassword:
-      return <Password />;
+      return <Password {...props} />;
     case InvestorSignUpFlowSteps.EmailVerify:
-      return <RegisterEmailCodeVerification />;
+      return <RegisterEmailCodeVerification {...props} />;
     case InvestorSignUpFlowSteps.MobileVerify:
-      return <MobileCodeVerification />;
+      return <MobileCodeVerification {...props} />;
 
     default:
       return <></>;
@@ -34,7 +40,8 @@ const investorFlowComponent = (activeStep: InvestorSignUpFlowSteps): ReactNode =
 };
 
 const IssuerSignUpStepper: FC = () => {
-  const { activeStep } = useInvestorSignUpStepper();
+  const props = useInvestorSignUpStepper();
+  const { activeStep } = props;
 
   return (
     <Stepper
@@ -45,7 +52,7 @@ const IssuerSignUpStepper: FC = () => {
           alignItems: 'flex-start'
         }
       }}>
-      {investorFlowComponent(activeStep)}
+      {investorFlowComponent(activeStep, props)}
     </Stepper>
   );
 };

@@ -2,9 +2,9 @@ import { enumToIndexRecord } from '@app/utils/enum';
 
 export enum InvestorSignUpFlowSteps {
   Country = 'Country',
+  Email = 'Email',
   NameAndDateOfBirth = 'NameAndDateOfBirth',
   Address = 'Address',
-  Email = 'Email',
   Mobile = 'Mobile',
   IncomeRange = 'IncomeRange',
   Questionaire = 'Questionaire',
