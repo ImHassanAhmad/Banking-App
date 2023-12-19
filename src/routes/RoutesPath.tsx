@@ -1,6 +1,7 @@
 import { lazy } from 'react';
 import type { IRouteConfig } from './types';
 import { RouteNames } from '@app/constants/routes';
+import UploadDocuments from '@app/pages/UploadDocuments';
 import IncomeRange from '@app/pages/IncomeRange';
 
 const Welcome = lazy(async () => await import('@app/pages/Welcome'));
@@ -26,7 +27,7 @@ export const publicRoutes: IRouteConfig[] = [
   { path: RouteNames.VERIFY_EMAIL, element: EmailCodeVerification },
   { path: RouteNames.LOGIN, element: Login },
   { path: RouteNames.NOT_FOUND, element: NotFound },
-  { path: RouteNames.SOURCE_OF_FUNDING, element: SourceOfFunding },
+  { path: RouteNames.UPLOAD_DOCUMENTS, element: UploadDocuments },
   { path: RouteNames.SOURCE_OF_FUNDING, element: SourceOfFunding },
   { path: RouteNames.INCOME_RANGE, element: IncomeRange },
   { path: RouteNames.PERSONAL_INFORMATION, element: PersonalInformation },
