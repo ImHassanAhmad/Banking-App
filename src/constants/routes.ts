@@ -17,5 +17,8 @@ export const RouteNames = {
   BUSINESS_DESCRIPTION: 'business-description',
   BUSINESS_REGULATION: 'business-regulation',
   BUSINESS_REVENUE: 'business-revenue',
-  BUSINESS_TURNOVER: 'business-turnover'
+  BUSINESS_TURNOVER: 'business-turnover',
+  PERSONAL_INFORMATION: 'personal-information',
+  ADDRESS: 'address',
+  QUESTIONS_LIST: 'questions-list'
 } as const;
