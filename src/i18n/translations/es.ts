@@ -28,6 +28,7 @@ const es: LanguageResource = {
   'business-revenue': {},
   'business-turnover': {},
   'upload-documents': {},
+  'income-range': {},
   'personal-information': {},
   address: {},
   'questions-list': {}

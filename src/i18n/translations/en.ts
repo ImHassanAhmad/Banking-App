@@ -299,6 +299,9 @@ const en: LanguageResource = {
     outgoing_title: 'Turnover for outgoing transactions'
   },
   'upload-documents': {},
+  'income-range': {
+    title: 'Income Range'
+  },
   'personal-information': {
     title: 'Personal Information',
     subtitle: '',

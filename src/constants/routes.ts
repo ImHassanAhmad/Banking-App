@@ -20,6 +20,7 @@ export const RouteNames = {
   BUSINESS_REVENUE: 'business-revenue',
   BUSINESS_TURNOVER: 'business-turnover',
   UPLOAD_DOCUMENTS: 'upload-documents',
+  INCOME_RANGE: 'income-range',
   PERSONAL_INFORMATION: 'personal-information',
   ADDRESS: 'address',
   QUESTIONS_LIST: 'questions-list'
