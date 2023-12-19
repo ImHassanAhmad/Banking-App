@@ -38,7 +38,7 @@ const Welcome: FC = () => {
             />
             <AuthOption
               onClick={() => {
-                navigate(`/${RouteNames.SIGNUP}`);
+                navigate(`/${RouteNames.INVESTOR_SIGNUP}`);
               }}
               title={t(`${welcomeNamespace}.create_option_title`)}
               subTitle={t(`${welcomeNamespace}.create_option_subtitle`)}

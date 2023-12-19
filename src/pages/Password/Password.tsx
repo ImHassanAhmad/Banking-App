@@ -1,18 +1,18 @@
 import { Grid, Stack, Button, Box } from '@mui/material';
 import Heading from '@app/components/Heading';
 import React, { useState, type FC } from 'react';
-import PasswordField from '../../components/PasswordField';
+import PasswordField from '@app/components/PasswordField';
 import { RouteNames } from '@app/constants/routes';
 import { useTranslation } from 'react-i18next';
 import Subtract from '@app/assets/images/Subtract.svg';
-import { useSignUpStepper } from '@app/context/SignupStepperContext';
-import { SignUpFlowSteps } from '@app/layout/SignUpStepper/types';
+// import { IssuerSignUpFlowSteps } from '@app/layout/IssuerSignUpStepper/types';
 import { type FieldError } from 'react-hook-form';
 import {
   type RegisterUserResponseDto,
   type RegisterUserRequestDto,
   type AuthFetchQueryError,
-  AuthErrorLevel
+  AuthErrorLevel,
+  type SignUpStepperContextProps
 } from '@app/common/types';
 import BackButton from '@app/components/BackButton';
 import Loader from '@app/components/Loader';
@@ -21,15 +21,14 @@ import WarningAlert from '@app/components/WarningAlert';
 
 const translationNamespace = RouteNames.CREATE_PASSWORD;
 
-const Password: FC = () => {
+const Password: FC<SignUpStepperContextProps> = ({
+  updateActiveStep,
+  registerUser,
+  setUserId,
+  isLoading,
+  activeStepError: error
+}) => {
   const { t } = useTranslation();
-  const {
-    updateActiveStep,
-    registerUser,
-    setUserId,
-    isLoading,
-    activeStepError: error
-  } = useSignUpStepper();
   const [regUserPayload, setRegUserPayload] = useState<RegisterUserRequestDto>({ dryRun: true });
   const [errors, setFieldErrors] = useState<FieldError>();
 
@@ -55,7 +54,7 @@ const Password: FC = () => {
       payload: { ...regUserPayload, captchaToken },
       onSuccess: ({ userId }: RegisterUserResponseDto) => {
         setUserId(userId);
-        updateActiveStep(SignUpFlowSteps.EmailVerify);
+        updateActiveStep();
       },
       onError: ({ message }: AuthFetchQueryError) => {
         setFieldErrors({
@@ -70,7 +69,7 @@ const Password: FC = () => {
     <Stack mt={4}>
       <BackButton
         onClick={() => {
-          updateActiveStep(SignUpFlowSteps.AboutOurServices);
+          updateActiveStep();
         }}
       />
       <Stack mt={4}>

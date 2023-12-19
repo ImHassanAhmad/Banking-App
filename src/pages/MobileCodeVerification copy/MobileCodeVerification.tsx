@@ -6,28 +6,26 @@ import { RouteNames } from '@app/constants/routes';
 import CodeVerification from '@app/components/CodeVerification';
 import { useNavigate } from 'react-router-dom';
 import { OtpCommunicationChannelType, type VerifyPhoneResponseDto } from './types';
+import { useInvestorSignUpStepper } from '@app/context/InvestorSignUpStepperContext';
 import {
   useResendPhoneConfirmationMutation,
   useVerifyPhoneMutation
 } from '@app/store/api/onboarding';
-import {
-  AuthErrorLevel,
-  type SignUpStepperContextProps,
-  type AuthFetchQueryError
-} from '@app/common/types';
+import { AuthErrorLevel, type AuthFetchQueryError } from '@app/common/types';
 import WarningAlert from '@app/components/WarningAlert';
 import { useAuthError } from '@app/context/AuthErrorContext';
 
 const mobileVerifyNamespace = RouteNames.VERIFY_MOBILE;
 
-const MobileCodeVerification: React.FC<SignUpStepperContextProps> = ({
-  updateActiveStep,
-  userId,
-  userPayload,
-  activeStep,
-  activeStepError: error
-}) => {
+const MobileCodeVerification: React.FC = () => {
   const { t } = useTranslation();
+  const {
+    updateActiveStep,
+    userId,
+    userPayload,
+    activeStep,
+    activeStepError: error
+  } = useInvestorSignUpStepper();
   const { updateError } = useAuthError();
   const { codeBy, disclaimer, codeByContainer } = useStyles;
   const [codeNotRecieved, setCodeNotRecieved] = useState(false);

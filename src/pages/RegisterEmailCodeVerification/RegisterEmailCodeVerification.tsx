@@ -1,8 +1,11 @@
-import { type AuthFetchQueryError, AuthErrorLevel } from '@app/common/types';
+import {
+  type AuthFetchQueryError,
+  AuthErrorLevel,
+  type SignUpStepperContextProps
+} from '@app/common/types';
 import EmailCodeVerification from '@app/components/EmailCodeVerification/EmailCodeVerification';
 import { useAuthError } from '@app/context/AuthErrorContext';
-import { useSignUpStepper } from '@app/context/SignupStepperContext';
-import { SignUpFlowSteps } from '@app/layout/SignUpStepper/types';
+// import { InvestorSignUpFlowSteps } from '@app/layout/InvestorSignUpStepper/types';
 import {
   useVerifyEmailMutation,
   useResendEmailConfirmationMutation
@@ -11,11 +14,15 @@ import { type FC, useState } from 'react';
 import {
   type VerifyEmailResponseDto,
   type ResendEmailConfirmationResponseDto
-} from '../LoginEmailCodeVerification/types';
+} from '@app/pages/LoginEmailCodeVerification/types';
 
-const RegisterEmailCodeVerification: FC = () => {
+const RegisterEmailCodeVerification: FC<SignUpStepperContextProps> = ({
+  updateActiveStep,
+  userId,
+  userPayload,
+  activeStep
+}) => {
   const [isInvalid, setOtpValidity] = useState<boolean>(false);
-  const { updateActiveStep, userId, userPayload, activeStep } = useSignUpStepper();
   const { updateError } = useAuthError();
   const [codeRequested, setCodeRequested] = useState(true);
 
@@ -40,7 +47,7 @@ const RegisterEmailCodeVerification: FC = () => {
     })
       .unwrap()
       .then((response: VerifyEmailResponseDto) => {
-        updateActiveStep(SignUpFlowSteps.MobileVerify);
+        updateActiveStep();
       })
       .catch(apiErrorHandler);
   };

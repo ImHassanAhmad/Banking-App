@@ -1,9 +1,8 @@
+import { type SignUpStepperContextProps } from '@app/common/types';
 import BackButton from '@app/components/BackButton';
 import Heading from '@app/components/Heading';
 // import TextFieldComp from '@app/components/Textfield/Textfield';
 import { RouteNames } from '@app/constants/routes';
-import { useSignUpStepper } from '@app/context/SignupStepperContext';
-import { SignUpFlowSteps } from '@app/layout/SignUpStepper/types';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Stack, TextField } from '@mui/material';
 import { type FC } from 'react';
@@ -24,9 +23,8 @@ const schema = yup
   })
   .required();
 
-const BusinessDescription: FC = () => {
+const BusinessDescription: FC<SignUpStepperContextProps> = ({ updateActiveStep }) => {
   const { t } = useTranslation();
-  const { updateActiveStep } = useSignUpStepper();
 
   const { handleSubmit } = useForm<IForm>({
     defaultValues: {
@@ -44,7 +42,7 @@ const BusinessDescription: FC = () => {
     <Stack>
       <BackButton
         onClick={() => {
-          updateActiveStep(SignUpFlowSteps.BusinessCategory);
+          updateActiveStep();
         }}
       />
       <Stack mt={4}>

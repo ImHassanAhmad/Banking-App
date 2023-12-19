@@ -1,11 +1,11 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import SignUpStepper from './SignUpStepper';
+import IssuerStepper from './IssuerSignUpStepper';
 import { en } from '@app/i18n/translations';
 import transformation from '@app/utils/LanguageTransformation';
 import { RouteNames } from '@app/constants/routes';
 import { store } from '@app/store';
 import { Provider } from 'react-redux';
-import { SignUpStepperProvider } from '@app/context/SignupStepperContext';
+import { IssuerSignUpStepperProvider } from '@app/context/IssuerSignUpStepperContext';
 import { AuthErrorProvider } from '@app/context/AuthErrorContext';
 import { type PropsWithChildren, type ReactNode } from 'react';
 
@@ -27,14 +27,14 @@ jest.mock('react-router', () => ({
 const wrapper = ({ children }: PropsWithChildren): ReactNode => (
   <Provider store={store}>
     <AuthErrorProvider>
-      <SignUpStepperProvider>{children}</SignUpStepperProvider>
+      <IssuerSignUpStepperProvider>{children}</IssuerSignUpStepperProvider>
     </AuthErrorProvider>
   </Provider>
 );
 
-describe('SignUpStepper Component', () => {
+describe('IssuerStepper Component', () => {
   it('render the signup stepper component', async () => {
-    render(<SignUpStepper />, { wrapper });
+    render(<IssuerStepper />, { wrapper });
     await waitFor(() => {
       expect(screen.getByText(en[RouteNames.COUNTRY].title)).toBeInTheDocument();
     });

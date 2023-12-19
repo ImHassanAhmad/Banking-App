@@ -1,17 +1,15 @@
-// AboutServices.tsx
 import React, { useState, useCallback } from 'react';
 import { Button, Stack } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import BackButton from '@app/components/BackButton';
 import Heading from '@app/components/Heading';
 import { RouteNames } from '@app/constants/routes';
-import TermItem from './components/TermItem';
-import { type TermCheckListType } from './types';
-import { type SignUpStepperContextProps } from '@app/common/types';
+import CheckboxItem from '@app/components/CheckboxItem';
+import { type CheckListType } from '@app/components/CheckboxItem/types';
 
-const aboutOurServicesNamespace = RouteNames.ABOUT_OUR_SERVICES;
+const aboutOurServicesNamespace = RouteNames.QUESTIONS_LIST;
 
-const CHECK_LIST: TermCheckListType = {
+const CHECK_LIST: CheckListType = {
   news_promotions: { checked: false, optional: true },
   terms_conditions: { checked: false, link: '#' },
   privacy_policy: { checked: false, link: '#' },
@@ -19,12 +17,9 @@ const CHECK_LIST: TermCheckListType = {
   prices_limits: { checked: false, link: '#' }
 };
 
-const AboutServices: React.FC<SignUpStepperContextProps> = ({ updateActiveStep }) => {
+const QuestionsList: React.FC = () => {
   const { t } = useTranslation();
-
-  const [checkList, setCheckList] = useState<TermCheckListType>(CHECK_LIST);
-
-  const isAllChecked = Object.values(checkList).every(({ checked }) => checked);
+  const [checkList, setCheckList] = useState<CheckListType>(CHECK_LIST);
 
   const isAllNonOptionalChecked = Object.values(checkList).every(({ optional, checked }) => {
     if (!optional) return checked;
@@ -42,29 +37,9 @@ const AboutServices: React.FC<SignUpStepperContextProps> = ({ updateActiveStep }
     }));
   }, []);
 
-  const handleSelectAllChange = useCallback((): void => {
-    setCheckList((prevCheckList) => {
-      const isAllChecked = Object.values(prevCheckList).every((item) => item.checked);
-      const updatedCheckList: TermCheckListType = {};
-
-      Object.keys(prevCheckList).forEach((key) => {
-        updatedCheckList[key] = {
-          ...prevCheckList[key],
-          checked: !isAllChecked
-        };
-      });
-
-      return updatedCheckList;
-    });
-  }, []);
-
   return (
     <Stack sx={{ width: '436px' }}>
-      <BackButton
-        onClick={() => {
-          // updateActiveStep(IssuerSignUpFlowSteps.Mobile);
-        }}
-      />
+      <BackButton onClick={() => {}} />
       <Stack mt={4}>
         <Heading
           title={t(`${aboutOurServicesNamespace}.title`)}
@@ -81,7 +56,7 @@ const AboutServices: React.FC<SignUpStepperContextProps> = ({ updateActiveStep }
         <Stack height={'15%'} paddingRight={{ xs: '5%' }}>
           <Stack sx={{ marginTop: '2rem', display: 'flex', gap: '1rem' }}>
             {Object.keys(checkList).map((key) => (
-              <TermItem
+              <CheckboxItem
                 key={key}
                 checked={checkList[key].checked}
                 onChange={() => {
@@ -92,19 +67,12 @@ const AboutServices: React.FC<SignUpStepperContextProps> = ({ updateActiveStep }
                 optional={checkList[key].optional}
               />
             ))}
-            <TermItem
-              checked={isAllChecked}
-              onChange={handleSelectAllChange}
-              linkText={t(`${aboutOurServicesNamespace}.select_all`)}
-            />
+
             <Button
               disabled={!isAllNonOptionalChecked}
-              sx={{ textTransform: 'uppercase', marginTop: '20px' }}
+              sx={{ textTransform: 'uppercase', marginTop: '2rem' }}
               fullWidth
-              type="submit"
-              onClick={() => {
-                updateActiveStep();
-              }}>
+              type="submit">
               {t(`${aboutOurServicesNamespace}.confirm`)}
             </Button>
           </Stack>
@@ -114,4 +82,4 @@ const AboutServices: React.FC<SignUpStepperContextProps> = ({ updateActiveStep }
   );
 };
 
-export default AboutServices;
+export default QuestionsList;

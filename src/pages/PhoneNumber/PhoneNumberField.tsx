@@ -1,12 +1,15 @@
 import { getCountryFlag } from '@app/assets/flags';
-import { type AuthFetchQueryError, type RegisterUserRequestDto } from '@app/common/types';
+import {
+  type SignUpStepperContextProps,
+  type AuthFetchQueryError,
+  type RegisterUserRequestDto
+} from '@app/common/types';
 import BackButton from '@app/components/BackButton';
 import Heading from '@app/components/Heading';
 import { NotSupportedModal } from '@app/components/Modals';
 import { NOT_SUPPORTED_MODES } from '@app/constants';
 import { RouteNames } from '@app/constants/routes';
-import { useSignUpStepper } from '@app/context/SignupStepperContext';
-import { SignUpFlowSteps } from '@app/layout/SignUpStepper/types';
+// import { IssuerSignUpFlowSteps } from '@app/layout/IssuerSignUpStepper/types';
 import { useAppSelector } from '@app/store/hooks';
 import {
   Button,
@@ -34,7 +37,7 @@ import { ALL_COUNTRIES } from '@app/constants/countries';
 import Loader from '@app/components/Loader';
 
 const mobileVerifyNamespace = RouteNames.MOBILE;
-const translationNamespace = RouteNames.SIGNUP;
+const translationNamespace = RouteNames.INVESTOR_SIGNUP;
 
 const getCountryDataByPhone = (phoneCode: string): ICountryData => {
   const index: number = getCountryDataList().findIndex(
@@ -43,14 +46,13 @@ const getCountryDataByPhone = (phoneCode: string): ICountryData => {
   return getCountryDataList()[index];
 };
 
-const PhoneNumberField: FC = () => {
+const PhoneNumberField: FC<SignUpStepperContextProps> = ({
+  updateActiveStep,
+  registerUser,
+  userPayload: { phoneNumberCountryCode, shortenPhoneNumber, countryOfIncorporation },
+  isLoading
+}) => {
   const { t } = useTranslation();
-  const {
-    updateActiveStep,
-    registerUser,
-    userPayload: { phoneNumberCountryCode, shortenPhoneNumber, countryOfIncorporation },
-    isLoading
-  } = useSignUpStepper();
   const [value, setValue] = useState<string>(
     phoneNumberCountryCode
       ? getCountryDataByPhone(phoneNumberCountryCode).iso2
@@ -104,7 +106,7 @@ const PhoneNumberField: FC = () => {
     registerUser({
       payload: regUserPayload,
       onSuccess: () => {
-        updateActiveStep(SignUpFlowSteps.AboutOurServices);
+        updateActiveStep();
       },
       onError: ({ message }: AuthFetchQueryError) => {
         setFieldErrors({
@@ -119,7 +121,7 @@ const PhoneNumberField: FC = () => {
     <Stack mt={4} className="phoneSelector">
       <BackButton
         onClick={() => {
-          updateActiveStep(SignUpFlowSteps.Email);
+          updateActiveStep();
         }}
       />
       <Stack mt={5} mb={5}>
