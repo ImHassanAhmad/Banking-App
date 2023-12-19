@@ -27,6 +27,7 @@ const lt: LanguageResource = {
   'business-regulation': {},
   'business-revenue': {},
   'business-turnover': {},
+  'income-range': {},
   'personal-information': {},
   address: {},
   'questions-list': {}
