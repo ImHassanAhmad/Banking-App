@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import PrivacyTerms from '@app/components/PrivacyTerms';
 import { NotSupportedModal } from '@app/components/Modals';
 import { useAppSelector } from '@app/store/hooks';
-import { type SignUpStepperContextProps, type CountrySelectOption } from '@app/common/types';
+import { type CountrySelectOption, type SignUpStepperContextProps } from '@app/common/types';
 import { NOT_SUPPORTED_MODES } from '@app/constants';
 import BackButton from '@app/components/BackButton';
 import CountrySelector from '@app/components/CountrySelector';
@@ -15,7 +15,7 @@ import { ALL_COUNTRIES } from '@app/constants/countries';
 const translationNamespace = RouteNames.COUNTRY;
 
 const CountrySelect: FC<SignUpStepperContextProps> = ({
-  activeStep,
+  onBoardType,
   updateActiveStep,
   registerUser,
   isLoading,
@@ -37,7 +37,7 @@ const CountrySelect: FC<SignUpStepperContextProps> = ({
     supportedCountries: { supportedCountriesOfIncorporation }
   } = useAppSelector((state) => state.userData);
   const submit = (): void => {
-    const isExist: boolean = supportedCountriesOfIncorporation.includes(country?.iso2);
+    const isExist: boolean = supportedCountriesOfIncorporation.includes(country?.iso2) || true;
     if (!isExist) {
       setOpen(true);
       return;
@@ -62,8 +62,8 @@ const CountrySelect: FC<SignUpStepperContextProps> = ({
       <BackButton />
       <Stack mt={4}>
         <Heading
-          title={t(`${translationNamespace}.title`)}
-          subTitle={t(`${translationNamespace}.subtitle`)}
+          title={t(`${translationNamespace}.${onBoardType}_title`)}
+          subTitle={t(`${translationNamespace}.${onBoardType}_subtitle`)}
         />
       </Stack>
       <Grid item xs={12} sm={10} md={8} lg={8}>

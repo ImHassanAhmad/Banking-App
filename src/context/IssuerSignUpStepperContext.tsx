@@ -25,6 +25,7 @@ import { useAuthError } from './AuthErrorContext';
 import { type IErrorMessage } from 'types';
 import AuthErrorWrapper from '@app/layout/AuthErrorWrapper';
 import { enumToIndexRecord, indexToEnumKeyRecord } from '@app/utils/enum';
+import { onBoardType } from './InvestorSignUpStepperContext';
 
 export interface RegisterUserCallBackParams {
   payload: RegisterUserRequestDto;
@@ -38,6 +39,7 @@ export interface IssuerSignUpStepperContextProps {
   isLoading: boolean;
   userPayload: RegisterUserRequestDto;
   activeStepError?: IErrorMessage;
+  onBoardType: onBoardType;
   registerUser: (params: RegisterUserCallBackParams) => void;
   setUserId: Dispatch<SetStateAction<string>>;
   updateActiveStep: () => void;
@@ -153,6 +155,7 @@ export const IssuerSignUpStepperProvider: FC<PropsWithChildren> = ({ children })
     isLoading,
     userPayload: registerUserPayload,
     activeStepError: findError(activeStep),
+    onBoardType: onBoardType.Issuer,
     updateActiveStep,
     setUserId,
     registerUser

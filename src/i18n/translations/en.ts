@@ -9,19 +9,19 @@ const en: LanguageResource = {
     create_option_title: 'Create a new business account',
     create_option_subtitle: 'Get your company onto W1TTY'
   },
-  'investor-register': {
+  'register-investor': {
     title: 'Create a W1TTY business account',
     subtitle: 'Already have an account?  ',
     signin: 'Sign In',
     continue: 'Continue'
   },
-  'issuer-register': {
+  'register-issuer': {
     title: 'Create a W1TTY business account',
     subtitle: 'Already have an account?  ',
     signin: 'Sign In',
     continue: 'Continue'
   },
-  'onboarding-user-type': {
+  onboarding: {
     title: 'Choose Account Type',
     subtitle: 'Everything you need to run your business in one place',
     login_option_title: 'Create Investor Account',
@@ -41,8 +41,10 @@ const en: LanguageResource = {
     created_subtitle: 'Log in to your W1TTY account'
   },
   'select-country': {
-    title: 'Select country of incorporation',
-    subtitle: 'What country is your business legally incorporated in?',
+    issuer_title: 'Select country of incorporation',
+    issuer_subtitle: 'What country is your business legally incorporated in?',
+    investor_title: 'Select country of residence',
+    investor_subtitle: 'Which country are your located in?',
     placeholder: 'Select country',
     continue: 'CONTINUE',
     by_registering: 'By registering, you accept our ',

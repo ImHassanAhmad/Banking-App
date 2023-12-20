@@ -2,9 +2,7 @@ import { type LanguageResource } from '@app/i18n/types';
 
 const lt: LanguageResource = {
   home: {},
-  'investor-register': {},
-  'issuer-register': {},
-  'onboarding-user-type': {},
+  onboarding: {},
   login: {},
   'select-country': {},
   'register-mobile': {},
@@ -32,7 +30,9 @@ const lt: LanguageResource = {
   'income-range': {},
   'personal-information': {},
   address: {},
-  'questions-list': {}
+  'questions-list': {},
+  'register-investor': {},
+  'register-issuer': {}
 };
 
 export default lt;

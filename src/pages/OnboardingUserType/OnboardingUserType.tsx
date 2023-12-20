@@ -9,7 +9,7 @@ import AuthOption from '@app/components/AuthOption';
 import BackButton from '@app/components/BackButton';
 import { useNavigate } from 'react-router-dom';
 
-const userTypeNamespace = RouteNames.ONBOARDING_USER_TYPE;
+const userTypeNamespace = RouteNames.ONBOARDING;
 
 const OnboardingUserType: FC = () => {
   const { t } = useTranslation();

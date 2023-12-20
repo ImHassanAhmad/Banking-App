@@ -24,7 +24,7 @@ export const publicRoutes: IRouteConfig[] = [
     path: '/',
     element: Welcome
   },
-  { path: RouteNames.ONBOARDING_USER_TYPE, element: OnboardingUserType },
+  { path: RouteNames.ONBOARDING, element: OnboardingUserType },
   { path: RouteNames.INVESTOR_SIGNUP, element: InvestorSignUpStepper },
   { path: RouteNames.ISSUER_SIGNUP, element: IssuerSignUpStepper },
   { path: RouteNames.VERIFY_EMAIL, element: EmailCodeVerification },
