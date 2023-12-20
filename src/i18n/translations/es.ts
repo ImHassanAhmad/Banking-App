@@ -2,8 +2,6 @@ import { type LanguageResource } from '@app/i18n/types';
 
 const es: LanguageResource = {
   home: {},
-  'investor-register': {},
-  'issuer-register': {},
   onboarding: {},
   login: {},
   'select-country': {},
@@ -32,7 +30,9 @@ const es: LanguageResource = {
   'income-range': {},
   'personal-information': {},
   address: {},
-  'questions-list': {}
+  'questions-list': {},
+  'register-investor': {},
+  'register-issuer': {}
 };
 
 export default es;

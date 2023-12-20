@@ -1,8 +1,8 @@
 export const RouteNames = {
   WELCOME: 'home',
-  INVESTOR_SIGNUP: 'investor-register',
-  ISSUER_SIGNUP: 'issuer-register',
-  ONBOARDING: 'onboarding',
+  INVESTOR_SIGNUP: 'register-investor',
+  ISSUER_SIGNUP: 'register-issuer',
+  ONBOARDING_USER_TYPE: 'onboarding',
   COUNTRY: 'select-country',
   COMPANY_INFORMATION: 'company-information',
   MOBILE: 'register-mobile',

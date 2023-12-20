@@ -32,12 +32,18 @@ export interface RegisterUserCallBackParams {
   onError?: (error: AuthFetchQueryError) => void;
 }
 
+export enum onBoardType {
+  Issuer = 'issuer',
+  Investor = 'investor'
+}
+
 export interface InvestorSignUpStepperContextProps {
   activeStep: InvestorSignUpFlowSteps;
   userId: string;
   isLoading: boolean;
   userPayload: RegisterUserRequestDto;
   activeStepError?: IErrorMessage;
+  onBoardType: onBoardType;
   registerUser: (params: RegisterUserCallBackParams) => void;
   setUserId: Dispatch<SetStateAction<string>>;
   updateActiveStep: () => void;
@@ -147,6 +153,7 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
     isLoading,
     userPayload: registerUserPayload,
     activeStepError: findError(activeStep),
+    onBoardType: onBoardType.Investor,
     updateActiveStep,
     setUserId,
     registerUser
