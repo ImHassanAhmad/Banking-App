@@ -1,7 +1,10 @@
 import { http, type HttpHandler, HttpResponse } from 'msw';
 import constants from '../constants';
 import { type VerifyLoginOTPRequestDto } from 'types';
-import dbhandler from '../../utils/dbHandler';
+import { DatabaseService, Entity } from '../../utils/DatabaseService';
+
+const dbhandler = new DatabaseService<Entity, any>(Entity.Issuer);
+
 const onBoardDictionaryHandler: HttpHandler = http.get(
   '*/v1/sme/onboarding/dictionary',
   (req: any) => {
@@ -36,7 +39,7 @@ const registerUserHandler: HttpHandler = http.post(
       registrationNumber &&
       shortenPhoneNumber
     ) {
-      const user: any = await dbhandler.add('users', {
+      const user: any = await dbhandler.add({
         captchaToken,
         email,
         password,
@@ -67,7 +70,7 @@ const verifyEmailHandler: HttpHandler = http.post(
     const requstData: VerifyLoginOTPRequestDto = (await request.json()) as VerifyLoginOTPRequestDto;
     const { otpCode } = requstData;
 
-    const user: any = await dbhandler.getAll('users', `?verficationToken=${otpCode}`);
+    const user: any = await dbhandler.getAll({ verficationToken: otpCode });
     console.log(user);
     if (user.length > 0) {
       return HttpResponse.json(user[0], {
@@ -87,7 +90,7 @@ const verifyPhoneHandler: HttpHandler = http.post(
     const requstData: VerifyLoginOTPRequestDto = (await request.json()) as VerifyLoginOTPRequestDto;
     const { otpCode } = requstData;
 
-    const user: any = await dbhandler.getAll('users', `?verficationToken=${otpCode}`);
+    const user: any = await dbhandler.getAll({ verficationToken: otpCode });
     console.log(user);
     if (user.length > 0) {
       return HttpResponse.json(user[0], {

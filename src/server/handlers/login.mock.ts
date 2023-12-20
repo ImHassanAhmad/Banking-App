@@ -5,8 +5,10 @@ import {
   type LoginRequest,
   type ResendLoginOtpRequestDto
 } from 'types';
-import dbhandler from '../../utils/dbHandler';
+import { DatabaseService, Entity } from '../../utils/DatabaseService';
 let INCORRECT_LOGINS_COUNT: number = 0;
+
+const dbhandler = new DatabaseService<Entity, LoginRequest>(Entity.Issuer);
 
 const loginHandler: HttpHandler = http.post(
   '*/v1/sme/onboarding/authentication/login',
@@ -15,7 +17,7 @@ const loginHandler: HttpHandler = http.post(
     console.log(requestData);
     const { email, password, captchaToken }: LoginRequest = requestData;
     if (email && password && captchaToken) {
-      const user: any = await dbhandler.getAll('users', `?email${email}&password=${password}`);
+      const user: any = await dbhandler.getAll({ email, password });
       if (user.length > 0) {
         return HttpResponse.json(user[0].otpId, {
           status: 200
@@ -53,7 +55,7 @@ const verifyLoginHandler: HttpHandler = http.post(
     const requstData: VerifyLoginOTPRequestDto = (await request.json()) as VerifyLoginOTPRequestDto;
     const { otpCode } = requstData;
 
-    const user: any = await dbhandler.getAll('users', `?verficationToken=${otpCode}`);
+    const user: any = await dbhandler.getAll({ verficationToken: otpCode });
     console.log(user);
     if (user.length > 0) {
       return HttpResponse.json(user[0], {
