@@ -201,3 +201,25 @@ export const transformErrorResponse = (
 export type SignUpStepperContextProps =
   | InvestorSignUpStepperContextProps
   | IssuerSignUpStepperContextProps;
+
+export interface AssetRequestDto {
+  name: string;
+  description: string;
+  image: File;
+  websiteURL?: string;
+  socialMediaLink?: string;
+  logoURL?: string;
+}
+
+export interface AssetResponseDto {
+  assetId: string;
+}
+
+export interface AssetLegalDocumentsRequestDto {
+  assetId: string;
+  prospectus: File;
+  businessModel: File;
+  financialModel: File;
+  businessPlan: File;
+  valuationReport: File;
+}
