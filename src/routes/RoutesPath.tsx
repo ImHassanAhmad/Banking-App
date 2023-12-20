@@ -3,9 +3,11 @@ import type { IRouteConfig } from './types';
 import { RouteNames } from '@app/constants/routes';
 import UploadDocuments from '@app/pages/UploadDocuments';
 import IncomeRange from '@app/pages/IncomeRange';
+// import OnboardingUserType from '@app/pages/OnboardingUserType';
 
 const Welcome = lazy(async () => await import('@app/pages/Welcome'));
 const Login = lazy(async () => await import('@app/layout/LoginStepper'));
+const OnboardingUserType = lazy(async () => await import('@app/pages/OnboardingUserType'));
 const InvestorSignUpStepper = lazy(async () => await import('@app/layout/InvestorSignUpStepper'));
 const IssuerSignUpStepper = lazy(async () => await import('@app/layout/IssuerSignUpStepper'));
 const NotFound = lazy(async () => await import('@app/pages/NotFound'));
@@ -22,6 +24,7 @@ export const publicRoutes: IRouteConfig[] = [
     path: '/',
     element: Welcome
   },
+  { path: RouteNames.ONBOARDING_USER_TYPE, element: OnboardingUserType },
   { path: RouteNames.INVESTOR_SIGNUP, element: InvestorSignUpStepper },
   { path: RouteNames.ISSUER_SIGNUP, element: IssuerSignUpStepper },
   { path: RouteNames.VERIFY_EMAIL, element: EmailCodeVerification },

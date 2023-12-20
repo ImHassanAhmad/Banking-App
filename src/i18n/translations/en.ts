@@ -21,6 +21,14 @@ const en: LanguageResource = {
     signin: 'Sign In',
     continue: 'Continue'
   },
+  'onboarding-user-type': {
+    title: 'Choose Account Type',
+    subtitle: 'Everything you need to run your business in one place',
+    login_option_title: 'Create Investor Account',
+    login_option_subtitle: 'Join as a Investor',
+    create_option_title: 'Create Issuer Account',
+    create_option_subtitle: 'Join as a Issuer'
+  },
   login: {
     title: 'Welcome to W1TTY Business',
     subtitle: 'New at W1TTY?',
