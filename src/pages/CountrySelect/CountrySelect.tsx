@@ -34,6 +34,7 @@ const CountrySelect: FC = () => {
     supportedCountries: { supportedCountriesOfIncorporation }
   } = useAppSelector((state) => state.userData);
 
+  console.log(supportedCountriesOfIncorporation);
   const submit = (): void => {
     const isExist: boolean = supportedCountriesOfIncorporation.includes(country?.iso2);
     if (!isExist) {
