@@ -2,25 +2,26 @@ import { Stack, Card } from '@mui/material';
 import { type FC } from 'react';
 import homeIcon from '@app/assets/images/home.svg';
 import adduserIcon from '@app/assets/images/add-user.svg';
-// import AuthOption from './components/AuthOption';
-import { useNavigate } from 'react-router-dom';
 import { RouteNames } from '@app/constants/routes';
 import { useTranslation } from 'react-i18next';
 import Heading from '@app/components/Heading';
 import AuthOption from '@app/components/AuthOption';
+import BackButton from '@app/components/BackButton';
+import { useNavigate } from 'react-router-dom';
 
-const welcomeNamespace = RouteNames.WELCOME;
+const userTypeNamespace = RouteNames.ONBOARDING_USER_TYPE;
 
-const Welcome: FC = () => {
-  const navigate = useNavigate();
+const OnboardingUserType: FC = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   return (
-    <>
-      <Stack mt={12} data-testid="welcome-screen-wrapper">
+    <Stack mt={4}>
+      <BackButton />
+      <Stack mt={4} data-testid="welcome-screen-wrapper">
         <Heading
-          title={t(`${welcomeNamespace}.title`)}
-          subTitle={t(`${welcomeNamespace}.subtitle`)}
+          title={t(`${userTypeNamespace}.title`)}
+          subTitle={t(`${userTypeNamespace}.subtitle`)}
         />
         <Stack mt={6}>
           <Card
@@ -30,19 +31,19 @@ const Welcome: FC = () => {
             }}>
             <AuthOption
               onClick={() => {
-                navigate(`/${RouteNames.LOGIN}`);
+                navigate(`/${RouteNames.INVESTOR_SIGNUP}`);
               }}
-              title={t(`${welcomeNamespace}.login_option_title`)}
-              subTitle={t(`${welcomeNamespace}.login_option_subtitle`)}
+              title={t(`${userTypeNamespace}.login_option_title`)}
+              subTitle={t(`${userTypeNamespace}.login_option_subtitle`)}
               icon={homeIcon}
               borderType="top"
             />
             <AuthOption
               onClick={() => {
-                navigate(`/${RouteNames.ONBOARDING_USER_TYPE}`);
+                navigate(`/${RouteNames.ISSUER_SIGNUP}`);
               }}
-              title={t(`${welcomeNamespace}.create_option_title`)}
-              subTitle={t(`${welcomeNamespace}.create_option_subtitle`)}
+              title={t(`${userTypeNamespace}.create_option_title`)}
+              subTitle={t(`${userTypeNamespace}.create_option_subtitle`)}
               icon={adduserIcon}
               iconWidth={22}
               borderType="bottom"
@@ -50,8 +51,8 @@ const Welcome: FC = () => {
           </Card>
         </Stack>
       </Stack>
-    </>
+    </Stack>
   );
 };
 
-export default Welcome;
+export default OnboardingUserType;

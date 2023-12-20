@@ -5,6 +5,7 @@ const pl: LanguageResource = {
   login: {},
   'investor-register': {},
   'issuer-register': {},
+  'onboarding-user-type': {},
   'select-country': {},
   'register-mobile': {},
   'verify-mobile': {},
