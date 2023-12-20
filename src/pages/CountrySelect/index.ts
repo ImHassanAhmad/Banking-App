@@ -1,1 +1,1 @@
-export { default as CountrySelect } from './CountrySelect';
+export { default } from './CountrySelect';

@@ -3,8 +3,12 @@ import Heading from '@app/components/Heading';
 import OnboardingList from '@app/components/OnboardingList';
 import { type Category } from 'types';
 import { BUSINESS_CATEGORY } from '@app/constants/business-categories';
+import { type SignUpStepperContextProps } from '@app/common/types';
 
-const BusinessCategory: React.FC = () => {
+const BusinessCategory: React.FC<SignUpStepperContextProps> = ({
+  activeStep,
+  updateActiveStep
+}) => {
   const [selectedCategory, setSelectedCategory] = useState<string>();
 
   const categories: Category[] = BUSINESS_CATEGORY;

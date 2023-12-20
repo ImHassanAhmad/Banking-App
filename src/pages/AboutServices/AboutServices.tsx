@@ -2,13 +2,12 @@
 import React, { useState, useCallback } from 'react';
 import { Button, Stack } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useSignUpStepper } from '@app/context/SignupStepperContext';
-import { SignUpFlowSteps } from '@app/layout/SignUpStepper/types';
 import BackButton from '@app/components/BackButton';
 import Heading from '@app/components/Heading';
 import { RouteNames } from '@app/constants/routes';
 import TermItem from './components/TermItem';
 import { type TermCheckListType } from './types';
+import { type SignUpStepperContextProps } from '@app/common/types';
 
 const aboutOurServicesNamespace = RouteNames.ABOUT_OUR_SERVICES;
 
@@ -20,9 +19,8 @@ const CHECK_LIST: TermCheckListType = {
   prices_limits: { checked: false, link: '#' }
 };
 
-const AboutServices: React.FC = () => {
+const AboutServices: React.FC<SignUpStepperContextProps> = ({ updateActiveStep }) => {
   const { t } = useTranslation();
-  const { updateActiveStep } = useSignUpStepper();
 
   const [checkList, setCheckList] = useState<TermCheckListType>(CHECK_LIST);
 
@@ -64,7 +62,7 @@ const AboutServices: React.FC = () => {
     <Stack sx={{ width: '436px' }}>
       <BackButton
         onClick={() => {
-          updateActiveStep(SignUpFlowSteps.Mobile);
+          // updateActiveStep(IssuerSignUpFlowSteps.Mobile);
         }}
       />
       <Stack mt={4}>
@@ -105,7 +103,7 @@ const AboutServices: React.FC = () => {
               fullWidth
               type="submit"
               onClick={() => {
-                updateActiveStep(SignUpFlowSteps.CreatePassword);
+                updateActiveStep();
               }}>
               {t(`${aboutOurServicesNamespace}.confirm`)}
             </Button>

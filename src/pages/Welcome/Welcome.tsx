@@ -2,11 +2,12 @@ import { Stack, Card } from '@mui/material';
 import { type FC } from 'react';
 import homeIcon from '@app/assets/images/home.svg';
 import adduserIcon from '@app/assets/images/add-user.svg';
-import AuthOption from './components/AuthOption';
+// import AuthOption from './components/AuthOption';
 import { useNavigate } from 'react-router-dom';
 import { RouteNames } from '@app/constants/routes';
 import { useTranslation } from 'react-i18next';
 import Heading from '@app/components/Heading';
+import AuthOption from '@app/components/AuthOption';
 
 const welcomeNamespace = RouteNames.WELCOME;
 
@@ -38,7 +39,7 @@ const Welcome: FC = () => {
             />
             <AuthOption
               onClick={() => {
-                navigate(`/${RouteNames.SIGNUP}`);
+                navigate(`/${RouteNames.ONBOARDING}`);
               }}
               title={t(`${welcomeNamespace}.create_option_title`)}
               subTitle={t(`${welcomeNamespace}.create_option_subtitle`)}

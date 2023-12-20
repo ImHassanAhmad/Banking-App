@@ -6,27 +6,28 @@ import { RouteNames } from '@app/constants/routes';
 import CodeVerification from '@app/components/CodeVerification';
 import { useNavigate } from 'react-router-dom';
 import { OtpCommunicationChannelType, type VerifyPhoneResponseDto } from './types';
-import { useSignUpStepper } from '@app/context/SignupStepperContext';
-import { SignUpFlowSteps } from '@app/layout/SignUpStepper/types';
 import {
   useResendPhoneConfirmationMutation,
   useVerifyPhoneMutation
 } from '@app/store/api/onboarding';
-import { AuthErrorLevel, type AuthFetchQueryError } from '@app/common/types';
+import {
+  AuthErrorLevel,
+  type SignUpStepperContextProps,
+  type AuthFetchQueryError
+} from '@app/common/types';
 import WarningAlert from '@app/components/WarningAlert';
 import { useAuthError } from '@app/context/AuthErrorContext';
 
 const mobileVerifyNamespace = RouteNames.VERIFY_MOBILE;
 
-const MobileCodeVerification: React.FC = () => {
+const MobileCodeVerification: React.FC<SignUpStepperContextProps> = ({
+  updateActiveStep,
+  userId,
+  userPayload,
+  activeStep,
+  activeStepError: error
+}) => {
   const { t } = useTranslation();
-  const {
-    updateActiveStep,
-    userId,
-    userPayload,
-    activeStep,
-    activeStepError: error
-  } = useSignUpStepper();
   const { updateError } = useAuthError();
   const { codeBy, disclaimer, codeByContainer } = useStyles;
   const [codeNotRecieved, setCodeNotRecieved] = useState(false);
@@ -55,7 +56,7 @@ const MobileCodeVerification: React.FC = () => {
       .unwrap()
       .then((response: VerifyPhoneResponseDto) => {
         navigate(`/${RouteNames.LOGIN}?recentlyRegistered`);
-        updateActiveStep(SignUpFlowSteps.Country);
+        updateActiveStep();
       })
       .catch(apiErrorHandler);
   };

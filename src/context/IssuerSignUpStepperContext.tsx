@@ -1,4 +1,4 @@
-import { SignUpFlowSteps } from '@app/layout/SignUpStepper/types';
+import { IssuerSignUpFlowSteps } from '@app/layout/IssuerSignUpStepper/types';
 import {
   useOnBoardingDictionaryApiQuery,
   useRegisterUserMutation
@@ -24,6 +24,8 @@ import {
 import { useAuthError } from './AuthErrorContext';
 import { type IErrorMessage } from 'types';
 import AuthErrorWrapper from '@app/layout/AuthErrorWrapper';
+import { enumToIndexRecord, indexToEnumKeyRecord } from '@app/utils/enum';
+import { onBoardType } from './InvestorSignUpStepperContext';
 
 export interface RegisterUserCallBackParams {
   payload: RegisterUserRequestDto;
@@ -31,29 +33,30 @@ export interface RegisterUserCallBackParams {
   onError?: (error: AuthFetchQueryError) => void;
 }
 
-interface SignUpStepperContextProps {
-  activeStep: SignUpFlowSteps;
+export interface IssuerSignUpStepperContextProps {
+  activeStep: IssuerSignUpFlowSteps;
   userId: string;
   isLoading: boolean;
   userPayload: RegisterUserRequestDto;
   activeStepError?: IErrorMessage;
+  onBoardType: onBoardType;
   registerUser: (params: RegisterUserCallBackParams) => void;
   setUserId: Dispatch<SetStateAction<string>>;
-  updateActiveStep: (step: SignUpFlowSteps) => void;
+  updateActiveStep: () => void;
 }
 
-const SignUpStepperContext = createContext<SignUpStepperContextProps>({
-  activeStep: SignUpFlowSteps.BusinessDescription,
+const IssuerSignUpStepperContext = createContext<IssuerSignUpStepperContextProps>({
+  activeStep: IssuerSignUpFlowSteps.BusinessDescription,
   userId: '',
   error: {},
   isLoading: false,
   userPayload: { dryRun: true }
 } as any);
 
-const { Provider } = SignUpStepperContext;
+const { Provider } = IssuerSignUpStepperContext;
 
-export const SignUpStepperProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [activeStep, setActiveStep] = useState(SignUpFlowSteps.Country);
+export const IssuerSignUpStepperProvider: FC<PropsWithChildren> = ({ children }) => {
+  const [activeStep, setActiveStep] = useState(IssuerSignUpFlowSteps.Country);
   const [userId, setUserId] = useState('');
   const { updateError, findError } = useAuthError();
   const [registerUserPayload, setRegisterUserPayload] = useState<RegisterUserRequestDto>({
@@ -79,44 +82,53 @@ export const SignUpStepperProvider: FC<PropsWithChildren> = ({ children }) => {
     }
   };
 
-  const updateActiveStep = (activeStep: SignUpFlowSteps): void => {
-    updateError(activeStep, undefined);
+  const updateActiveStep = (): void => {
+    const nextActiveStep: IssuerSignUpFlowSteps = indexToEnumKeyRecord(IssuerSignUpFlowSteps)[
+      enumToIndexRecord(IssuerSignUpFlowSteps)[activeStep] + 1
+    ] as IssuerSignUpFlowSteps;
 
-    setActiveStep(activeStep);
+    updateError(nextActiveStep, undefined);
+
+    setActiveStep(nextActiveStep);
   };
+
+  // const updateActiveStep = (activeStep: IssuerSignUpFlowSteps): void => {
+  //   updateError(activeStep, undefined);
+
+  //   setActiveStep(activeStep);
+  // };
 
   const registerUser = ({
     payload,
     onSuccess,
     onError = () => {}
   }: RegisterUserCallBackParams): void => {
-    console.log('registeruserpayload', registerUserPayload);
     const registerFormData = { ...registerUserPayload, ...payload };
     let apiPayload: RegisterUserRequestDto = { dryRun: true };
     switch (activeStep) {
-      case SignUpFlowSteps.Country:
+      case IssuerSignUpFlowSteps.Country:
         apiPayload.countryOfIncorporation = registerFormData.countryOfIncorporation;
         break;
-      case SignUpFlowSteps.Email:
+      case IssuerSignUpFlowSteps.Email:
         apiPayload.email = registerFormData.email;
         break;
-      case SignUpFlowSteps.Mobile:
+      case IssuerSignUpFlowSteps.Mobile:
         apiPayload.phoneNumberCountryCode = registerFormData.phoneNumberCountryCode;
         apiPayload.shortenPhoneNumber = registerFormData.shortenPhoneNumber;
         break;
-      case SignUpFlowSteps.AboutOurServices:
+      case IssuerSignUpFlowSteps.AboutOurServices:
         apiPayload.visaTncAgreed = registerFormData.visaTncAgreed;
         apiPayload.wittyTncAgreed = registerFormData.wittyTncAgreed;
         break;
-      case SignUpFlowSteps.CreatePassword:
+      case IssuerSignUpFlowSteps.CreatePassword:
         apiPayload = { ...registerFormData, dryRun: false };
         break;
-      case SignUpFlowSteps.EmailVerify:
-      case SignUpFlowSteps.MobileVerify:
+      case IssuerSignUpFlowSteps.EmailVerify:
+      case IssuerSignUpFlowSteps.MobileVerify:
       default:
     }
 
-    setRegisterUserPayload({ ...registerUserPayload, ...payload, ...apiPayload });
+    setRegisterUserPayload({ ...registerUserPayload, ...payload });
     const userPayload = {
       vis: true,
       visaTncAgreed: true,
@@ -124,11 +136,11 @@ export const SignUpStepperProvider: FC<PropsWithChildren> = ({ children }) => {
       companyName: 'Temoral Company Name',
       registrationNumber: Date.now().toString().slice(0, 10)
     };
-    register({ ...registerUserPayload, ...userPayload, ...payload })
+    register({ ...apiPayload, ...userPayload })
       .unwrap()
       .then((response: RegisterUserResponseDto) => {
         onSuccess(response);
-        // setRegisterUserPayload({ ...registerUserPayload, ...userPayload, ...apiPayload });
+        setRegisterUserPayload({ dryRun: true, ...userPayload });
       })
       .catch((error: AuthFetchQueryError) => {
         handleError(error, onSuccess, onError);
@@ -143,6 +155,7 @@ export const SignUpStepperProvider: FC<PropsWithChildren> = ({ children }) => {
     isLoading,
     userPayload: registerUserPayload,
     activeStepError: findError(activeStep),
+    onBoardType: onBoardType.Issuer,
     updateActiveStep,
     setUserId,
     registerUser
@@ -164,4 +177,5 @@ export const SignUpStepperProvider: FC<PropsWithChildren> = ({ children }) => {
   );
 };
 
-export const useSignUpStepper = (): SignUpStepperContextProps => useContext(SignUpStepperContext);
+export const useIssuerSignUpStepper = (): IssuerSignUpStepperContextProps =>
+  useContext(IssuerSignUpStepperContext);

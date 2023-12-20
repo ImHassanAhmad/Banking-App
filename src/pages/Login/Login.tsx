@@ -100,7 +100,7 @@ const Login: FC = () => {
             subTitle={t(`${translationNamespace}.subtitle`)}
             subTitleAnchor={t(`${translationNamespace}.signup`)}
             subTitleAnchorClick={() => {
-              navigate(`/${RouteNames.SIGNUP}`);
+              navigate(`/${RouteNames.INVESTOR_SIGNUP}`);
             }}
           />
         )}
