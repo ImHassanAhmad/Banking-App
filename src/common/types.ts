@@ -60,7 +60,7 @@ export interface AccountError {
   traceId: string;
 }
 
-interface FieldErrors {
+export interface FieldErrors {
   errors: FieldErrorDto[];
 }
 
@@ -201,3 +201,14 @@ export const transformErrorResponse = (
 export type SignUpStepperContextProps =
   | InvestorSignUpStepperContextProps
   | IssuerSignUpStepperContextProps;
+
+export interface RegisterUserRequestBody {
+  captchaToken?: string;
+  email?: string;
+  countryOfIncorporation?: string;
+  password?: string;
+  phoneNumberCountryCode?: string;
+  registrationNumber?: string;
+  shortenPhoneNumber?: string;
+  otpId?: string;
+}
