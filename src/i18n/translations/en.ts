@@ -21,7 +21,7 @@ const en: LanguageResource = {
     signin: 'Sign In',
     continue: 'Continue'
   },
-  'onboarding-user-type': {
+  onboarding: {
     title: 'Choose Account Type',
     subtitle: 'Everything you need to run your business in one place',
     login_option_title: 'Create Investor Account',

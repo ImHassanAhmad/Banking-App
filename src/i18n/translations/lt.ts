@@ -4,7 +4,7 @@ const lt: LanguageResource = {
   home: {},
   'investor-register': {},
   'issuer-register': {},
-  'onboarding-user-type': {},
+  onboarding: {},
   login: {},
   'select-country': {},
   'register-mobile': {},
