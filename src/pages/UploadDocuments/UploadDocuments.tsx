@@ -1,16 +1,23 @@
-// UploadDocument.tsx
-
-import React, { useState } from 'react';
+import React, { type FC, useState } from 'react';
 import { Stack, Typography, Autocomplete, Box, Button } from '@mui/material';
+import { RouteNames } from '@app/constants/routes';
+import { useTranslation } from 'react-i18next';
 import Heading from '@app/components/Heading';
 import Textfield from '@app/components/Textfield';
 import { FileInput } from './components/DocumentFileInput';
 import { UploadDocumentsTypes } from './utils/constant';
-import BackButton from '@app/components/BackButton';
+import { type SignUpStepperContextProps } from '@app/common/types';
 
-const UploadDocument: React.FC = () => {
+const uploadDocumentsNamespace = RouteNames.UPLOAD_DOCUMENTS;
+
+const UploadDocument: FC<SignUpStepperContextProps> = ({
+  updateActiveStep,
+  registerUser,
+  isLoading,
+  userPayload
+}) => {
+  const { t } = useTranslation();
   const APP_DOCUMENT_TYPES = UploadDocumentsTypes;
-
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -23,9 +30,7 @@ const UploadDocument: React.FC = () => {
   };
 
   return (
-    <Stack sx={{ maxWidth: '490px' }}>
-      <BackButton />
-
+    <Stack sx={{ width: '100%' }}>
       <Stack mt={4} gap={4}>
         <Stack>
           <Heading title={'Upload Documents'} subTitle="" />
@@ -75,7 +80,14 @@ const UploadDocument: React.FC = () => {
           />
         </Box>
 
-        <Button sx={{ fontWeight: '600' }}>Continue</Button>
+        <Button
+          sx={{ textTransform: 'uppercase', marginTop: '2rem' }}
+          onClick={() => {
+            updateActiveStep();
+          }}
+          fullWidth>
+          {t(`${uploadDocumentsNamespace}.continue`)}
+        </Button>
       </Stack>
     </Stack>
   );

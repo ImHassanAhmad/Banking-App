@@ -1,13 +1,13 @@
-import React, { useState, useCallback } from 'react';
+import { type FC, useState, useCallback } from 'react';
 import { Button, Stack } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import BackButton from '@app/components/BackButton';
 import Heading from '@app/components/Heading';
 import { RouteNames } from '@app/constants/routes';
 import CheckboxItem from '@app/components/CheckboxItem';
 import { type CheckListType } from '@app/components/CheckboxItem/types';
+import { type SignUpStepperContextProps } from '@app/common/types';
 
-const aboutOurServicesNamespace = RouteNames.QUESTIONS_LIST;
+const questionsListsNamespace = RouteNames.QUESTIONS_LIST;
 
 const CHECK_LIST: CheckListType = {
   news_promotions: { checked: false, optional: true },
@@ -17,7 +17,12 @@ const CHECK_LIST: CheckListType = {
   prices_limits: { checked: false, link: '#' }
 };
 
-const QuestionsList: React.FC = () => {
+const QuestionsList: FC<SignUpStepperContextProps> = ({
+  updateActiveStep,
+  registerUser,
+  isLoading,
+  userPayload
+}) => {
   const { t } = useTranslation();
   const [checkList, setCheckList] = useState<CheckListType>(CHECK_LIST);
 
@@ -38,22 +43,15 @@ const QuestionsList: React.FC = () => {
   }, []);
 
   return (
-    <Stack sx={{ width: '436px' }}>
-      <BackButton onClick={() => {}} />
+    <Stack sx={{ width: '100%' }}>
       <Stack mt={4}>
         <Heading
-          title={t(`${aboutOurServicesNamespace}.title`)}
-          subTitle={t(`${aboutOurServicesNamespace}.subtitle`)}
+          title={t(`${questionsListsNamespace}.title`)}
+          subTitle={t(`${questionsListsNamespace}.subtitle`)}
         />
       </Stack>
-
-      <Stack
-        mt={1}
-        gap={3}
-        width="100%"
-        height={'80%'}
-        sx={{ overflowY: 'scroll', width: '436px' }}>
-        <Stack height={'15%'} paddingRight={{ xs: '5%' }}>
+      <Stack mt={1} gap={3} width="100%" height="80%" sx={{ overflowY: 'scroll', width: '436px' }}>
+        <Stack height="15%" paddingRight={{ xs: '5%' }}>
           <Stack sx={{ marginTop: '2rem', display: 'flex', gap: '1rem' }}>
             {Object.keys(checkList).map((key) => (
               <CheckboxItem
@@ -63,7 +61,7 @@ const QuestionsList: React.FC = () => {
                   handleCheckboxChange(key);
                 }}
                 link={checkList[key].link}
-                linkText={t(`${aboutOurServicesNamespace}.${key}`)}
+                linkText={t(`${questionsListsNamespace}.${key}`)}
                 optional={checkList[key].optional}
               />
             ))}
@@ -71,9 +69,11 @@ const QuestionsList: React.FC = () => {
             <Button
               disabled={!isAllNonOptionalChecked}
               sx={{ textTransform: 'uppercase', marginTop: '2rem' }}
-              fullWidth
-              type="submit">
-              {t(`${aboutOurServicesNamespace}.confirm`)}
+              onClick={() => {
+                updateActiveStep();
+              }}
+              fullWidth>
+              {t(`${questionsListsNamespace}.continue`)}
             </Button>
           </Stack>
         </Stack>

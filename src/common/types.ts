@@ -201,3 +201,8 @@ export const transformErrorResponse = (
 export type SignUpStepperContextProps =
   | InvestorSignUpStepperContextProps
   | IssuerSignUpStepperContextProps;
+
+export enum onBoardType {
+  Issuer = 'issuer',
+  Investor = 'investor'
+}
