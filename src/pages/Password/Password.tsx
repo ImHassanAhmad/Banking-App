@@ -12,7 +12,7 @@ import {
   type RegisterUserRequestDto,
   type AuthFetchQueryError,
   AuthErrorLevel,
-  type SignUpStepperContextProps
+  type WithSignUpStepperContextProps
 } from '@app/common/types';
 import BackButton from '@app/components/BackButton';
 import Loader from '@app/components/Loader';
@@ -21,7 +21,7 @@ import WarningAlert from '@app/components/WarningAlert';
 
 const translationNamespace = RouteNames.CREATE_PASSWORD;
 
-const Password: FC<SignUpStepperContextProps> = ({
+const Password: FC<WithSignUpStepperContextProps> = ({
   updateActiveStep,
   registerUser,
   setUserId,

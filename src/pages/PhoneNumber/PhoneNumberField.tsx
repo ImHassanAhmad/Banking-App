@@ -1,6 +1,6 @@
 import { getCountryFlag } from '@app/assets/flags';
 import {
-  type SignUpStepperContextProps,
+  type WithSignUpStepperContextProps,
   type AuthFetchQueryError,
   type RegisterUserRequestDto
 } from '@app/common/types';
@@ -46,7 +46,7 @@ const getCountryDataByPhone = (phoneCode: string): ICountryData => {
   return getCountryDataList()[index];
 };
 
-const PhoneNumberField: FC<SignUpStepperContextProps> = ({
+const PhoneNumberField: FC<WithSignUpStepperContextProps> = ({
   updateActiveStep,
   registerUser,
   userPayload: { phoneNumberCountryCode, shortenPhoneNumber, countryOfIncorporation },

@@ -12,7 +12,7 @@ import * as yup from 'yup';
 import BackButton from '@app/components/BackButton';
 import EmailField from '@app/components/EmailField/EmailField';
 import Loader from '@app/components/Loader';
-import { type SignUpStepperContextProps, type AuthFetchQueryError } from '@app/common/types';
+import { type WithSignUpStepperContextProps, type AuthFetchQueryError } from '@app/common/types';
 import { ModalNames } from '@app/constants/modals';
 
 interface IForm {
@@ -22,7 +22,7 @@ interface IForm {
 const translationNamespace = RouteNames.REGISTER_EMAIL;
 const emailAlreadyRegisteredNamespace = ModalNames.EMAIL_ALREADY_REGISTERED;
 
-const SignUp: FC<SignUpStepperContextProps> = ({
+const SignUp: FC<WithSignUpStepperContextProps> = ({
   activeStep,
   updateActiveStep,
   registerUser,

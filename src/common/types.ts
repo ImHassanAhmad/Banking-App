@@ -198,9 +198,11 @@ export const transformErrorResponse = (
   };
 };
 
-export type SignUpStepperContextProps =
+export type WithSignUpStepperContextProps<T = any> = (
   | InvestorSignUpStepperContextProps
-  | IssuerSignUpStepperContextProps;
+  | IssuerSignUpStepperContextProps
+) &
+  T;
 
 export interface AssetRequestDto {
   name: string;

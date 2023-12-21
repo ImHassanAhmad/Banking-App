@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import PrivacyTerms from '@app/components/PrivacyTerms';
 import { NotSupportedModal } from '@app/components/Modals';
 import { useAppSelector } from '@app/store/hooks';
-import { type CountrySelectOption, type SignUpStepperContextProps } from '@app/common/types';
+import { type WithSignUpStepperContextProps, type CountrySelectOption } from '@app/common/types';
 import { NOT_SUPPORTED_MODES } from '@app/constants';
 import BackButton from '@app/components/BackButton';
 import CountrySelector from '@app/components/CountrySelector';
@@ -14,7 +14,7 @@ import { ALL_COUNTRIES } from '@app/constants/countries';
 
 const translationNamespace = RouteNames.COUNTRY;
 
-const CountrySelect: FC<SignUpStepperContextProps> = ({
+const CountrySelect: FC<WithSignUpStepperContextProps> = ({
   onBoardType,
   updateActiveStep,
   registerUser,
@@ -36,6 +36,7 @@ const CountrySelect: FC<SignUpStepperContextProps> = ({
   const {
     supportedCountries: { supportedCountriesOfIncorporation }
   } = useAppSelector((state) => state.userData);
+
   const submit = (): void => {
     const isExist: boolean = supportedCountriesOfIncorporation.includes(country?.iso2) || true;
     if (!isExist) {

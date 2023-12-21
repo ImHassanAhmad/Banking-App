@@ -3,9 +3,9 @@ import Heading from '@app/components/Heading';
 import OnboardingList from '@app/components/OnboardingList';
 import { type Category } from 'types';
 import { BUSINESS_CATEGORY } from '@app/constants/business-categories';
-import { type SignUpStepperContextProps } from '@app/common/types';
+import { type WithSignUpStepperContextProps } from '@app/common/types';
 
-const BusinessCategory: React.FC<SignUpStepperContextProps> = ({
+const BusinessCategory: React.FC<WithSignUpStepperContextProps> = ({
   activeStep,
   updateActiveStep
 }) => {

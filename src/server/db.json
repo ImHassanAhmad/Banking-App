@@ -1,0 +1,25 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "test@witty.com",
+      "password": "Pass123456789@",
+      "verficationToken": "444444",
+      "otpId": "1ee45ddf-957a-4011-a90c-8cad4b415f98",
+      "refreshToken": "1ee45ddf-957a-4011-a90c-8cad4b415f98",
+      "accessToken": "1ee45ddf-957a-4011-a90c-8cad4b415f98"
+    },
+    {
+      "captchaToken": "03AFcWeA6124Q08Rp11FafDMh0xkYaeAK8gm18R1yctOtHzD4Mt5r8FPw3FgvNF4SHNaA9a-MbpS2pFyCCeY3PZQ36Dsk0CEu36L3qQkEwvF-p_OGeBkeeoDdyxh2KpV1_qQCrlpWSRCGeX_stYLpNOMqKfiJ3ekYUli23vCc0jvjm1fyCX9pedFeIYVaCvUHAgf8PwWC7jxgdjkUes-9kIR8UDj6065rA_7P01rebfHPERVbK3LpHOhNLbHMWo-b6GVRCEVOejoMs7NOvN6IqlhowIhzhrtykWjU3IbORt3SDKa_c_PSFqBZsrYS5mat3qPd_vEQ2FFUyWuM1jduQSDyYej1IXNTlUbAdk4T0ph78qJNizXlYqIc95KMnXoiW98w1SzvP3XD4aqKimo0I5ots3isFSKNWXyscN6fUVkph9vWBQQWhW28Red_3mvseFMTfVNNAd4OQWW9wVeqewOWZa9xOk0ZL50ao9KZYAv9BHvkjS6jCbrY",
+      "email": "mt29@witty.tech",
+      "password": "Unloack94@",
+      "countryOfIncorporation": "CY",
+      "phoneNumberCountryCode": "357",
+      "registrationNumber": "1703049132",
+      "shortenPhoneNumber": "22334212",
+      "verficationToken": "444444",
+      "otpId": "1ee45ddf-957a-4011-a90c-8cad4b415f98",
+      "id": 2
+    }
+  ]
+}

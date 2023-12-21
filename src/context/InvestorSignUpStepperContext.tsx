@@ -101,6 +101,7 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
     onSuccess,
     onError = () => {}
   }: RegisterUserCallBackParams): void => {
+    console.log('registeruserpayload', registerUserPayload);
     const registerFormData = { ...registerUserPayload, ...payload };
     let apiPayload: RegisterUserRequestDto = { dryRun: true };
     switch (activeStep) {
@@ -126,7 +127,7 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
       default:
     }
 
-    setRegisterUserPayload({ ...registerUserPayload, ...payload });
+    setRegisterUserPayload({ ...registerUserPayload, ...payload, ...apiPayload });
     const userPayload = {
       vis: true,
       visaTncAgreed: true,
@@ -134,11 +135,11 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
       companyName: 'Temoral Company Name',
       registrationNumber: Date.now().toString().slice(0, 10)
     };
-    register({ ...apiPayload, ...userPayload })
+    register({ ...registerUserPayload, ...userPayload, ...payload })
       .unwrap()
       .then((response: RegisterUserResponseDto) => {
         onSuccess(response);
-        setRegisterUserPayload({ dryRun: true, ...userPayload });
+        // setRegisterUserPayload({ ...registerUserPayload, ...userPayload, ...apiPayload });
       })
       .catch((error: AuthFetchQueryError) => {
         handleError(error, onSuccess, onError);

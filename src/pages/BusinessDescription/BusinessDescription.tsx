@@ -1,4 +1,4 @@
-import { type SignUpStepperContextProps } from '@app/common/types';
+import { type WithSignUpStepperContextProps } from '@app/common/types';
 import BackButton from '@app/components/BackButton';
 import Heading from '@app/components/Heading';
 // import TextFieldComp from '@app/components/Textfield/Textfield';
@@ -23,7 +23,7 @@ const schema = yup
   })
   .required();
 
-const BusinessDescription: FC<SignUpStepperContextProps> = ({ updateActiveStep }) => {
+const BusinessDescription: FC<WithSignUpStepperContextProps> = ({ updateActiveStep }) => {
   const { t } = useTranslation();
 
   const { handleSubmit } = useForm<IForm>({
