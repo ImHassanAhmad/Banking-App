@@ -1,9 +1,6 @@
 import { lazy } from 'react';
 import type { IRouteConfig } from './types';
 import { RouteNames } from '@app/constants/routes';
-import UploadDocuments from '@app/pages/UploadDocuments';
-import IncomeRange from '@app/pages/IncomeRange';
-// import OnboardingUserType from '@app/pages/OnboardingUserType';
 
 const Welcome = lazy(async () => await import('@app/pages/Welcome'));
 const Login = lazy(async () => await import('@app/layout/LoginStepper'));
@@ -15,9 +12,6 @@ const EmailCodeVerification = lazy(
   async () => await import('@app/pages/LoginEmailCodeVerification')
 );
 const SourceOfFunding = lazy(async () => await import('@app/pages/SourceOfFunding'));
-const PersonalInformation = lazy(async () => await import('@app/pages/PersonalInformation'));
-const Address = lazy(async () => await import('@app/pages/Address'));
-const QuestionsList = lazy(async () => await import('@app/pages/QuestionsList'));
 
 export const publicRoutes: IRouteConfig[] = [
   {
@@ -30,12 +24,7 @@ export const publicRoutes: IRouteConfig[] = [
   { path: RouteNames.VERIFY_EMAIL, element: EmailCodeVerification },
   { path: RouteNames.LOGIN, element: Login },
   { path: RouteNames.NOT_FOUND, element: NotFound },
-  { path: RouteNames.UPLOAD_DOCUMENTS, element: UploadDocuments },
-  { path: RouteNames.SOURCE_OF_FUNDING, element: SourceOfFunding },
-  { path: RouteNames.INCOME_RANGE, element: IncomeRange },
-  { path: RouteNames.PERSONAL_INFORMATION, element: PersonalInformation },
-  { path: RouteNames.ADDRESS, element: Address },
-  { path: RouteNames.QUESTIONS_LIST, element: QuestionsList }
+  { path: RouteNames.SOURCE_OF_FUNDING, element: SourceOfFunding }
 ];
 
 export const privateRoutes: IRouteConfig[] = [];

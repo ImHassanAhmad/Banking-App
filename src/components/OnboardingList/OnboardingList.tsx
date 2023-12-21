@@ -16,7 +16,6 @@ const OnboardingList: React.FC<OnboardingListProps> = ({
       <Stack mt={4}>
         <Heading title={title} subTitle={subtitle} />
       </Stack>
-
       <List sx={{ marginTop: '1rem' }}>
         {itemList.map(({ topic, details }) => (
           <ListItem
