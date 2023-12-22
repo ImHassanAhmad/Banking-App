@@ -60,7 +60,7 @@ export interface AccountError {
   traceId: string;
 }
 
-export interface FieldErrors {
+interface FieldErrors {
   errors: FieldErrorDto[];
 }
 
@@ -205,14 +205,4 @@ export type SignUpStepperContextProps =
 export enum onBoardType {
   Issuer = 'issuer',
   Investor = 'investor'
-}
-export interface RegisterUserRequestBody {
-  captchaToken?: string;
-  email?: string;
-  countryOfIncorporation?: string;
-  password?: string;
-  phoneNumberCountryCode?: string;
-  registrationNumber?: string;
-  shortenPhoneNumber?: string;
-  otpId?: string;
 }

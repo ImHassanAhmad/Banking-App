@@ -6,7 +6,9 @@
 import '@testing-library/jest-dom';
 import { createMocks } from 'react-idle-timer';
 import { setupServer } from 'msw/node';
-import handlers from './store/api/mock/handlers';
+import { onBoardMockApiHandler } from './store/api/mock/handlers';
+
+export const handlers = [...onBoardMockApiHandler];
 
 const server = setupServer(...handlers);
 

@@ -1,7 +1,7 @@
 import * as onBoardingConstants from './onboarding.const';
-import * as loginConstants from './login.const';
 
-export default {
-  onBoardingConstants,
-  loginConstants
+const combineConstants = {
+  onBoardingConstants
 };
+
+export default combineConstants;
