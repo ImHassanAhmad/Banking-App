@@ -60,7 +60,7 @@ export interface AccountError {
   traceId: string;
 }
 
-interface FieldErrors {
+export interface FieldErrors {
   errors: FieldErrorDto[];
 }
 
