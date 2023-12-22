@@ -1,7 +1,5 @@
 import { type SignUpStepperContextProps } from '@app/common/types';
-import BackButton from '@app/components/BackButton';
 import Heading from '@app/components/Heading';
-// import TextFieldComp from '@app/components/Textfield/Textfield';
 import { RouteNames } from '@app/constants/routes';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Stack, TextField } from '@mui/material';
@@ -39,12 +37,7 @@ const BusinessDescription: FC<SignUpStepperContextProps> = ({ updateActiveStep }
   };
 
   return (
-    <Stack>
-      <BackButton
-        onClick={() => {
-          updateActiveStep();
-        }}
-      />
+    <Stack sx={{ width: '100%' }}>
       <Stack mt={4}>
         <Heading
           title={t(`${businessDescriptionNamespace}.title`)}

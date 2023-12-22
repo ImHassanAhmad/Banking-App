@@ -4,11 +4,9 @@ import { useState, type FC } from 'react';
 import { RouteNames } from '@app/constants/routes';
 import { useTranslation } from 'react-i18next';
 import PrivacyTerms from '@app/components/PrivacyTerms';
-// import { EmailAlreadyRegisteredModal } from '@app/components/Modals';
 import { type SubmitHandler, useForm, type FieldError } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import BackButton from '@app/components/BackButton';
 import Textfield from '@app/components/Textfield';
 import Loader from '@app/components/Loader';
 import { SEARCH_ICON2 } from '@app/assets/images';
@@ -72,8 +70,7 @@ const CompanyInformation: FC<SignUpStepperContextProps> = ({
   };
 
   return (
-    <Stack mt={4}>
-      <BackButton />
+    <Stack mt={4} sx={{ width: '100%' }}>
       <Stack mt={4}>
         <Heading
           title={t(`${translationNamespace}.title`)}

@@ -202,6 +202,10 @@ export type SignUpStepperContextProps =
   | InvestorSignUpStepperContextProps
   | IssuerSignUpStepperContextProps;
 
+export enum onBoardType {
+  Issuer = 'issuer',
+  Investor = 'investor'
+}
 export interface RegisterUserRequestBody {
   captchaToken?: string;
   email?: string;

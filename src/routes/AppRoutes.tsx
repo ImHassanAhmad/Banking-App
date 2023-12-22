@@ -5,6 +5,7 @@ import ProtectedRoute from './ProtectedRoute';
 import { privateRoutes, publicRoutes } from './RoutesPath';
 import type { IRouteConfig } from './types';
 import Loader from '@app/components/Loader';
+
 const renderRoutes: FC<IRouteConfig[]> = (routes: IRouteConfig[]) => {
   return routes.map(({ path, element: Element, params }: IRouteConfig) => (
     <Route

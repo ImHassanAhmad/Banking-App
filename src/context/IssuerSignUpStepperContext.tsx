@@ -19,13 +19,13 @@ import {
   type RegisterUserResponseDto,
   type RegisterUserRequestDto,
   type AuthFetchQueryError,
-  AuthErrorLevel
+  AuthErrorLevel,
+  onBoardType
 } from '@app/common/types';
 import { useAuthError } from './AuthErrorContext';
 import { type IErrorMessage } from 'types';
 import AuthErrorWrapper from '@app/layout/AuthErrorWrapper';
 import { enumToIndexRecord, indexToEnumKeyRecord } from '@app/utils/enum';
-import { onBoardType } from './InvestorSignUpStepperContext';
 
 export interface RegisterUserCallBackParams {
   payload: RegisterUserRequestDto;
@@ -43,10 +43,11 @@ export interface IssuerSignUpStepperContextProps {
   registerUser: (params: RegisterUserCallBackParams) => void;
   setUserId: Dispatch<SetStateAction<string>>;
   updateActiveStep: () => void;
+  goBack: (backStep: number) => void;
 }
 
 const IssuerSignUpStepperContext = createContext<IssuerSignUpStepperContextProps>({
-  activeStep: IssuerSignUpFlowSteps.BusinessDescription,
+  activeStep: IssuerSignUpFlowSteps.BusinessCategory,
   userId: '',
   error: {},
   isLoading: false,
@@ -56,7 +57,7 @@ const IssuerSignUpStepperContext = createContext<IssuerSignUpStepperContextProps
 const { Provider } = IssuerSignUpStepperContext;
 
 export const IssuerSignUpStepperProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [activeStep, setActiveStep] = useState(IssuerSignUpFlowSteps.Country);
+  const [activeStep, setActiveStep] = useState(IssuerSignUpFlowSteps.BusinessCategory);
   const [userId, setUserId] = useState('');
   const { updateError, findError } = useAuthError();
   const [registerUserPayload, setRegisterUserPayload] = useState<RegisterUserRequestDto>({
@@ -92,11 +93,10 @@ export const IssuerSignUpStepperProvider: FC<PropsWithChildren> = ({ children })
     setActiveStep(nextActiveStep);
   };
 
-  // const updateActiveStep = (activeStep: IssuerSignUpFlowSteps): void => {
-  //   updateError(activeStep, undefined);
-
-  //   setActiveStep(activeStep);
-  // };
+  const goBack = (backStep: number): void => {
+    updateError(backStep, undefined);
+    setActiveStep(indexToEnumKeyRecord(IssuerSignUpFlowSteps)[backStep] as IssuerSignUpFlowSteps);
+  };
 
   const registerUser = ({
     payload,
@@ -158,7 +158,8 @@ export const IssuerSignUpStepperProvider: FC<PropsWithChildren> = ({ children })
     onBoardType: onBoardType.Issuer,
     updateActiveStep,
     setUserId,
-    registerUser
+    registerUser,
+    goBack
   };
   const dispatch = useAppDispatch();
   const { data } = useOnBoardingDictionaryApiQuery();
