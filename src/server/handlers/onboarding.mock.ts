@@ -13,7 +13,7 @@ import withErrorHandler from '../middleware/withErrorHandler';
 import { type ResponseResolverInfo } from 'msw/lib/core/handlers/RequestHandler';
 import { type HttpRequestResolverExtras } from 'msw/lib/core/handlers/HttpHandler';
 
-const registerUserScheme: yup.ObjectSchema<RegisterUserRequestDto> = yup.object({
+const registerUserScheme: yup.ObjectSchema<RegisterUserRequestDto> = yup.object().shape({
   countryOfIncorporation: yup.mixed(),
   email: yup.string().email().required(),
   password: yup.string().min(13).required(),
@@ -28,7 +28,7 @@ const registerUserScheme: yup.ObjectSchema<RegisterUserRequestDto> = yup.object(
   dryRun: yup.boolean().required()
 });
 
-const otpCodeSceheme: yup.ObjectSchema<VerifyLoginOTPRequestDto> = yup.object({
+const otpCodeSceheme: yup.ObjectSchema<VerifyLoginOTPRequestDto> = yup.object().shape({
   otpId: yup.string().required(),
   otpCode: yup.string().required()
 });

@@ -21,17 +21,17 @@ import { type ResponseResolverInfo } from 'msw/lib/core/handlers/RequestHandler'
 
 let INCORRECT_LOGINS_COUNT: number = 0;
 
-const loginScheme: yup.ObjectSchema<LoginRequest> = yup.object({
+const loginScheme: yup.ObjectSchema<LoginRequest> = yup.object().shape({
   email: yup.string().email().required(),
   password: yup.string().min(13).required(),
   captchaToken: yup.string().required()
 });
 
-const otpIdScheme: yup.ObjectSchema<ResendLoginOtpRequestDto> = yup.object({
+const otpIdScheme: yup.ObjectSchema<ResendLoginOtpRequestDto> = yup.object().shape({
   otpId: yup.string().required()
 });
 
-const otpCodeSceheme: yup.ObjectSchema<VerifyLoginOTPRequestDto> = yup.object({
+const otpCodeSceheme: yup.ObjectSchema<VerifyLoginOTPRequestDto> = yup.object().shape({
   otpId: yup.string().required(),
   otpCode: yup
     .string()
