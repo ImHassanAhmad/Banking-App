@@ -8,17 +8,19 @@ const labelStyle = {
   '& .MuiTypography-root': {
     fontSize: '16px'
   },
+  minHeight: '4.5rem',
   gap: '1rem'
 };
 
 const checkboxStyle = {
-  '& .MuiSvgIcon-root': { fontSize: 22 }
+  '& .MuiSvgIcon-root': { fontSize: 22 },
+  '& input': { position: 'relative' }
 };
 
 const CheckIcon: React.FC<CheckIconProps> = ({ icon }) => {
   return (
-    <Box sx={{ paddingLeft: '2px' }}>
-      <img src={icon} alt="" height={20} width={20} />
+    <Box>
+      <img src={icon} alt="unchecked" height={21} width={21} />
     </Box>
   );
 };
@@ -37,13 +39,15 @@ const CheckboxItem: React.FC<CheckboxItemProps> = ({
   return (
     <FormControlLabel
       control={
-        <Checkbox
-          sx={checkboxStyle}
-          checked={checked}
-          onChange={onChange}
-          icon={<CheckIcon icon={UNCHECHK_ICON} />}
-          checkedIcon={<CustomChecbox />}
-        />
+        <Box sx={{ width: '12%' }}>
+          <Checkbox
+            sx={checkboxStyle}
+            checked={checked}
+            onChange={onChange}
+            icon={<CheckIcon icon={UNCHECHK_ICON} />}
+            checkedIcon={<CustomChecbox />}
+          />
+        </Box>
       }
       sx={labelStyle}
       label={<OptionalTermLabel linkText={linkText} />}

@@ -1,8 +1,9 @@
-import { Stepper } from '@mui/material';
-import { type FC, type ReactNode } from 'react';
-
+import { Stepper, Stack, Grid } from '@mui/material';
+import { type FC, type ReactNode, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
+import BackButton from '@app/components/BackButton';
 import CountrySelect from '@app/pages/CountrySelect';
-import SignUp from '@app/pages/RegisterEmail';
+import RegisterEmail from '@app/pages/RegisterEmail';
 import Password from '@app/pages/Password';
 import PhoneNumber from '@app/pages/PhoneNumber';
 import MobileCodeVerification from '@app/pages/MobileCodeVerification';
@@ -29,7 +30,7 @@ const issuerFlowComponent = (
     case IssuerSignUpFlowSteps.Country:
       return <CountrySelect {...props} />;
     case IssuerSignUpFlowSteps.Email:
-      return <SignUp {...props} />;
+      return <RegisterEmail {...props} />;
     case IssuerSignUpFlowSteps.CompanyBasicInfo:
       return <CompanyInformation {...props} />;
     case IssuerSignUpFlowSteps.Mobile:
@@ -55,20 +56,32 @@ const issuerFlowComponent = (
 };
 
 const IssuerSignUpStepper: FC = () => {
+  const navigate = useNavigate();
   const props = useIssuerSignUpStepper();
-  const { activeStep } = props;
+  const { activeStep, goBack } = props;
 
+  const activeStepIndex = useMemo(() => IssuerFlowStepsIndices[activeStep], [activeStep]);
+  console.log('POLA', activeStep, activeStepIndex);
   return (
-    <Stepper
-      activeStep={IssuerFlowStepsIndices[activeStep]}
-      sx={{
-        alignItems: 'flex-start',
-        '&.MuiStepper-root': {
-          alignItems: 'flex-start'
-        }
-      }}>
-      {issuerFlowComponent(activeStep, props)}
-    </Stepper>
+    <Stack>
+      <BackButton
+        onClick={() => {
+          activeStepIndex ? goBack(activeStepIndex - 1) : navigate(-1);
+        }}
+      />
+      <Stepper
+        activeStep={IssuerFlowStepsIndices[activeStep]}
+        sx={{
+          alignItems: 'flex-start',
+          '&.MuiStepper-root': {
+            alignItems: 'flex-start'
+          }
+        }}>
+        <Grid item lg={8} md={10} sm={10} xs={12}>
+          {issuerFlowComponent(activeStep, props)}
+        </Grid>
+      </Stepper>
+    </Stack>
   );
 };
 

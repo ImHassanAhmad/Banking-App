@@ -60,7 +60,7 @@ export interface AccountError {
   traceId: string;
 }
 
-interface FieldErrors {
+export interface FieldErrors {
   errors: FieldErrorDto[];
 }
 
@@ -226,4 +226,9 @@ export interface AssetLegalDocumentsRequestDto {
   financialModel: File;
   businessPlan: File;
   valuationReport: File;
+}
+
+export enum onBoardType {
+  Issuer = 'issuer',
+  Investor = 'investor'
 }

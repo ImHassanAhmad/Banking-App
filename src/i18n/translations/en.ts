@@ -321,7 +321,7 @@ const en: LanguageResource = {
     continue: 'Continue'
   },
   address: {
-    title: 'Personal Information',
+    title: 'Address',
     postal_code: 'Postal Code',
     city: 'City',
     street: 'Street',
@@ -339,7 +339,7 @@ const en: LanguageResource = {
     visa_card_policy: 'VISA Card Terms & Conditions',
     prices_limits: 'Prices & Limits',
     select_all: 'Select All',
-    confirm: 'Confirm'
+    continue: 'Continue'
   }
 };
 

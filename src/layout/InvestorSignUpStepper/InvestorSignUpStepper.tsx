@@ -1,59 +1,74 @@
-import { Stepper } from '@mui/material';
-import { type FC, type ReactNode } from 'react';
-
-import CountrySelect from '@app/pages/CountrySelect';
-import SignUp from '@app/pages/RegisterEmail';
+import { Stack, Stepper, Grid } from '@mui/material';
+import { type FC, type ReactNode, useMemo } from 'react';
+import PersonalInformation from '@app/pages/PersonalInformation';
+import RegisterEmail from '@app/pages/RegisterEmail';
+import { useNavigate } from 'react-router-dom';
 import Password from '@app/pages/Password';
+import Address from '@app/pages/Address';
 import PhoneNumber from '@app/pages/PhoneNumber';
-import MobileCodeVerification from '@app/pages/MobileCodeVerification';
+import IncomeRange from '@app/pages/IncomeRange';
+import QuestionsList from '@app/pages/QuestionsList';
+import UploadDocument from '@app/pages/UploadDocuments';
 import { InvestorSignUpFlowSteps, InvestorSignUpFlowStepsIndices } from './types';
-import AboutServices from '@app/pages/AboutServices';
-import RegisterEmailCodeVerification from '@app/pages/RegisterEmailCodeVerification';
 import {
   type InvestorSignUpStepperContextProps,
   useInvestorSignUpStepper
 } from '@app/context/InvestorSignUpStepperContext';
+import BackButton from '@app/components/BackButton';
 
 const investorFlowComponent = (
   activeStep: InvestorSignUpFlowSteps,
   props: InvestorSignUpStepperContextProps
 ): ReactNode => {
   switch (activeStep) {
-    case InvestorSignUpFlowSteps.Country:
-      return <CountrySelect {...props} />;
+    case InvestorSignUpFlowSteps.NameAndDateOfBirth:
+      return <PersonalInformation {...props} />;
+    case InvestorSignUpFlowSteps.Address:
+      return <Address {...props} />;
     case InvestorSignUpFlowSteps.Email:
-      return <SignUp {...props} />;
+      return <RegisterEmail {...props} />;
     case InvestorSignUpFlowSteps.Mobile:
       return <PhoneNumber {...props} />;
-    case InvestorSignUpFlowSteps.AboutOurServices:
-      return <AboutServices {...props} />;
+    case InvestorSignUpFlowSteps.IncomeRange:
+      return <IncomeRange {...props} />;
+    case InvestorSignUpFlowSteps.Questionaire:
+      return <QuestionsList {...props} />;
+    case InvestorSignUpFlowSteps.UploadDocument:
+      return <UploadDocument {...props} />;
     case InvestorSignUpFlowSteps.CreatePassword:
       return <Password {...props} />;
-    case InvestorSignUpFlowSteps.EmailVerify:
-      return <RegisterEmailCodeVerification {...props} />;
-    case InvestorSignUpFlowSteps.MobileVerify:
-      return <MobileCodeVerification {...props} />;
-
     default:
       return <></>;
   }
 };
 
 const IssuerSignUpStepper: FC = () => {
+  const navigate = useNavigate();
   const props = useInvestorSignUpStepper();
-  const { activeStep } = props;
+  const { activeStep, goBack } = props;
+
+  const activeStepIndex = useMemo(() => InvestorSignUpFlowStepsIndices[activeStep], [activeStep]);
 
   return (
-    <Stepper
-      activeStep={InvestorSignUpFlowStepsIndices[activeStep]}
-      sx={{
-        alignItems: 'flex-start',
-        '&.MuiStepper-root': {
-          alignItems: 'flex-start'
-        }
-      }}>
-      {investorFlowComponent(activeStep, props)}
-    </Stepper>
+    <Stack>
+      <BackButton
+        onClick={() => {
+          activeStepIndex ? goBack(activeStepIndex - 1) : navigate(-1);
+        }}
+      />
+      <Stepper
+        activeStep={activeStepIndex}
+        sx={{
+          alignItems: 'flex-start',
+          '&.MuiStepper-root': {
+            alignItems: 'flex-start'
+          }
+        }}>
+        <Grid item lg={8} md={10} sm={10} xs={12}>
+          {investorFlowComponent(activeStep, props)}
+        </Grid>
+      </Stepper>
+    </Stack>
   );
 };
 

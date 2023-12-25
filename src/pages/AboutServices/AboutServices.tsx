@@ -2,7 +2,6 @@
 import React, { useState, useCallback } from 'react';
 import { Button, Stack } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import BackButton from '@app/components/BackButton';
 import Heading from '@app/components/Heading';
 import { RouteNames } from '@app/constants/routes';
 import TermItem from './components/TermItem';
@@ -59,19 +58,13 @@ const AboutServices: React.FC<WithSignUpStepperContextProps> = ({ updateActiveSt
   }, []);
 
   return (
-    <Stack sx={{ width: '436px' }}>
-      <BackButton
-        onClick={() => {
-          // updateActiveStep(IssuerSignUpFlowSteps.Mobile);
-        }}
-      />
+    <Stack sx={{ width: '100%' }}>
       <Stack mt={4}>
         <Heading
           title={t(`${aboutOurServicesNamespace}.title`)}
           subTitle={t(`${aboutOurServicesNamespace}.subtitle`)}
         />
       </Stack>
-
       <Stack
         mt={1}
         gap={3}

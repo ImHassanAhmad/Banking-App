@@ -19,7 +19,8 @@ import {
   type RegisterUserResponseDto,
   type RegisterUserRequestDto,
   type AuthFetchQueryError,
-  AuthErrorLevel
+  AuthErrorLevel,
+  onBoardType
 } from '@app/common/types';
 import { useAuthError } from './AuthErrorContext';
 import { type IErrorMessage } from 'types';
@@ -32,11 +33,6 @@ export interface RegisterUserCallBackParams {
   onError?: (error: AuthFetchQueryError) => void;
 }
 
-export enum onBoardType {
-  Issuer = 'issuer',
-  Investor = 'investor'
-}
-
 export interface InvestorSignUpStepperContextProps {
   activeStep: InvestorSignUpFlowSteps;
   userId: string;
@@ -47,10 +43,11 @@ export interface InvestorSignUpStepperContextProps {
   registerUser: (params: RegisterUserCallBackParams) => void;
   setUserId: Dispatch<SetStateAction<string>>;
   updateActiveStep: () => void;
+  goBack: (backStep: number) => void;
 }
 
 const InvestorSignUpStepperContext = createContext<InvestorSignUpStepperContextProps>({
-  activeStep: InvestorSignUpFlowSteps.Country,
+  activeStep: InvestorSignUpFlowSteps.NameAndDateOfBirth,
   userId: '',
   error: {},
   isLoading: false,
@@ -60,7 +57,7 @@ const InvestorSignUpStepperContext = createContext<InvestorSignUpStepperContextP
 const { Provider } = InvestorSignUpStepperContext;
 
 export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [activeStep, setActiveStep] = useState(InvestorSignUpFlowSteps.Country);
+  const [activeStep, setActiveStep] = useState(InvestorSignUpFlowSteps.NameAndDateOfBirth);
   const [userId, setUserId] = useState('');
   const { updateError, findError } = useAuthError();
   const [registerUserPayload, setRegisterUserPayload] = useState<RegisterUserRequestDto>({
@@ -92,8 +89,14 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
     ] as InvestorSignUpFlowSteps;
 
     updateError(nextActiveStep, undefined);
-
     setActiveStep(nextActiveStep);
+  };
+
+  const goBack = (backStep: number): void => {
+    updateError(backStep, undefined);
+    setActiveStep(
+      indexToEnumKeyRecord(InvestorSignUpFlowSteps)[backStep] as InvestorSignUpFlowSteps
+    );
   };
 
   const registerUser = ({
@@ -101,13 +104,9 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
     onSuccess,
     onError = () => {}
   }: RegisterUserCallBackParams): void => {
-    console.log('registeruserpayload', registerUserPayload);
     const registerFormData = { ...registerUserPayload, ...payload };
     let apiPayload: RegisterUserRequestDto = { dryRun: true };
     switch (activeStep) {
-      case InvestorSignUpFlowSteps.Country:
-        apiPayload.countryOfIncorporation = registerFormData.countryOfIncorporation;
-        break;
       case InvestorSignUpFlowSteps.Email:
         apiPayload.email = registerFormData.email;
         break;
@@ -115,19 +114,13 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
         apiPayload.phoneNumberCountryCode = registerFormData.phoneNumberCountryCode;
         apiPayload.shortenPhoneNumber = registerFormData.shortenPhoneNumber;
         break;
-      case InvestorSignUpFlowSteps.AboutOurServices:
-        apiPayload.visaTncAgreed = registerFormData.visaTncAgreed;
-        apiPayload.wittyTncAgreed = registerFormData.wittyTncAgreed;
-        break;
       case InvestorSignUpFlowSteps.CreatePassword:
         apiPayload = { ...registerFormData, dryRun: false };
         break;
-      case InvestorSignUpFlowSteps.EmailVerify:
-      case InvestorSignUpFlowSteps.MobileVerify:
       default:
     }
 
-    setRegisterUserPayload({ ...registerUserPayload, ...payload, ...apiPayload });
+    setRegisterUserPayload({ ...registerUserPayload, ...payload });
     const userPayload = {
       vis: true,
       visaTncAgreed: true,
@@ -135,11 +128,11 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
       companyName: 'Temoral Company Name',
       registrationNumber: Date.now().toString().slice(0, 10)
     };
-    register({ ...registerUserPayload, ...userPayload, ...payload })
+    register({ ...apiPayload, ...userPayload })
       .unwrap()
       .then((response: RegisterUserResponseDto) => {
         onSuccess(response);
-        // setRegisterUserPayload({ ...registerUserPayload, ...userPayload, ...apiPayload });
+        setRegisterUserPayload({ dryRun: true, ...userPayload });
       })
       .catch((error: AuthFetchQueryError) => {
         handleError(error, onSuccess, onError);
@@ -157,7 +150,8 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
     onBoardType: onBoardType.Investor,
     updateActiveStep,
     setUserId,
-    registerUser
+    registerUser,
+    goBack
   };
   const dispatch = useAppDispatch();
   const { data } = useOnBoardingDictionaryApiQuery();

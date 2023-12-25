@@ -1,7 +1,7 @@
 import { http, type HttpHandler, HttpResponse, type PathParams, type StrictResponse } from 'msw';
 import constants from '../constants';
 import { type VerifyLoginOTPRequestDto } from 'types';
-import { DatabaseService, Entity } from '../../utils/DatabaseService';
+import { userService } from '../database/service';
 import * as yup from 'yup';
 import { type RegisterUserResponseDto, type RegisterUserRequestDto } from '@app/common/types';
 import { type AuthingDictionaryResponseType } from '@app/store/api/onboarding';
@@ -9,12 +9,9 @@ import {
   type MockVerifySignUpOtpResponse,
   type MockRegisterUserResponse
 } from '../constants/onboarding.const';
-import withErrorHandler, { ApiError } from '../middleware/withErrorHandler';
+import withErrorHandler from '../middleware/withErrorHandler';
 import { type ResponseResolverInfo } from 'msw/lib/core/handlers/RequestHandler';
 import { type HttpRequestResolverExtras } from 'msw/lib/core/handlers/HttpHandler';
-import { SOMETHING_WENT_WRONG } from '../constants/common.const';
-
-const dbhandler = new DatabaseService<Entity, any>(Entity.Issuer);
 
 const registerUserScheme: yup.ObjectSchema<RegisterUserRequestDto> = yup.object({
   countryOfIncorporation: yup.mixed(),
@@ -64,34 +61,32 @@ const registerUserHandler: HttpHandler = http.post<
     >): Promise<StrictResponse<MockRegisterUserResponse>> => {
       const registerUserPayload: any = await request.json();
       registerUserScheme.validateSync(registerUserPayload);
-      const {
-        captchaToken,
-        email,
-        countryOfIncorporation,
-        password,
-        phoneNumberCountryCode,
-        registrationNumber,
-        shortenPhoneNumber
-      } = registerUserPayload;
+      // const {
+      //   captchaToken,
+      //   email,
+      //   countryOfIncorporation,
+      //   password,
+      //   phoneNumberCountryCode,
+      //   registrationNumber,
+      //   shortenPhoneNumber
+      // } = registerUserPayload;
 
-      const user: RegisterUserResponseDto = await dbhandler.add({
-        userId: Date.now().toString(),
-        captchaToken,
-        email,
-        password,
-        countryOfIncorporation,
-        phoneNumberCountryCode,
-        registrationNumber,
-        shortenPhoneNumber,
-        verficationToken: '444444',
-        otpId: '1ee45ddf-957a-4011-a90c-8cad4b415f98'
+      // const user: RegisterUserResponseDto = await userService.add({
+      //   userId: Date.now().toString(),
+      //   captchaToken,
+      //   email,
+      //   password,
+      //   countryOfIncorporation,
+      //   phoneNumberCountryCode,
+      //   registrationNumber,
+      //   shortenPhoneNumber,
+      //   verficationToken: '444444',
+      //   otpId: '1ee45ddf-957a-4011-a90c-8cad4b415f98'
+      // });
+      // if (user)
+      return HttpResponse.json<RegisterUserResponseDto>({} as any, {
+        status: 200
       });
-      if (user)
-        return HttpResponse.json<RegisterUserResponseDto>(user, {
-          status: 200
-        });
-
-      throw new ApiError(SOMETHING_WENT_WRONG, 500);
     }
   )
 );
@@ -113,9 +108,9 @@ const verifyEmailHandler: HttpHandler = http.post<
       otpCodeSceheme.validateSync(verifyLoginPayload);
       const { otpCode } = verifyLoginPayload;
 
-      const user = await dbhandler.getAll({ verficationToken: otpCode });
-      if (user?.length) {
-        return HttpResponse.json(user[0], {
+      const user = await userService.getById(otpCode);
+      if (user) {
+        return HttpResponse.json(null, {
           status: 200
         });
       }
@@ -139,9 +134,9 @@ const verifyPhoneHandler: HttpHandler = http.post<
     >): Promise<StrictResponse<MockVerifySignUpOtpResponse>> => {
       const verifyLoginPayload: VerifyLoginOTPRequestDto = await request.json();
       otpCodeSceheme.validateSync(verifyLoginPayload);
-      const { otpCode } = verifyLoginPayload;
+      const { otpId } = verifyLoginPayload;
 
-      const user: any = await dbhandler.getAll({ verficationToken: otpCode });
+      const user: any = await userService.getById(otpId);
       if (user?.length) {
         return HttpResponse.json(user[0], {
           status: 200

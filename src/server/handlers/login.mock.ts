@@ -6,7 +6,7 @@ import {
   type ResendLoginOtpRequestDto,
   type ResendLoginOtpResponseDto
 } from 'types';
-import { DatabaseService, Entity } from '../../utils/DatabaseService';
+import { userService } from '../database/service';
 import * as yup from 'yup';
 import withErrorHandler, { ApiError } from '../middleware/withErrorHandler';
 import {
@@ -19,8 +19,6 @@ import { type ResponseResolverInfo } from 'msw/lib/core/handlers/RequestHandler'
 
 let INCORRECT_LOGINS_COUNT: number = 0;
 
-const dbhandler = new DatabaseService<Entity, LoginRequest>(Entity.Issuer);
-
 const loginScheme: yup.ObjectSchema<LoginRequest> = yup.object({
   email: yup.string().email().required(),
   password: yup.string().min(13).required(),
@@ -32,7 +30,10 @@ const otpIdScheme: yup.ObjectSchema<ResendLoginOtpRequestDto> = yup.object({
 });
 
 const otpCodeSceheme: yup.ObjectSchema<VerifyLoginOTPRequestDto> = yup.object({
-  otpId: yup.string().required(),
+  otpId: yup
+    .string()
+    .required()
+    .matches(/444444/g),
   otpCode: yup.string().required()
 });
 
@@ -47,8 +48,8 @@ const loginHandler: HttpHandler = http.post<PathParams, LoginRequest, MockLoginR
       const loginRequestPayload: LoginRequest = await request.json();
       loginScheme.validateSync(loginRequestPayload);
 
-      const { email, password } = loginRequestPayload;
-      const user: any = await dbhandler.getAll({ email, password });
+      const { email } = loginRequestPayload;
+      const user: any = await userService.add({ id: email, email });
 
       if (user?.length) {
         const { otpId }: VerifyLoginOTPRequestDto = user[0];
@@ -89,11 +90,11 @@ const verifyLoginHandler: HttpHandler = http.post<
       const verifyLoginRequestPayload: VerifyLoginOTPRequestDto = await request.json();
       otpCodeSceheme.validateSync(verifyLoginRequestPayload);
 
-      const { otpCode } = verifyLoginRequestPayload;
+      const { otpId } = verifyLoginRequestPayload;
 
-      const user: any = await dbhandler.getAll({ verficationToken: otpCode });
+      const user: any = await userService.getById(otpId);
       if (user?.length) {
-        return HttpResponse.json(user[0], {
+        return HttpResponse.json(user, {
           status: 200
         });
       }

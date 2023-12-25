@@ -42,6 +42,7 @@
     "currency-codes": "^2.1.0",
     "date-fns": "^2.30.0",
     "dayjs": "^1.11.10",
+    "dexie": "^3.2.4",
     "dotenv": "^16.3.1",
     "dotenv-expand": "^5.1.0",
     "env-cmd": "^10.1.0",
@@ -106,7 +107,6 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
-    "json-server": "json-server --watch src/server/db.json --port 3001 --cors",
     "start:dev": "env-cmd -f ./.env.development yarn start",
     "start:stage": "env-cmd -f ./.env.stage yarn start",
     "start:uat": "env-cmd -f ./.env.uat yarn start",
@@ -164,7 +164,6 @@
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-react": "^7.33.2",
-    "json-server": "^0.17.4",
     "msw": "^2.0.10",
     "opn": "^6.0.0",
     "pre-commit": "^1.2.2",
@@ -236,8 +235,5 @@
     "presets": [
       "react-app"
     ]
-  },
-  "msw": {
-    "workerDirectory": "public"
   }
 }
