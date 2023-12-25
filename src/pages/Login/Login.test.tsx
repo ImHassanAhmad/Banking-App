@@ -11,12 +11,14 @@ import { AuthErrorProvider } from '@app/context/AuthErrorContext';
 import type React from 'react';
 import { type JSX } from 'react/jsx-runtime';
 import {
-  INCORRECT_LOGIN_DATA_RESPONSE,
   MOCK_CAPTCHA_VALUE,
   MOCK_LOGIN_EMAIL,
-  MOCK_LOGIN_PASSWORD,
-  TOO_MANY_INVALID_LOGIN_ATTEMPTS_RESPONSE
+  MOCK_LOGIN_PASSWORD
 } from '@app/store/api/mock/constants/onboarding.const';
+import {
+  INCORRECT_LOGIN_DATA,
+  TOO_MANY_INVALID_LOGIN_ATTEMPTS
+} from '@app/store/api/mock/constants/login.const';
 
 const mockLanguage = en;
 const mockRoutes = RouteNames;
@@ -142,9 +144,7 @@ describe('Login', () => {
     });
 
     await waitFor(() => {
-      expect(
-        screen.getByText(INCORRECT_LOGIN_DATA_RESPONSE.error.errorMessage)
-      ).toBeInTheDocument();
+      expect(screen.getByText(INCORRECT_LOGIN_DATA)).toBeInTheDocument();
     });
   });
 
@@ -169,9 +169,7 @@ describe('Login', () => {
     }
 
     await waitFor(() => {
-      expect(
-        screen.getByText(TOO_MANY_INVALID_LOGIN_ATTEMPTS_RESPONSE.error.errorMessage)
-      ).toBeInTheDocument();
+      expect(screen.getByText(TOO_MANY_INVALID_LOGIN_ATTEMPTS)).toBeInTheDocument();
     });
   });
 

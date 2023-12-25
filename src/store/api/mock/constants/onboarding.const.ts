@@ -1,26 +1,32 @@
 import {
-  type ErrorMessage,
+  type OnboardingError,
   type AccountError,
+  type ErrorMessage,
   type RegisterUserResponseDto
 } from '@app/common/types';
 import { type VerifyLoginOTPResponseDto } from 'types';
-import { type AuthingDictionaryResponseType } from '../../onboarding';
+import { type ApiError } from '../middleware/withErrorHandler';
+import { type FieldErrorsDto } from '@app/pages/MobileCodeVerification/types';
 
 export const MOCK_LOGIN_EMAIL = 'test@witty.tech';
 export const MOCK_LOGIN_PASSWORD = 'Pass123456789@';
 export const MOCK_CAPTCHA_VALUE = 'mock-captcha';
-export const SYSTEM_ERROR_RESPONSE: AccountError = {
+export const SYSTEM_ERROR_RESPONSE = (error: Error): AccountError => ({
   code: '500',
   detail: 'Something went wrong.',
-  error: 'Something went wrong.',
-  message: 'Something went wrong.',
+  error: error.message,
+  message: error.message,
   path: 'Something went wrong.',
   status: 500,
   timestamp: new Date().toString(),
   traceId: Date.now().toString()
+});
+
+export const MOCK_USER_REGISTER_RESPONSE: RegisterUserResponseDto = {
+  userId: 'HHDHSDS-33DD998D-433343SFDFF3'
 };
 
-export const DICTIONARY_COUNTRY_OF_INCORPORATION_RESPONSE: AuthingDictionaryResponseType = {
+export const DICTIONARY_COUNTRY_OF_INCORPORATION_RESPONSE = {
   supportedCountriesOfIncorporation: [
     'AT',
     'BE',
@@ -112,14 +118,9 @@ export const LOGIN_RESPONSE: VerifyLoginOTPResponseDto = {
   otpId: '2434-3434-433343SFDFF3'
 };
 
-export const REGISTER_USER_RESPONSE: RegisterUserResponseDto = {
-  userId: '2434-3434-433343SFDFF3'
-};
+export const ERROR_MESSAGE_RESPONSE = ({ message, status }: ApiError): OnboardingError => ({
+  error: { errorMessage: message }
+});
 
-export const INCORRECT_LOGIN_DATA_RESPONSE: ErrorMessage = {
-  error: { errorMessage: 'Incorrect login data.' }
-};
-
-export const TOO_MANY_INVALID_LOGIN_ATTEMPTS_RESPONSE: ErrorMessage = {
-  error: { errorMessage: 'Too many invalid login attempts, try again after five minutes.' }
-};
+export type MockRegisterUserResponse = RegisterUserResponseDto | ErrorMessage | AccountError;
+export type MockVerifySignUpOtpResponse = null | FieldErrorsDto;

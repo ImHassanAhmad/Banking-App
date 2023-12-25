@@ -107,8 +107,10 @@ export class AuthFieldErrors implements AuthApiError {
   }
 }
 
+export type OnboardingError = AccountError | FieldErrors | ErrorMessage | string;
+
 export interface AuthApiError {
-  data?: AccountError | FieldErrors | ErrorMessage | string;
+  data?: OnboardingError;
   error?: string;
   status: number | string;
 }

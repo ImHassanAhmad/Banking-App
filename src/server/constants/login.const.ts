@@ -31,12 +31,8 @@ export const NEW_OTP_ID_RESPONSE: ResendLoginOtpResponseDto = {
 export const TOO_MANY_INVALID_LOGIN_ATTEMPTS: string =
   'Too many invalid login attempts, try again after five minutes.';
 
-export const INCORRECT_LOGIN_DATA: string = 'Incorrect login data.';
+export const INCORRECT_LOGIN_RESPONSE: string = 'Incorrect login data.';
 
-export type MockLoginResponse =
-  | VerifyLoginOTPResponseDto
-  | ErrorMessage
-  | AccountError
-  | FieldErrorsDto;
+export type MockLoginResponse = VerifyLoginOTPResponseDto | ErrorMessage | AccountError;
 export type MockVerifyLoginOtpResponse = RefreshSessionDto | FieldErrorsDto;
 export type MockResendOtpCodeResponse = ResendLoginOtpResponseDto | FieldErrorsDto;
