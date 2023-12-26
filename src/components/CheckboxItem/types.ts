@@ -17,6 +17,7 @@ export interface CheckboxItemProps extends CheckboxLabelProps {
   optional?: boolean;
   checked: boolean;
   onChange: () => void;
+  isDisabled?: boolean;
 }
 
 export type SetupResult = RenderResult & {

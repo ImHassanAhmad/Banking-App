@@ -340,6 +340,21 @@ const en: LanguageResource = {
     prices_limits: 'Prices & Limits',
     select_all: 'Select All',
     confirm: 'Confirm'
+  },
+  'create-asset-token': {
+    create_new_asset: 'Create new Asset',
+    continue: 'Continue',
+    token_name: 'Token Name (On Block Chain)',
+    token_symbol: 'Token Symbol (On Block Chain)',
+    total_supply: 'Total Supply (Mint)',
+    decimal_number: 'Number of Decimals Allowed',
+    token_config_pausable: 'pause',
+    token_config_mint: 'mint',
+    token_config_burn: 'burn',
+    token_config_capped: 'capped',
+    buy_token: 'Token Buy Now Price',
+    currency: 'Currency',
+    upload_logo: 'Upload Logo'
   }
 };
 

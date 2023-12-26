@@ -6,14 +6,26 @@ import CustomChecbox from '@app/components/CustomChecbox';
 
 const labelStyle = {
   '& .MuiTypography-root': {
-    fontSize: '16px'
+    fontSize: '16px',
+    opacity: '1 !important'
   },
-  gap: '1rem'
+  gap: '1rem',
+  '& .Mui-disabled': {
+    color: 'black !important'
+  }
 };
 
-const checkboxStyle = {
-  '& .MuiSvgIcon-root': { fontSize: 22 }
-};
+const checkboxStyle = (disabled: boolean | undefined): any => ({
+  '& .MuiSvgIcon-root': {
+    fontSize: 22,
+    opacity: disabled ? 0.5 : 1 // Adjust opacity for disabled or enabled states
+  }
+  // '&.Mui-disabled': {
+  //   '& svg': {
+  //     opacity: disabled ? 0.5 : 1 // Adjust opacity for disabled or enabled states
+  //   }
+  // }
+});
 
 const CheckIcon: React.FC<CheckIconProps> = ({ icon }) => {
   return (
@@ -32,17 +44,19 @@ const CheckboxItem: React.FC<CheckboxItemProps> = ({
   link,
   linkText,
   optional = false,
-  onChange
+  onChange,
+  isDisabled
 }) => {
   return (
     <FormControlLabel
       control={
         <Checkbox
-          sx={checkboxStyle}
+          sx={checkboxStyle(isDisabled)}
           checked={checked}
           onChange={onChange}
           icon={<CheckIcon icon={UNCHECHK_ICON} />}
           checkedIcon={<CustomChecbox />}
+          disabled={isDisabled} // Setting the disabled state
         />
       }
       sx={labelStyle}

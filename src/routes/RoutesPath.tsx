@@ -3,6 +3,7 @@ import type { IRouteConfig } from './types';
 import { RouteNames } from '@app/constants/routes';
 import UploadDocuments from '@app/pages/UploadDocuments';
 import IncomeRange from '@app/pages/IncomeRange';
+import CreateAssetToken from '@app/pages/CreateAssetToken/CreateAssetToken';
 // import OnboardingUserType from '@app/pages/OnboardingUserType';
 
 const Welcome = lazy(async () => await import('@app/pages/Welcome'));
@@ -35,7 +36,8 @@ export const publicRoutes: IRouteConfig[] = [
   { path: RouteNames.INCOME_RANGE, element: IncomeRange },
   { path: RouteNames.PERSONAL_INFORMATION, element: PersonalInformation },
   { path: RouteNames.ADDRESS, element: Address },
-  { path: RouteNames.QUESTIONS_LIST, element: QuestionsList }
+  { path: RouteNames.QUESTIONS_LIST, element: QuestionsList },
+  { path: RouteNames.CREATE_ASSET_TOKEN, element: CreateAssetToken }
 ];
 
 export const privateRoutes: IRouteConfig[] = [];
