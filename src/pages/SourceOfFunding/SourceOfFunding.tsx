@@ -2,10 +2,7 @@ import React, { useState } from 'react';
 import { Button, Stack } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import FundingSourceItem from './components/FundingSourceItem';
-// import { useSignUpStepper } from '@app/context/SignupStepperContext';
-// import { SignUpFlowSteps } from '@app/layout/SignUpStepper/types';
 import { RouteNames } from '@app/constants/routes';
-import BackButton from '@app/components/BackButton';
 import Heading from '@app/components/Heading';
 import { type CheckList } from './types';
 import { FUNDING_SOURCES } from './constants';
@@ -37,11 +34,6 @@ const SourceOfFunding: React.FC = () => {
 
   return (
     <Stack sx={{ width: '552px' }}>
-      <BackButton
-        onClick={() => {
-          // updateActiveStep(SignUpFlowSteps.Mobile);
-        }}
-      />
       <Stack mt={4}>
         <Heading
           title={t(`${sourceOfFundingNamespace}.title`)}

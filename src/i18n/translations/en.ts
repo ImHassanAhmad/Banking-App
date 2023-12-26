@@ -288,6 +288,7 @@ const en: LanguageResource = {
     registration_number: 'Registration number',
     company_name: 'Company name',
     date_of_register: 'Date of register',
+    trading_name: 'Trading Name',
     continue: 'Continue'
   },
   'business-description': {
@@ -340,7 +341,8 @@ const en: LanguageResource = {
     prices_limits: 'Prices & Limits',
     select_all: 'Select All',
     continue: 'Continue'
-  }
+  },
+  'legal-representative': {}
 };
 
 export default en;

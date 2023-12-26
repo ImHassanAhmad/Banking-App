@@ -5,7 +5,6 @@ import { RouteNames } from '@app/constants/routes';
 import { useTranslation } from 'react-i18next';
 import PrivacyTerms from '@app/components/PrivacyTerms';
 import { NotSupportedModal } from '@app/components/Modals';
-import { useAppSelector } from '@app/store/hooks';
 import { type WithSignUpStepperContextProps, type CountrySelectOption } from '@app/common/types';
 import { NOT_SUPPORTED_MODES } from '@app/constants';
 import CountrySelector from '@app/components/CountrySelector';
@@ -32,12 +31,9 @@ const CountrySelect: FC<WithSignUpStepperContextProps> = ({
       : undefined
   );
 
-  const {
-    supportedCountries: { supportedCountriesOfIncorporation }
-  } = useAppSelector((state) => state.userData);
-
   const submit = (): void => {
-    const isExist: boolean = supportedCountriesOfIncorporation.includes(country?.iso2) || true;
+    const isExist: boolean = true;
+    // supportedCountriesOfIncorporation.includes(country?.iso2);
     if (!isExist) {
       setOpen(true);
       return;

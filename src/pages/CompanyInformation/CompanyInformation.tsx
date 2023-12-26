@@ -17,6 +17,7 @@ interface IForm {
   companyName: string;
   registrationNumber: string;
   dateOfRegister: string;
+  tradingName: string;
 }
 
 const translationNamespace = RouteNames.COMPANY_INFORMATION;
@@ -28,7 +29,6 @@ const CompanyInformation: FC<WithSignUpStepperContextProps> = ({
   userPayload
 }) => {
   const { t } = useTranslation();
-  // const [open, setOpen] = useState<boolean>(false);
   const [fieldErrors] = useState<FieldError>();
 
   const schema = yup
@@ -36,7 +36,8 @@ const CompanyInformation: FC<WithSignUpStepperContextProps> = ({
     .shape({
       companyName: yup.string().required(),
       registrationNumber: yup.string().required(),
-      dateOfRegister: yup.string().required()
+      dateOfRegister: yup.string().required(),
+      tradingName: yup.string().required()
     })
     .required();
 
@@ -47,9 +48,10 @@ const CompanyInformation: FC<WithSignUpStepperContextProps> = ({
     getValues
   } = useForm<IForm>({
     defaultValues: {
-      companyName: userPayload.companyName ?? '',
+      companyName: userPayload.companyName,
       registrationNumber: userPayload.registrationNumber,
-      dateOfRegister: userPayload.dateOfRegister
+      dateOfRegister: userPayload.dateOfRegister,
+      tradingName: userPayload.tradingName
     },
     mode: 'onBlur',
     resolver: yupResolver(schema)
@@ -61,6 +63,7 @@ const CompanyInformation: FC<WithSignUpStepperContextProps> = ({
         companyName: getValues('companyName'),
         registrationNumber: getValues('registrationNumber'),
         dateOfRegister: getValues('dateOfRegister'),
+        tradingName: getValues('tradingName'),
         dryRun: true
       },
       onSuccess: () => {
@@ -129,6 +132,14 @@ const CompanyInformation: FC<WithSignUpStepperContextProps> = ({
                 name="dateOfRegister"
                 label={t(`${translationNamespace}.date_of_register`)}
                 errorValue={errors?.dateOfRegister ?? fieldErrors}
+              />
+
+              <Textfield
+                name="tradingName"
+                label={t(`${translationNamespace}.trading_name`)}
+                register={register}
+                errorValue={errors?.registrationNumber ?? fieldErrors}
+                fullWidth
               />
             </Stack>
 

@@ -24,5 +24,6 @@ export const RouteNames = {
   INCOME_RANGE: 'income-range',
   PERSONAL_INFORMATION: 'personal-information',
   ADDRESS: 'address',
-  QUESTIONS_LIST: 'questions-list'
+  QUESTIONS_LIST: 'questions-list',
+  LEGAL_REPRESENTATIVE: 'legal-representative'
 } as const;

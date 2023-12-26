@@ -2,9 +2,10 @@ import { type OnboardingError, type AccountError } from '@app/common/types';
 import { HttpResponse, type PathParams } from 'msw';
 import { type HttpRequestResolverExtras } from 'msw/lib/core/handlers/HttpHandler';
 import { type ResponseResolverInfo } from 'msw/lib/core/handlers/RequestHandler';
-import { ERROR_MESSAGE_RESPONSE, SYSTEM_ERROR_RESPONSE } from '../constants/onboarding.const';
+import { ERROR_MESSAGE_RESPONSE } from '../constants/onboarding.const';
 import { FIELD_ERROR_RESPONSE } from '../constants/login.const';
 import { ValidationError } from 'yup';
+import { SYSTEM_ERROR_RESPONSE } from '../constants/common.const';
 
 export class ApiError extends ValidationError {
   status: number;

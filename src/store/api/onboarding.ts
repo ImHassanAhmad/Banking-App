@@ -27,7 +27,7 @@ export type AuthingDictionaryResponseType = SupportedCountriesPhone &
 export const onBoardingApi = createApi({
   reducerPath: 'onBoarding',
   baseQuery: smeBaseQuery,
-  tagTypes: ['AuthingDictionary', 'registerUser'],
+  tagTypes: ['AuthingDictionary', 'registerIssuer'],
   endpoints: (builder) => ({
     onBoardingDictionaryApi: builder.query<AuthingDictionaryResponseType, void>({
       query: () => ({
@@ -41,7 +41,7 @@ export const onBoardingApi = createApi({
     }),
     registerUser: builder.mutation<RegisterUserResponseDto, RegisterUserRequestDto>({
       query: (body) => ({
-        url: '/v1/sme/onboarding/register-user',
+        url: '/v1/sme/onboarding/register-issuer',
         method: 'POST',
         body
       }),
