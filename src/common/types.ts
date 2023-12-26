@@ -1,5 +1,7 @@
 import { type InvestorSignUpStepperContextProps } from '@app/context/InvestorSignUpStepperContext';
 import { type IssuerSignUpStepperContextProps } from '@app/context/IssuerSignUpStepperContext';
+import { type BusinessCategoryType } from '@app/pages/BusinessCategory/types';
+import { type BusinessTypes } from '@app/pages/BusinessType/types';
 import { type FieldErrorDto } from '@app/pages/MobileCodeVerification//types';
 import { type ICountryData, type TCountryCode } from 'countries-list';
 import { type CaptchaTokenRequest } from 'types';
@@ -40,6 +42,10 @@ export interface RegisterUserRequestDto extends CaptchaTokenRequest {
   companyName?: string;
   registrationNumber?: string;
   dateOfRegister?: string;
+  tradingName?: string;
+  isLegalRepresentative?: boolean;
+  businessType?: BusinessTypes;
+  businessCategory?: BusinessCategoryType;
   dryRun: boolean;
 }
 

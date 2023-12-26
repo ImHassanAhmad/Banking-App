@@ -32,7 +32,8 @@ const lt: LanguageResource = {
   address: {},
   'questions-list': {},
   'register-investor': {},
-  'register-issuer': {}
+  'register-issuer': {},
+  'legal-representative': {}
 };
 
 export default lt;

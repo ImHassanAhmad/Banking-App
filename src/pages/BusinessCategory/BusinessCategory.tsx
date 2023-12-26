@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Heading from '@app/components/Heading';
 import OnboardingList from '@app/components/OnboardingList';
 import { type Category } from 'types';
-import { BUSINESS_CATEGORY } from '@app/constants/business-categories';
+import { BUSINESS_CATEGORY } from '@app/constants/issuer-onboarding';
 import { type SignUpStepperContextProps } from '@app/common/types';
 
 const BusinessCategory: React.FC<SignUpStepperContextProps> = ({
@@ -20,7 +20,8 @@ const BusinessCategory: React.FC<SignUpStepperContextProps> = ({
         subtitle=""
         itemList={categories.map((cat) => ({
           topic: cat.topic,
-          details: ''
+          details: '',
+          id: cat.id
         }))}
         onItemClick={(category: string) => {
           // Set the selected category in state
@@ -47,7 +48,8 @@ const BusinessCategory: React.FC<SignUpStepperContextProps> = ({
       title={currentCategory.topic}
       subtitle=""
       itemList={currentCategory.subcategories.map((subcategory) => ({
-        topic: subcategory.name
+        topic: subcategory.name,
+        id: subcategory.name
       }))}
       onItemClick={(selectedSubcategory: string) => {
         // Handle logic when a subcategory is selected

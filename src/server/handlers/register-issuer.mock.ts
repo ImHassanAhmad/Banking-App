@@ -10,30 +10,27 @@ import {
 // const dbhandler = new DatabaseService<UserEntity>(database.users);
 
 const userRegistrationSchema = yup.object().shape({
-  captchaToken: yup.string(),
   email: yup.string().email('must be a valid email'),
   password: yup.string().min(13, 'Password should be at least 13 chracters'),
   countryOfIncorporation: yup.string(),
   phoneNumberCountryCode: yup.string(),
+  shortenPhoneNumber: yup.string(),
   registrationNumber: yup.string(),
-  shortenPhoneNumber: yup.string()
+  captchaToken: yup.string(),
+  visaTncAgreed: yup.boolean(),
+  wittyTncAgreed: yup.boolean(),
+  isLegalRepresentative: yup.boolean(),
+  businessType: yup.string(),
+  businessCategory: yup.string(),
+  dryRun: yup.boolean()
 });
 
-const onBoardDictionaryHandler: HttpHandler = http.get('*/v1/sme/onboarding/dictionary', () => {
-  return HttpResponse.json(
-    {},
-    {
-      status: 200
-    }
-  );
-});
-
-const registerUserHandler: HttpHandler = http.post<
+const registerUIssuerHandler: HttpHandler = http.post<
   PathParams,
   RegisterUserRequestDto,
   RegisterUserRequestDto | ErrorMessage
 >(
-  '*/v1/sme/onboarding/register-user',
+  '*/v1/sme/onboarding/register-issuer',
   async ({ request }): Promise<StrictResponse<RegisterUserRequestDto | ErrorMessage>> => {
     const requestData = await request.json();
 
@@ -46,7 +43,8 @@ const registerUserHandler: HttpHandler = http.post<
         }
       );
     }
-    await userRegistrationSchema.validate(requestData, { abortEarly: false });
+    const data = await userRegistrationSchema.validate(requestData, { abortEarly: false });
+    console.log(data);
 
     // if (requestData.password) {
     //   const user = await dbhandler.add({
@@ -121,9 +119,4 @@ const verifyPhoneHandler: HttpHandler = http.post<
   }
 );
 
-export const handlers = [
-  onBoardDictionaryHandler,
-  registerUserHandler,
-  verifyEmailHandler,
-  verifyPhoneHandler
-];
+export const handlers = [registerUIssuerHandler, verifyEmailHandler, verifyPhoneHandler];

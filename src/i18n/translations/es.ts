@@ -32,7 +32,8 @@ const es: LanguageResource = {
   address: {},
   'questions-list': {},
   'register-investor': {},
-  'register-issuer': {}
+  'register-issuer': {},
+  'legal-representative': {}
 };
 
 export default es;

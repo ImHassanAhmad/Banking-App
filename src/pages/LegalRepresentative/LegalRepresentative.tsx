@@ -5,9 +5,9 @@ import { RouteNames } from '@app/constants/routes';
 import { type FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
-const transactionResource = RouteNames.BUSINESS_REGULATION;
+const transactionResource = RouteNames.LEGAL_REPRESENTATIVE;
 
-const BusinessRegulation: FC<SignUpStepperContextProps> = ({ activeStep, updateActiveStep }) => {
+const LegalRepresentative: FC<SignUpStepperContextProps> = ({ activeStep, updateActiveStep }) => {
   const { t } = useTranslation();
   return (
     <OnboardingList
@@ -19,4 +19,4 @@ const BusinessRegulation: FC<SignUpStepperContextProps> = ({ activeStep, updateA
   );
 };
 
-export default BusinessRegulation;
+export default LegalRepresentative;

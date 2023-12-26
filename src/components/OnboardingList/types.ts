@@ -6,6 +6,7 @@ export interface OnboardingListProps {
 }
 
 export interface ICategories {
+  id: string;
   topic: string;
   details?: string;
 }
