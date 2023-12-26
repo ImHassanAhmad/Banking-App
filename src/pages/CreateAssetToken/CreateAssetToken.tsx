@@ -1,36 +1,42 @@
-import { Box, Button, Grid, Stack, Step, StepLabel, Stepper } from '@mui/material';
 import React, { useState } from 'react';
+import { Box, Button, Grid, Stack, Step, StepLabel, Stepper } from '@mui/material';
 import AssetSmartContract from './components/TokenBasicInformation';
 import Heading from '@app/components/Heading';
 import BackButton from '@app/components/BackButton';
-import { steps } from './types';
-import { AssetTokenPrice } from './components/AssetTokenPrice';
-import AssetTokenConfigurations from './components/AssetTokenConfiguration';
 import { RouteNames } from '@app/constants/routes';
 import { useTranslation } from 'react-i18next';
+import AssetTokenConfigurations from './components/AssetTokenConfiguration';
+import { AssetTokenPrice } from './components/AssetTokenPrice';
+import { CreateAssetTokenFlowSteps } from './types';
+import { indexToEnumKeyRecord } from '@app/utils/enum';
 
 const assetTokenNamespace = RouteNames.CREATE_ASSET_TOKEN;
+
+const steps = Object.values(CreateAssetTokenFlowSteps);
+
+// Util function to map enum to index
 
 const CreateAssetToken: React.FC = () => {
   const { t } = useTranslation();
 
-  const [step, setStep] = useState(0);
-  const getStepContent = (step: number): any => {
+  const [activeStepIndex, setActiveStepIndex] = useState<number>(0);
+
+  const getStepContent = (step: string): any => {
     switch (step) {
-      case 0:
+      case CreateAssetTokenFlowSteps.tokenBasicInformation:
         return <AssetSmartContract />;
-      case 1:
-        return (
-          <AssetTokenConfigurations
-            defaultSelectedKeys={['token_config_pausable', 'token_config_mint']}
-          />
-        );
-      case 2:
+      case CreateAssetTokenFlowSteps.tokenConfigutration:
+        return <AssetTokenConfigurations />;
+      case CreateAssetTokenFlowSteps.tokenPrice:
         return <AssetTokenPrice />;
       default:
         return <></>;
     }
   };
+
+  const enumToIndexRecordValue = indexToEnumKeyRecord(CreateAssetTokenFlowSteps);
+  const currentStep = enumToIndexRecordValue[activeStepIndex];
+
   return (
     <Box>
       <Stack mb={3}>
@@ -38,12 +44,12 @@ const CreateAssetToken: React.FC = () => {
       </Stack>
       <BackButton
         onClick={() => {
-          if (step === 0) return;
-          setStep((prevStep) => prevStep - 1);
+          if (activeStepIndex === 0) return;
+          setActiveStepIndex((prevStep) => prevStep - 1);
         }}
       />
       <Box mt="46px">
-        <Stepper activeStep={step} sx={{ mb: 8 }}>
+        <Stepper activeStep={activeStepIndex} sx={{ mb: 8 }}>
           {steps.map((label, index) => (
             <Step key={index}>
               <StepLabel>{label}</StepLabel>
@@ -52,13 +58,15 @@ const CreateAssetToken: React.FC = () => {
         </Stepper>
       </Box>
       <Grid item xs={12} sm={10} md={8} lg={8}>
-        {getStepContent(step)}
+        {getStepContent(currentStep)}
         <Stack gap={3} direction={'row'} mt={3}>
           <Button
             sx={{ marginTop: '20px', width: '100%' }}
             type="submit"
             onClick={() => {
-              setStep((prevStep) => prevStep + 1);
+              if (activeStepIndex < steps.length - 1) {
+                setActiveStepIndex((prevStep) => prevStep + 1);
+              }
             }}>
             {t(`${assetTokenNamespace}.continue`)}
           </Button>
@@ -67,4 +75,5 @@ const CreateAssetToken: React.FC = () => {
     </Box>
   );
 };
+
 export default CreateAssetToken;

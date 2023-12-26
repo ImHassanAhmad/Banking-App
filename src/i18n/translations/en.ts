@@ -354,7 +354,10 @@ const en: LanguageResource = {
     token_config_capped: 'capped',
     buy_token: 'Token Buy Now Price',
     currency: 'Currency',
-    upload_logo: 'Upload Logo'
+    upload_logo: 'Upload Logo',
+    token_basic_info: 'Token Basic Information',
+    token_config: 'Token Configuration',
+    token_price: 'Token Price'
   }
 };
 

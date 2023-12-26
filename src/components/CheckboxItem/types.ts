@@ -1,6 +1,10 @@
 import { type RenderResult } from '@testing-library/react';
 
-export interface CheckListProps {
+export interface AllowActionItem {
+  allowAction?: boolean;
+}
+
+export interface CheckListProps extends AllowActionItem {
   checked: boolean;
   link?: string;
   optional?: boolean;

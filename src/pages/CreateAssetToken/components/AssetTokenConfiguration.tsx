@@ -4,37 +4,24 @@ import { useTranslation } from 'react-i18next';
 import CheckboxItem from '@app/components/CheckboxItem';
 import { type CheckListType } from '@app/components/CheckboxItem/types';
 import { RouteNames } from '@app/constants/routes';
-import { type InspiredQuestionsListProps } from '../types';
 
 const assetTokenNamespace = RouteNames.CREATE_ASSET_TOKEN;
 
-const AssetTokenConfigurations: React.FC<InspiredQuestionsListProps> = ({
-  defaultSelectedKeys
-}) => {
+const AssetTokenConfigurations: React.FC = () => {
   const { t } = useTranslation();
 
   const CHECK_LIST: CheckListType = {
     token_config_pausable: { checked: true, link: '#' },
     token_config_mint: { checked: true, link: '#' },
-    token_config_burn: { checked: false, link: '#' },
-    token_config_capped: { checked: false, link: '#' }
+    token_config_burn: { checked: false, link: '#', allowAction: true },
+    token_config_capped: { checked: false, link: '#', allowAction: true }
   };
-
-  defaultSelectedKeys.forEach((key) => {
-    if (key in CHECK_LIST) {
-      CHECK_LIST[key].checked = true;
-    } else {
-      console.error(`Invalid defaultSelectedKey: ${key}`);
-    }
-  });
 
   const [checkList, setCheckList] = useState<CheckListType>(CHECK_LIST);
 
   const handleCheckboxChange = useCallback(
     (key: string): void => {
-      // Check if the clicked key is NOT in the defaultSelectedKeys array
-      if (!defaultSelectedKeys.includes(key)) {
-        // Toggle the checked status of the checkbox for the given key
+      if (checkList[key].allowAction) {
         setCheckList((prevCheckList) => ({
           ...prevCheckList,
           [key]: {
@@ -44,7 +31,7 @@ const AssetTokenConfigurations: React.FC<InspiredQuestionsListProps> = ({
         }));
       }
     },
-    [defaultSelectedKeys] // Now depends on the array of default selected keys
+    [checkList]
   );
 
   return (
@@ -67,7 +54,7 @@ const AssetTokenConfigurations: React.FC<InspiredQuestionsListProps> = ({
                 link={checkList[key].link}
                 linkText={`Ability to ${t(`${assetTokenNamespace}.${key}`)}`}
                 optional={checkList[key].optional}
-                isDisabled={defaultSelectedKeys.includes(key)} // Set disabled to true if key is in defaultSelectedKeys
+                isDisabled={!checkList[key].allowAction}
               />
             ))}
           </Stack>
