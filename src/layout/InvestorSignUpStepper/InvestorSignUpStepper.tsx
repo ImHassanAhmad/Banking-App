@@ -12,11 +12,11 @@ import UploadDocument from '@app/pages/UploadDocuments';
 import { InvestorSignUpFlowSteps, InvestorSignUpFlowStepsIndices } from './types';
 import { useInvestorSignUpStepper } from '@app/context/InvestorSignUpStepperContext';
 import BackButton from '@app/components/BackButton';
-import { type SignUpStepperContextProps } from '@app/common/types';
+import { type WithSignUpStepperContextProps } from '@app/common/types';
 
 const investorFlowComponent = (
   activeStep: InvestorSignUpFlowSteps
-): ComponentType<SignUpStepperContextProps> | undefined => {
+): ComponentType<WithSignUpStepperContextProps> | undefined => {
   switch (activeStep) {
     case InvestorSignUpFlowSteps.NameAndDateOfBirth:
       return PersonalInformation;

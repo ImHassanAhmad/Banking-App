@@ -19,7 +19,11 @@ const registerUserScheme: yup.ObjectSchema<RegisterUserRequestDto> = yup.object(
   companyName: yup.string().required(),
   registrationNumber: yup.string().required(),
   dateOfRegister: yup.string().required(),
+  tradingName: yup.string().required(),
+  isLegalRepresentative: yup.boolean().required(),
   captchaToken: yup.string(),
+  businessType: yup.mixed(),
+  businessCategory: yup.mixed(),
   dryRun: yup.boolean().required()
 });
 
