@@ -1,5 +1,4 @@
-import { type AccountError, type ErrorMessage, type OnboardingError } from '@app/common/types';
-import { type FieldErrorsDto } from '@app/pages/MobileCodeVerification/types';
+import { type OnboardingError } from '@app/common/types';
 import {
   type ResendLoginOtpResponseDto,
   type RefreshSessionDto,
@@ -33,6 +32,6 @@ export const TOO_MANY_INVALID_LOGIN_ATTEMPTS: string =
 
 export const INCORRECT_LOGIN_RESPONSE: string = 'Incorrect login data.';
 
-export type MockLoginResponse = VerifyLoginOTPResponseDto | ErrorMessage | AccountError;
-export type MockVerifyLoginOtpResponse = RefreshSessionDto | FieldErrorsDto;
-export type MockResendOtpCodeResponse = ResendLoginOtpResponseDto | FieldErrorsDto;
+export type MockLoginResponse = VerifyLoginOTPResponseDto | OnboardingError;
+export type MockVerifyLoginOtpResponse = RefreshSessionDto | OnboardingError;
+export type MockResendOtpCodeResponse = ResendLoginOtpResponseDto | OnboardingError;

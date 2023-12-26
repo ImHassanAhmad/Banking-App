@@ -1,12 +1,10 @@
 import {
   type OnboardingError,
   type AccountError,
-  type ErrorMessage,
   type RegisterUserResponseDto
 } from '@app/common/types';
 import { type VerifyLoginOTPResponseDto } from 'types';
 import { type ApiError } from '../middleware/withErrorHandler';
-import { type FieldErrorsDto } from '@app/pages/MobileCodeVerification/types';
 
 export const MOCK_LOGIN_EMAIL = 'test@witty.tech';
 export const MOCK_LOGIN_PASSWORD = 'Pass123456789@';
@@ -118,9 +116,9 @@ export const LOGIN_RESPONSE: VerifyLoginOTPResponseDto = {
   otpId: '2434-3434-433343SFDFF3'
 };
 
-export const ERROR_MESSAGE_RESPONSE = ({ message, status }: ApiError): OnboardingError => ({
+export const ERROR_MESSAGE_RESPONSE = ({ message }: ApiError): OnboardingError => ({
   error: { errorMessage: message }
 });
 
-export type MockRegisterUserResponse = RegisterUserResponseDto | ErrorMessage | AccountError;
-export type MockVerifySignUpOtpResponse = null | FieldErrorsDto;
+export type MockRegisterUserResponse = RegisterUserResponseDto | OnboardingError;
+export type MockVerifySignUpOtpResponse = null | OnboardingError;

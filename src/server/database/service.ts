@@ -6,11 +6,11 @@ class DatabaseService<T extends BaseEntity> {
   constructor(private readonly table: Table<T, string>) {}
 
   async getAll(): Promise<T[]> {
-    return this.table.toArray();
+    return await this.table.toArray();
   }
 
   async getById(id: string): Promise<T | undefined> {
-    return this.table.get(id);
+    return await this.table.get(id);
   }
 
   async add(entity: T): Promise<T> {
