@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import Heading from '@app/components/Heading';
 import OnboardingList from '@app/components/OnboardingList';
 import { type Category } from 'types';
+import { type WithSignUpStepperContextProps } from '@app/common/types';
 import { BUSINESS_CATEGORY } from '@app/constants/issuer-onboarding';
-import { type SignUpStepperContextProps } from '@app/common/types';
 
-const BusinessCategory: React.FC<SignUpStepperContextProps> = ({
+const BusinessCategory: React.FC<WithSignUpStepperContextProps> = ({
   activeStep,
   updateActiveStep
 }) => {

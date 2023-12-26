@@ -4,19 +4,20 @@ import {
   type VerifyLoginOTPRequestDto,
   type LoginRequest,
   type ResendLoginOtpRequestDto,
+  type VerifyLoginOTPResponseDto,
+  type RefreshSessionDto,
   type ResendLoginOtpResponseDto
 } from 'types';
-import { userService } from '../database/service';
-import * as yup from 'yup';
-import withErrorHandler, { ApiError } from '../middleware/withErrorHandler';
 import {
   type MockVerifyLoginOtpResponse,
   type MockLoginResponse,
   type MockResendOtpCodeResponse
 } from '../constants/login.const';
+import { ApiError } from '@app/server/middleware/withErrorHandler';
+import * as yup from 'yup';
+import withErrorHandler from '../middleware/withErrorHandler';
 import { type HttpRequestResolverExtras } from 'msw/lib/core/handlers/HttpHandler';
 import { type ResponseResolverInfo } from 'msw/lib/core/handlers/RequestHandler';
-import { INVALID_OTP_CODE } from '../constants/common.const';
 
 let INCORRECT_LOGINS_COUNT: number = 0;
 
@@ -31,11 +32,11 @@ const otpIdScheme: yup.ObjectSchema<ResendLoginOtpRequestDto> = yup.object().sha
 });
 
 const otpCodeSceheme: yup.ObjectSchema<VerifyLoginOTPRequestDto> = yup.object().shape({
-  otpId: yup
+  otpId: yup.string().required(),
+  otpCode: yup
     .string()
     .required()
-    .matches(/444444/g, INVALID_OTP_CODE),
-  otpCode: yup.string().required()
+    .matches(/444444/g)
 });
 
 const loginHandler: HttpHandler = http.post<PathParams, LoginRequest, MockLoginResponse>(
@@ -46,31 +47,33 @@ const loginHandler: HttpHandler = http.post<PathParams, LoginRequest, MockLoginR
     }: ResponseResolverInfo<HttpRequestResolverExtras<PathParams>, LoginRequest>): Promise<
       StrictResponse<MockLoginResponse>
     > => {
-      const loginRequestPayload: LoginRequest = await request.json();
+      const loginRequestPayload: LoginRequest = (request.body ??
+        (await request.json())) as LoginRequest;
+
       loginScheme.validateSync(loginRequestPayload);
+      const { email, password, captchaToken } = loginRequestPayload;
 
-      const { email } = loginRequestPayload;
-      const user: any = await userService.add({ id: email, email });
-
-      if (user?.length) {
-        const { otpId }: VerifyLoginOTPRequestDto = user[0];
-        return HttpResponse.json(
-          { otpId },
+      if (
+        email === constants.loginConstants.MOCK_LOGIN_EMAIL &&
+        password === constants.loginConstants.MOCK_LOGIN_PASSWORD &&
+        captchaToken
+      )
+        return HttpResponse.json<VerifyLoginOTPResponseDto>(
+          constants.loginConstants.LOGIN_RESPONSE,
           {
             status: 200
           }
         );
-      }
+
       INCORRECT_LOGINS_COUNT += 1;
 
       if (INCORRECT_LOGINS_COUNT > 5 && INCORRECT_LOGINS_COUNT < 10)
         throw new ApiError(constants.loginConstants.TOO_MANY_INVALID_LOGIN_ATTEMPTS);
 
-      if (INCORRECT_LOGINS_COUNT > 10) {
+      if (INCORRECT_LOGINS_COUNT > 10)
         throw new ApiError(constants.commonConstants.SOMETHING_WENT_WRONG, 500);
-      }
 
-      throw new ApiError(constants.loginConstants.INCORRECT_LOGIN_RESPONSE, 400);
+      throw new ApiError(constants.loginConstants.INCORRECT_LOGIN_DATA);
     }
   )
 );
@@ -88,19 +91,10 @@ const verifyLoginHandler: HttpHandler = http.post<
       HttpRequestResolverExtras<PathParams>,
       VerifyLoginOTPRequestDto
     >): Promise<StrictResponse<MockVerifyLoginOtpResponse>> => {
-      const verifyLoginRequestPayload: VerifyLoginOTPRequestDto = await request.json();
-      otpCodeSceheme.validateSync(verifyLoginRequestPayload);
-
-      const { otpId } = verifyLoginRequestPayload;
-
-      const user: any = await userService.getById(otpId);
-      if (user?.length) {
-        return HttpResponse.json(user, {
-          status: 200
-        });
-      }
-
-      throw new yup.ValidationError(constants.commonConstants.INVALID_OTP_CODE, null, 'otpCode');
+      const verifyLoginOtpPayload: VerifyLoginOTPRequestDto =
+        request.body ?? ((await request.json()) as any);
+      otpCodeSceheme.validateSync(verifyLoginOtpPayload);
+      return HttpResponse.json<RefreshSessionDto>(constants.loginConstants.VERIFY_LOGIN_RESPONSE);
     }
   )
 );
@@ -118,11 +112,11 @@ const resendLoginHandler: HttpHandler = http.post<
       HttpRequestResolverExtras<PathParams>,
       ResendLoginOtpRequestDto
     >): Promise<StrictResponse<MockResendOtpCodeResponse>> => {
-      const resendOtpRequestPayload: ResendLoginOtpRequestDto = await request.json();
+      const resendOtpRequestPayload: ResendLoginOtpRequestDto =
+        request.body ?? ((await request.json()) as any);
       otpIdScheme.validateSync(resendOtpRequestPayload);
       return HttpResponse.json<ResendLoginOtpResponseDto>(
-        constants.loginConstants.NEW_OTP_ID_RESPONSE,
-        { status: 200 }
+        constants.loginConstants.NEW_OTP_ID_RESPONSE
       );
     }
   )

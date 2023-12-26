@@ -21,7 +21,8 @@ import {
   type ResendPhoneConfirmationRequestDto
 } from '@app/pages/MobileCodeVerification/types';
 
-type AuthingDictionaryResponseType = SupportedCountriesPhone & SupportedCountriesIncorporation;
+export type AuthingDictionaryResponseType = SupportedCountriesPhone &
+  SupportedCountriesIncorporation;
 
 export const onBoardingApi = createApi({
   reducerPath: 'onBoarding',

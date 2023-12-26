@@ -6,7 +6,7 @@ import Heading from '@app/components/Heading';
 import { RouteNames } from '@app/constants/routes';
 import TermItem from './components/TermItem';
 import { type TermCheckListType } from './types';
-import { type SignUpStepperContextProps } from '@app/common/types';
+import { type WithSignUpStepperContextProps } from '@app/common/types';
 
 const aboutOurServicesNamespace = RouteNames.ABOUT_OUR_SERVICES;
 
@@ -17,7 +17,7 @@ const CHECK_LIST: TermCheckListType = {
   prices_limits: { checked: false, link: '#' }
 };
 
-const AboutServices: React.FC<SignUpStepperContextProps> = ({ updateActiveStep }) => {
+const AboutServices: React.FC<WithSignUpStepperContextProps> = ({ updateActiveStep }) => {
   const { t } = useTranslation();
 
   const [checkList, setCheckList] = useState<TermCheckListType>(CHECK_LIST);

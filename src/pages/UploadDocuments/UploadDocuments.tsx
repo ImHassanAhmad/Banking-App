@@ -6,11 +6,11 @@ import Heading from '@app/components/Heading';
 import Textfield from '@app/components/Textfield';
 import { FileInput } from './components/DocumentFileInput';
 import { UploadDocumentsTypes } from './utils/constant';
-import { type SignUpStepperContextProps } from '@app/common/types';
+import { type WithSignUpStepperContextProps } from '@app/common/types';
 
 const uploadDocumentsNamespace = RouteNames.UPLOAD_DOCUMENTS;
 
-const UploadDocument: FC<SignUpStepperContextProps> = ({
+const UploadDocument: FC<WithSignUpStepperContextProps> = ({
   updateActiveStep,
   registerUser,
   isLoading,

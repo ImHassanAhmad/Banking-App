@@ -2,6 +2,7 @@ import { enumToIndexRecord } from '@app/utils/enum';
 
 export enum IssuerSignUpFlowSteps {
   Country = 'Country',
+  BusinessCategory = 'BusinessCategory',
   Email = 'Email',
   Mobile = 'Mobile',
   CompanyBasicInfo = 'CompanyBasicInfo',

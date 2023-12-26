@@ -11,7 +11,7 @@ import {
   type RegisterUserRequestDto,
   type AuthFetchQueryError,
   AuthErrorLevel,
-  type SignUpStepperContextProps
+  type WithSignUpStepperContextProps
 } from '@app/common/types';
 import Loader from '@app/components/Loader';
 import ReCAPTCHA from 'react-google-recaptcha';
@@ -19,7 +19,7 @@ import WarningAlert from '@app/components/WarningAlert';
 
 const translationNamespace = RouteNames.CREATE_PASSWORD;
 
-const Password: FC<SignUpStepperContextProps> = ({
+const Password: FC<WithSignUpStepperContextProps> = ({
   updateActiveStep,
   registerUser,
   setUserId,

@@ -11,7 +11,7 @@ import Textfield from '@app/components/Textfield';
 import Loader from '@app/components/Loader';
 import { SEARCH_ICON2 } from '@app/assets/images';
 import Calendar from '@app/components/Calendar';
-import { type SignUpStepperContextProps } from '@app/common/types';
+import { type WithSignUpStepperContextProps } from '@app/common/types';
 
 interface IForm {
   companyName: string;
@@ -22,7 +22,7 @@ interface IForm {
 
 const translationNamespace = RouteNames.COMPANY_INFORMATION;
 
-const CompanyInformation: FC<SignUpStepperContextProps> = ({
+const CompanyInformation: FC<WithSignUpStepperContextProps> = ({
   updateActiveStep,
   registerUser,
   isLoading,

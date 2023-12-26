@@ -4,11 +4,11 @@ import { type FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RevenueRange } from '@app/constants/revenue-range';
 import { Stack } from '@mui/material';
-import { type SignUpStepperContextProps } from '@app/common/types';
+import { type WithSignUpStepperContextProps } from '@app/common/types';
 
 const transactionResource = RouteNames.INCOME_RANGE;
 
-const BusinessTurnover: FC<SignUpStepperContextProps> = ({
+const BusinessTurnover: FC<WithSignUpStepperContextProps> = ({
   updateActiveStep,
   registerUser,
   isLoading,

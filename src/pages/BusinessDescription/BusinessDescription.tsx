@@ -1,4 +1,4 @@
-import { type SignUpStepperContextProps } from '@app/common/types';
+import { type WithSignUpStepperContextProps } from '@app/common/types';
 import Heading from '@app/components/Heading';
 import { RouteNames } from '@app/constants/routes';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -21,7 +21,7 @@ const schema = yup
   })
   .required();
 
-const BusinessDescription: FC<SignUpStepperContextProps> = ({ updateActiveStep }) => {
+const BusinessDescription: FC<WithSignUpStepperContextProps> = ({ updateActiveStep }) => {
   const { t } = useTranslation();
 
   const { handleSubmit } = useForm<IForm>({

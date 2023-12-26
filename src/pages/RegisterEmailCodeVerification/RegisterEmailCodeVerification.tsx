@@ -1,7 +1,7 @@
 import {
   type AuthFetchQueryError,
   AuthErrorLevel,
-  type SignUpStepperContextProps
+  type WithSignUpStepperContextProps
 } from '@app/common/types';
 import EmailCodeVerification from '@app/components/EmailCodeVerification/EmailCodeVerification';
 import { useAuthError } from '@app/context/AuthErrorContext';
@@ -16,7 +16,7 @@ import {
   type ResendEmailConfirmationResponseDto
 } from '@app/pages/LoginEmailCodeVerification/types';
 
-const RegisterEmailCodeVerification: FC<SignUpStepperContextProps> = ({
+const RegisterEmailCodeVerification: FC<WithSignUpStepperContextProps> = ({
   updateActiveStep,
   userId,
   userPayload,

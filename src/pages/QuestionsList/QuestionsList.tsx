@@ -5,7 +5,7 @@ import Heading from '@app/components/Heading';
 import { RouteNames } from '@app/constants/routes';
 import CheckboxItem from '@app/components/CheckboxItem';
 import { type CheckListType } from '@app/components/CheckboxItem/types';
-import { type SignUpStepperContextProps } from '@app/common/types';
+import { type WithSignUpStepperContextProps } from '@app/common/types';
 
 const questionsListsNamespace = RouteNames.QUESTIONS_LIST;
 
@@ -17,7 +17,7 @@ const CHECK_LIST: CheckListType = {
   prices_limits: { checked: false, link: '#' }
 };
 
-const QuestionsList: FC<SignUpStepperContextProps> = ({
+const QuestionsList: FC<WithSignUpStepperContextProps> = ({
   updateActiveStep,
   registerUser,
   isLoading,

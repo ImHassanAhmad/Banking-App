@@ -7,7 +7,7 @@ import { type SubmitHandler, useForm, type FieldError } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Textfield from '@app/components/Textfield';
-import { type SignUpStepperContextProps } from '@app/common/types';
+import { type WithSignUpStepperContextProps } from '@app/common/types';
 
 interface IForm {
   postalCode: string;
@@ -18,7 +18,7 @@ interface IForm {
 
 const translationNamespace = RouteNames.ADDRESS;
 
-const Address: FC<SignUpStepperContextProps> = ({
+const Address: FC<WithSignUpStepperContextProps> = ({
   updateActiveStep,
   registerUser,
   isLoading,
