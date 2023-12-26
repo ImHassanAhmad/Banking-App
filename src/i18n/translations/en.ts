@@ -340,7 +340,26 @@ const en: LanguageResource = {
     visa_card_policy: 'VISA Card Terms & Conditions',
     prices_limits: 'Prices & Limits',
     select_all: 'Select All',
+    confirm: 'Confirm',
     continue: 'Continue'
+  },
+  'create-asset-token': {
+    create_new_asset: 'Create new Asset',
+    continue: 'Continue',
+    token_name: 'Token Name (On Block Chain)',
+    token_symbol: 'Token Symbol (On Block Chain)',
+    total_supply: 'Total Supply (Mint)',
+    decimal_number: 'Number of Decimals Allowed',
+    token_config_pausable: 'pause',
+    token_config_mint: 'mint',
+    token_config_burn: 'burn',
+    token_config_capped: 'capped',
+    buy_token: 'Token Buy Now Price',
+    currency: 'Currency',
+    upload_logo: 'Upload Logo',
+    token_basic_info: 'Token Basic Information',
+    token_config: 'Token Configuration',
+    token_price: 'Token Price'
   },
   'legal-representative': {}
 };

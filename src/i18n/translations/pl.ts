@@ -33,6 +33,7 @@ const pl: LanguageResource = {
   'questions-list': {},
   'register-investor': {},
   'register-issuer': {},
+  'create-asset-token': {},
   'legal-representative': {}
 };
 
