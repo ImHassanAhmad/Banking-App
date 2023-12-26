@@ -5,11 +5,11 @@ import {
   type AssetRequestDto,
   type AssetResponseDto
 } from '@app/common/types';
-import { type MockAssetCreationResponse } from '../constants/asset.const';
 import withErrorHandler from '../middleware/withErrorHandler';
 import { type HttpRequestResolverExtras } from 'msw/lib/core/handlers/HttpHandler';
 import { type ResponseResolverInfo } from 'msw/lib/core/handlers/RequestHandler';
 import { ValidationError } from 'yup';
+import { type MockAssetCreationResponse } from '../constants/common.const';
 
 const createAssetHandler: HttpHandler = http.post<
   PathParams,
@@ -30,9 +30,12 @@ const createAssetHandler: HttpHandler = http.post<
           throw new ValidationError(constants.commonConstants.FIELD_REQUIRED(key), null, key);
       });
 
-      return HttpResponse.json<AssetResponseDto>(constants.assetConstants.ASSET_CREATE_RESPONSE, {
-        status: 200
-      });
+      return HttpResponse.json<AssetResponseDto>(
+        { assetId: '' },
+        {
+          status: 200
+        }
+      );
     }
   )
 );
@@ -57,7 +60,7 @@ const uploadAssetLegalDocumentHandler: HttpHandler = http.post<
           throw new ValidationError(constants.commonConstants.FIELD_REQUIRED(key), null, key);
       });
 
-      return HttpResponse.json<AssetResponseDto>(constants.assetConstants.ASSET_CREATE_RESPONSE);
+      return HttpResponse.json<AssetResponseDto>({ assetId: '' });
     }
   )
 );

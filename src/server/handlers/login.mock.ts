@@ -16,6 +16,7 @@ import {
 } from '../constants/login.const';
 import { type HttpRequestResolverExtras } from 'msw/lib/core/handlers/HttpHandler';
 import { type ResponseResolverInfo } from 'msw/lib/core/handlers/RequestHandler';
+import { INVALID_OTP_CODE } from '../constants/common.const';
 
 let INCORRECT_LOGINS_COUNT: number = 0;
 
@@ -33,7 +34,7 @@ const otpCodeSceheme: yup.ObjectSchema<VerifyLoginOTPRequestDto> = yup.object().
   otpId: yup
     .string()
     .required()
-    .matches(/444444/g),
+    .matches(/444444/g, INVALID_OTP_CODE),
   otpCode: yup.string().required()
 });
 
