@@ -17,13 +17,13 @@ import BusinessRevenue from '@app/pages/BusinessRevenue';
 import CompanyInformation from '@app/pages/CompanyInformation';
 import { useIssuerSignUpStepper } from '@app/context/IssuerSignUpStepperContext';
 import LegalRepresentative from '@app/pages/LegalRepresentative/LegalRepresentative';
-import { type SignUpStepperContextProps } from '@app/common/types';
+import { type WithSignUpStepperContextProps } from '@app/common/types';
 import BusinessType from '@app/pages/BusinessType/BusinessType';
 import SourceOfFunding from '@app/pages/SourceOfFunding';
 
 const issuerFlowComponent = (
   activeStep: IssuerSignUpFlowSteps
-): React.ComponentType<SignUpStepperContextProps> | undefined => {
+): React.ComponentType<WithSignUpStepperContextProps> | undefined => {
   switch (activeStep) {
     case IssuerSignUpFlowSteps.BusinessCategory:
       return BusinessCategory;
