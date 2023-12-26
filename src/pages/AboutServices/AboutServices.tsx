@@ -14,7 +14,6 @@ const CHECK_LIST: TermCheckListType = {
   news_promotions: { checked: false, optional: true },
   terms_conditions: { checked: false, link: '#' },
   privacy_policy: { checked: false, link: '#' },
-  visa_card_policy: { checked: false, link: '#' },
   prices_limits: { checked: false, link: '#' }
 };
 

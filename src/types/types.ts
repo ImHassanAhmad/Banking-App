@@ -54,6 +54,7 @@ export interface LoginResponse {
 }
 
 export interface Category {
+  id: string;
   topic: string;
   subcategories: Subcategory[];
 }

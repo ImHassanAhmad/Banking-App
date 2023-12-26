@@ -1,10 +1,5 @@
 import { InvestorSignUpFlowSteps } from '@app/layout/InvestorSignUpStepper/types';
-import {
-  useOnBoardingDictionaryApiQuery,
-  useRegisterUserMutation
-} from '@app/store/api/onboarding';
-import { useAppDispatch } from '@app/store/hooks';
-import { setSupportedCountries } from '@app/store/slices/userData';
+import { useRegisterUserMutation } from '@app/store/api/onboarding';
 import {
   type Dispatch,
   type SetStateAction,
@@ -12,8 +7,7 @@ import {
   useState,
   useContext,
   type FC,
-  type PropsWithChildren,
-  useEffect
+  type PropsWithChildren
 } from 'react';
 import {
   type RegisterUserResponseDto,
@@ -153,13 +147,6 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
     registerUser,
     goBack
   };
-  const dispatch = useAppDispatch();
-  const { data } = useOnBoardingDictionaryApiQuery();
-
-  useEffect(() => {
-    if (!data) return;
-    dispatch(setSupportedCountries(data));
-  }, [data]);
 
   return (
     <Provider value={value}>

@@ -1,5 +1,5 @@
 import { Stack, Stepper, Grid } from '@mui/material';
-import { type FC, type ReactNode, useMemo } from 'react';
+import { type FC, useMemo, type ComponentType } from 'react';
 import PersonalInformation from '@app/pages/PersonalInformation';
 import RegisterEmail from '@app/pages/RegisterEmail';
 import { useNavigate } from 'react-router-dom';
@@ -10,35 +10,31 @@ import IncomeRange from '@app/pages/IncomeRange';
 import QuestionsList from '@app/pages/QuestionsList';
 import UploadDocument from '@app/pages/UploadDocuments';
 import { InvestorSignUpFlowSteps, InvestorSignUpFlowStepsIndices } from './types';
-import {
-  type InvestorSignUpStepperContextProps,
-  useInvestorSignUpStepper
-} from '@app/context/InvestorSignUpStepperContext';
+import { useInvestorSignUpStepper } from '@app/context/InvestorSignUpStepperContext';
 import BackButton from '@app/components/BackButton';
+import { type SignUpStepperContextProps } from '@app/common/types';
 
 const investorFlowComponent = (
-  activeStep: InvestorSignUpFlowSteps,
-  props: InvestorSignUpStepperContextProps
-): ReactNode => {
+  activeStep: InvestorSignUpFlowSteps
+): ComponentType<SignUpStepperContextProps> | undefined => {
   switch (activeStep) {
     case InvestorSignUpFlowSteps.NameAndDateOfBirth:
-      return <PersonalInformation {...props} />;
+      return PersonalInformation;
     case InvestorSignUpFlowSteps.Address:
-      return <Address {...props} />;
+      return Address;
     case InvestorSignUpFlowSteps.Email:
-      return <RegisterEmail {...props} />;
+      return RegisterEmail;
     case InvestorSignUpFlowSteps.Mobile:
-      return <PhoneNumber {...props} />;
+      return PhoneNumber;
     case InvestorSignUpFlowSteps.IncomeRange:
-      return <IncomeRange {...props} />;
+      return IncomeRange;
     case InvestorSignUpFlowSteps.Questionaire:
-      return <QuestionsList {...props} />;
+      return QuestionsList;
     case InvestorSignUpFlowSteps.UploadDocument:
-      return <UploadDocument {...props} />;
+      return UploadDocument;
     case InvestorSignUpFlowSteps.CreatePassword:
-      return <Password {...props} />;
+      return Password;
     default:
-      return <></>;
   }
 };
 
@@ -49,6 +45,7 @@ const IssuerSignUpStepper: FC = () => {
 
   const activeStepIndex = useMemo(() => InvestorSignUpFlowStepsIndices[activeStep], [activeStep]);
 
+  const InvestorFlowComponent = investorFlowComponent(activeStep);
   return (
     <Stack>
       <BackButton
@@ -65,7 +62,11 @@ const IssuerSignUpStepper: FC = () => {
           }
         }}>
         <Grid item lg={8} md={10} sm={10} xs={12}>
-          {investorFlowComponent(activeStep, props)}
+          {InvestorFlowComponent ? (
+            <InvestorFlowComponent {...props}></InvestorFlowComponent>
+          ) : (
+            <></>
+          )}
         </Grid>
       </Stepper>
     </Stack>

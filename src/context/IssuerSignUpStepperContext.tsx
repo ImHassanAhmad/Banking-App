@@ -1,10 +1,5 @@
 import { IssuerSignUpFlowSteps } from '@app/layout/IssuerSignUpStepper/types';
-import {
-  useOnBoardingDictionaryApiQuery,
-  useRegisterUserMutation
-} from '@app/store/api/onboarding';
-import { useAppDispatch } from '@app/store/hooks';
-import { setSupportedCountries } from '@app/store/slices/userData';
+import { useRegisterUserMutation } from '@app/store/api/onboarding';
 import {
   type Dispatch,
   type SetStateAction,
@@ -12,8 +7,7 @@ import {
   useState,
   useContext,
   type FC,
-  type PropsWithChildren,
-  useEffect
+  type PropsWithChildren
 } from 'react';
 import {
   type RegisterUserResponseDto,
@@ -47,7 +41,7 @@ export interface IssuerSignUpStepperContextProps {
 }
 
 const IssuerSignUpStepperContext = createContext<IssuerSignUpStepperContextProps>({
-  activeStep: IssuerSignUpFlowSteps.BusinessCategory,
+  activeStep: IssuerSignUpFlowSteps.BusinessType,
   userId: '',
   error: {},
   isLoading: false,
@@ -57,7 +51,7 @@ const IssuerSignUpStepperContext = createContext<IssuerSignUpStepperContextProps
 const { Provider } = IssuerSignUpStepperContext;
 
 export const IssuerSignUpStepperProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [activeStep, setActiveStep] = useState(IssuerSignUpFlowSteps.BusinessCategory);
+  const [activeStep, setActiveStep] = useState(IssuerSignUpFlowSteps.Country);
   const [userId, setUserId] = useState('');
   const { updateError, findError } = useAuthError();
   const [registerUserPayload, setRegisterUserPayload] = useState<RegisterUserRequestDto>({
@@ -129,18 +123,12 @@ export const IssuerSignUpStepperProvider: FC<PropsWithChildren> = ({ children })
     }
 
     setRegisterUserPayload({ ...registerUserPayload, ...payload });
-    const userPayload = {
-      vis: true,
-      visaTncAgreed: true,
-      wittyTncAgreed: true,
-      companyName: 'Temoral Company Name',
-      registrationNumber: Date.now().toString().slice(0, 10)
-    };
-    register({ ...apiPayload, ...userPayload })
+
+    register({ ...apiPayload })
       .unwrap()
       .then((response: RegisterUserResponseDto) => {
         onSuccess(response);
-        setRegisterUserPayload({ dryRun: true, ...userPayload });
+        setRegisterUserPayload({ dryRun: true });
       })
       .catch((error: AuthFetchQueryError) => {
         handleError(error, onSuccess, onError);
@@ -161,13 +149,14 @@ export const IssuerSignUpStepperProvider: FC<PropsWithChildren> = ({ children })
     registerUser,
     goBack
   };
-  const dispatch = useAppDispatch();
-  const { data } = useOnBoardingDictionaryApiQuery();
 
-  useEffect(() => {
-    if (!data) return;
-    dispatch(setSupportedCountries(data));
-  }, [data]);
+  // const dispatch = useAppDispatch();
+  // const { data } = useOnBoardingDictionaryApiQuery();
+
+  // useEffect(() => {
+  //   if (!data) return;
+  //   dispatch(setSupportedCountries(data));
+  // }, [data]);
 
   return (
     <Provider value={value}>

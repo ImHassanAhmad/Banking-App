@@ -1,17 +1,17 @@
 import { enumToIndexRecord } from '@app/utils/enum';
 
 export enum IssuerSignUpFlowSteps {
-  BusinessCategory = 'BusinessCategory',
   Country = 'Country',
   Email = 'Email',
+  Mobile = 'Mobile',
   CompanyBasicInfo = 'CompanyBasicInfo',
+  LegalRepresentative = 'LegalRepresentative',
+  BusinessType = 'BusinessType',
+  BusinessCategory = 'BusinessCategory',
   BusinessDescription = 'BusinessDescription',
   BusinessRegulation = 'BusinessRegulation',
   BusinessRevenue = 'BusinessRevenue',
-  TradingName = 'TradingName',
-  RegistrationAddress = 'RegistrationAddress',
-  CompanyOperatingAddress = 'CompanyOperatingAddress',
-  Mobile = 'Mobile',
+  FundingSource = 'FundingSource',
   AboutOurServices = 'AboutOurServices',
   CreatePassword = 'CreatePassword',
   EmailVerify = 'EmailVerify',
