@@ -1,7 +1,5 @@
-import { type SignUpStepperContextProps } from '@app/common/types';
-import BackButton from '@app/components/BackButton';
+import { type WithSignUpStepperContextProps } from '@app/common/types';
 import Heading from '@app/components/Heading';
-// import TextFieldComp from '@app/components/Textfield/Textfield';
 import { RouteNames } from '@app/constants/routes';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Stack, TextField } from '@mui/material';
@@ -23,7 +21,7 @@ const schema = yup
   })
   .required();
 
-const BusinessDescription: FC<SignUpStepperContextProps> = ({ updateActiveStep }) => {
+const BusinessDescription: FC<WithSignUpStepperContextProps> = ({ updateActiveStep }) => {
   const { t } = useTranslation();
 
   const { handleSubmit } = useForm<IForm>({
@@ -39,12 +37,7 @@ const BusinessDescription: FC<SignUpStepperContextProps> = ({ updateActiveStep }
   };
 
   return (
-    <Stack>
-      <BackButton
-        onClick={() => {
-          updateActiveStep();
-        }}
-      />
+    <Stack sx={{ width: '100%' }}>
       <Stack mt={4}>
         <Heading
           title={t(`${businessDescriptionNamespace}.title`)}

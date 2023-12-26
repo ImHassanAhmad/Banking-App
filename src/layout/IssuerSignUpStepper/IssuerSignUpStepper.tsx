@@ -1,8 +1,9 @@
-import { Stepper } from '@mui/material';
-import { type FC, type ReactNode } from 'react';
-
+import { Stepper, Stack, Grid } from '@mui/material';
+import React, { type FC, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
+import BackButton from '@app/components/BackButton';
 import CountrySelect from '@app/pages/CountrySelect';
-import SignUp from '@app/pages/RegisterEmail';
+import RegisterEmail from '@app/pages/RegisterEmail';
 import Password from '@app/pages/Password';
 import PhoneNumber from '@app/pages/PhoneNumber';
 import MobileCodeVerification from '@app/pages/MobileCodeVerification';
@@ -14,61 +15,80 @@ import BusinessDescription from '@app/pages/BusinessDescription';
 import BusinessRegulation from '@app/pages/BusinessRegulation';
 import BusinessRevenue from '@app/pages/BusinessRevenue';
 import CompanyInformation from '@app/pages/CompanyInformation';
-import {
-  type IssuerSignUpStepperContextProps,
-  useIssuerSignUpStepper
-} from '@app/context/IssuerSignUpStepperContext';
+import { useIssuerSignUpStepper } from '@app/context/IssuerSignUpStepperContext';
+import LegalRepresentative from '@app/pages/LegalRepresentative/LegalRepresentative';
+import { type SignUpStepperContextProps } from '@app/common/types';
+import BusinessType from '@app/pages/BusinessType/BusinessType';
+import SourceOfFunding from '@app/pages/SourceOfFunding';
 
 const issuerFlowComponent = (
-  activeStep: IssuerSignUpFlowSteps,
-  props: IssuerSignUpStepperContextProps
-): ReactNode => {
+  activeStep: IssuerSignUpFlowSteps
+): React.ComponentType<SignUpStepperContextProps> | undefined => {
   switch (activeStep) {
     case IssuerSignUpFlowSteps.BusinessCategory:
-      return <BusinessCategory {...props} />;
+      return BusinessCategory;
     case IssuerSignUpFlowSteps.Country:
-      return <CountrySelect {...props} />;
+      return CountrySelect;
     case IssuerSignUpFlowSteps.Email:
-      return <SignUp {...props} />;
+      return RegisterEmail;
     case IssuerSignUpFlowSteps.CompanyBasicInfo:
-      return <CompanyInformation {...props} />;
+      return CompanyInformation;
     case IssuerSignUpFlowSteps.Mobile:
-      return <PhoneNumber {...props} />;
+      return PhoneNumber;
     case IssuerSignUpFlowSteps.AboutOurServices:
-      return <AboutServices {...props} />;
+      return AboutServices;
     case IssuerSignUpFlowSteps.CreatePassword:
-      return <Password {...props} />;
+      return Password;
     case IssuerSignUpFlowSteps.EmailVerify:
-      return <RegisterEmailCodeVerification {...props} />;
+      return RegisterEmailCodeVerification;
     case IssuerSignUpFlowSteps.MobileVerify:
-      return <MobileCodeVerification {...props} />;
+      return MobileCodeVerification;
     case IssuerSignUpFlowSteps.BusinessDescription:
-      return <BusinessDescription {...props} />;
+      return BusinessDescription;
     case IssuerSignUpFlowSteps.BusinessRegulation:
-      return <BusinessRegulation {...props} />;
+      return BusinessRegulation;
     case IssuerSignUpFlowSteps.BusinessRevenue:
-      return <BusinessRevenue {...props} />;
+      return BusinessRevenue;
+    case IssuerSignUpFlowSteps.LegalRepresentative:
+      return LegalRepresentative;
+    case IssuerSignUpFlowSteps.BusinessType:
+      return BusinessType;
+    case IssuerSignUpFlowSteps.FundingSource:
+      return SourceOfFunding;
 
     default:
-      return <></>;
+      return undefined;
   }
 };
 
 const IssuerSignUpStepper: FC = () => {
+  const navigate = useNavigate();
   const props = useIssuerSignUpStepper();
-  const { activeStep } = props;
+  const { activeStep, goBack } = props;
 
+  const activeStepIndex = useMemo(() => IssuerFlowStepsIndices[activeStep], [activeStep]);
+
+  const IssuerFlowComponent = issuerFlowComponent(activeStep);
   return (
-    <Stepper
-      activeStep={IssuerFlowStepsIndices[activeStep]}
-      sx={{
-        alignItems: 'flex-start',
-        '&.MuiStepper-root': {
-          alignItems: 'flex-start'
-        }
-      }}>
-      {issuerFlowComponent(activeStep, props)}
-    </Stepper>
+    <Stack>
+      <BackButton
+        onClick={() => {
+          activeStepIndex ? goBack(activeStepIndex - 1) : navigate(-1);
+        }}
+      />
+      <Stepper
+        activeStep={IssuerFlowStepsIndices[activeStep]}
+        sx={{
+          alignItems: 'flex-start',
+          '&.MuiStepper-root': {
+            alignItems: 'flex-start'
+          }
+        }}>
+        <Grid item lg={8} md={10} sm={10} xs={12}>
+          {IssuerFlowComponent ? <IssuerFlowComponent {...props} /> : <></>}
+        </Grid>
+      </Stepper>
+    </Stack>
   );
 };
 

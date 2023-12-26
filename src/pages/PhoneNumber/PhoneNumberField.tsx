@@ -1,10 +1,9 @@
 import { getCountryFlag } from '@app/assets/flags';
 import {
-  type SignUpStepperContextProps,
+  type WithSignUpStepperContextProps,
   type AuthFetchQueryError,
   type RegisterUserRequestDto
 } from '@app/common/types';
-import BackButton from '@app/components/BackButton';
 import Heading from '@app/components/Heading';
 import { NotSupportedModal } from '@app/components/Modals';
 import { NOT_SUPPORTED_MODES } from '@app/constants';
@@ -46,7 +45,7 @@ const getCountryDataByPhone = (phoneCode: string): ICountryData => {
   return getCountryDataList()[index];
 };
 
-const PhoneNumberField: FC<SignUpStepperContextProps> = ({
+const PhoneNumberField: FC<WithSignUpStepperContextProps> = ({
   updateActiveStep,
   registerUser,
   userPayload: { phoneNumberCountryCode, shortenPhoneNumber, countryOfIncorporation },
@@ -119,11 +118,6 @@ const PhoneNumberField: FC<SignUpStepperContextProps> = ({
 
   return (
     <Stack mt={4} className="phoneSelector">
-      <BackButton
-        onClick={() => {
-          updateActiveStep();
-        }}
-      />
       <Stack mt={5} mb={5}>
         <Heading
           title={t(`${mobileVerifyNamespace}.title`)}

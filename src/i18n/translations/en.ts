@@ -25,9 +25,9 @@ const en: LanguageResource = {
     title: 'Choose Account Type',
     subtitle: 'Everything you need to run your business in one place',
     login_option_title: 'Create Investor Account',
-    login_option_subtitle: 'Join as a Investor',
+    login_option_subtitle: 'Join as an Investor',
     create_option_title: 'Create Issuer Account',
-    create_option_subtitle: 'Join as a Issuer'
+    create_option_subtitle: 'Join as an Issuer'
   },
   login: {
     title: 'Welcome to W1TTY Business',
@@ -288,6 +288,7 @@ const en: LanguageResource = {
     registration_number: 'Registration number',
     company_name: 'Company name',
     date_of_register: 'Date of register',
+    trading_name: 'Trading Name',
     continue: 'Continue'
   },
   'business-description': {
@@ -321,7 +322,7 @@ const en: LanguageResource = {
     continue: 'Continue'
   },
   address: {
-    title: 'Personal Information',
+    title: 'Address',
     postal_code: 'Postal Code',
     city: 'City',
     street: 'Street',
@@ -339,7 +340,8 @@ const en: LanguageResource = {
     visa_card_policy: 'VISA Card Terms & Conditions',
     prices_limits: 'Prices & Limits',
     select_all: 'Select All',
-    confirm: 'Confirm'
+    confirm: 'Confirm',
+    continue: 'Continue'
   },
   'create-asset-token': {
     create_new_asset: 'Create new Asset',
@@ -358,7 +360,8 @@ const en: LanguageResource = {
     token_basic_info: 'Token Basic Information',
     token_config: 'Token Configuration',
     token_price: 'Token Price'
-  }
+  },
+  'legal-representative': {}
 };
 
 export default en;

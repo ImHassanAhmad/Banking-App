@@ -1,27 +1,25 @@
-import { Grid, Stack, Button, Box } from '@mui/material';
+import { Stack, Button, Box } from '@mui/material';
 import Heading from '@app/components/Heading';
 import React, { useState, type FC } from 'react';
 import PasswordField from '@app/components/PasswordField';
 import { RouteNames } from '@app/constants/routes';
 import { useTranslation } from 'react-i18next';
 import Subtract from '@app/assets/images/Subtract.svg';
-// import { IssuerSignUpFlowSteps } from '@app/layout/IssuerSignUpStepper/types';
 import { type FieldError } from 'react-hook-form';
 import {
   type RegisterUserResponseDto,
   type RegisterUserRequestDto,
   type AuthFetchQueryError,
   AuthErrorLevel,
-  type SignUpStepperContextProps
+  type WithSignUpStepperContextProps
 } from '@app/common/types';
-import BackButton from '@app/components/BackButton';
 import Loader from '@app/components/Loader';
 import ReCAPTCHA from 'react-google-recaptcha';
 import WarningAlert from '@app/components/WarningAlert';
 
 const translationNamespace = RouteNames.CREATE_PASSWORD;
 
-const Password: FC<SignUpStepperContextProps> = ({
+const Password: FC<WithSignUpStepperContextProps> = ({
   updateActiveStep,
   registerUser,
   setUserId,
@@ -66,42 +64,35 @@ const Password: FC<SignUpStepperContextProps> = ({
   };
 
   return (
-    <Stack mt={4}>
-      <BackButton
-        onClick={() => {
-          updateActiveStep();
-        }}
-      />
+    <Stack mt={4} sx={{ width: '100%' }}>
       <Stack mt={4}>
         <Heading
           title={t(`${translationNamespace}.title`)}
           subTitle={t(`${translationNamespace}.subtitle`)}
         />
       </Stack>
-      <Grid item xs={12} sm={10} md={8} lg={8}>
-        <Stack gap={3} mt={3}>
-          <PasswordField
-            label={t(`${translationNamespace}.password_input_label`)}
-            errorValue={errors}
-            onChange={handleChange}
-          />
-          {error?.errorLevel === AuthErrorLevel.Account && (
-            <WarningAlert message={error?.message ?? ''} />
-          )}
-          <ReCAPTCHA sitekey={SiteKey ?? ''} size="invisible" ref={reRef} />
-          <Button
-            startIcon={<Box component="img" src={Subtract} alt="auth" />}
-            sx={{ textTransform: 'uppercase' }}
-            disabled={isLoading}
-            onClick={() => {
-              submit().catch((e) => {
-                // TODO handle error cases
-              });
-            }}>
-            {t(`${translationNamespace}.create_account`)} {isLoading && <Loader />}
-          </Button>
-        </Stack>
-      </Grid>
+      <Stack gap={3} mt={3}>
+        <PasswordField
+          label={t(`${translationNamespace}.password_input_label`)}
+          errorValue={errors}
+          onChange={handleChange}
+        />
+        {error?.errorLevel === AuthErrorLevel.Account && (
+          <WarningAlert message={error?.message ?? ''} />
+        )}
+        <ReCAPTCHA sitekey={SiteKey ?? ''} size="invisible" ref={reRef} />
+        <Button
+          startIcon={<Box component="img" src={Subtract} alt="auth" />}
+          sx={{ textTransform: 'uppercase' }}
+          disabled={isLoading}
+          onClick={() => {
+            submit().catch((e) => {
+              // TODO handle error cases
+            });
+          }}>
+          {t(`${translationNamespace}.create_account`)} {isLoading && <Loader />}
+        </Button>
+      </Stack>
     </Stack>
   );
 };

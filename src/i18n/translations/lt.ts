@@ -33,7 +33,8 @@ const lt: LanguageResource = {
   'questions-list': {},
   'register-investor': {},
   'register-issuer': {},
-  'create-asset-token': {}
+  'create-asset-token': {},
+  'legal-representative': {}
 };
 
 export default lt;

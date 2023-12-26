@@ -4,6 +4,9 @@ import { RouteNames } from '@app/constants/routes';
 import UploadDocuments from '@app/pages/UploadDocuments';
 import IncomeRange from '@app/pages/IncomeRange';
 import CreateAssetToken from '@app/pages/CreateAssetToken/CreateAssetToken';
+import PersonalInformation from '@app/pages/PersonalInformation';
+import Address from '@app/pages/Address';
+import QuestionsList from '@app/pages/QuestionsList';
 // import OnboardingUserType from '@app/pages/OnboardingUserType';
 
 const Welcome = lazy(async () => await import('@app/pages/Welcome'));
@@ -16,9 +19,6 @@ const EmailCodeVerification = lazy(
   async () => await import('@app/pages/LoginEmailCodeVerification')
 );
 const SourceOfFunding = lazy(async () => await import('@app/pages/SourceOfFunding'));
-const PersonalInformation = lazy(async () => await import('@app/pages/PersonalInformation'));
-const Address = lazy(async () => await import('@app/pages/Address'));
-const QuestionsList = lazy(async () => await import('@app/pages/QuestionsList'));
 
 export const publicRoutes: IRouteConfig[] = [
   {
@@ -37,7 +37,8 @@ export const publicRoutes: IRouteConfig[] = [
   { path: RouteNames.PERSONAL_INFORMATION, element: PersonalInformation },
   { path: RouteNames.ADDRESS, element: Address },
   { path: RouteNames.QUESTIONS_LIST, element: QuestionsList },
-  { path: RouteNames.CREATE_ASSET_TOKEN, element: CreateAssetToken }
+  { path: RouteNames.CREATE_ASSET_TOKEN, element: CreateAssetToken },
+  { path: RouteNames.SOURCE_OF_FUNDING, element: SourceOfFunding }
 ];
 
 export const privateRoutes: IRouteConfig[] = [];

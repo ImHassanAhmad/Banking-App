@@ -1,10 +1,5 @@
 import { IssuerSignUpFlowSteps } from '@app/layout/IssuerSignUpStepper/types';
-import {
-  useOnBoardingDictionaryApiQuery,
-  useRegisterUserMutation
-} from '@app/store/api/onboarding';
-import { useAppDispatch } from '@app/store/hooks';
-import { setSupportedCountries } from '@app/store/slices/userData';
+import { useRegisterUserMutation } from '@app/store/api/onboarding';
 import {
   type Dispatch,
   type SetStateAction,
@@ -12,20 +7,19 @@ import {
   useState,
   useContext,
   type FC,
-  type PropsWithChildren,
-  useEffect
+  type PropsWithChildren
 } from 'react';
 import {
   type RegisterUserResponseDto,
   type RegisterUserRequestDto,
   type AuthFetchQueryError,
-  AuthErrorLevel
+  AuthErrorLevel,
+  onBoardType
 } from '@app/common/types';
 import { useAuthError } from './AuthErrorContext';
 import { type IErrorMessage } from 'types';
 import AuthErrorWrapper from '@app/layout/AuthErrorWrapper';
 import { enumToIndexRecord, indexToEnumKeyRecord } from '@app/utils/enum';
-import { onBoardType } from './InvestorSignUpStepperContext';
 
 export interface RegisterUserCallBackParams {
   payload: RegisterUserRequestDto;
@@ -43,10 +37,11 @@ export interface IssuerSignUpStepperContextProps {
   registerUser: (params: RegisterUserCallBackParams) => void;
   setUserId: Dispatch<SetStateAction<string>>;
   updateActiveStep: () => void;
+  goBack: (backStep: number) => void;
 }
 
 const IssuerSignUpStepperContext = createContext<IssuerSignUpStepperContextProps>({
-  activeStep: IssuerSignUpFlowSteps.BusinessDescription,
+  activeStep: IssuerSignUpFlowSteps.BusinessType,
   userId: '',
   error: {},
   isLoading: false,
@@ -92,11 +87,10 @@ export const IssuerSignUpStepperProvider: FC<PropsWithChildren> = ({ children })
     setActiveStep(nextActiveStep);
   };
 
-  // const updateActiveStep = (activeStep: IssuerSignUpFlowSteps): void => {
-  //   updateError(activeStep, undefined);
-
-  //   setActiveStep(activeStep);
-  // };
+  const goBack = (backStep: number): void => {
+    updateError(backStep, undefined);
+    setActiveStep(indexToEnumKeyRecord(IssuerSignUpFlowSteps)[backStep] as IssuerSignUpFlowSteps);
+  };
 
   const registerUser = ({
     payload,
@@ -129,18 +123,12 @@ export const IssuerSignUpStepperProvider: FC<PropsWithChildren> = ({ children })
     }
 
     setRegisterUserPayload({ ...registerUserPayload, ...payload });
-    const userPayload = {
-      vis: true,
-      visaTncAgreed: true,
-      wittyTncAgreed: true,
-      companyName: 'Temoral Company Name',
-      registrationNumber: Date.now().toString().slice(0, 10)
-    };
-    register({ ...apiPayload, ...userPayload })
+
+    register({ ...apiPayload })
       .unwrap()
       .then((response: RegisterUserResponseDto) => {
         onSuccess(response);
-        setRegisterUserPayload({ dryRun: true, ...userPayload });
+        setRegisterUserPayload({ dryRun: true });
       })
       .catch((error: AuthFetchQueryError) => {
         handleError(error, onSuccess, onError);
@@ -158,15 +146,17 @@ export const IssuerSignUpStepperProvider: FC<PropsWithChildren> = ({ children })
     onBoardType: onBoardType.Issuer,
     updateActiveStep,
     setUserId,
-    registerUser
+    registerUser,
+    goBack
   };
-  const dispatch = useAppDispatch();
-  const { data } = useOnBoardingDictionaryApiQuery();
 
-  useEffect(() => {
-    if (!data) return;
-    dispatch(setSupportedCountries(data));
-  }, [data]);
+  // const dispatch = useAppDispatch();
+  // const { data } = useOnBoardingDictionaryApiQuery();
+
+  // useEffect(() => {
+  //   if (!data) return;
+  //   dispatch(setSupportedCountries(data));
+  // }, [data]);
 
   return (
     <Provider value={value}>

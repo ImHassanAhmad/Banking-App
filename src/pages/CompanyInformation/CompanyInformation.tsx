@@ -4,33 +4,31 @@ import { useState, type FC } from 'react';
 import { RouteNames } from '@app/constants/routes';
 import { useTranslation } from 'react-i18next';
 import PrivacyTerms from '@app/components/PrivacyTerms';
-// import { EmailAlreadyRegisteredModal } from '@app/components/Modals';
 import { type SubmitHandler, useForm, type FieldError } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import BackButton from '@app/components/BackButton';
 import Textfield from '@app/components/Textfield';
 import Loader from '@app/components/Loader';
 import { SEARCH_ICON2 } from '@app/assets/images';
 import Calendar from '@app/components/Calendar';
-import { type SignUpStepperContextProps } from '@app/common/types';
+import { type WithSignUpStepperContextProps } from '@app/common/types';
 
 interface IForm {
   companyName: string;
   registrationNumber: string;
   dateOfRegister: string;
+  tradingName: string;
 }
 
 const translationNamespace = RouteNames.COMPANY_INFORMATION;
 
-const CompanyInformation: FC<SignUpStepperContextProps> = ({
+const CompanyInformation: FC<WithSignUpStepperContextProps> = ({
   updateActiveStep,
   registerUser,
   isLoading,
   userPayload
 }) => {
   const { t } = useTranslation();
-  // const [open, setOpen] = useState<boolean>(false);
   const [fieldErrors] = useState<FieldError>();
 
   const schema = yup
@@ -38,7 +36,8 @@ const CompanyInformation: FC<SignUpStepperContextProps> = ({
     .shape({
       companyName: yup.string().required(),
       registrationNumber: yup.string().required(),
-      dateOfRegister: yup.string().required()
+      dateOfRegister: yup.string().required(),
+      tradingName: yup.string().required()
     })
     .required();
 
@@ -49,9 +48,10 @@ const CompanyInformation: FC<SignUpStepperContextProps> = ({
     getValues
   } = useForm<IForm>({
     defaultValues: {
-      companyName: userPayload.companyName ?? '',
+      companyName: userPayload.companyName,
       registrationNumber: userPayload.registrationNumber,
-      dateOfRegister: userPayload.dateOfRegister
+      dateOfRegister: userPayload.dateOfRegister,
+      tradingName: userPayload.tradingName
     },
     mode: 'onBlur',
     resolver: yupResolver(schema)
@@ -63,6 +63,7 @@ const CompanyInformation: FC<SignUpStepperContextProps> = ({
         companyName: getValues('companyName'),
         registrationNumber: getValues('registrationNumber'),
         dateOfRegister: getValues('dateOfRegister'),
+        tradingName: getValues('tradingName'),
         dryRun: true
       },
       onSuccess: () => {
@@ -72,8 +73,7 @@ const CompanyInformation: FC<SignUpStepperContextProps> = ({
   };
 
   return (
-    <Stack mt={4}>
-      <BackButton />
+    <Stack mt={4} sx={{ width: '100%' }}>
       <Stack mt={4}>
         <Heading
           title={t(`${translationNamespace}.title`)}
@@ -132,6 +132,14 @@ const CompanyInformation: FC<SignUpStepperContextProps> = ({
                 name="dateOfRegister"
                 label={t(`${translationNamespace}.date_of_register`)}
                 errorValue={errors?.dateOfRegister ?? fieldErrors}
+              />
+
+              <Textfield
+                name="tradingName"
+                label={t(`${translationNamespace}.trading_name`)}
+                register={register}
+                errorValue={errors?.registrationNumber ?? fieldErrors}
+                fullWidth
               />
             </Stack>
 

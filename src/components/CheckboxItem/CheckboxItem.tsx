@@ -29,8 +29,8 @@ const checkboxStyle = (disabled: boolean | undefined): any => ({
 
 const CheckIcon: React.FC<CheckIconProps> = ({ icon }) => {
   return (
-    <Box sx={{ paddingLeft: '2px' }}>
-      <img src={icon} alt="" height={20} width={20} />
+    <Box>
+      <img src={icon} alt="unchecked" height={21} width={21} />
     </Box>
   );
 };

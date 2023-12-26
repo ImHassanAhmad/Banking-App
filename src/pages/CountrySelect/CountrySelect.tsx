@@ -1,20 +1,18 @@
-import { Grid, Stack, Button, CircularProgress } from '@mui/material';
+import { Stack, Button, CircularProgress } from '@mui/material';
 import Heading from '@app/components/Heading';
 import { useState, type FC } from 'react';
 import { RouteNames } from '@app/constants/routes';
 import { useTranslation } from 'react-i18next';
 import PrivacyTerms from '@app/components/PrivacyTerms';
 import { NotSupportedModal } from '@app/components/Modals';
-import { useAppSelector } from '@app/store/hooks';
-import { type CountrySelectOption, type SignUpStepperContextProps } from '@app/common/types';
+import { type WithSignUpStepperContextProps, type CountrySelectOption } from '@app/common/types';
 import { NOT_SUPPORTED_MODES } from '@app/constants';
-import BackButton from '@app/components/BackButton';
 import CountrySelector from '@app/components/CountrySelector';
 import { ALL_COUNTRIES } from '@app/constants/countries';
 
 const translationNamespace = RouteNames.COUNTRY;
 
-const CountrySelect: FC<SignUpStepperContextProps> = ({
+const CountrySelect: FC<WithSignUpStepperContextProps> = ({
   onBoardType,
   updateActiveStep,
   registerUser,
@@ -33,11 +31,9 @@ const CountrySelect: FC<SignUpStepperContextProps> = ({
       : undefined
   );
 
-  const {
-    supportedCountries: { supportedCountriesOfIncorporation }
-  } = useAppSelector((state) => state.userData);
   const submit = (): void => {
-    const isExist: boolean = supportedCountriesOfIncorporation.includes(country?.iso2) || true;
+    const isExist: boolean = true;
+    // supportedCountriesOfIncorporation.includes(country?.iso2);
     if (!isExist) {
       setOpen(true);
       return;
@@ -58,44 +54,42 @@ const CountrySelect: FC<SignUpStepperContextProps> = ({
   };
 
   return (
-    <Stack mt={4}>
-      <BackButton />
+    <Stack mt={4} sx={{ width: '100%' }}>
       <Stack mt={4}>
         <Heading
           title={t(`${translationNamespace}.${onBoardType}_title`)}
           subTitle={t(`${translationNamespace}.${onBoardType}_subtitle`)}
         />
       </Stack>
-      <Grid item xs={12} sm={10} md={8} lg={8}>
-        <Stack gap={3} mt={3}>
-          <CountrySelector
-            placeholder={t(`${translationNamespace}.placeholder`)}
-            onChange={countrySelectHandler}
-            selectedCountry={country}
-          />
-          <Stack width={'100%'} height={'5.4rem'} alignItems={'center'} justifyContent={'center'}>
-            {isLoading ? (
-              <CircularProgress />
-            ) : (
-              <Button
-                sx={{ textTransform: 'uppercase', width: '100%' }}
-                disabled={!country?.iso2 || isLoading}
-                onClick={submit}>
-                {t(`${translationNamespace}.continue`)}
-              </Button>
-            )}
-          </Stack>
-          <NotSupportedModal
-            open={open}
-            handleClose={() => {
-              setOpen(false);
-            }}
-            country={country}
-            mode={NOT_SUPPORTED_MODES.country}
-          />
-          <PrivacyTerms />
+
+      <Stack gap={3} mt={3}>
+        <CountrySelector
+          placeholder={t(`${translationNamespace}.placeholder`)}
+          onChange={countrySelectHandler}
+          selectedCountry={country}
+        />
+        <Stack width={'100%'} height={'5.4rem'} alignItems={'center'} justifyContent={'center'}>
+          {isLoading ? (
+            <CircularProgress />
+          ) : (
+            <Button
+              sx={{ textTransform: 'uppercase', width: '100%' }}
+              disabled={!country?.iso2 || isLoading}
+              onClick={submit}>
+              {t(`${translationNamespace}.continue`)}
+            </Button>
+          )}
         </Stack>
-      </Grid>
+        <NotSupportedModal
+          open={open}
+          handleClose={() => {
+            setOpen(false);
+          }}
+          country={country}
+          mode={NOT_SUPPORTED_MODES.country}
+        />
+        <PrivacyTerms />
+      </Stack>
     </Stack>
   );
 };

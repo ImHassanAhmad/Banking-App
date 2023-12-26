@@ -1,10 +1,5 @@
 import { InvestorSignUpFlowSteps } from '@app/layout/InvestorSignUpStepper/types';
-import {
-  useOnBoardingDictionaryApiQuery,
-  useRegisterUserMutation
-} from '@app/store/api/onboarding';
-import { useAppDispatch } from '@app/store/hooks';
-import { setSupportedCountries } from '@app/store/slices/userData';
+import { useRegisterUserMutation } from '@app/store/api/onboarding';
 import {
   type Dispatch,
   type SetStateAction,
@@ -12,14 +7,14 @@ import {
   useState,
   useContext,
   type FC,
-  type PropsWithChildren,
-  useEffect
+  type PropsWithChildren
 } from 'react';
 import {
   type RegisterUserResponseDto,
   type RegisterUserRequestDto,
   type AuthFetchQueryError,
-  AuthErrorLevel
+  AuthErrorLevel,
+  onBoardType
 } from '@app/common/types';
 import { useAuthError } from './AuthErrorContext';
 import { type IErrorMessage } from 'types';
@@ -32,11 +27,6 @@ export interface RegisterUserCallBackParams {
   onError?: (error: AuthFetchQueryError) => void;
 }
 
-export enum onBoardType {
-  Issuer = 'issuer',
-  Investor = 'investor'
-}
-
 export interface InvestorSignUpStepperContextProps {
   activeStep: InvestorSignUpFlowSteps;
   userId: string;
@@ -47,10 +37,11 @@ export interface InvestorSignUpStepperContextProps {
   registerUser: (params: RegisterUserCallBackParams) => void;
   setUserId: Dispatch<SetStateAction<string>>;
   updateActiveStep: () => void;
+  goBack: (backStep: number) => void;
 }
 
 const InvestorSignUpStepperContext = createContext<InvestorSignUpStepperContextProps>({
-  activeStep: InvestorSignUpFlowSteps.Country,
+  activeStep: InvestorSignUpFlowSteps.NameAndDateOfBirth,
   userId: '',
   error: {},
   isLoading: false,
@@ -60,7 +51,7 @@ const InvestorSignUpStepperContext = createContext<InvestorSignUpStepperContextP
 const { Provider } = InvestorSignUpStepperContext;
 
 export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [activeStep, setActiveStep] = useState(InvestorSignUpFlowSteps.Country);
+  const [activeStep, setActiveStep] = useState(InvestorSignUpFlowSteps.NameAndDateOfBirth);
   const [userId, setUserId] = useState('');
   const { updateError, findError } = useAuthError();
   const [registerUserPayload, setRegisterUserPayload] = useState<RegisterUserRequestDto>({
@@ -92,8 +83,14 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
     ] as InvestorSignUpFlowSteps;
 
     updateError(nextActiveStep, undefined);
-
     setActiveStep(nextActiveStep);
+  };
+
+  const goBack = (backStep: number): void => {
+    updateError(backStep, undefined);
+    setActiveStep(
+      indexToEnumKeyRecord(InvestorSignUpFlowSteps)[backStep] as InvestorSignUpFlowSteps
+    );
   };
 
   const registerUser = ({
@@ -104,9 +101,6 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
     const registerFormData = { ...registerUserPayload, ...payload };
     let apiPayload: RegisterUserRequestDto = { dryRun: true };
     switch (activeStep) {
-      case InvestorSignUpFlowSteps.Country:
-        apiPayload.countryOfIncorporation = registerFormData.countryOfIncorporation;
-        break;
       case InvestorSignUpFlowSteps.Email:
         apiPayload.email = registerFormData.email;
         break;
@@ -114,15 +108,9 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
         apiPayload.phoneNumberCountryCode = registerFormData.phoneNumberCountryCode;
         apiPayload.shortenPhoneNumber = registerFormData.shortenPhoneNumber;
         break;
-      case InvestorSignUpFlowSteps.AboutOurServices:
-        apiPayload.visaTncAgreed = registerFormData.visaTncAgreed;
-        apiPayload.wittyTncAgreed = registerFormData.wittyTncAgreed;
-        break;
       case InvestorSignUpFlowSteps.CreatePassword:
         apiPayload = { ...registerFormData, dryRun: false };
         break;
-      case InvestorSignUpFlowSteps.EmailVerify:
-      case InvestorSignUpFlowSteps.MobileVerify:
       default:
     }
 
@@ -156,15 +144,9 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
     onBoardType: onBoardType.Investor,
     updateActiveStep,
     setUserId,
-    registerUser
+    registerUser,
+    goBack
   };
-  const dispatch = useAppDispatch();
-  const { data } = useOnBoardingDictionaryApiQuery();
-
-  useEffect(() => {
-    if (!data) return;
-    dispatch(setSupportedCountries(data));
-  }, [data]);
 
   return (
     <Provider value={value}>
