@@ -38,6 +38,7 @@ export interface IssuerSignUpStepperContextProps {
   setUserId: Dispatch<SetStateAction<string>>;
   updateActiveStep: () => void;
   goBack: (backStep: number) => void;
+  updateUserPayload: (data: Partial<RegisterUserRequestDto>) => void;
 }
 
 const IssuerSignUpStepperContext = createContext<IssuerSignUpStepperContextProps>({
@@ -117,8 +118,6 @@ export const IssuerSignUpStepperProvider: FC<PropsWithChildren> = ({ children })
       case IssuerSignUpFlowSteps.CreatePassword:
         apiPayload = { ...registerFormData, dryRun: false };
         break;
-      case IssuerSignUpFlowSteps.EmailVerify:
-      case IssuerSignUpFlowSteps.MobileVerify:
       default:
     }
 
@@ -128,7 +127,8 @@ export const IssuerSignUpStepperProvider: FC<PropsWithChildren> = ({ children })
       .unwrap()
       .then((response: RegisterUserResponseDto) => {
         onSuccess(response);
-        setRegisterUserPayload({ dryRun: true });
+        if (activeStep === IssuerSignUpFlowSteps.CreatePassword)
+          setRegisterUserPayload({ dryRun: true });
       })
       .catch((error: AuthFetchQueryError) => {
         handleError(error, onSuccess, onError);
@@ -137,6 +137,11 @@ export const IssuerSignUpStepperProvider: FC<PropsWithChildren> = ({ children })
 
   const activeStepError = findError(activeStep);
 
+  const updateUserPayload = (data: Partial<RegisterUserRequestDto>): void => {
+    setRegisterUserPayload({ ...registerUserPayload, ...data });
+    console.log(registerUserPayload, data);
+  };
+
   const value = {
     activeStep,
     userId,
@@ -144,6 +149,7 @@ export const IssuerSignUpStepperProvider: FC<PropsWithChildren> = ({ children })
     userPayload: registerUserPayload,
     activeStepError: findError(activeStep),
     onBoardType: onBoardType.Issuer,
+    updateUserPayload,
     updateActiveStep,
     setUserId,
     registerUser,

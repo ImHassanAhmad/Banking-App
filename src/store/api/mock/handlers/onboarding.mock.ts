@@ -8,7 +8,7 @@ import { type HttpRequestResolverExtras } from 'msw/lib/core/handlers/HttpHandle
 import { type MockRegisterUserResponse } from '../constants/onboarding.const';
 import withErrorHandler from '../middleware/withErrorHandler';
 
-const registerUserScheme: yup.ObjectSchema<RegisterUserRequestDto> = yup.object().shape({
+const registerUserScheme = yup.object().shape({
   countryOfIncorporation: yup.mixed(),
   email: yup.string().email().required(),
   password: yup.string().min(13).required(),
