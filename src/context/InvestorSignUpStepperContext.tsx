@@ -11,10 +11,10 @@ import {
 } from 'react';
 import {
   type RegisterUserResponseDto,
-  type RegisterUserRequestDto,
   type AuthFetchQueryError,
   AuthErrorLevel,
-  onBoardType
+  onBoardType,
+  type InvestorUserRequestDto
 } from '@app/common/types';
 import { useAuthError } from './AuthErrorContext';
 import { type IErrorMessage } from 'types';
@@ -22,7 +22,7 @@ import AuthErrorWrapper from '@app/layout/AuthErrorWrapper';
 import { enumToIndexRecord, indexToEnumKeyRecord } from '@app/utils/enum';
 
 export interface RegisterUserCallBackParams {
-  payload: RegisterUserRequestDto;
+  payload: InvestorUserRequestDto;
   onSuccess: (response: RegisterUserResponseDto) => void;
   onError?: (error: AuthFetchQueryError) => void;
 }
@@ -31,7 +31,7 @@ export interface InvestorSignUpStepperContextProps {
   activeStep: InvestorSignUpFlowSteps;
   userId: string;
   isLoading: boolean;
-  userPayload: RegisterUserRequestDto;
+  userPayload: InvestorUserRequestDto;
   activeStepError?: IErrorMessage;
   onBoardType: onBoardType;
   registerUser: (params: RegisterUserCallBackParams) => void;
@@ -54,7 +54,7 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
   const [activeStep, setActiveStep] = useState(InvestorSignUpFlowSteps.NameAndDateOfBirth);
   const [userId, setUserId] = useState('');
   const { updateError, findError } = useAuthError();
-  const [registerUserPayload, setRegisterUserPayload] = useState<RegisterUserRequestDto>({
+  const [registerUserPayload, setRegisterUserPayload] = useState<InvestorUserRequestDto>({
     dryRun: true
   });
   const [register, { isLoading }] = useRegisterUserMutation();
@@ -99,14 +99,20 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
     onError = () => {}
   }: RegisterUserCallBackParams): void => {
     const registerFormData = { ...registerUserPayload, ...payload };
-    let apiPayload: RegisterUserRequestDto = { dryRun: true };
+    let apiPayload: InvestorUserRequestDto = { dryRun: true };
     switch (activeStep) {
       case InvestorSignUpFlowSteps.Email:
         apiPayload.email = registerFormData.email;
         break;
+      case InvestorSignUpFlowSteps.IncomeRange:
+        apiPayload.incomeRange = registerFormData.incomeRange;
+        break;
       case InvestorSignUpFlowSteps.Mobile:
         apiPayload.phoneNumberCountryCode = registerFormData.phoneNumberCountryCode;
         apiPayload.shortenPhoneNumber = registerFormData.shortenPhoneNumber;
+        break;
+      case InvestorSignUpFlowSteps.Questionaire:
+        apiPayload.wittyNews = registerFormData.wittyNews;
         break;
       case InvestorSignUpFlowSteps.CreatePassword:
         apiPayload = { ...registerFormData, dryRun: false };
@@ -119,6 +125,7 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
       vis: true,
       visaTncAgreed: true,
       wittyTncAgreed: true,
+      privacyPolicy: true,
       companyName: 'Temoral Company Name',
       registrationNumber: Date.now().toString().slice(0, 10)
     };

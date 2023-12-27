@@ -1,3 +1,4 @@
+/* eslint-disable no-constant-condition */
 import { getCountryFlag } from '@app/assets/flags';
 import {
   type WithSignUpStepperContextProps,
@@ -98,10 +99,12 @@ const PhoneNumberField: FC<WithSignUpStepperContextProps> = ({
   };
 
   const submit = (): void => {
-    if (!supportedPhoneCountries.includes(value)) {
-      setOpen(true);
-      return;
-    }
+    // TODO: fix this functionality from here
+    // if (!supportedPhoneCountries.includes(value)) {
+    //   setOpen(true);
+    //   return;
+    // }
+    console.log(supportedPhoneCountries);
     registerUser({
       payload: regUserPayload,
       onSuccess: () => {
@@ -175,7 +178,7 @@ const PhoneNumberField: FC<WithSignUpStepperContextProps> = ({
           </FormControl>
           <Button
             sx={{ textTransform: 'uppercase', width: '378px', height: '52px' }}
-            disabled={!isValid || supportedPhoneCountries.length === 0 || isLoading}
+            disabled={!isValid} // || supportedPhoneCountries.length === 0 || isLoading}
             onClick={submit}>
             {' '}
             {t(`${translationNamespace}.continue`)} {isLoading && <Loader />}

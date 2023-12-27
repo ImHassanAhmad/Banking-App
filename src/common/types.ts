@@ -49,6 +49,38 @@ export interface RegisterUserRequestDto extends CaptchaTokenRequest {
   dryRun: boolean;
 }
 
+export interface UserRequestDto extends CaptchaTokenRequest {
+  countryOfIncorporation?: TCountryCode;
+  email?: string;
+  password?: string;
+  shortenPhoneNumber?: string;
+  phoneNumberCountryCode?: string;
+  visaTncAgreed?: boolean;
+  wittyTncAgreed?: boolean;
+  privacyPolicy?: boolean;
+  wittyNews?: boolean;
+  dryRun: boolean;
+}
+
+export interface InvestorUserRequestDto extends UserRequestDto {
+  postalCode?: number;
+  city?: string;
+  street?: string;
+  houseNo?: string;
+  incomeRange?: string;
+  priceAndLimit?: boolean;
+}
+
+export interface IssuerUserRequestDto extends UserRequestDto {
+  companyName?: string;
+  registrationNumber?: string;
+  dateOfRegister?: string;
+  tradingName?: string;
+  isLegalRepresentative?: boolean;
+  businessType?: BusinessTypes;
+  businessCategory?: BusinessCategoryType;
+}
+
 export type CountryWithIcon = ICountryData & { icon: string };
 export type CountrySelectOption = Pick<CountryWithIcon, 'name' | 'iso2' | 'icon'>;
 export interface RegisterUser {

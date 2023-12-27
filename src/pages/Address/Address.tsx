@@ -7,7 +7,7 @@ import { type SubmitHandler, useForm, type FieldError } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Textfield from '@app/components/Textfield';
-import { type WithSignUpStepperContextProps } from '@app/common/types';
+import { type AuthFetchQueryError, type WithSignUpStepperContextProps } from '@app/common/types';
 
 interface IForm {
   postalCode: string;
@@ -22,7 +22,7 @@ const Address: FC<WithSignUpStepperContextProps> = ({
   updateActiveStep,
   registerUser,
   isLoading,
-  userPayload
+  userPayload: { postalCode, city, street, houseNo }
 }) => {
   const { t } = useTranslation();
   const [fieldErrors] = useState<FieldError>();
@@ -40,16 +40,23 @@ const Address: FC<WithSignUpStepperContextProps> = ({
   const {
     register,
     handleSubmit,
-    formState: { errors },
-    getValues
+    formState: { errors }
   } = useForm<IForm>({
     mode: 'onBlur',
     resolver: yupResolver(schema)
   });
 
-  const onSubmit: SubmitHandler<IForm> = async () => {
-    console.log('data', getValues());
-    updateActiveStep();
+  const onSubmit: SubmitHandler<IForm> = async (userPayload: IForm) => {
+    registerUser({
+      payload: {
+        ...userPayload,
+        dryRun: true
+      },
+      onSuccess: () => {
+        updateActiveStep();
+      },
+      onError: ({ message }: AuthFetchQueryError) => {}
+    });
   };
 
   return (
@@ -67,6 +74,7 @@ const Address: FC<WithSignUpStepperContextProps> = ({
               name="postalCode"
               label={t(`${translationNamespace}.postal_code`)}
               register={register}
+              defaultValue={postalCode}
               errorValue={errors?.postalCode ?? fieldErrors}
               fullWidth
             />
@@ -75,6 +83,7 @@ const Address: FC<WithSignUpStepperContextProps> = ({
               name="city"
               label={t(`${translationNamespace}.city`)}
               register={register}
+              defaultValue={city}
               errorValue={errors?.city ?? fieldErrors}
               fullWidth
             />
@@ -83,6 +92,7 @@ const Address: FC<WithSignUpStepperContextProps> = ({
               name="street"
               label={t(`${translationNamespace}.street`)}
               register={register}
+              defaultValue={street}
               errorValue={errors?.street ?? fieldErrors}
               fullWidth
             />
@@ -91,6 +101,7 @@ const Address: FC<WithSignUpStepperContextProps> = ({
               name="houseNo"
               label={t(`${translationNamespace}.houseNo`)}
               register={register}
+              defaultValue={houseNo}
               errorValue={errors?.houseNo ?? fieldErrors}
               fullWidth
             />

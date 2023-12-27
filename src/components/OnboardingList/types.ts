@@ -3,6 +3,7 @@ export interface OnboardingListProps {
   onItemClick: (selectedItem: string) => void;
   title: string;
   subtitle: string;
+  defaultValue?: string;
 }
 
 export interface ICategories {

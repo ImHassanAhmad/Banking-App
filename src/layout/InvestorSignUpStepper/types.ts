@@ -7,8 +7,11 @@ export enum InvestorSignUpFlowSteps {
   Mobile = 'Mobile',
   IncomeRange = 'IncomeRange',
   Questionaire = 'Questionaire',
-  UploadDocument = 'UploadDocument',
-  CreatePassword = 'CreatePassword'
+  // TODO: has to be discuss
+  // UploadDocument = 'UploadDocument',
+  CreatePassword = 'CreatePassword',
+  EmailVerify = 'EmailVerify',
+  MobileVerify = 'MobileVerify'
 }
 
 export const InvestorSignUpFlowStepsIndices = enumToIndexRecord(InvestorSignUpFlowSteps);
