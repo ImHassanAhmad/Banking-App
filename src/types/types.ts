@@ -1,8 +1,11 @@
 import { type AuthErrorLevel } from '@app/common/types';
 import { type UseFormRegister, type FieldError } from 'react-hook-form';
 
-export interface ITextFieldProps {
+export interface UseFormField {
   register?: UseFormRegister<any>;
+}
+
+export interface ITextFieldProps extends UseFormField {
   name?: string;
   errorValue?: FieldError | undefined;
   noPopper?: boolean;
