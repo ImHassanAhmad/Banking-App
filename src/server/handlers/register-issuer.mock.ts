@@ -54,18 +54,9 @@ const registerUIssuerHandler: HttpHandler = http.post<
 
       if (rest.email) {
         const doesExist = await userService.getById(rest.email);
+
         if (doesExist) {
-          return HttpResponse.json(
-            {
-              errors: [
-                {
-                  fieldName: 'email',
-                  errorMessage: 'Email is already in-use'
-                }
-              ]
-            },
-            { status: 401 }
-          );
+          throw new yup.ValidationError('Email is already in-use', null, 'email');
         }
       }
 
@@ -80,29 +71,21 @@ const registerUIssuerHandler: HttpHandler = http.post<
   )
 );
 
-const otpHandler = async ({
-  request
-}: ResponseResolverInfo<HttpRequestResolverExtras<PathParams>, VerifyPhoneRequestDto>): Promise<
-  StrictResponse<MockRegisterUserResponse>
-> => {
-  const requestData: VerifyPhoneRequestDto = await request.json();
+const otpHandler = withErrorHandler(
+  async ({
+    request
+  }: ResponseResolverInfo<HttpRequestResolverExtras<PathParams>, VerifyPhoneRequestDto>): Promise<
+    StrictResponse<MockRegisterUserResponse>
+  > => {
+    const requestData: VerifyPhoneRequestDto = await request.json();
 
-  otpCodeSceheme.validateSync(requestData);
-  const { otpCode } = requestData;
-  if (otpCode !== '444444')
-    return HttpResponse.json(
-      {
-        errors: [
-          {
-            fieldName: 'otpCode',
-            errorMessage: 'Entered otp is not valid'
-          }
-        ]
-      },
-      { status: 400 }
-    );
-  return HttpResponse.json({});
-};
+    otpCodeSceheme.validateSync(requestData);
+    const { otpCode } = requestData;
+    if (otpCode !== '444444')
+      throw new yup.ValidationError('Entered otp is not valid', null, 'otpCode');
+    return HttpResponse.json({});
+  }
+);
 
 const verifyEmailHandler: HttpHandler = http.post<
   PathParams,
