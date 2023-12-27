@@ -1,7 +1,9 @@
 import userDataSlice from './userData';
 import createAssetTokenSlice from './CreateAssetToken';
+import postOnboardingSlice from './postOnboarding';
 
 export const reducerSlices = [
-  { name: 'userData', reducer: userDataSlice },
+  { name: userDataSlice.name, reducer: userDataSlice.reducer },
+  { name: postOnboardingSlice.name, reducer: postOnboardingSlice.reducer },
   { name: createAssetTokenSlice.name, reducer: createAssetTokenSlice.reducer }
 ];

@@ -28,5 +28,6 @@ export const RouteNames = {
   ADDRESS: 'address',
   QUESTIONS_LIST: 'questions-list',
   CREATE_ASSET_TOKEN: 'create-asset-token',
-  LEGAL_REPRESENTATIVE: 'legal-representative'
+  LEGAL_REPRESENTATIVE: 'legal-representative',
+  POST_ONBOARDING: 'post-onboarding'
 } as const;

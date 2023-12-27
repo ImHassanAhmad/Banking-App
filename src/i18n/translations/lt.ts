@@ -36,7 +36,8 @@ const lt: LanguageResource = {
   'register-issuer': {},
   'legal-representative': {},
   'us-person': {},
-  'create-asset-token': {}
+  'create-asset-token': {},
+  'post-onboarding': {}
 };
 
 export default lt;

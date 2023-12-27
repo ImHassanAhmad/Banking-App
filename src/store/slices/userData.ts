@@ -31,4 +31,4 @@ export const userDataSlice = createSlice({
 
 export const { setThemeMode, setSupportedCountries } = userDataSlice.actions;
 
-export default userDataSlice.reducer;
+export default userDataSlice;
