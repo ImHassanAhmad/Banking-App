@@ -1,10 +1,8 @@
 import { type HttpHandler, HttpResponse, http, type PathParams, type StrictResponse } from 'msw';
-import constants from '../constants';
 import {
   type VerifyLoginOTPRequestDto,
   type LoginRequest,
-  type ResendLoginOtpRequestDto,
-  type ResendLoginOtpResponseDto
+  type ResendLoginOtpRequestDto
 } from 'types';
 import { userService } from '../database/service';
 import * as yup from 'yup';
@@ -17,8 +15,7 @@ import {
 import { type HttpRequestResolverExtras } from 'msw/lib/core/handlers/HttpHandler';
 import { type ResponseResolverInfo } from 'msw/lib/core/handlers/RequestHandler';
 import { INVALID_OTP_CODE } from '../constants/common.const';
-
-let INCORRECT_LOGINS_COUNT: number = 0;
+import { type UserEntity } from '../database/entity';
 
 const loginScheme: yup.ObjectSchema<LoginRequest> = yup.object().shape({
   email: yup.string().email().required(),
@@ -26,15 +23,8 @@ const loginScheme: yup.ObjectSchema<LoginRequest> = yup.object().shape({
   captchaToken: yup.string().required()
 });
 
-const otpIdScheme: yup.ObjectSchema<ResendLoginOtpRequestDto> = yup.object().shape({
-  otpId: yup.string().required()
-});
-
 const otpCodeSceheme: yup.ObjectSchema<VerifyLoginOTPRequestDto> = yup.object().shape({
-  otpId: yup
-    .string()
-    .required()
-    .matches(/444444/g, INVALID_OTP_CODE),
+  otpId: yup.string().required(),
   otpCode: yup.string().required()
 });
 
@@ -47,18 +37,14 @@ const loginHandler: HttpHandler = http.post<PathParams, LoginRequest, MockLoginR
       StrictResponse<MockLoginResponse>
     > => {
       const loginRequestPayload: LoginRequest = await request.json();
-      loginScheme.validateSync(loginRequestPayload);
+      const { email, password } = loginScheme.validateSync(loginRequestPayload);
 
-      INCORRECT_LOGINS_COUNT += 1;
-
-      if (INCORRECT_LOGINS_COUNT > 5 && INCORRECT_LOGINS_COUNT < 10)
-        throw new ApiError(constants.loginConstants.TOO_MANY_INVALID_LOGIN_ATTEMPTS);
-
-      if (INCORRECT_LOGINS_COUNT > 10) {
-        throw new ApiError(constants.commonConstants.SOMETHING_WENT_WRONG, 500);
+      const user = await userService.getById(email);
+      if (!user || user.password !== password) {
+        throw new ApiError('Invalid Credentials', 400);
       }
 
-      throw new ApiError(constants.loginConstants.INCORRECT_LOGIN_RESPONSE, 400);
+      return HttpResponse.json({ otpId: email });
     }
   )
 );
@@ -75,20 +61,20 @@ const verifyLoginHandler: HttpHandler = http.post<
     }: ResponseResolverInfo<
       HttpRequestResolverExtras<PathParams>,
       VerifyLoginOTPRequestDto
-    >): Promise<StrictResponse<MockVerifyLoginOtpResponse>> => {
+    >): Promise<StrictResponse<UserEntity>> => {
       const verifyLoginRequestPayload: VerifyLoginOTPRequestDto = await request.json();
       otpCodeSceheme.validateSync(verifyLoginRequestPayload);
 
-      const { otpId } = verifyLoginRequestPayload;
+      const { otpId, otpCode } = verifyLoginRequestPayload;
 
-      const user: any = await userService.getById(otpId);
-      if (user?.length) {
-        return HttpResponse.json(user, {
-          status: 200
-        });
+      console.log(otpId);
+
+      if (otpCode === '444444') {
+        const user = await userService.getById(otpId);
+        return HttpResponse.json(user);
       }
 
-      throw new yup.ValidationError(constants.commonConstants.INVALID_OTP_CODE, null, 'otpCode');
+      throw new yup.ValidationError(INVALID_OTP_CODE, null, 'otpCode');
     }
   )
 );
@@ -105,13 +91,8 @@ const resendLoginHandler: HttpHandler = http.post<
     }: ResponseResolverInfo<
       HttpRequestResolverExtras<PathParams>,
       ResendLoginOtpRequestDto
-    >): Promise<StrictResponse<MockResendOtpCodeResponse>> => {
-      const resendOtpRequestPayload: ResendLoginOtpRequestDto = await request.json();
-      otpIdScheme.validateSync(resendOtpRequestPayload);
-      return HttpResponse.json<ResendLoginOtpResponseDto>(
-        constants.loginConstants.NEW_OTP_ID_RESPONSE,
-        { status: 200 }
-      );
+    >): Promise<StrictResponse<any>> => {
+      return HttpResponse.json({});
     }
   )
 );
