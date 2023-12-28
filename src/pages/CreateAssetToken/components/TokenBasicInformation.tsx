@@ -32,8 +32,14 @@ const TokenBasicInformation: FC<ITokenBasicInfoProps> = ({ next }) => {
   const schema = yup.object().shape({
     tokenName: yup.string().required('name is required'),
     tokenSymbol: yup.string().required('symbol is required'),
-    totalSupply: yup.number().required('total supply is required'),
-    numberOfDecimal: yup.number().required('No. of Decimal is required')
+    totalSupply: yup
+      .number()
+      .required('total supply is required')
+      .min(1, 'Number of Decimal places must be greater than 0'),
+    numberOfDecimal: yup
+      .number()
+      .required('No. of Decimal is required')
+      .min(1, 'Number of Decimal places must be greater than 0')
   });
 
   const {

@@ -7,7 +7,7 @@ import { RouteNames } from '@app/constants/routes';
 import { useTranslation } from 'react-i18next';
 import AssetTokenConfigurations from './components/AssetTokenConfiguration';
 import { AssetTokenPrice } from './components/AssetTokenPrice';
-import { CreateAssetFlows, CreateAssetTokenFlowSteps, type DataType } from './types';
+import { CreateAssetFlows, CreateAssetTokenFlowSteps, type CreateAssetTokenType } from './types';
 import { indexToEnumKeyRecord } from '@app/utils/enum';
 import { useAppDispatch } from '@app/store/hooks';
 import {
@@ -26,7 +26,7 @@ const CreateAssetToken: React.FC = () => {
 
   const dispatch = useAppDispatch();
 
-  const next = (data: DataType): void => {
+  const next = (data: CreateAssetTokenType): void => {
     console.log('here is data', data);
     if (activeStepIndex < steps.length - 1) {
       setActiveStepIndex((prevStep) => prevStep + 1);
@@ -34,14 +34,14 @@ const CreateAssetToken: React.FC = () => {
     retainState(data);
   };
 
-  const back = (data: DataType): void => {
+  const back = (data: CreateAssetTokenType): void => {
     retainState(data);
     setActiveStepIndex((prevStep) => prevStep - 1);
   };
 
   const submit = (): void => {};
 
-  const retainState = (data: DataType): void => {
+  const retainState = (data: CreateAssetTokenType): void => {
     switch (currentStep) {
       case CreateAssetTokenFlowSteps.tokenBasicInformation:
         dispatch(setTokenBasicInfo({ ...data }));

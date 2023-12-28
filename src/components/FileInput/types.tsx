@@ -5,6 +5,8 @@ export interface FileInputProps {
   handleFileChange: (event: ChangeEvent<HTMLInputElement>) => void;
   handleUpload: () => void;
   label?: string;
+  required?: boolean;
+  error?: string;
 }
 
 export interface FileDisplayProps {

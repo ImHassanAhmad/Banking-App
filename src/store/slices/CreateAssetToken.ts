@@ -5,15 +5,13 @@ import type {
 } from '@app/pages/CreateAssetToken/types';
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState: {
-  tokenBasicInfo: ITokenBasicInfoForm | null;
-  tokenConfig: ITokenConfigurationForm | null;
-  tokenPrice: ITokenPriceForm | null;
-} = {
-  tokenBasicInfo: null,
-  tokenConfig: null,
-  tokenPrice: null
-};
+interface ICreateAssetTokenState {
+  tokenBasicInfo?: ITokenBasicInfoForm;
+  tokenConfig?: ITokenConfigurationForm;
+  tokenPrice?: ITokenPriceForm;
+}
+
+const initialState: ICreateAssetTokenState = {};
 
 export const createAssetTokenSlice = createSlice({
   name: 'createAssetToken',

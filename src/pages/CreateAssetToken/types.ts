@@ -69,7 +69,7 @@ export interface ITokenPriceForm {
   buyPrice: number;
 }
 
-export type DataType =
+export type CreateAssetTokenType =
   | ITokenBasicInfoForm
   | ITokenConfigurationForm
   | ITokenPriceForm
