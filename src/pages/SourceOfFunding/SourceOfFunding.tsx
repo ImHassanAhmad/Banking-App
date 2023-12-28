@@ -5,7 +5,8 @@ import FundingSourceItem from './components/FundingSourceItem';
 import { RouteNames } from '@app/constants/routes';
 import Heading from '@app/components/Heading';
 import { type CheckList } from './types';
-import { FUNDING_SOURCES } from './constants';
+import { FUNDING_SOURCES } from '@app/constants/funding-source';
+import { type WithSignUpStepperContextProps } from '@app/common/types';
 
 const sourceOfFundingNamespace = RouteNames.SOURCE_OF_FUNDING;
 
@@ -14,9 +15,11 @@ const CHECK_LIST: CheckList = FUNDING_SOURCES.reduce<CheckList>((obj, key) => {
   return obj;
 }, {});
 
-const SourceOfFunding: React.FC = () => {
+const SourceOfFunding: React.FC<WithSignUpStepperContextProps> = ({
+  updateUserPayload,
+  updateActiveStep
+}) => {
   const { t } = useTranslation();
-  // const { updateActiveStep } = useSignUpStepper();
   const [checkList, setCheckList] = useState<CheckList>(CHECK_LIST);
 
   const isAtLeastOneChecked = (): boolean =>
@@ -56,7 +59,10 @@ const SourceOfFunding: React.FC = () => {
           sx={{ marginTop: '20px', width: '436px' }}
           type="submit"
           onClick={() => {
-            // Handle click event
+            updateUserPayload({
+              fundingSources: Object.keys(checkList).filter((key) => checkList[key].checked)
+            });
+            updateActiveStep();
           }}>
           {t(`${sourceOfFundingNamespace}.continue`)}
         </Button>

@@ -5,7 +5,7 @@ import Heading from '@app/components/Heading';
 import { RouteNames } from '@app/constants/routes';
 import CheckboxItem from '@app/components/CheckboxItem';
 import { type CheckListType } from '@app/components/CheckboxItem/types';
-import { type AuthFetchQueryError, type WithSignUpStepperContextProps } from '@app/common/types';
+import { type WithSignUpStepperContextProps } from '@app/common/types';
 
 const questionsListsNamespace = RouteNames.QUESTIONS_LIST;
 
@@ -21,14 +21,14 @@ const QuestionsList: FC<WithSignUpStepperContextProps> = ({
   updateActiveStep,
   registerUser,
   isLoading,
-  userPayload: { wittyNews }
+  userPayload: { wittyNews },
+  updateUserPayload
 }) => {
   const { t } = useTranslation();
   const [checkList, setCheckList] = useState<CheckListType>({
     ...CHECK_LIST,
     news_promotions: { ...CHECK_LIST.news_promotions, checked: wittyNews }
   });
-
   const isAllNonOptionalChecked = Object.values(checkList).every(({ optional, checked }) => {
     if (!optional) return checked;
 
@@ -44,16 +44,6 @@ const QuestionsList: FC<WithSignUpStepperContextProps> = ({
       }
     }));
   }, []);
-
-  const submit = (): void => {
-    registerUser({
-      payload: { wittyNews: checkList.news_promotions.checked },
-      onSuccess: () => {
-        updateActiveStep();
-      },
-      onError: ({ message }: AuthFetchQueryError) => {}
-    });
-  };
 
   return (
     <Stack sx={{ width: '100%' }}>
@@ -83,7 +73,8 @@ const QuestionsList: FC<WithSignUpStepperContextProps> = ({
               disabled={!isAllNonOptionalChecked}
               sx={{ textTransform: 'uppercase', marginTop: '2rem' }}
               onClick={() => {
-                submit();
+                updateUserPayload({ wittyNews: checkList.news_promotions.checked });
+                updateActiveStep();
               }}
               fullWidth>
               {t(`${questionsListsNamespace}.continue`)}

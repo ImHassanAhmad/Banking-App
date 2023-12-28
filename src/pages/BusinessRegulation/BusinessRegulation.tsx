@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 const transactionResource = RouteNames.BUSINESS_REGULATION;
 
 const BusinessRegulation: FC<WithSignUpStepperContextProps> = ({
-  activeStep,
+  updateUserPayload,
   updateActiveStep
 }) => {
   const { t } = useTranslation();
@@ -17,7 +17,10 @@ const BusinessRegulation: FC<WithSignUpStepperContextProps> = ({
       title={t(`${transactionResource}.title`)}
       subtitle=""
       itemList={BINARY_ANSWER_OPTIONS}
-      onItemClick={() => {}}
+      onItemClick={(selected) => {
+        updateUserPayload({ isBusinessRegulated: selected === 'Yes' });
+        updateActiveStep();
+      }}
     />
   );
 };

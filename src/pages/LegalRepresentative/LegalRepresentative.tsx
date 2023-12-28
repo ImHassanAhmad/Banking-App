@@ -8,16 +8,20 @@ import { useTranslation } from 'react-i18next';
 const transactionResource = RouteNames.LEGAL_REPRESENTATIVE;
 
 const LegalRepresentative: FC<WithSignUpStepperContextProps> = ({
-  activeStep,
+  updateUserPayload,
   updateActiveStep
 }) => {
   const { t } = useTranslation();
+
   return (
     <OnboardingList
       title={t(`${transactionResource}.title`)}
       subtitle=""
       itemList={BINARY_ANSWER_OPTIONS}
-      onItemClick={() => {}}
+      onItemClick={(selected) => {
+        updateUserPayload({ isLegalRepresentative: selected === 'Yes' });
+        updateActiveStep();
+      }}
     />
   );
 };

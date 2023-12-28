@@ -43,18 +43,22 @@ export interface RegisterUserRequestDto extends CaptchaTokenRequest {
   registrationNumber?: string;
   dateOfRegister?: string;
   tradingName?: string;
+  isBusinessRegulated?: boolean;
   isLegalRepresentative?: boolean;
   businessType?: BusinessTypes;
   businessCategory?: BusinessCategoryType;
+  businessSubCategory?: string;
+  businessRevenue?: string;
+  fundingSources?: string[];
   dryRun: boolean;
 }
 
 export interface UserRequestDto extends CaptchaTokenRequest {
-  countryOfIncorporation?: TCountryCode;
   email?: string;
   password?: string;
   shortenPhoneNumber?: string;
   phoneNumberCountryCode?: string;
+  vis?: boolean;
   visaTncAgreed?: boolean;
   wittyTncAgreed?: boolean;
   privacyPolicy?: boolean;
@@ -63,6 +67,10 @@ export interface UserRequestDto extends CaptchaTokenRequest {
 }
 
 export interface InvestorUserRequestDto extends UserRequestDto {
+  firstName?: string;
+  lastName?: string;
+  dateOfBirth?: string;
+  countryOfIncorporation?: TCountryCode;
   postalCode?: number;
   city?: string;
   street?: string;
@@ -72,13 +80,18 @@ export interface InvestorUserRequestDto extends UserRequestDto {
 }
 
 export interface IssuerUserRequestDto extends UserRequestDto {
+  countryOfIncorporation?: TCountryCode;
   companyName?: string;
   registrationNumber?: string;
   dateOfRegister?: string;
   tradingName?: string;
+  isBusinessRegulated?: boolean;
   isLegalRepresentative?: boolean;
   businessType?: BusinessTypes;
   businessCategory?: BusinessCategoryType;
+  businessSubCategory?: string;
+  businessRevenue?: string;
+  fundingSources?: string[];
 }
 
 export type CountryWithIcon = ICountryData & { icon: string };

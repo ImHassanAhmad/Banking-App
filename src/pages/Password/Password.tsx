@@ -14,7 +14,6 @@ import {
   type UserRequestDto
 } from '@app/common/types';
 import Loader from '@app/components/Loader';
-import ReCAPTCHA from 'react-google-recaptcha';
 import WarningAlert from '@app/components/WarningAlert';
 
 const translationNamespace = RouteNames.CREATE_PASSWORD;
@@ -30,8 +29,8 @@ const Password: FC<WithSignUpStepperContextProps> = ({
   const [regUserPayload, setRegUserPayload] = useState<UserRequestDto>({ dryRun: true });
   const [errors, setFieldErrors] = useState<FieldError>();
 
-  const reRef = React.createRef<ReCAPTCHA>();
-  const SiteKey = process.env.REACT_APP_GOOGLE_RECAPTHA_SITEKEY;
+  // const reRef = React.createRef<ReCAPTCHA>();
+  // const SiteKey = process.env.REACT_APP_GOOGLE_RECAPTHA_SITEKEY;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setRegUserPayload({
@@ -41,15 +40,15 @@ const Password: FC<WithSignUpStepperContextProps> = ({
   };
 
   const submit = async (): Promise<void> => {
-    // TODO make recaptcha token validation functional
-    const captchaRef = reRef.current;
-    const captchaToken = await captchaRef?.executeAsync();
+    // // TODO make recaptcha token validation functional
+    // const captchaRef = reRef.current;
+    // const captchaToken = await captchaRef?.executeAsync();
 
     // Reset the reCAPTCHA response to allow it to be executed again
-    captchaRef?.reset();
+    // captchaRef?.reset();
 
     registerUser({
-      payload: { ...regUserPayload, captchaToken },
+      payload: { ...regUserPayload },
       onSuccess: ({ userId }: RegisterUserResponseDto) => {
         setUserId(userId);
         updateActiveStep();
@@ -80,7 +79,7 @@ const Password: FC<WithSignUpStepperContextProps> = ({
         {error?.errorLevel === AuthErrorLevel.Account && (
           <WarningAlert message={error?.message ?? ''} />
         )}
-        <ReCAPTCHA sitekey={SiteKey ?? ''} size="invisible" ref={reRef} />
+        {/* <ReCAPTCHA sitekey={SiteKey ?? ''} size="invisible" ref={reRef} /> */}
         <Button
           startIcon={<Box component="img" src={Subtract} alt="auth" />}
           sx={{ textTransform: 'uppercase' }}

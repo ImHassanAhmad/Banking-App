@@ -1,4 +1,4 @@
-import { type FieldError } from 'react-hook-form';
+import { type Control, type FieldError } from 'react-hook-form';
 
 export interface CalendarProps {
   name: string;
@@ -6,4 +6,5 @@ export interface CalendarProps {
   defaultValue?: string;
   handleChange?: (date: any) => void;
   errorValue?: FieldError | undefined;
+  control: Control<any, any>;
 }

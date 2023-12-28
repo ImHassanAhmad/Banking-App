@@ -38,6 +38,7 @@ const PersonalInformation: FC<WithSignUpStepperContextProps> = ({
 
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors },
     setValue
@@ -45,8 +46,6 @@ const PersonalInformation: FC<WithSignUpStepperContextProps> = ({
     mode: 'onBlur',
     resolver: yupResolver(schema)
   });
-
-  console.log('dateOfBirth ', dateOfBirth);
 
   const onSubmit: SubmitHandler<IForm> = async (data: IForm) => {
     registerUser({
@@ -94,6 +93,7 @@ const PersonalInformation: FC<WithSignUpStepperContextProps> = ({
 
             <Calendar
               name="dateOfBirth"
+              control={control}
               label={t(`${translationNamespace}.DOB`)}
               defaultValue={dateOfBirth}
               handleChange={(newValue) => {

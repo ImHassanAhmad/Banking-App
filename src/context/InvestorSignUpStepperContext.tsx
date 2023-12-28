@@ -1,5 +1,5 @@
 import { InvestorSignUpFlowSteps } from '@app/layout/InvestorSignUpStepper/types';
-import { useRegisterUserMutation } from '@app/store/api/onboarding';
+import { useRegisterInvestorMutation } from '@app/store/api/onboarding';
 import {
   type Dispatch,
   type SetStateAction,
@@ -38,6 +38,7 @@ export interface InvestorSignUpStepperContextProps {
   setUserId: Dispatch<SetStateAction<string>>;
   updateActiveStep: () => void;
   goBack: (backStep: number) => void;
+  updateUserPayload: (data: Partial<InvestorUserRequestDto>) => void;
 }
 
 const InvestorSignUpStepperContext = createContext<InvestorSignUpStepperContextProps>({
@@ -57,7 +58,7 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
   const [registerUserPayload, setRegisterUserPayload] = useState<InvestorUserRequestDto>({
     dryRun: true
   });
-  const [register, { isLoading }] = useRegisterUserMutation();
+  const [register, { isLoading }] = useRegisterInvestorMutation();
   const handleError = (
     { message, errorLevel }: AuthFetchQueryError,
     onSuccess: (response: RegisterUserResponseDto) => void,
@@ -92,7 +93,7 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
       indexToEnumKeyRecord(InvestorSignUpFlowSteps)[backStep] as InvestorSignUpFlowSteps
     );
   };
-
+  console.log('tester payload ', registerUserPayload);
   const registerUser = ({
     payload,
     onSuccess,
@@ -101,6 +102,17 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
     const registerFormData = { ...registerUserPayload, ...payload };
     let apiPayload: InvestorUserRequestDto = { dryRun: true };
     switch (activeStep) {
+      case InvestorSignUpFlowSteps.NameAndDateOfBirth:
+        apiPayload.firstName = registerFormData.firstName;
+        apiPayload.lastName = registerFormData.lastName;
+        apiPayload.dateOfBirth = registerFormData.dateOfBirth;
+        break;
+      case InvestorSignUpFlowSteps.Address:
+        apiPayload.postalCode = registerFormData.postalCode;
+        apiPayload.city = registerFormData.city;
+        apiPayload.street = registerFormData.street;
+        apiPayload.houseNo = registerFormData.houseNo;
+        break;
       case InvestorSignUpFlowSteps.Email:
         apiPayload.email = registerFormData.email;
         break;
@@ -119,15 +131,12 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
         break;
       default:
     }
-
     setRegisterUserPayload({ ...registerUserPayload, ...payload });
     const userPayload = {
       vis: true,
       visaTncAgreed: true,
       wittyTncAgreed: true,
-      privacyPolicy: true,
-      companyName: 'Temoral Company Name',
-      registrationNumber: Date.now().toString().slice(0, 10)
+      privacyPolicy: true
     };
     register({ ...apiPayload, ...userPayload })
       .unwrap()
@@ -142,6 +151,10 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
 
   const activeStepError = findError(activeStep);
 
+  const updateUserPayload = (data: Partial<InvestorUserRequestDto>): void => {
+    setRegisterUserPayload({ ...registerUserPayload, ...data });
+  };
+
   const value = {
     activeStep,
     userId,
@@ -152,7 +165,8 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
     updateActiveStep,
     setUserId,
     registerUser,
-    goBack
+    goBack,
+    updateUserPayload
   };
 
   return (
