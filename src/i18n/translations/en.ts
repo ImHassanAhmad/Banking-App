@@ -275,6 +275,19 @@ const en: LanguageResource = {
     other: 'Other',
     continue: 'Continue'
   },
+  'source-of-income': {
+    title: 'Source of Income',
+    subtitle:
+      'Please tell us what is the source of funds that you will use to funds your W1tty Account',
+    revenue: 'Revenue',
+    loans_credits: 'Loans/credits',
+    donations: 'Donations',
+    dividend_from_branches: 'Dividend from branches',
+    financial_support: 'Financial support from state / international bodies',
+    sales_of_goods: 'Sales of goods',
+    other: 'Other',
+    continue: 'Continue'
+  },
   '*': {
     title: '404',
     sub_title: 'Page Not Found',
@@ -300,6 +313,10 @@ const en: LanguageResource = {
   'business-regulation': {
     title: 'Is your business regulated?',
     subtitle: ''
+  },
+  'us-person': {
+    title: 'Are you a US Person?',
+    subtitle: '[subtitle here]'
   },
   'business-revenue': {
     title: 'Annual Revenue',
