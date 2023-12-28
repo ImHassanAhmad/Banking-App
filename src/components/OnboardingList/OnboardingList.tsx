@@ -36,7 +36,12 @@ const OnboardingList: React.FC<OnboardingListProps> = ({
               {details ? <Typography variant="subtitle2">{details}</Typography> : ''}
             </Box>
 
-            <IconButton sx={{ ml: 'auto' }}>
+            <IconButton
+              data-testid="itemClick"
+              sx={{ ml: 'auto' }}
+              onClick={() => {
+                onItemClick(topic);
+              }}>
               <ArrowRightIcon />
             </IconButton>
           </ListItem>
