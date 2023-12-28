@@ -32,7 +32,6 @@ const OnboardingList: React.FC<OnboardingListProps> = ({
               <Typography variant="subtitle1">{topic}</Typography>
               {details ? <Typography variant="subtitle2">{details}</Typography> : ''}
             </Box>
-
             <IconButton
               sx={{ ml: 'auto' }}
               onClick={() => {

@@ -31,6 +31,14 @@ export interface RegisterUserResponseDto {
   userId: string;
 }
 
+export enum SourceOfIncome {
+  'revenue',
+  'loans_credits',
+  'donations',
+  'sales_of_goods',
+  'other'
+}
+
 export interface RegisterUserRequestDto extends CaptchaTokenRequest {
   countryOfIncorporation?: TCountryCode;
   email?: string;
@@ -46,6 +54,8 @@ export interface RegisterUserRequestDto extends CaptchaTokenRequest {
   isLegalRepresentative?: boolean;
   businessType?: BusinessTypes;
   businessCategory?: BusinessCategoryType;
+  SourceOfIncome?: SourceOfIncome;
+  UsPerson?: string;
   dryRun: boolean;
 }
 
