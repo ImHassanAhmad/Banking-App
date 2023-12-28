@@ -51,7 +51,7 @@ const InvestorSignUpStepperContext = createContext<InvestorSignUpStepperContextP
 const { Provider } = InvestorSignUpStepperContext;
 
 export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [activeStep, setActiveStep] = useState(InvestorSignUpFlowSteps.NameAndDateOfBirth);
+  const [activeStep, setActiveStep] = useState(InvestorSignUpFlowSteps.IncomeRange);
   const [userId, setUserId] = useState('');
   const { updateError, findError } = useAuthError();
   const [registerUserPayload, setRegisterUserPayload] = useState<RegisterUserRequestDto>({

@@ -326,7 +326,11 @@ const en: LanguageResource = {
     incoming_title: 'Turnover for incoming transactions',
     outgoing_title: 'Turnover for outgoing transactions'
   },
-  'upload-documents': {},
+  'upload-documents': {
+    document_type: 'Select Your Document Type ?',
+    upload_document: 'Upload Documents',
+    continue: 'Continue'
+  },
   'income-range': {
     title: 'Income Range'
   },
@@ -343,7 +347,7 @@ const en: LanguageResource = {
     postal_code: 'Postal Code',
     city: 'City',
     street: 'Street',
-    houseNo: 'House No.',
+    house_no: 'House No.',
     continue: 'Continue'
   },
   'questions-list': {

@@ -35,7 +35,9 @@ const OnboardingList: React.FC<OnboardingListProps> = ({
               <Typography variant="subtitle1">{topic}</Typography>
               {details ? <Typography variant="subtitle2">{details}</Typography> : ''}
             </Box>
+
             <IconButton
+              data-testid="itemClick"
               sx={{ ml: 'auto' }}
               onClick={() => {
                 onItemClick(topic);
