@@ -42,7 +42,7 @@ const RegisterEmailCodeVerification: FC<WithSignUpStepperContextProps> = ({
 
   const verifyOtp = (code: string): void => {
     verifyEmail({
-      userId,
+      userId: userId || '333333',
       otpCode: code
     })
       .unwrap()

@@ -12,6 +12,8 @@ import { InvestorSignUpFlowSteps, InvestorSignUpFlowStepsIndices } from './types
 import { useInvestorSignUpStepper } from '@app/context/InvestorSignUpStepperContext';
 import BackButton from '@app/components/BackButton';
 import { type WithSignUpStepperContextProps } from '@app/common/types';
+import MobileCodeVerification from '@app/pages/MobileCodeVerification';
+import RegisterEmailCodeVerification from '@app/pages/RegisterEmailCodeVerification';
 
 const investorFlowComponent = (
   activeStep: InvestorSignUpFlowSteps
@@ -34,6 +36,10 @@ const investorFlowComponent = (
     //   return UploadDocument;
     case InvestorSignUpFlowSteps.CreatePassword:
       return Password;
+    case InvestorSignUpFlowSteps.EmailVerify:
+      return RegisterEmailCodeVerification;
+    case InvestorSignUpFlowSteps.MobileVerify:
+      return MobileCodeVerification;
     default:
   }
 };

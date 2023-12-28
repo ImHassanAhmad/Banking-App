@@ -2,10 +2,12 @@ import { http, type HttpHandler, HttpResponse, type PathParams, type StrictRespo
 import { type VerifyLoginOTPRequestDto } from 'types';
 import * as yup from 'yup';
 import { type RegisterUserRequestDto } from '@app/common/types';
-import { type MockRegisterUserResponse } from '../constants/common.const';
+import { INVALID_OTP_CODE, type MockRegisterUserResponse } from '../constants/common.const';
 import withErrorHandler from '../middleware/withErrorHandler';
 import { type ResponseResolverInfo } from 'msw/lib/core/handlers/RequestHandler';
 import { type HttpRequestResolverExtras } from 'msw/lib/core/handlers/HttpHandler';
+import { type VerifyEmailRequestDto } from '@app/pages/LoginEmailCodeVerification/types';
+import { type VerifyPhoneRequestDto } from '@app/pages/MobileCodeVerification/types';
 
 // const dbhandler = new DatabaseService<UserEntity>(database.users);
 
@@ -28,10 +30,15 @@ const userRegistrationSchema: yup.ObjectSchema<RegisterUserRequestDto> = yup.obj
   dryRun: yup.boolean().required()
 });
 
-const otpCodeSceheme: yup.ObjectSchema<VerifyLoginOTPRequestDto> = yup.object().shape({
-  otpId: yup.string().required(),
-  otpCode: yup.string().required()
-});
+const otpCodeSceheme: yup.ObjectSchema<VerifyEmailRequestDto | VerifyPhoneRequestDto> = yup
+  .object()
+  .shape({
+    userId: yup.string().required(),
+    otpCode: yup
+      .string()
+      .required()
+      .matches(/444444/g, INVALID_OTP_CODE)
+  });
 
 const registerUIssuerHandler: HttpHandler = http.post<
   PathParams,
@@ -80,11 +87,10 @@ const verifyEmailHandler: HttpHandler = http.post<
   withErrorHandler(
     async ({
       request
-    }: ResponseResolverInfo<
-      HttpRequestResolverExtras<PathParams>,
-      VerifyLoginOTPRequestDto
-    >): Promise<StrictResponse<MockRegisterUserResponse>> => {
-      const requestData: VerifyLoginOTPRequestDto = await request.json();
+    }: ResponseResolverInfo<HttpRequestResolverExtras<PathParams>, VerifyEmailRequestDto>): Promise<
+      StrictResponse<MockRegisterUserResponse>
+    > => {
+      const requestData: VerifyEmailRequestDto = await request.json();
 
       otpCodeSceheme.validateSync(requestData);
       // const user: RegisterUserRequestBody[] | null = await dbhandler.getAll({
@@ -99,7 +105,7 @@ const verifyEmailHandler: HttpHandler = http.post<
       return HttpResponse.json<MockRegisterUserResponse>(
         { userId: '' },
         {
-          status: 400
+          status: 200
         }
       );
       // }
@@ -109,36 +115,37 @@ const verifyEmailHandler: HttpHandler = http.post<
 
 const verifyPhoneHandler: HttpHandler = http.post<
   PathParams,
-  VerifyLoginOTPRequestDto,
+  VerifyPhoneRequestDto,
   MockRegisterUserResponse
 >(
   '*/v1/sme/onboarding/verify-phone',
-  async ({
-    request
-  }: ResponseResolverInfo<
-    HttpRequestResolverExtras<PathParams>,
-    VerifyLoginOTPRequestDto
-  >): Promise<StrictResponse<MockRegisterUserResponse>> => {
-    const requestData: VerifyLoginOTPRequestDto = await request.json();
+  withErrorHandler(
+    async ({
+      request
+    }: ResponseResolverInfo<HttpRequestResolverExtras<PathParams>, VerifyPhoneRequestDto>): Promise<
+      StrictResponse<MockRegisterUserResponse>
+    > => {
+      const requestData: VerifyPhoneRequestDto = await request.json();
 
-    otpCodeSceheme.validateSync(requestData);
-    // const { otpCode } = requestData;
+      otpCodeSceheme.validateSync(requestData);
+      // const { otpCode } = requestData;
 
-    // const user = await dbhandler.getAll({ verficationToken: otpCode });
+      // const user = await dbhandler.getAll({ verficationToken: otpCode });
 
-    // if (user && user.length > 0) {
-    //   return HttpResponse.json<RegisterUserRequestBody>(user[0], {
-    //     status: 200
-    //   });
-    // } else {
-    return HttpResponse.json<MockRegisterUserResponse>(
-      { userId: '' },
-      {
-        status: 400
-      }
-    );
-    // }
-  }
+      // if (user && user.length > 0) {
+      //   return HttpResponse.json<RegisterUserRequestBody>(user[0], {
+      //     status: 200
+      //   });
+      // } else {
+      return HttpResponse.json<MockRegisterUserResponse>(
+        { userId: '' },
+        {
+          status: 200
+        }
+      );
+      // }
+    }
+  )
 );
 
 export const handlers = [registerUIssuerHandler, verifyEmailHandler, verifyPhoneHandler];
