@@ -7,7 +7,7 @@ import Heading from '@app/components/Heading';
 import IncomeSourceItem from './components/IncomeSourceItem';
 import { type CheckList } from '../SourceOfFunding/types';
 import { INCOME_SOURCES } from './constants';
-import { type SignUpStepperContextProps } from '@app/common/types';
+import { type WithSignUpStepperContextProps } from '@app/common/types';
 const sourceOfFundingNamespace = RouteNames.SOURCE_OF_INCOME;
 
 const CHECK_LIST: CheckList = INCOME_SOURCES.reduce<CheckList>((obj, key) => {
@@ -15,7 +15,7 @@ const CHECK_LIST: CheckList = INCOME_SOURCES.reduce<CheckList>((obj, key) => {
   return obj;
 }, {});
 
-const SourceOfIncome: FC<SignUpStepperContextProps> = ({
+const SourceOfIncome: FC<WithSignUpStepperContextProps> = ({
   updateActiveStep,
   registerUser,
   isLoading,

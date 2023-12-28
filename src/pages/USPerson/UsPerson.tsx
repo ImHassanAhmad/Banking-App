@@ -5,11 +5,11 @@ import { BINARY_ANSWER_OPTIONS } from '@app/constants/issuer-onboarding';
 import { RouteNames } from '@app/constants/routes';
 import { Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { type SignUpStepperContextProps } from '@app/common/types';
+import { type WithSignUpStepperContextProps } from '@app/common/types';
 
 const transactionResource = RouteNames.US_Person;
 
-const UsPerson: FC<SignUpStepperContextProps> = ({
+const UsPerson: FC<WithSignUpStepperContextProps> = ({
   updateActiveStep,
   registerUser,
   isLoading,
