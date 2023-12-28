@@ -51,11 +51,15 @@ export interface RegisterUserRequestDto extends CaptchaTokenRequest {
   registrationNumber?: string;
   dateOfRegister?: string;
   tradingName?: string;
+  isBusinessRegulated?: boolean;
   isLegalRepresentative?: boolean;
   businessType?: BusinessTypes;
   businessCategory?: BusinessCategoryType;
   SourceOfIncome?: SourceOfIncome;
   UsPerson?: string;
+  businessSubCategory?: string;
+  businessRevenue?: string;
+  fundingSources?: string[];
   dryRun: boolean;
 }
 
@@ -123,8 +127,10 @@ export class AuthFieldErrors implements AuthApiError {
   }
 }
 
+export type OnboardingError = AccountError | FieldErrors | ErrorMessage | string;
+
 export interface AuthApiError {
-  data?: AccountError | FieldErrors | ErrorMessage | string;
+  data?: OnboardingError;
   error?: string;
   status: number | string;
 }
@@ -214,9 +220,33 @@ export const transformErrorResponse = (
   };
 };
 
-export type SignUpStepperContextProps =
+export type WithSignUpStepperContextProps<T = any> = (
   | InvestorSignUpStepperContextProps
-  | IssuerSignUpStepperContextProps;
+  | IssuerSignUpStepperContextProps
+) &
+  T;
+
+export interface AssetRequestDto {
+  name: string;
+  description: string;
+  image: File;
+  websiteURL?: string;
+  socialMediaLink?: string;
+  logoURL?: string;
+}
+
+export interface AssetResponseDto {
+  assetId: string;
+}
+
+export interface AssetLegalDocumentsRequestDto {
+  assetId: string;
+  prospectus: File;
+  businessModel: File;
+  financialModel: File;
+  businessPlan: File;
+  valuationReport: File;
+}
 
 export enum onBoardType {
   Issuer = 'issuer',

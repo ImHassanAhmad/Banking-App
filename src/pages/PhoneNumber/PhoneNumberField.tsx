@@ -1,6 +1,6 @@
 import { getCountryFlag } from '@app/assets/flags';
 import {
-  type SignUpStepperContextProps,
+  type WithSignUpStepperContextProps,
   type AuthFetchQueryError,
   type RegisterUserRequestDto
 } from '@app/common/types';
@@ -8,8 +8,6 @@ import Heading from '@app/components/Heading';
 import { NotSupportedModal } from '@app/components/Modals';
 import { NOT_SUPPORTED_MODES } from '@app/constants';
 import { RouteNames } from '@app/constants/routes';
-// import { IssuerSignUpFlowSteps } from '@app/layout/IssuerSignUpStepper/types';
-import { useAppSelector } from '@app/store/hooks';
 import {
   Button,
   FormControl,
@@ -45,7 +43,7 @@ const getCountryDataByPhone = (phoneCode: string): ICountryData => {
   return getCountryDataList()[index];
 };
 
-const PhoneNumberField: FC<SignUpStepperContextProps> = ({
+const PhoneNumberField: FC<WithSignUpStepperContextProps> = ({
   updateActiveStep,
   registerUser,
   userPayload: { phoneNumberCountryCode, shortenPhoneNumber, countryOfIncorporation },
@@ -62,9 +60,6 @@ const PhoneNumberField: FC<SignUpStepperContextProps> = ({
   const [errors, setFieldErrors] = useState<FieldError>();
   const [open, setOpen] = useState<boolean>(false);
 
-  const {
-    supportedCountries: { supportedPhoneCountries }
-  } = useAppSelector((state) => state.userData);
   const { formcontrol, selectText, textField, setIcon } = useStyles;
 
   const handleChangecountry = (event: SelectChangeEvent): void => {
@@ -98,10 +93,6 @@ const PhoneNumberField: FC<SignUpStepperContextProps> = ({
   };
 
   const submit = (): void => {
-    if (!supportedPhoneCountries.includes(value)) {
-      setOpen(true);
-      return;
-    }
     registerUser({
       payload: regUserPayload,
       onSuccess: () => {
@@ -175,7 +166,7 @@ const PhoneNumberField: FC<SignUpStepperContextProps> = ({
           </FormControl>
           <Button
             sx={{ textTransform: 'uppercase', width: '378px', height: '52px' }}
-            disabled={!isValid || supportedPhoneCountries.length === 0 || isLoading}
+            disabled={!isValid || isLoading}
             onClick={submit}>
             {' '}
             {t(`${translationNamespace}.continue`)} {isLoading && <Loader />}

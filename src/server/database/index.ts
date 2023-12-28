@@ -11,7 +11,8 @@ export class AppDatabase extends Dexie {
   constructor() {
     super('Tokenization');
     this.version(1).stores({
-      users: 'id, name, age',
+      users:
+        'id, email, password, shortenPhoneNumber, phoneNumberCountryCode, countryOfIncorporation, visaTncAgreed, wittyTncAgreed, companyName, registrationNumber, dateOfRegister, tradingName, isLegalRepresentative, businessType, businessCategory, isBusinessRegulated, businessRevenue, fundingSources',
       tokens: 'id',
       assets: 'id'
     });

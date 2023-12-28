@@ -1,8 +1,9 @@
-import { type SignUpStepperContextProps } from '@app/common/types';
+import { type WithSignUpStepperContextProps } from '@app/common/types';
 import Heading from '@app/components/Heading';
 import { RouteNames } from '@app/constants/routes';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button, Stack, TextField } from '@mui/material';
+import { Button, Stack } from '@mui/material';
+import Textfield from '@app/components/Textfield';
 import { type FC } from 'react';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -17,14 +18,17 @@ interface IForm {
 const schema = yup
   .object()
   .shape({
-    description: yup.string().min(180).required()
+    description: yup.string().min(100).required()
   })
   .required();
 
-const BusinessDescription: FC<SignUpStepperContextProps> = ({ updateActiveStep }) => {
+const BusinessDescription: FC<WithSignUpStepperContextProps> = ({
+  updateActiveStep,
+  registerUser
+}) => {
   const { t } = useTranslation();
 
-  const { handleSubmit } = useForm<IForm>({
+  const { handleSubmit, getValues, register } = useForm<IForm>({
     defaultValues: {
       description: ''
     },
@@ -32,10 +36,16 @@ const BusinessDescription: FC<SignUpStepperContextProps> = ({ updateActiveStep }
     resolver: yupResolver(schema)
   });
 
-  const onSubmit: SubmitHandler<IForm> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<IForm> = async (): Promise<void> => {
+    registerUser({
+      payload: {
+        description: getValues('description')
+      },
+      onSuccess: () => {
+        updateActiveStep();
+      }
+    });
   };
-
   return (
     <Stack sx={{ width: '100%' }}>
       <Stack mt={4}>
@@ -48,7 +58,8 @@ const BusinessDescription: FC<SignUpStepperContextProps> = ({ updateActiveStep }
         onSubmit={(event) => {
           void handleSubmit(onSubmit)(event);
         }}>
-        <TextField
+        <Textfield
+          register={register}
           multiline
           minRows={4}
           maxRows={15}

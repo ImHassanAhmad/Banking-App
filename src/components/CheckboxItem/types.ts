@@ -1,6 +1,10 @@
 import { type RenderResult } from '@testing-library/react';
 
-export interface CheckListProps {
+export interface AllowActionItem {
+  allowAction?: boolean;
+}
+
+export interface CheckListProps extends AllowActionItem {
   checked: boolean;
   link?: string;
   optional?: boolean;
@@ -17,6 +21,7 @@ export interface CheckboxItemProps extends CheckboxLabelProps {
   optional?: boolean;
   checked: boolean;
   onChange: () => void;
+  isDisabled?: boolean;
 }
 
 export type SetupResult = RenderResult & {

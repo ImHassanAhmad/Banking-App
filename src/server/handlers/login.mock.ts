@@ -1,72 +1,119 @@
 import { type HttpHandler, HttpResponse, http, type PathParams, type StrictResponse } from 'msw';
+import constants from '../constants';
 import {
   type VerifyLoginOTPRequestDto,
   type LoginRequest,
-  type ResendLoginOtpRequestDto
+  type ResendLoginOtpRequestDto,
+  type ResendLoginOtpResponseDto
 } from 'types';
-
-import {
-  type RegisterUserRequestDto,
-  type ErrorMessage,
-  type AccountError
-} from '@app/common/types';
-import { type FieldErrorsDto } from '@app/pages/MobileCodeVerification/types';
-
-import * as yup from 'yup';
 import { userService } from '../database/service';
+import * as yup from 'yup';
+import withErrorHandler, { ApiError } from '../middleware/withErrorHandler';
+import {
+  type MockVerifyLoginOtpResponse,
+  type MockLoginResponse,
+  type MockResendOtpCodeResponse
+} from '../constants/login.const';
+import { type HttpRequestResolverExtras } from 'msw/lib/core/handlers/HttpHandler';
+import { type ResponseResolverInfo } from 'msw/lib/core/handlers/RequestHandler';
+import { INVALID_OTP_CODE } from '../constants/common.const';
 
-const loginHandlerSchema = yup.object({
+let INCORRECT_LOGINS_COUNT: number = 0;
+
+const loginScheme: yup.ObjectSchema<LoginRequest> = yup.object().shape({
   email: yup.string().email().required(),
   password: yup.string().min(13).required(),
   captchaToken: yup.string().required()
 });
 
-const loginHandler: HttpHandler = http.post<PathParams, LoginRequest, ErrorMessage | AccountError>(
+const otpIdScheme: yup.ObjectSchema<ResendLoginOtpRequestDto> = yup.object().shape({
+  otpId: yup.string().required()
+});
+
+const otpCodeSceheme: yup.ObjectSchema<VerifyLoginOTPRequestDto> = yup.object().shape({
+  otpId: yup
+    .string()
+    .required()
+    .matches(/444444/g, INVALID_OTP_CODE),
+  otpCode: yup.string().required()
+});
+
+const loginHandler: HttpHandler = http.post<PathParams, LoginRequest, MockLoginResponse>(
   '*/v1/sme/onboarding/authentication/login',
-  async ({ request }): Promise<StrictResponse<any | ErrorMessage | AccountError>> => {
-    const requestData = await request.json();
-    console.log(requestData);
-    const validateData = loginHandlerSchema.validateSync(requestData, { abortEarly: true });
+  withErrorHandler(
+    async ({
+      request
+    }: ResponseResolverInfo<HttpRequestResolverExtras<PathParams>, LoginRequest>): Promise<
+      StrictResponse<MockLoginResponse>
+    > => {
+      const loginRequestPayload: LoginRequest = await request.json();
+      loginScheme.validateSync(loginRequestPayload);
 
-    const { email } = validateData;
+      INCORRECT_LOGINS_COUNT += 1;
 
-    const user = await userService.add({ id: email, email });
+      if (INCORRECT_LOGINS_COUNT > 5 && INCORRECT_LOGINS_COUNT < 10)
+        throw new ApiError(constants.loginConstants.TOO_MANY_INVALID_LOGIN_ATTEMPTS);
 
-    // if (!user) return HttpResponse.json({ error: { errorMessage: 'Invalid Credentials' } });
+      if (INCORRECT_LOGINS_COUNT > 10) {
+        throw new ApiError(constants.commonConstants.SOMETHING_WENT_WRONG, 500);
+      }
 
-    return HttpResponse.json({ otpId: user.email });
-  }
+      throw new ApiError(constants.loginConstants.INCORRECT_LOGIN_RESPONSE, 400);
+    }
+  )
 );
 
 const verifyLoginHandler: HttpHandler = http.post<
   PathParams,
   VerifyLoginOTPRequestDto,
-  RegisterUserRequestDto | FieldErrorsDto
+  MockVerifyLoginOtpResponse
 >(
   '*/v1/sme/onboarding/authentication/verify-login-otp',
-  async ({ request }): Promise<StrictResponse<RegisterUserRequestDto | FieldErrorsDto>> => {
-    const requstData: VerifyLoginOTPRequestDto = await request.json();
-    const { otpCode, otpId } = requstData;
+  withErrorHandler(
+    async ({
+      request
+    }: ResponseResolverInfo<
+      HttpRequestResolverExtras<PathParams>,
+      VerifyLoginOTPRequestDto
+    >): Promise<StrictResponse<MockVerifyLoginOtpResponse>> => {
+      const verifyLoginRequestPayload: VerifyLoginOTPRequestDto = await request.json();
+      otpCodeSceheme.validateSync(verifyLoginRequestPayload);
 
-    if (otpCode !== '444444')
-      return HttpResponse.json({} as any, {
-        status: 400
-      });
+      const { otpId } = verifyLoginRequestPayload;
 
-    const user: any = await userService.getById(otpId);
+      const user: any = await userService.getById(otpId);
+      if (user?.length) {
+        return HttpResponse.json(user, {
+          status: 200
+        });
+      }
 
-    return HttpResponse.json(user);
-  }
+      throw new yup.ValidationError(constants.commonConstants.INVALID_OTP_CODE, null, 'otpCode');
+    }
+  )
 );
 
-const resendLoginHandler: HttpHandler = http.post<PathParams, ResendLoginOtpRequestDto, any>(
+const resendLoginHandler: HttpHandler = http.post<
+  PathParams,
+  ResendLoginOtpRequestDto,
+  MockResendOtpCodeResponse
+>(
   '*/v1/sme/onboarding/authentication/resend-login-otp',
-  async ({ request }): Promise<StrictResponse<any>> => {
-    const { otpId }: ResendLoginOtpRequestDto = await request.json();
-    if (otpId) return HttpResponse.json({});
-
-    return HttpResponse.json({}, { status: 400 });
-  }
+  withErrorHandler(
+    async ({
+      request
+    }: ResponseResolverInfo<
+      HttpRequestResolverExtras<PathParams>,
+      ResendLoginOtpRequestDto
+    >): Promise<StrictResponse<MockResendOtpCodeResponse>> => {
+      const resendOtpRequestPayload: ResendLoginOtpRequestDto = await request.json();
+      otpIdScheme.validateSync(resendOtpRequestPayload);
+      return HttpResponse.json<ResendLoginOtpResponseDto>(
+        constants.loginConstants.NEW_OTP_ID_RESPONSE,
+        { status: 200 }
+      );
+    }
+  )
 );
 
 export const handlers = [loginHandler, verifyLoginHandler, resendLoginHandler];

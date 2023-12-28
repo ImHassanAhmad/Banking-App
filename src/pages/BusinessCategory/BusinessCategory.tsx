@@ -2,14 +2,15 @@ import React, { useState } from 'react';
 import Heading from '@app/components/Heading';
 import OnboardingList from '@app/components/OnboardingList';
 import { type Category } from 'types';
+import { type WithSignUpStepperContextProps } from '@app/common/types';
 import { BUSINESS_CATEGORY } from '@app/constants/issuer-onboarding';
-import { type SignUpStepperContextProps } from '@app/common/types';
 
-const BusinessCategory: React.FC<SignUpStepperContextProps> = ({
-  activeStep,
-  updateActiveStep
+const BusinessCategory: React.FC<WithSignUpStepperContextProps> = ({
+  updateActiveStep,
+  updateUserPayload,
+  userPayload
 }) => {
-  const [selectedCategory, setSelectedCategory] = useState<string>();
+  const [selectedCategory, setSelectedCategory] = useState<string>(userPayload.businessCategory);
 
   const categories: Category[] = BUSINESS_CATEGORY;
   if (!selectedCategory) {
@@ -24,8 +25,8 @@ const BusinessCategory: React.FC<SignUpStepperContextProps> = ({
           id: cat.id
         }))}
         onItemClick={(category: string) => {
-          // Set the selected category in state
           setSelectedCategory(category);
+          updateUserPayload({ businessCategory: category });
         }}
       />
     );
@@ -52,8 +53,8 @@ const BusinessCategory: React.FC<SignUpStepperContextProps> = ({
         id: subcategory.name
       }))}
       onItemClick={(selectedSubcategory: string) => {
-        // Handle logic when a subcategory is selected
-        console.log(`Selected subcategory: ${selectedSubcategory}`);
+        updateUserPayload({ businessSubCategory: selectedSubcategory });
+        updateActiveStep();
       }}
     />
   );

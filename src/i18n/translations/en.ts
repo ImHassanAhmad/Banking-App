@@ -25,9 +25,9 @@ const en: LanguageResource = {
     title: 'Choose Account Type',
     subtitle: 'Everything you need to run your business in one place',
     login_option_title: 'Create Investor Account',
-    login_option_subtitle: 'Join as a Investor',
+    login_option_subtitle: 'Join as an Investor',
     create_option_title: 'Create Issuer Account',
-    create_option_subtitle: 'Join as a Issuer'
+    create_option_subtitle: 'Join as an Issuer'
   },
   login: {
     title: 'Welcome to W1TTY Business',
@@ -296,7 +296,7 @@ const en: LanguageResource = {
 
   help: {},
   'company-information': {
-    title: 'Company informations',
+    title: 'Company information',
     subtitle: 'We need your business details to open your account',
     registration_number: 'Registration number',
     company_name: 'Company name',
@@ -357,9 +357,30 @@ const en: LanguageResource = {
     visa_card_policy: 'VISA Card Terms & Conditions',
     prices_limits: 'Prices & Limits',
     select_all: 'Select All',
+    confirm: 'Confirm',
     continue: 'Continue'
   },
-  'legal-representative': {}
+  'create-asset-token': {
+    create_new_asset: 'Create new Asset',
+    continue: 'Continue',
+    token_name: 'Token Name (On Block Chain)',
+    token_symbol: 'Token Symbol (On Block Chain)',
+    total_supply: 'Total Supply (Mint)',
+    decimal_number: 'Number of Decimals Allowed',
+    token_config_pausable: 'pause',
+    token_config_mint: 'mint',
+    token_config_burn: 'burn',
+    token_config_capped: 'capped',
+    buy_token: 'Token Buy Now Price',
+    currency: 'Currency',
+    upload_logo: 'Upload Logo',
+    token_basic_info: 'Token Basic Information',
+    token_config: 'Token Configuration',
+    token_price: 'Token Price'
+  },
+  'legal-representative': {
+    title: 'Are you the legal representative or director of this company?'
+  }
 };
 
 export default en;

@@ -1,52 +1,63 @@
-import { http, HttpResponse } from 'msw';
+import { http, type HttpHandler, HttpResponse, type PathParams, type StrictResponse } from 'msw';
 import constants from '../constants';
-import { type LoginRequest } from 'types';
+import { type AuthingDictionaryResponseType } from '@app/store/api/onboarding';
+import { type RegisterUserRequestDto, type RegisterUserResponseDto } from '@app/common/types';
+import * as yup from 'yup';
+import { type ResponseResolverInfo } from 'msw/lib/core/handlers/RequestHandler';
+import { type HttpRequestResolverExtras } from 'msw/lib/core/handlers/HttpHandler';
+import { type MockRegisterUserResponse } from '../constants/onboarding.const';
+import withErrorHandler from '../middleware/withErrorHandler';
 
-let INCORRECT_LOGINS_COUNT: number = 0;
+const registerUserScheme = yup.object().shape({
+  countryOfIncorporation: yup.mixed(),
+  email: yup.string().email().required(),
+  password: yup.string().min(13).required(),
+  shortenPhoneNumber: yup.string().min(5).required(),
+  phoneNumberCountryCode: yup.string().min(2).required(),
+  visaTncAgreed: yup.boolean(),
+  wittyTncAgreed: yup.boolean(),
+  companyName: yup.string().required(),
+  registrationNumber: yup.string().required(),
+  dateOfRegister: yup.string().required(),
+  tradingName: yup.string().required(),
+  isLegalRepresentative: yup.boolean().required(),
+  captchaToken: yup.string(),
+  businessType: yup.mixed(),
+  businessCategory: yup.mixed(),
+  dryRun: yup.boolean().required()
+});
 
-export const handlers = [
-  http.get('*/v1/sme/onboarding/dictionary', (req: any) => {
-    return HttpResponse.json(
-      constants.onBoardingConstants.DICTIONARY_COUNTRY_OF_INCORPORATION_RESPONSE,
-      {
-        status: 200
-      }
-    );
-  }),
-  http.get('/v1/sme/onboarding/register-user', () => {
-    return HttpResponse.json(
-      constants.onBoardingConstants.DICTIONARY_COUNTRY_OF_INCORPORATION_RESPONSE
-    );
-  }),
-  http.post('*/v1/sme/onboarding/authentication/login', ({ request }: any): HttpResponse => {
-    const { email, password, captchaToken }: LoginRequest = request.body;
+const onBoardDictionaryHandler: HttpHandler = http.get<
+  PathParams,
+  null,
+  AuthingDictionaryResponseType
+>('*/v1/sme/onboarding/dictionary', (): StrictResponse<AuthingDictionaryResponseType> => {
+  return HttpResponse.json<AuthingDictionaryResponseType>(
+    constants.onBoardingConstants.DICTIONARY_COUNTRY_OF_INCORPORATION_RESPONSE,
+    {
+      status: 200
+    }
+  );
+});
 
-    if (
-      email === constants.onBoardingConstants.MOCK_LOGIN_EMAIL &&
-      password === constants.onBoardingConstants.MOCK_LOGIN_PASSWORD &&
-      captchaToken === constants.onBoardingConstants.MOCK_CAPTCHA_VALUE
-    )
-      return HttpResponse.json(constants.onBoardingConstants.LOGIN_RESPONSE, {
-        status: 200
-      });
-
-    INCORRECT_LOGINS_COUNT += 1;
-
-    if (INCORRECT_LOGINS_COUNT > 5 && INCORRECT_LOGINS_COUNT < 10)
-      return HttpResponse.json(
-        constants.onBoardingConstants.TOO_MANY_INVALID_LOGIN_ATTEMPTS_RESPONSE,
-        {
-          status: 500
-        }
+const registerUserHandler: HttpHandler = http.post<
+  PathParams,
+  RegisterUserRequestDto,
+  RegisterUserResponseDto
+>(
+  '*/v1/sme/onboarding/register-user',
+  withErrorHandler(
+    async ({
+      request
+    }: ResponseResolverInfo<HttpRequestResolverExtras<PathParams>, MockRegisterUserResponse>) => {
+      const registerUserPayload: RegisterUserRequestDto =
+        request.body ?? ((await request.json()) as any);
+      registerUserScheme.validateSync(registerUserPayload);
+      return HttpResponse.json<RegisterUserResponseDto>(
+        constants.onBoardingConstants.MOCK_USER_REGISTER_RESPONSE
       );
+    }
+  )
+);
 
-    if (INCORRECT_LOGINS_COUNT > 10)
-      return HttpResponse.json(constants.onBoardingConstants.SYSTEM_ERROR_RESPONSE, {
-        status: 400
-      });
-
-    return HttpResponse.json(constants.onBoardingConstants.INCORRECT_LOGIN_DATA_RESPONSE, {
-      status: 400
-    });
-  })
-];
+export const handlers = [onBoardDictionaryHandler, registerUserHandler];

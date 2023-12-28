@@ -12,7 +12,7 @@ import {
 } from '@app/store/api/onboarding';
 import {
   AuthErrorLevel,
-  type SignUpStepperContextProps,
+  type WithSignUpStepperContextProps,
   type AuthFetchQueryError
 } from '@app/common/types';
 import WarningAlert from '@app/components/WarningAlert';
@@ -20,7 +20,7 @@ import { useAuthError } from '@app/context/AuthErrorContext';
 
 const mobileVerifyNamespace = RouteNames.VERIFY_MOBILE;
 
-const MobileCodeVerification: React.FC<SignUpStepperContextProps> = ({
+const MobileCodeVerification: React.FC<WithSignUpStepperContextProps> = ({
   updateActiveStep,
   userId,
   userPayload,

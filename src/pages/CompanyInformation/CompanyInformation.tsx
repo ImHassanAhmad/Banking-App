@@ -1,4 +1,4 @@
-import { Grid, Stack, Button, InputAdornment, Box, Autocomplete, TextField } from '@mui/material';
+import { Grid, Stack, Button } from '@mui/material';
 import Heading from '@app/components/Heading';
 import { useState, type FC } from 'react';
 import { RouteNames } from '@app/constants/routes';
@@ -9,9 +9,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Textfield from '@app/components/Textfield';
 import Loader from '@app/components/Loader';
-import { SEARCH_ICON2 } from '@app/assets/images';
 import Calendar from '@app/components/Calendar';
-import { type SignUpStepperContextProps } from '@app/common/types';
+import { type WithSignUpStepperContextProps } from '@app/common/types';
 
 interface IForm {
   companyName: string;
@@ -22,7 +21,7 @@ interface IForm {
 
 const translationNamespace = RouteNames.COMPANY_INFORMATION;
 
-const CompanyInformation: FC<SignUpStepperContextProps> = ({
+const CompanyInformation: FC<WithSignUpStepperContextProps> = ({
   updateActiveStep,
   registerUser,
   isLoading,
@@ -43,6 +42,7 @@ const CompanyInformation: FC<SignUpStepperContextProps> = ({
 
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors },
     getValues
@@ -57,14 +57,13 @@ const CompanyInformation: FC<SignUpStepperContextProps> = ({
     resolver: yupResolver(schema)
   });
 
-  const onSubmit: SubmitHandler<IForm> = async () => {
+  const onSubmit: SubmitHandler<IForm> = async (): Promise<void> => {
     registerUser({
       payload: {
         companyName: getValues('companyName'),
         registrationNumber: getValues('registrationNumber'),
         dateOfRegister: getValues('dateOfRegister'),
-        tradingName: getValues('tradingName'),
-        dryRun: true
+        tradingName: getValues('tradingName')
       },
       onSuccess: () => {
         updateActiveStep();
@@ -87,37 +86,12 @@ const CompanyInformation: FC<SignUpStepperContextProps> = ({
               void handleSubmit(onSubmit)(event);
             }}>
             <Stack gap={2}>
-              <Autocomplete
+              <Textfield
+                name="companyName"
+                label={t(`${translationNamespace}.company_name`)}
+                register={register}
+                errorValue={errors?.companyName ?? fieldErrors}
                 fullWidth
-                disablePortal
-                id="company name"
-                options={[
-                  { label: 'W1tty', value: 'w1tty' },
-                  { label: 'Apple', value: 'apple' },
-                  { label: 'Microsoft', value: 'microsoft' }
-                ]}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    {...register('companyName')}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <Box
-                            component="img"
-                            src={SEARCH_ICON2}
-                            alt="search"
-                            sx={{
-                              position: 'absolute'
-                            }}
-                          />
-                        </InputAdornment>
-                      )
-                    }}
-                    fullWidth
-                    label={t(`${translationNamespace}.company_name`)}
-                  />
-                )}
               />
 
               <Textfield
@@ -130,6 +104,7 @@ const CompanyInformation: FC<SignUpStepperContextProps> = ({
 
               <Calendar
                 name="dateOfRegister"
+                control={control}
                 label={t(`${translationNamespace}.date_of_register`)}
                 errorValue={errors?.dateOfRegister ?? fieldErrors}
               />

@@ -1,4 +1,4 @@
-import { type SignUpStepperContextProps } from '@app/common/types';
+import { type WithSignUpStepperContextProps } from '@app/common/types';
 import OnboardingList from '@app/components/OnboardingList';
 import { BINARY_ANSWER_OPTIONS } from '@app/constants/issuer-onboarding';
 import { RouteNames } from '@app/constants/routes';
@@ -7,14 +7,21 @@ import { useTranslation } from 'react-i18next';
 
 const transactionResource = RouteNames.LEGAL_REPRESENTATIVE;
 
-const LegalRepresentative: FC<SignUpStepperContextProps> = ({ activeStep, updateActiveStep }) => {
+const LegalRepresentative: FC<WithSignUpStepperContextProps> = ({
+  updateUserPayload,
+  updateActiveStep
+}) => {
   const { t } = useTranslation();
+
   return (
     <OnboardingList
       title={t(`${transactionResource}.title`)}
       subtitle=""
       itemList={BINARY_ANSWER_OPTIONS}
-      onItemClick={() => {}}
+      onItemClick={(selected) => {
+        updateUserPayload({ isLegalRepresentative: selected === 'Yes' });
+        updateActiveStep();
+      }}
     />
   );
 };

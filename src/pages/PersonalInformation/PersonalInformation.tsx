@@ -9,7 +9,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Textfield from '@app/components/Textfield';
 import Calendar from '@app/components/Calendar';
-import { type SignUpStepperContextProps } from '@app/common/types';
+import { type WithSignUpStepperContextProps } from '@app/common/types';
 
 interface IForm {
   firstName: string;
@@ -19,7 +19,7 @@ interface IForm {
 
 const translationNamespace = RouteNames.PERSONAL_INFORMATION;
 
-const PersonalInformation: FC<SignUpStepperContextProps> = ({
+const PersonalInformation: FC<WithSignUpStepperContextProps> = ({
   updateActiveStep,
   registerUser,
   isLoading,
@@ -39,6 +39,7 @@ const PersonalInformation: FC<SignUpStepperContextProps> = ({
 
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors },
     getValues,
@@ -82,6 +83,7 @@ const PersonalInformation: FC<SignUpStepperContextProps> = ({
 
             <Calendar
               name="dateOfBirth"
+              control={control}
               label={t(`${translationNamespace}.DOB`)}
               handleChange={(newValue) => {
                 setValue('dateOfBirth', newValue);

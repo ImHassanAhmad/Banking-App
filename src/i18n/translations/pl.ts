@@ -35,7 +35,8 @@ const pl: LanguageResource = {
   'register-investor': {},
   'register-issuer': {},
   'legal-representative': {},
-  'us-person': {}
+  'us-person': {},
+  'create-asset-token': {}
 };
 
 export default pl;
