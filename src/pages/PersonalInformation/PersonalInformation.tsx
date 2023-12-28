@@ -49,8 +49,8 @@ const PersonalInformation: FC<WithSignUpStepperContextProps> = ({
   });
 
   const onSubmit: SubmitHandler<IForm> = async () => {
-    console.log('data', format(new Date(getValues('dateOfBirth') as string), 'dd/MM/yyyy'));
     updateActiveStep();
+    console.log('data', format(new Date(getValues('dateOfBirth') as string), 'dd/MM/yyyy'));
   };
 
   return (

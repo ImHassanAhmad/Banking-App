@@ -34,6 +34,7 @@ const OnboardingList: React.FC<OnboardingListProps> = ({
             </Box>
 
             <IconButton
+              data-testid="itemClick"
               sx={{ ml: 'auto' }}
               onClick={() => {
                 onItemClick(topic);

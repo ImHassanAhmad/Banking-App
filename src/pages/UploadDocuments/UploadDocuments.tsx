@@ -33,10 +33,10 @@ const UploadDocument: FC<WithSignUpStepperContextProps> = ({
     <Stack sx={{ width: '100%' }}>
       <Stack mt={4} gap={4}>
         <Stack>
-          <Heading title={'Upload Documents'} subTitle="" />
+          <Heading title={t(`${uploadDocumentsNamespace}.upload_document`)} subTitle="" />
         </Stack>
         <Stack>
-          <Typography>Select Your Document Type ?</Typography>
+          <Typography>{t(`${uploadDocumentsNamespace}.document_type`)}</Typography>
           <Autocomplete
             id="document-select"
             options={APP_DOCUMENT_TYPES}
@@ -81,6 +81,7 @@ const UploadDocument: FC<WithSignUpStepperContextProps> = ({
         </Box>
 
         <Button
+          disabled={isLoading}
           sx={{ textTransform: 'uppercase', marginTop: '2rem' }}
           onClick={() => {
             updateActiveStep();
