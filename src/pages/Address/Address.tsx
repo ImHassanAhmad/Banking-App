@@ -89,7 +89,7 @@ const Address: FC<WithSignUpStepperContextProps> = ({
 
             <Textfield
               name="houseNo"
-              label={t(`${translationNamespace}.houseNo`)}
+              label={t(`${translationNamespace}.house_no`)}
               register={register}
               errorValue={errors?.houseNo ?? fieldErrors}
               fullWidth

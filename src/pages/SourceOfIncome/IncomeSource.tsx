@@ -6,11 +6,11 @@ import { RouteNames } from '@app/constants/routes';
 import Heading from '@app/components/Heading';
 import IncomeSourceItem from './components/IncomeSourceItem';
 import { type CheckList } from '../SourceOfFunding/types';
-import { INCOME_SOURCES } from './constants';
 import { type WithSignUpStepperContextProps } from '@app/common/types';
+import { IncomeSources } from '@app/common/types';
 const sourceOfFundingNamespace = RouteNames.SOURCE_OF_INCOME;
-
-const CHECK_LIST: CheckList = INCOME_SOURCES.reduce<CheckList>((obj, key) => {
+const incomeSourcesArray: string[] = Object.values(IncomeSources);
+const CHECK_LIST: CheckList = incomeSourcesArray.reduce<CheckList>((obj, key) => {
   obj[key] = { checked: false };
   return obj;
 }, {});
@@ -31,7 +31,6 @@ const SourceOfIncome: FC<WithSignUpStepperContextProps> = ({
   const handleCheckboxChange = (key: string): void => {
     setCheckList((prevCheckList) => {
       const isChecked = !prevCheckList[key].checked;
-
       return {
         ...prevCheckList,
         [key]: {
