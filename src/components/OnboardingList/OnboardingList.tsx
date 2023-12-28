@@ -27,6 +27,9 @@ const OnboardingList: React.FC<OnboardingListProps> = ({
               color: 'black',
               cursor: 'pointer',
               padding: '15px 20px'
+            }}
+            onClick={() => {
+              onItemClick(topic);
             }}>
             <Box>
               <Typography variant="subtitle1">{topic}</Typography>

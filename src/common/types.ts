@@ -43,9 +43,13 @@ export interface RegisterUserRequestDto extends CaptchaTokenRequest {
   registrationNumber?: string;
   dateOfRegister?: string;
   tradingName?: string;
+  isBusinessRegulated?: boolean;
   isLegalRepresentative?: boolean;
   businessType?: BusinessTypes;
   businessCategory?: BusinessCategoryType;
+  businessSubCategory?: string;
+  businessRevenue?: string;
+  fundingSources?: string[];
   dryRun: boolean;
 }
 

@@ -283,7 +283,7 @@ const en: LanguageResource = {
 
   help: {},
   'company-information': {
-    title: 'Company informations',
+    title: 'Company information',
     subtitle: 'We need your business details to open your account',
     registration_number: 'Registration number',
     company_name: 'Company name',
@@ -365,7 +365,9 @@ const en: LanguageResource = {
     token_config: 'Token Configuration',
     token_price: 'Token Price'
   },
-  'legal-representative': {}
+  'legal-representative': {
+    title: 'Are you the legal representative or director of this company?'
+  }
 };
 
 export default en;

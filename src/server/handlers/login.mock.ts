@@ -49,18 +49,6 @@ const loginHandler: HttpHandler = http.post<PathParams, LoginRequest, MockLoginR
       const loginRequestPayload: LoginRequest = await request.json();
       loginScheme.validateSync(loginRequestPayload);
 
-      const { email } = loginRequestPayload;
-      const user: any = await userService.add({ id: email, email });
-
-      if (user?.length) {
-        const { otpId }: VerifyLoginOTPRequestDto = user[0];
-        return HttpResponse.json(
-          { otpId },
-          {
-            status: 200
-          }
-        );
-      }
       INCORRECT_LOGINS_COUNT += 1;
 
       if (INCORRECT_LOGINS_COUNT > 5 && INCORRECT_LOGINS_COUNT < 10)

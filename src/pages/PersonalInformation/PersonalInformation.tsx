@@ -39,6 +39,7 @@ const PersonalInformation: FC<WithSignUpStepperContextProps> = ({
 
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors },
     getValues,
@@ -82,6 +83,7 @@ const PersonalInformation: FC<WithSignUpStepperContextProps> = ({
 
             <Calendar
               name="dateOfBirth"
+              control={control}
               label={t(`${translationNamespace}.DOB`)}
               handleChange={(newValue) => {
                 setValue('dateOfBirth', newValue);

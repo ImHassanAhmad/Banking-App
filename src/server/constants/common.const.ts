@@ -23,6 +23,9 @@ export const SYSTEM_ERROR_RESPONSE = (error: Error): AccountError => ({
 export const ERROR_MESSAGE_RESPONSE = ({ message }: ApiError): OnboardingError => ({
   error: { errorMessage: message }
 });
-export type MockRegisterUserResponse = RegisterUserResponseDto | OnboardingError;
+export type MockRegisterUserResponse =
+  | RegisterUserResponseDto
+  | OnboardingError
+  | Record<string, any>;
 export type MockVerifySignUpOtpResponse = null | OnboardingError;
 export type MockAssetCreationResponse = AssetResponseDto | OnboardingError;

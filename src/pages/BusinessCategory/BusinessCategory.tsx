@@ -6,10 +6,11 @@ import { type WithSignUpStepperContextProps } from '@app/common/types';
 import { BUSINESS_CATEGORY } from '@app/constants/issuer-onboarding';
 
 const BusinessCategory: React.FC<WithSignUpStepperContextProps> = ({
-  activeStep,
-  updateActiveStep
+  updateActiveStep,
+  updateUserPayload,
+  userPayload
 }) => {
-  const [selectedCategory, setSelectedCategory] = useState<string>();
+  const [selectedCategory, setSelectedCategory] = useState<string>(userPayload.businessCategory);
 
   const categories: Category[] = BUSINESS_CATEGORY;
   if (!selectedCategory) {
@@ -24,8 +25,8 @@ const BusinessCategory: React.FC<WithSignUpStepperContextProps> = ({
           id: cat.id
         }))}
         onItemClick={(category: string) => {
-          // Set the selected category in state
           setSelectedCategory(category);
+          updateUserPayload({ businessCategory: category });
         }}
       />
     );
@@ -52,8 +53,8 @@ const BusinessCategory: React.FC<WithSignUpStepperContextProps> = ({
         id: subcategory.name
       }))}
       onItemClick={(selectedSubcategory: string) => {
-        // Handle logic when a subcategory is selected
-        console.log(`Selected subcategory: ${selectedSubcategory}`);
+        updateUserPayload({ businessSubCategory: selectedSubcategory });
+        updateActiveStep();
       }}
     />
   );
