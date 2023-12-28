@@ -8,11 +8,12 @@ import {
   transformErrorResponse,
   type AuthApiError
 } from '@app/common/types';
-import {
-  type ResendEmailConfirmationRequestDto,
-  type ResendEmailConfirmationResponseDto,
-  type VerifyEmailRequestDto,
-  type VerifyEmailResponseDto
+import type {
+  IssuerDetailsRequestDto,
+  ResendEmailConfirmationRequestDto,
+  ResendEmailConfirmationResponseDto,
+  VerifyEmailRequestDto,
+  VerifyEmailResponseDto
 } from '@app/pages/LoginEmailCodeVerification/types';
 import {
   type ResendPhoneConfirmationResponseDto,
@@ -20,6 +21,7 @@ import {
   type VerifyPhoneResponseDto,
   type ResendPhoneConfirmationRequestDto
 } from '@app/pages/MobileCodeVerification/types';
+import type { IssuerDetailsEntity } from '@app/server/database/entity';
 
 export type AuthingDictionaryResponseType = SupportedCountriesPhone &
   SupportedCountriesIncorporation;
@@ -64,6 +66,25 @@ export const onBoardingApi = createApi({
         url: '/v1/sme/onboarding/verify-email',
         method: 'POST',
         body
+      }),
+      transformErrorResponse(baseQueryReturnValue, meta, arg) {
+        return transformErrorResponse(baseQueryReturnValue as AuthApiError, meta, arg);
+      }
+    }),
+    issuerDetails: builder.mutation<IssuerDetailsEntity, IssuerDetailsRequestDto>({
+      query: (body) => ({
+        url: '/v1/sme/onboarding/issuer-details',
+        method: 'POST',
+        body
+      }),
+      transformErrorResponse(baseQueryReturnValue, meta, arg) {
+        return transformErrorResponse(baseQueryReturnValue as AuthApiError, meta, arg);
+      }
+    }),
+    getIssuerDetails: builder.query<IssuerDetailsEntity, string>({
+      query: (id) => ({
+        url: 'v1/sme/onboarding/issuer-details/' + id,
+        method: 'GET'
       }),
       transformErrorResponse(baseQueryReturnValue, meta, arg) {
         return transformErrorResponse(baseQueryReturnValue as AuthApiError, meta, arg);
@@ -115,5 +136,7 @@ export const {
   useVerifyEmailMutation,
   useVerifyPhoneMutation,
   useResendEmailConfirmationMutation,
-  useResendPhoneConfirmationMutation
+  useResendPhoneConfirmationMutation,
+  useIssuerDetailsMutation,
+  useGetIssuerDetailsQuery
 } = onBoardingApi;

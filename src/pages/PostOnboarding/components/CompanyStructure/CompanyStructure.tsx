@@ -17,10 +17,16 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import type { ICompanyStructureForm, ICompanyStructureProps, IUbo } from '../../types';
 import { useAppSelector } from '@app/store/hooks';
+import { useIssuerDetailsMutation } from '@app/store/api/onboarding';
+import type { IssuerDetailsEntity } from '@app/server/database/entity';
 
 const translationNamespace = RouteNames.POST_ONBOARDING;
 
 const CompanyStructure: FC<ICompanyStructureProps> = ({ next }) => {
+  const { email } = useAppSelector((state) => state.userData);
+
+  const [postDetails] = useIssuerDetailsMutation();
+
   const { companyStructure: companyStructureState } = useAppSelector(
     (state) => state.postOnboarding
   );
@@ -55,7 +61,14 @@ const CompanyStructure: FC<ICompanyStructureProps> = ({ next }) => {
   const { fields, append, remove } = useFieldArray({ name: 'ubos', control });
 
   const onSubmit: SubmitHandler<ICompanyStructureForm> = (data) => {
-    next(data);
+    postDetails({ id: email, companyStructure: data })
+      .unwrap()
+      .then((response: IssuerDetailsEntity) => {
+        next(data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (

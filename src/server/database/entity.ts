@@ -1,3 +1,9 @@
+import type {
+  ICompanyStructureForm,
+  IKycForm,
+  ILegalRepresentativeForm
+} from '@app/pages/PostOnboarding/types';
+
 export interface BaseEntity {
   id: string;
 }
@@ -51,4 +57,11 @@ export interface AssetEntity extends BaseEntity {
 
 export interface TokenEntity extends BaseEntity {
   tokenId: string;
+}
+
+export interface IssuerDetailsEntity extends BaseEntity {
+  completed?: boolean;
+  companyStructure?: ICompanyStructureForm;
+  legalRepresentatives?: ILegalRepresentativeForm;
+  kyc?: { form: IKycForm | null };
 }

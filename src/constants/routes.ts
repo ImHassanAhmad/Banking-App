@@ -29,5 +29,6 @@ export const RouteNames = {
   QUESTIONS_LIST: 'questions-list',
   CREATE_ASSET_TOKEN: 'create-asset-token',
   LEGAL_REPRESENTATIVE: 'legal-representative',
-  POST_ONBOARDING: 'post-onboarding'
+  POST_ONBOARDING: 'post-onboarding',
+  DASHBOARD: 'dashboard'
 } as const;

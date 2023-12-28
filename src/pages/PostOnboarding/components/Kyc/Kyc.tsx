@@ -11,13 +11,17 @@ import UploadField from '../UploadFile/UploadFile';
 import type { IKycForm, IKycProps } from '../../types';
 import BackButton from '@app/components/BackButton';
 import { useAppSelector } from '@app/store/hooks';
+import { useIssuerDetailsMutation } from '@app/store/api/onboarding';
+import type { IssuerDetailsEntity } from '@app/server/database/entity';
 
 const translationNamespace = RouteNames.POST_ONBOARDING;
 
 const Kyc: FC<IKycProps> = ({ submit, back, uploadedFiles, setter }) => {
-  const { t } = useTranslation();
-
+  const { email } = useAppSelector((state) => state.userData);
   const { kyc: kycState } = useAppSelector((state) => state.postOnboarding);
+
+  const { t } = useTranslation();
+  const [postDetails] = useIssuerDetailsMutation();
 
   const defaultValue: IKycForm = { name: '', email: '', phone: '', role: '' };
 
@@ -40,7 +44,14 @@ const Kyc: FC<IKycProps> = ({ submit, back, uploadedFiles, setter }) => {
   });
 
   const onSubmit: SubmitHandler<IKycForm> = (data) => {
-    submit();
+    postDetails({ id: email, kyc: { form: data, uploadedFiles } })
+      .unwrap()
+      .then((response: IssuerDetailsEntity) => {
+        submit(data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (

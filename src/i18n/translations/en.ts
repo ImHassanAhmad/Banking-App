@@ -405,8 +405,12 @@ const en: LanguageResource = {
     passport: 'Passport',
     national_id: 'National ID',
     residence_proof: 'Residence Proof',
-    profile_picture: 'Profile Picture'
-  }
+    profile_picture: 'Profile Picture',
+    success_message:
+      'Your Details have been submitted and being review meanwhile you can start exploring',
+    dashboard_button: 'Go to Dashboard'
+  },
+  dashboard: {}
 };
 
 export default en;

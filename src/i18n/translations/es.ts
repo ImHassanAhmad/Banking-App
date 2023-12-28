@@ -37,7 +37,8 @@ const es: LanguageResource = {
   'legal-representative': {},
   'us-person': {},
   'create-asset-token': {},
-  'post-onboarding': {}
+  'post-onboarding': {},
+  dashboard: {}
 };
 
 export default es;

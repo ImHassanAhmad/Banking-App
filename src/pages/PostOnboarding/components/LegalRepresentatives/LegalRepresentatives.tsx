@@ -22,13 +22,18 @@ import type {
 } from '../../types';
 import { useAppSelector } from '@app/store/hooks';
 import BackButton from '@app/components/BackButton';
+import { useIssuerDetailsMutation } from '@app/store/api/onboarding';
+import type { IssuerDetailsEntity } from '@app/server/database/entity';
 
 const translationNamespace = RouteNames.POST_ONBOARDING;
 
 const LegalRepresentatives: FC<ILegalRepresentatives> = ({ next, back }) => {
+  const { email } = useAppSelector((state) => state.userData);
   const { legalRepresentatives: legalRepresentativesState } = useAppSelector(
     (state) => state.postOnboarding
   );
+
+  const [postDetails] = useIssuerDetailsMutation();
   const { t } = useTranslation();
   const theme = useTheme();
 
@@ -61,7 +66,14 @@ const LegalRepresentatives: FC<ILegalRepresentatives> = ({ next, back }) => {
   const { fields, append, remove } = useFieldArray({ name: 'legalRepresentative', control });
 
   const onSubmit: SubmitHandler<ILegalRepresentativeForm> = (data) => {
-    next(data);
+    postDetails({ id: email, legalRepresentatives: data })
+      .unwrap()
+      .then((response: IssuerDetailsEntity) => {
+        next(data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (

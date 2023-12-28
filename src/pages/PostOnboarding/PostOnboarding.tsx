@@ -1,24 +1,33 @@
 import React, { type FC, useState } from 'react';
-import { Stepper, Step, StepLabel, Box } from '@mui/material';
+import { Stepper, Step, StepLabel, Box, Typography, Button } from '@mui/material';
 import { RouteNames } from '@app/constants/routes';
 import { useTranslation } from 'react-i18next';
 import CompanyStructure from './components/CompanyStructure';
 import LegalRepresentatives from './components/LegalRepresentatives';
 import Kyc from './components/Kyc';
-import { useAppDispatch } from '@app/store/hooks';
+import { useAppDispatch, useAppSelector } from '@app/store/hooks';
 import {
   setCompanyStructure,
   setKyc,
-  setLegalRepresentatives
+  setLegalRepresentatives,
+  setStep
 } from '@app/store/slices/postOnboarding';
 import type { DataType, IUploadedFiles } from './types';
+import { setPostOnboardingCompleted } from '@app/store/slices/userData';
+import DoneIcon from '@mui/icons-material/Done';
+import { useTheme } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
 
 const translationNamespace = RouteNames.POST_ONBOARDING;
 
 const PostOnboarding: FC = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const theme = useTheme();
   const { t } = useTranslation();
-  const [activeStep, setActiveStep] = useState<number>(0);
+  const { postOnboardingCompleted } = useAppSelector((state) => state.userData);
+  const { activeStep } = useAppSelector((state) => state.postOnboarding);
+
   const [uploadedFiles, setUploadedFiles] = useState<IUploadedFiles>({
     passport: null,
     national_id: null,
@@ -32,6 +41,10 @@ const PostOnboarding: FC = () => {
     t(`${translationNamespace}.kyc`)
   ];
 
+  const setActiveStep = (payload: number): void => {
+    dispatch(setStep(payload));
+  };
+
   const setter = (name: string, file: File): void => {
     setUploadedFiles((prev: any) => {
       const newRes: any = { ...prev };
@@ -42,12 +55,12 @@ const PostOnboarding: FC = () => {
 
   const next = (data: DataType): void => {
     retainState(data);
-    setActiveStep((step) => step + 1);
+    setActiveStep(+1);
   };
 
   const back = (data: DataType): void => {
     retainState(data);
-    setActiveStep((prevState) => prevState - 1);
+    setActiveStep(-1);
   };
 
   const retainState = (data: DataType): void => {
@@ -67,7 +80,10 @@ const PostOnboarding: FC = () => {
     }
   };
 
-  const submit = (): void => {};
+  const submit = (data: DataType): void => {
+    retainState(data);
+    dispatch(setPostOnboardingCompleted(true));
+  };
 
   const getStepContent = (step: number): any => {
     switch (step) {
@@ -84,22 +100,56 @@ const PostOnboarding: FC = () => {
 
   return (
     <Box mt="40px">
-      <Box width="80%" mt="46px">
-        <Stepper activeStep={activeStep} sx={{ mb: 5 }}>
-          {steps.map((label) => {
-            const stepProps: { completed?: boolean } = {};
-            const labelProps: {
-              optional?: React.ReactNode;
-            } = {};
+      <Box width="80%" mt="46px" gap="20px">
+        {postOnboardingCompleted ? (
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            height="100%"
+            flexDirection="column"
+            m="200px"
+            gap="40px">
+            <Box
+              bgcolor={theme.palette.primary.main}
+              minHeight="100px"
+              minWidth="100px"
+              borderRadius="50%"
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              color="white">
+              <DoneIcon sx={{ width: '50px', height: '50px' }} />
+            </Box>
+            <Typography textAlign="center">
+              {t(`${translationNamespace}.success_message`)}
+            </Typography>
+            <Button
+              onClick={() => {
+                navigate(`/${RouteNames.DASHBOARD}`);
+              }}>
+              {t(`${translationNamespace}.dashboard_button`)}
+            </Button>
+          </Box>
+        ) : (
+          <>
+            <Stepper activeStep={activeStep} sx={{ mb: 5 }}>
+              {steps.map((label) => {
+                const stepProps: { completed?: boolean } = {};
+                const labelProps: {
+                  optional?: React.ReactNode;
+                } = {};
 
-            return (
-              <Step key={label} {...stepProps}>
-                <StepLabel {...labelProps}>{label}</StepLabel>
-              </Step>
-            );
-          })}
-        </Stepper>
-        {getStepContent(activeStep)}
+                return (
+                  <Step key={label} {...stepProps}>
+                    <StepLabel {...labelProps}>{label}</StepLabel>
+                  </Step>
+                );
+              })}
+            </Stepper>
+            {getStepContent(activeStep)}
+          </>
+        )}
       </Box>
     </Box>
   );
