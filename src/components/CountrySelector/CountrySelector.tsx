@@ -67,7 +67,7 @@ const CountrySelector: React.FC<ICountrySelectorProps> = ({
             {...params}
             placeholder={placeholder}
             sx={{
-              height: '5.7rem',
+              height: '5.6rem',
               margin: '3rem 0 2rem 0',
               borderRadius: '1rem',
               background: theme.palette.grey[700],

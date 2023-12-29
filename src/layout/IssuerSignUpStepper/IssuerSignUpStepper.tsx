@@ -74,7 +74,7 @@ const IssuerSignUpStepper: FC = () => {
     IssuerSignUpFlowSteps.EmailVerify
   ].includes(activeStep);
   return (
-    <Stack>
+    <Stack pt={5}>
       {hideBackButton ? (
         <></>
       ) : (
@@ -92,7 +92,7 @@ const IssuerSignUpStepper: FC = () => {
             alignItems: 'flex-start'
           }
         }}>
-        <Grid item lg={8} md={10} sm={10} xs={12}>
+        <Grid item lg={10} md={10} sm={10} xs={12}>
           {IssuerFlowComponent ? <IssuerFlowComponent {...props} /> : <></>}
         </Grid>
       </Stepper>

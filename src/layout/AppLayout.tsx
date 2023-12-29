@@ -7,7 +7,7 @@ import { Outlet } from 'react-router-dom';
 const AppLayout: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <Grid container justifyContent="center">
-      <Grid item xs={11} sm={10} md={6} xl={4} position="relative" sx={{ minHeight: '100vh' }}>
+      <Grid item xs={11} sm={10} md={6} xl={6} position="relative" sx={{ minHeight: '100vh' }}>
         <Stack justifyContent="flex-start">
           <Header />
         </Stack>

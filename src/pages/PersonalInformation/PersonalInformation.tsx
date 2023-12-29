@@ -8,7 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Textfield from '@app/components/Textfield';
 import Calendar from '@app/components/Calendar';
-import { type AuthFetchQueryError, type WithSignUpStepperContextProps } from '@app/common/types';
+import { type WithSignUpStepperContextProps } from '@app/common/types';
 
 interface IForm {
   firstName: string;
@@ -56,7 +56,7 @@ const PersonalInformation: FC<WithSignUpStepperContextProps> = ({
       onSuccess: () => {
         updateActiveStep();
       },
-      onError: (error: AuthFetchQueryError) => {}
+      onError: () => {}
     });
   };
 
