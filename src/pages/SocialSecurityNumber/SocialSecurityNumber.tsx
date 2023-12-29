@@ -1,17 +1,24 @@
-import React, { useCallback, useState } from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useCallback, useState, type FC } from 'react';
 import { RouteNames } from '@app/constants/routes';
 import { useTranslation } from 'react-i18next';
 import Heading from '@app/components/Heading';
 import { Box, Button, Stack, Typography } from '@mui/material';
 import Textfield from '@app/components/Textfield';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import { type WithSignUpStepperContextProps } from '@app/common/types';
 const SecurityNumber = RouteNames.SECURITY_NUMBER;
 
-const SocialSecurityNumber: React.FC = () => {
+const SocialSecurityNumber: FC<WithSignUpStepperContextProps> = ({
+  updateActiveStep,
+  registerUser,
+  isLoading,
+  userPayload
+}) => {
   const { t } = useTranslation();
   const [currentInput, setCurrentInput] = useState('');
   const [textInputArray, setTextInputArray] = useState<string[]>([]);
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setCurrentInput(event.target.value);
   };
   const handleButtonClick = useCallback(() => {
@@ -22,6 +29,8 @@ const SocialSecurityNumber: React.FC = () => {
       return updatedArray;
     });
     setCurrentInput('');
+    updateActiveStep();
+    console.log(textInputArray);
   }, [currentInput]);
 
   return (
@@ -40,6 +49,7 @@ const SocialSecurityNumber: React.FC = () => {
         </Typography>
         <Box sx={{ marginTop: '20px' }}>
           <Textfield sx={{ width: '400px' }} value={currentInput} onChange={handleInputChange} />
+
           <Box
             sx={{
               display: 'flex',
@@ -58,7 +68,8 @@ const SocialSecurityNumber: React.FC = () => {
           </Box>
         </Box>
         <Button
-          sx={{ marginTop: '40px', width: '400px' }}
+          sx={{ marginTop: '20px', width: '400px' }}
+          disabled={!currentInput}
           type="submit"
           onClick={handleButtonClick}>
           {t(`${SecurityNumber}.continue`)}

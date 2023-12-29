@@ -15,7 +15,8 @@ import { InvestorSignUpFlowSteps, InvestorSignUpFlowStepsIndices } from './types
 import { useInvestorSignUpStepper } from '@app/context/InvestorSignUpStepperContext';
 import BackButton from '@app/components/BackButton';
 import { type WithSignUpStepperContextProps } from '@app/common/types';
-
+import CountryTaxes from '@app/pages/CountryTaxes/CountryTaxes';
+import SocialSecurityNumber from '@app/pages/SocialSecurityNumber/SocialSecurityNumber';
 const investorFlowComponent = (
   activeStep: InvestorSignUpFlowSteps
 ): ComponentType<WithSignUpStepperContextProps> | undefined => {
@@ -34,6 +35,10 @@ const investorFlowComponent = (
       return SourceOfIncome;
     case InvestorSignUpFlowSteps.UsPerson:
       return UsPerson;
+    case InvestorSignUpFlowSteps.SecurityNumber:
+      return SocialSecurityNumber;
+    case InvestorSignUpFlowSteps.CountryTaxes:
+      return CountryTaxes;
     case InvestorSignUpFlowSteps.Questionaire:
       return QuestionsList;
     case InvestorSignUpFlowSteps.UploadDocument:

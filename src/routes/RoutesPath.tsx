@@ -8,12 +8,6 @@ import PersonalInformation from '@app/pages/PersonalInformation';
 import Address from '@app/pages/Address';
 import QuestionsList from '@app/pages/QuestionsList';
 // import OnboardingUserType from '@app/pages/OnboardingUserType';
-const securitynumber = lazy(
-  async () => await import('@app/pages/SocialSecurityNumber/SocialSecurityNumber')
-);
-const payedcountrytaxes = lazy(
-  async () => await import('@app/pages/PayedTaxesCountry/PayedTaxesCountry')
-);
 
 const Welcome = lazy(async () => await import('@app/pages/Welcome'));
 const Login = lazy(async () => await import('@app/layout/LoginStepper'));
@@ -31,9 +25,6 @@ export const publicRoutes: IRouteConfig[] = [
     path: '/',
     element: Welcome
   },
-  { path: RouteNames.SECURITY_NUMBER, element: securitynumber },
-  { path: RouteNames.PAY_COUNTRY_TAXES, element: payedcountrytaxes },
-
   { path: RouteNames.ONBOARDING, element: OnboardingUserType },
   { path: RouteNames.INVESTOR_SIGNUP, element: InvestorSignUpStepper },
   { path: RouteNames.ISSUER_SIGNUP, element: IssuerSignUpStepper },
