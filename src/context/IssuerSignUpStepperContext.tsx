@@ -37,6 +37,7 @@ export interface IssuerSignUpStepperContextProps {
   registerUser: (params: RegisterUserCallBackParams) => void;
   setUserId: Dispatch<SetStateAction<string>>;
   updateActiveStep: () => void;
+  resetStepper: () => void;
   goBack: (backStep: number) => void;
   updateUserPayload: (data: Partial<IssuerUserRequestDto>) => void;
 }
@@ -76,6 +77,11 @@ export const IssuerSignUpStepperProvider: FC<PropsWithChildren> = ({ children })
         updateError(activeStep, { title: message, message, errorLevel });
         break;
     }
+  };
+
+  const resetStepper = (): void => {
+    setActiveStep(IssuerSignUpFlowSteps.Country);
+    setRegisterUserPayload({ dryRun: true });
   };
 
   const updateActiveStep = (): void => {
@@ -155,6 +161,7 @@ export const IssuerSignUpStepperProvider: FC<PropsWithChildren> = ({ children })
     onBoardType: onBoardType.Issuer,
     updateUserPayload,
     updateActiveStep,
+    resetStepper,
     setUserId,
     registerUser,
     goBack

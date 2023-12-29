@@ -15,6 +15,7 @@ const pl: LanguageResource = {
   'account-statement-modal': {},
   'country-not-supported': {},
   'region-not-supported': {},
+  'legal-check': {},
   'privacy-policy': {},
   'about-our-services': {},
   'business-category': {},
