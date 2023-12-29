@@ -12,7 +12,6 @@ import { RouteNames } from '@app/constants/routes';
 import {
   Button,
   FormControl,
-  Grid,
   MenuItem,
   Select,
   Stack,
@@ -109,79 +108,77 @@ const PhoneNumberField: FC<WithSignUpStepperContextProps> = ({
   };
 
   return (
-    <Stack mt={4} className="phoneSelector">
-      <Stack mt={5} mb={5}>
+    <Stack mt={5} className="phoneSelector">
+      <Stack>
         <Heading
           title={t(`${mobileVerifyNamespace}.title`)}
           subTitle={t(`${mobileVerifyNamespace}.subtitle`)}
         />
       </Stack>
-      <Grid item xs={12} sm={10} md={8} lg={8}>
-        <Stack gap={3} mt={3}>
-          <FormControl fullWidth sx={formcontrol}>
-            <Select
-              sx={selectText}
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              data-testid="phone-country-selector"
-              value={value}
-              onChange={handleChangecountry}
-              IconComponent={() => <></>}
-              renderValue={(value) => {
-                const country = getCountryData(value as TCountryCode);
-                return (
-                  <Stack direction={'row'} gap={1}>
-                    <img src={getCountryFlag(country.iso2)} style={setIcon} />
-                    <Typography>+{country.phone[0]}</Typography>
-                  </Stack>
-                );
-              }}
-              MenuProps={{
-                sx: {
-                  marginTop: '8px',
-                  marginLeft: '25px'
-                }
-              }}>
-              {ALL_COUNTRIES.map(({ iso2: countryCode, name }) => (
-                <MenuItem key={countryCode} value={countryCode} sx={{ minWidth: '250px' }}>
-                  <Stack direction={'row'} gap={1}>
-                    <img src={getCountryFlag(countryCode)} style={setIcon} />
-                    <Typography>{name}</Typography>
-                  </Stack>
-                </MenuItem>
-              ))}
-            </Select>
-            <Textfield
-              type="text"
-              placeholder=""
-              data-testid="phone-input"
-              inputProps={{
-                onKeyPress: handleKeyPress
-              }}
-              autoFocus
-              defaultValue={shortenPhoneNumber}
-              onChange={handleChange}
-              sx={textField}
-              errorValue={errors}
-            />
-          </FormControl>
-          <Button
-            sx={{ textTransform: 'uppercase', width: '378px', height: '52px' }}
-            disabled={!isValid || isLoading}
-            onClick={submit}>
-            {' '}
-            {t(`${translationNamespace}.continue`)} {isLoading && <Loader />}
-          </Button>
-          <NotSupportedModal
-            open={open}
-            handleClose={() => {
-              setOpen(false);
+      <Stack gap={3} mt={3} maxWidth={'43.6rem'}>
+        <FormControl fullWidth sx={formcontrol}>
+          <Select
+            sx={selectText}
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            data-testid="phone-country-selector"
+            value={value}
+            onChange={handleChangecountry}
+            IconComponent={() => <></>}
+            renderValue={(value) => {
+              const country = getCountryData(value as TCountryCode);
+              return (
+                <Stack direction={'row'} gap={1}>
+                  <img src={getCountryFlag(country.iso2)} style={setIcon} />
+                  <Typography>+{country.phone[0]}</Typography>
+                </Stack>
+              );
             }}
-            country={ALL_COUNTRIES.find(({ iso2 }) => iso2 === value)}
-            mode={NOT_SUPPORTED_MODES.phoneNumber}
+            MenuProps={{
+              sx: {
+                marginTop: '8px',
+                marginLeft: '25px'
+              }
+            }}>
+            {ALL_COUNTRIES.map(({ iso2: countryCode, name }) => (
+              <MenuItem key={countryCode} value={countryCode} sx={{ minWidth: '250px' }}>
+                <Stack direction={'row'} gap={1}>
+                  <img src={getCountryFlag(countryCode)} style={setIcon} />
+                  <Typography>{name}</Typography>
+                </Stack>
+              </MenuItem>
+            ))}
+          </Select>
+          <Textfield
+            type="text"
+            placeholder=""
+            data-testid="phone-input"
+            inputProps={{
+              onKeyPress: handleKeyPress
+            }}
+            autoFocus
+            defaultValue={shortenPhoneNumber}
+            onChange={handleChange}
+            sx={textField}
+            errorValue={errors}
           />
-        </Stack>
-      </Grid>
+        </FormControl>
+        <Button
+          sx={{ textTransform: 'uppercase', height: '5.2rem' }}
+          disabled={!isValid || isLoading}
+          onClick={submit}>
+          {' '}
+          {t(`${translationNamespace}.continue`)} {isLoading && <Loader />}
+        </Button>
+        <NotSupportedModal
+          open={open}
+          handleClose={() => {
+            setOpen(false);
+          }}
+          country={ALL_COUNTRIES.find(({ iso2 }) => iso2 === value)}
+          mode={NOT_SUPPORTED_MODES.phoneNumber}
+        />
+      </Stack>
     </Stack>
   );
 };
@@ -193,18 +190,17 @@ const useStyles = {
     display: 'flex',
     flexDirection: 'row',
     gap: '9px',
-    width: '378px',
-    height: '52px'
+    height: '5.2rem'
   },
   selectText: {
-    width: '100px',
-    height: '56px',
+    width: '10rem',
+    height: '5.2rem',
     borderRadius: '8px',
     background: 'rgb(225,225,225)'
   },
   textField: {
-    width: '280px',
-    height: '52px',
+    width: '33rem',
+    height: '5.2rem',
     background: 'rgb(225,225,225)',
     borderRadius: '12px'
   },

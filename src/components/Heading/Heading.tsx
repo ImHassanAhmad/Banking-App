@@ -8,7 +8,7 @@ const Heading: FC<HeadingProps> = ({ title, subTitle, subTitleAnchor, subTitleAn
       <Typography
         sx={{
           fontSize: '3.6rem',
-          fontWeight: 500
+          fontWeight: 530
         }}>
         {title}
       </Typography>

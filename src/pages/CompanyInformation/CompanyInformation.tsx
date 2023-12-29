@@ -72,8 +72,8 @@ const CompanyInformation: FC<WithSignUpStepperContextProps> = ({
   };
 
   return (
-    <Stack mt={4} sx={{ width: '100%' }}>
-      <Stack mt={4}>
+    <Stack mt={5} sx={{ width: '100%' }}>
+      <Stack>
         <Heading
           title={t(`${translationNamespace}.title`)}
           subTitle={t(`${translationNamespace}.subtitle`)}
