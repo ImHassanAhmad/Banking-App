@@ -4,7 +4,6 @@ import { RouteNames } from '@app/constants/routes';
 import { useTranslation } from 'react-i18next';
 import Heading from '@app/components/Heading';
 import { Button, Stack, Typography, Box } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import CustomComponent from '@app/components/CustomInput/CustomInput';
 import { type WithSignUpStepperContextProps } from '@app/common/types';
@@ -14,12 +13,15 @@ const CountryTaxes: FC<WithSignUpStepperContextProps> = ({
   updateActiveStep,
   registerUser,
   isLoading,
-  userPayload
+  userPayload,
+  goBack,
+  activeStepIndex
 }) => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
+
   const addCountry = (): void => {
-    navigate('/security-number');
+    console.log(activeStepIndex);
+    goBack(activeStepIndex - 1);
   };
 
   return (

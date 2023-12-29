@@ -1,4 +1,7 @@
-import { InvestorSignUpFlowSteps } from '@app/layout/InvestorSignUpStepper/types';
+import {
+  InvestorSignUpFlowSteps,
+  InvestorSignUpFlowStepsIndices
+} from '@app/layout/InvestorSignUpStepper/types';
 import { useRegisterUserMutation } from '@app/store/api/onboarding';
 import {
   type Dispatch,
@@ -7,7 +10,8 @@ import {
   useState,
   useContext,
   type FC,
-  type PropsWithChildren
+  type PropsWithChildren,
+  useMemo
 } from 'react';
 import {
   type RegisterUserResponseDto,
@@ -38,6 +42,7 @@ export interface InvestorSignUpStepperContextProps {
   setUserId: Dispatch<SetStateAction<string>>;
   updateActiveStep: () => void;
   goBack: (backStep: number) => void;
+  activeStepIndex: number;
 }
 
 const InvestorSignUpStepperContext = createContext<InvestorSignUpStepperContextProps>({
@@ -134,7 +139,7 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
   };
 
   const activeStepError = findError(activeStep);
-
+  const activeStepIndex = useMemo(() => InvestorSignUpFlowStepsIndices[activeStep], [activeStep]);
   const value = {
     activeStep,
     userId,
@@ -142,6 +147,7 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
     userPayload: registerUserPayload,
     activeStepError: findError(activeStep),
     onBoardType: onBoardType.Investor,
+    activeStepIndex,
     updateActiveStep,
     setUserId,
     registerUser,
