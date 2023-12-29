@@ -44,6 +44,12 @@ const postOnboardingSchema = yup.object().shape({
           email: yup.string().email('Invalid email format').required('Email is required'),
           phone: yup.string().required('Phone number is required'),
           role: yup.string().required('Role is required')
+        }),
+        uploadedFiles: yup.object().shape({
+          passport: yup.string().required('Passport is required'),
+          national_id: yup.string().required('National Id is required'),
+          residence_proof: yup.string().required('Residence proof is required'),
+          profile_picture: yup.string().required('Profile picture is required')
         })
       });
     }

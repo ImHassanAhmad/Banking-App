@@ -54,4 +54,11 @@ export interface IUploadedFiles {
   profile_picture: File | null;
 }
 
+export interface IUploadedFilesEntity {
+  passport: string;
+  national_id: string;
+  residence_proof: string;
+  profile_picture: string;
+}
+
 export type DataType = ICompanyStructureForm | ILegalRepresentativeForm | IKycForm;

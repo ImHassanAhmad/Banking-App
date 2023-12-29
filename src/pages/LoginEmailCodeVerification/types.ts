@@ -8,7 +8,7 @@ import type {
   ICompanyStructureForm,
   IKycForm,
   ILegalRepresentativeForm,
-  IUploadedFiles
+  IUploadedFilesEntity
 } from '../PostOnboarding/types';
 
 export type VerifyEmailRequestDto = VerifyPhoneRequestDto;
@@ -22,7 +22,7 @@ export interface IssuerDetailsRequestDto {
   legalRepresentatives?: ILegalRepresentativeForm;
   kyc?: {
     form: IKycForm;
-    uploadedFiles: IUploadedFiles;
+    uploadedFiles: IUploadedFilesEntity;
   };
 }
 

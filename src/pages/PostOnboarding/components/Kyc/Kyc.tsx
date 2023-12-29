@@ -44,7 +44,18 @@ const Kyc: FC<IKycProps> = ({ submit, back, uploadedFiles, setter }) => {
   });
 
   const onSubmit: SubmitHandler<IKycForm> = (data) => {
-    postDetails({ id: email, kyc: { form: data, uploadedFiles } })
+    postDetails({
+      id: email,
+      kyc: {
+        form: data,
+        uploadedFiles: {
+          passport: uploadedFiles.passport?.name as string,
+          national_id: uploadedFiles.national_id?.name as string,
+          residence_proof: uploadedFiles.residence_proof?.name as string,
+          profile_picture: uploadedFiles.profile_picture?.name as string
+        }
+      }
+    })
       .unwrap()
       .then((response: IssuerDetailsEntity) => {
         submit(data);

@@ -1,7 +1,8 @@
 import type {
   ICompanyStructureForm,
   IKycForm,
-  ILegalRepresentativeForm
+  ILegalRepresentativeForm,
+  IUploadedFilesEntity
 } from '@app/pages/PostOnboarding/types';
 
 export interface BaseEntity {
@@ -63,5 +64,5 @@ export interface IssuerDetailsEntity extends BaseEntity {
   completed?: boolean;
   companyStructure?: ICompanyStructureForm;
   legalRepresentatives?: ILegalRepresentativeForm;
-  kyc?: { form: IKycForm | null };
+  kyc?: { form: IKycForm | null; uploadedFiles: IUploadedFilesEntity };
 }
