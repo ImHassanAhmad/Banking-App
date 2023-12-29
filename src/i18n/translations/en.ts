@@ -130,6 +130,11 @@ const en: LanguageResource = {
     subtitle: 'Phone numbers from this region is not supported.',
     change: 'CHANGE REGION'
   },
+  'legal-check': {
+    title: 'Unable to proceed !',
+    subtitle: 'Only legal representatives are allowed to create an account.',
+    OK: 'OK'
+  },
   'privacy-policy': {
     title: 'Privacy Policy',
     subtitle: 'Valid as of September 14, 2021',

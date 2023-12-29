@@ -4,5 +4,6 @@ export const ModalNames = {
   ACCOUNT_STATEMENT_MODAL: 'account-statement-modal',
   COUNTRY_NOT_SUPPORTED: 'country-not-supported',
   REGION_NOT_SUPPORTED: 'region-not-supported',
-  PRIVACY_POLICY: 'privacy-policy'
+  PRIVACY_POLICY: 'privacy-policy',
+  LEGAL_CHECK: 'legal-check'
 } as const;
