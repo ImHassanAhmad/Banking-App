@@ -16,6 +16,8 @@ import {
   MOCK_LOGIN_PASSWORD
 } from '@app/store/api/mock/constants/onboarding.const';
 import {
+  MOCK_LOGIN_EMAIL_SOMETHING_WENTWRONG,
+  MOCK_LOGIN_EMAIL_TOO_MANY_ATTEMPTS,
   INCORRECT_LOGIN_DATA,
   TOO_MANY_INVALID_LOGIN_ATTEMPTS
 } from '@app/store/api/mock/constants/login.const';
@@ -157,20 +159,19 @@ describe('Login', () => {
 
     act(() => {
       fireEvent.input(emailLoginInput, {
-        target: { value: MOCK_LOGIN_EMAIL + 'A', name: 'email' }
+        target: { value: MOCK_LOGIN_EMAIL_TOO_MANY_ATTEMPTS, name: 'email' }
       });
-      fireEvent.input(passwordInput, { target: { value: MOCK_LOGIN_PASSWORD, name: 'password' } });
+      fireEvent.input(passwordInput, {
+        target: { value: MOCK_LOGIN_PASSWORD, name: 'password' }
+      });
     });
 
-    for (let i = 0; i < 4; i++) {
-      await act(() => {
-        return fireEvent.click(loginBtn);
-      });
-    }
-
-    await waitFor(() => {
-      expect(screen.getByText(TOO_MANY_INVALID_LOGIN_ATTEMPTS)).toBeInTheDocument();
+    await act(() => {
+      return fireEvent.click(loginBtn);
     });
+
+    await waitFor(() => {});
+    expect(screen.getByText(TOO_MANY_INVALID_LOGIN_ATTEMPTS)).toBeInTheDocument();
   });
 
   it('should render the something went wrong error on multiple bad inputs', async () => {
@@ -182,12 +183,12 @@ describe('Login', () => {
 
     act(() => {
       fireEvent.input(emailLoginInput, {
-        target: { value: MOCK_LOGIN_EMAIL + 'A', name: 'email' }
+        target: { value: MOCK_LOGIN_EMAIL_SOMETHING_WENTWRONG, name: 'email' }
       });
       fireEvent.input(passwordInput, { target: { value: MOCK_LOGIN_PASSWORD, name: 'password' } });
     });
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 12; i++) {
       await act(() => {
         return fireEvent.click(loginBtn);
       });
