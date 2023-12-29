@@ -8,7 +8,7 @@ import { type WithSignUpStepperContextProps } from '@app/common/types';
 
 const transactionResource = RouteNames.INCOME_RANGE;
 
-const BusinessTurnover: FC<WithSignUpStepperContextProps> = ({
+const IncomeRange: FC<WithSignUpStepperContextProps> = ({
   updateActiveStep,
   registerUser,
   userPayload: { incomeRange },
@@ -32,4 +32,4 @@ const BusinessTurnover: FC<WithSignUpStepperContextProps> = ({
   );
 };
 
-export default BusinessTurnover;
+export default IncomeRange;

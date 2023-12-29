@@ -275,6 +275,19 @@ const en: LanguageResource = {
     other: 'Other',
     continue: 'Continue'
   },
+  'source-of-income': {
+    title: 'Source of Income',
+    subtitle:
+      'Please tell us what is the source of funds that you will use to funds your W1tty Account',
+    revenue: 'Revenue',
+    loans_credits: 'Loans/credits',
+    donations: 'Donations',
+    dividend_from_branches: 'Dividend from branches',
+    financial_support: 'Financial support from state / international bodies',
+    sales_of_goods: 'Sales of goods',
+    other: 'Other',
+    continue: 'Continue'
+  },
   '*': {
     title: '404',
     sub_title: 'Page Not Found',
@@ -301,6 +314,10 @@ const en: LanguageResource = {
     title: 'Is your business regulated?',
     subtitle: ''
   },
+  'us-person': {
+    title: 'Are you a US Person?',
+    subtitle: '[subtitle here]'
+  },
   'business-revenue': {
     title: 'Annual Revenue',
     subtitle: ''
@@ -309,7 +326,11 @@ const en: LanguageResource = {
     incoming_title: 'Turnover for incoming transactions',
     outgoing_title: 'Turnover for outgoing transactions'
   },
-  'upload-documents': {},
+  'upload-documents': {
+    document_type: 'Select Your Document Type ?',
+    upload_document: 'Upload Documents',
+    continue: 'Continue'
+  },
   'income-range': {
     title: 'Income Range'
   },
@@ -326,7 +347,7 @@ const en: LanguageResource = {
     postal_code: 'Postal Code',
     city: 'City',
     street: 'Street',
-    houseNo: 'House No.',
+    house_no: 'House No.',
     continue: 'Continue'
   },
   'questions-list': {

@@ -8,6 +8,8 @@ import Address from '@app/pages/Address';
 import PhoneNumber from '@app/pages/PhoneNumber';
 import IncomeRange from '@app/pages/IncomeRange';
 import QuestionsList from '@app/pages/QuestionsList';
+import SourceOfIncome from '@app/pages/SourceOfIncome';
+import UsPerson from '@app/pages/USPerson/UsPerson';
 import { InvestorSignUpFlowSteps, InvestorSignUpFlowStepsIndices } from './types';
 import { useInvestorSignUpStepper } from '@app/context/InvestorSignUpStepperContext';
 import BackButton from '@app/components/BackButton';
@@ -29,11 +31,12 @@ const investorFlowComponent = (
       return PhoneNumber;
     case InvestorSignUpFlowSteps.IncomeRange:
       return IncomeRange;
+    case InvestorSignUpFlowSteps.UsPerson:
+      return UsPerson;
+    case InvestorSignUpFlowSteps.SourceOfIncome:
+      return SourceOfIncome;
     case InvestorSignUpFlowSteps.Questionaire:
       return QuestionsList;
-    // TODO: has to be discuss
-    // case InvestorSignUpFlowSteps.UploadDocument:
-    //   return UploadDocument;
     case InvestorSignUpFlowSteps.CreatePassword:
       return Password;
     case InvestorSignUpFlowSteps.EmailVerify:

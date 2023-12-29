@@ -79,9 +79,14 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
   };
 
   const updateActiveStep = (): void => {
-    const nextActiveStep: InvestorSignUpFlowSteps = indexToEnumKeyRecord(InvestorSignUpFlowSteps)[
-      enumToIndexRecord(InvestorSignUpFlowSteps)[activeStep] + 1
-    ] as InvestorSignUpFlowSteps;
+    if (activeStep === InvestorSignUpFlowSteps.MobileVerify) {
+      setRegisterUserPayload({ dryRun: true });
+    }
+
+    const nextActiveStep: InvestorSignUpFlowSteps =
+      (indexToEnumKeyRecord(InvestorSignUpFlowSteps)[
+        enumToIndexRecord(InvestorSignUpFlowSteps)[activeStep] + 1
+      ] as InvestorSignUpFlowSteps) || InvestorSignUpFlowSteps.NameAndDateOfBirth;
 
     updateError(nextActiveStep, undefined);
     setActiveStep(nextActiveStep);
@@ -93,7 +98,6 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
       indexToEnumKeyRecord(InvestorSignUpFlowSteps)[backStep] as InvestorSignUpFlowSteps
     );
   };
-  console.log('tester payload ', registerUserPayload);
   const registerUser = ({
     payload,
     onSuccess,
@@ -142,7 +146,6 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
       .unwrap()
       .then((response: RegisterUserResponseDto) => {
         onSuccess(response);
-        setRegisterUserPayload({ dryRun: true, ...userPayload });
       })
       .catch((error: AuthFetchQueryError) => {
         handleError(error, onSuccess, onError);

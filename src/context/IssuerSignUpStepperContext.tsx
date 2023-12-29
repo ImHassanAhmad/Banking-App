@@ -79,12 +79,16 @@ export const IssuerSignUpStepperProvider: FC<PropsWithChildren> = ({ children })
   };
 
   const updateActiveStep = (): void => {
-    const nextActiveStep: IssuerSignUpFlowSteps = indexToEnumKeyRecord(IssuerSignUpFlowSteps)[
-      enumToIndexRecord(IssuerSignUpFlowSteps)[activeStep] + 1
-    ] as IssuerSignUpFlowSteps;
+    if (activeStep === IssuerSignUpFlowSteps.MobileVerify) {
+      setRegisterUserPayload({ dryRun: true });
+    }
+
+    const nextActiveStep: IssuerSignUpFlowSteps =
+      (indexToEnumKeyRecord(IssuerSignUpFlowSteps)[
+        enumToIndexRecord(IssuerSignUpFlowSteps)[activeStep] + 1
+      ] as IssuerSignUpFlowSteps) || IssuerSignUpFlowSteps.Country;
 
     updateError(nextActiveStep, undefined);
-
     setActiveStep(nextActiveStep);
   };
 

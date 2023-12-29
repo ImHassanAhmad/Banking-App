@@ -19,6 +19,7 @@ const pl: LanguageResource = {
   'about-our-services': {},
   'business-category': {},
   'source-of-funding': {},
+  'source-of-income': {},
   '*': {},
   help: {},
   'company-information': {},
@@ -33,8 +34,9 @@ const pl: LanguageResource = {
   'questions-list': {},
   'register-investor': {},
   'register-issuer': {},
-  'create-asset-token': {},
-  'legal-representative': {}
+  'legal-representative': {},
+  'us-person': {},
+  'create-asset-token': {}
 };
 
 export default pl;

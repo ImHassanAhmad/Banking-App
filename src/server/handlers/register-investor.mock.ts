@@ -11,11 +11,11 @@ import { type InvestorUserRequestDto } from '@app/common/types';
 
 const userRegistrationSchema = yup.object<InvestorUserRequestDto>().shape({
   email: yup.string().email().required(),
-  password: yup.string().min(13).required(),
-  shortenPhoneNumber: yup.string().required(),
-  phoneNumberCountryCode: yup.string().required(),
-  visaTncAgreed: yup.boolean().required(),
-  wittyTncAgreed: yup.boolean().required(),
+  password: yup.string().min(13),
+  shortenPhoneNumber: yup.string(),
+  phoneNumberCountryCode: yup.string(),
+  visaTncAgreed: yup.boolean(),
+  wittyTncAgreed: yup.boolean(),
   dryRun: yup.boolean().required()
 });
 

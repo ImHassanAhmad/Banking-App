@@ -99,7 +99,7 @@ const Address: FC<WithSignUpStepperContextProps> = ({
 
             <Textfield
               name="houseNo"
-              label={t(`${translationNamespace}.houseNo`)}
+              label={t(`${translationNamespace}.house_no`)}
               register={register}
               defaultValue={houseNo}
               errorValue={errors?.houseNo ?? fieldErrors}

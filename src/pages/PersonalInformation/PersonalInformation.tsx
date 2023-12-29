@@ -56,9 +56,7 @@ const PersonalInformation: FC<WithSignUpStepperContextProps> = ({
       onSuccess: () => {
         updateActiveStep();
       },
-      onError: (error: AuthFetchQueryError) => {
-        console.log('tester error ', error);
-      }
+      onError: (error: AuthFetchQueryError) => {}
     });
   };
 

@@ -31,6 +31,14 @@ export interface RegisterUserResponseDto {
   userId: string;
 }
 
+export enum IncomeSources {
+  Revenue = 'revenue',
+  LoanCredits = 'loans_credits',
+  Donations = 'donations',
+  GoodSales = 'sales_of_goods',
+  Other = 'other'
+}
+
 export interface RegisterUserRequestDto extends CaptchaTokenRequest {
   countryOfIncorporation?: TCountryCode;
   email?: string;
@@ -47,6 +55,8 @@ export interface RegisterUserRequestDto extends CaptchaTokenRequest {
   isLegalRepresentative?: boolean;
   businessType?: BusinessTypes;
   businessCategory?: BusinessCategoryType;
+  incomeSources?: IncomeSources;
+  isUsPerson?: boolean;
   businessSubCategory?: string;
   businessRevenue?: string;
   fundingSources?: string[];
@@ -77,6 +87,8 @@ export interface InvestorUserRequestDto extends UserRequestDto {
   houseNo?: string;
   incomeRange?: string;
   priceAndLimit?: boolean;
+  isUsResident?: boolean;
+  sourceOfIncome?: string[];
 }
 
 export interface IssuerUserRequestDto extends UserRequestDto {
