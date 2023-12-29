@@ -7,7 +7,9 @@ const FileInput: React.FC<FileInputProps> = ({
   selectedFile,
   label,
   handleFileChange,
-  handleUpload
+  handleUpload,
+  required,
+  error
 }) => (
   <>
     <input
@@ -16,7 +18,9 @@ const FileInput: React.FC<FileInputProps> = ({
       onChange={handleFileChange}
       style={{ display: 'none' }}
       id="file-input"
+      required={required} // Set required attribute based on the prop
     />
+    {error && required && <p style={{ color: 'red' }}>{error}</p>}
     <label htmlFor="file-input">
       <Button variant="contained" component="span" onClick={handleUpload}>
         {label ?? 'Choose File'}

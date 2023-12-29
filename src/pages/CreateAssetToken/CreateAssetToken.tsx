@@ -1,42 +1,81 @@
 import React, { useState } from 'react';
-import { Box, Button, Grid, Stack, Step, StepLabel, Stepper } from '@mui/material';
-import AssetSmartContract from './components/TokenBasicInformation';
+import { Box, Grid, Stack, Step, StepLabel, Stepper } from '@mui/material';
+import AssetTokenBasicInformation from './components/TokenBasicInformation';
 import Heading from '@app/components/Heading';
 import BackButton from '@app/components/BackButton';
 import { RouteNames } from '@app/constants/routes';
 import { useTranslation } from 'react-i18next';
 import AssetTokenConfigurations from './components/AssetTokenConfiguration';
 import { AssetTokenPrice } from './components/AssetTokenPrice';
-import { CreateAssetTokenFlowSteps } from './types';
+import { CreateAssetFlows, CreateAssetTokenFlowSteps, type CreateAssetTokenType } from './types';
 import { indexToEnumKeyRecord } from '@app/utils/enum';
+import { useAppDispatch } from '@app/store/hooks';
+import {
+  setTokenBasicInfo,
+  setTokenConfig,
+  setTokenPrice
+} from '@app/store/slices/CreateAssetToken';
 
 const assetTokenNamespace = RouteNames.CREATE_ASSET_TOKEN;
 
 const steps = Object.values(CreateAssetTokenFlowSteps);
-
-// Util function to map enum to index
-
 const CreateAssetToken: React.FC = () => {
   const { t } = useTranslation();
 
   const [activeStepIndex, setActiveStepIndex] = useState<number>(0);
 
+  const dispatch = useAppDispatch();
+
+  const next = (data: CreateAssetTokenType): void => {
+    console.log('here is data', data);
+    if (activeStepIndex < steps.length - 1) {
+      setActiveStepIndex((prevStep) => prevStep + 1);
+    }
+    retainState(data);
+  };
+
+  const back = (data: CreateAssetTokenType): void => {
+    retainState(data);
+    setActiveStepIndex((prevStep) => prevStep - 1);
+  };
+
+  const submit = (): void => {};
+
+  const retainState = (data: CreateAssetTokenType): void => {
+    switch (currentStep) {
+      case CreateAssetTokenFlowSteps.tokenBasicInformation:
+        dispatch(setTokenBasicInfo({ ...data }));
+        break;
+      case CreateAssetTokenFlowSteps.tokenConfiguration:
+        dispatch(setTokenConfig(data));
+        break;
+      case CreateAssetTokenFlowSteps.tokenPrice:
+        dispatch(setTokenPrice(data));
+        break;
+
+      default:
+        break;
+    }
+  };
   const getStepContent = (step: string): any => {
     switch (step) {
       case CreateAssetTokenFlowSteps.tokenBasicInformation:
-        return <AssetSmartContract />;
-      case CreateAssetTokenFlowSteps.tokenConfigutration:
-        return <AssetTokenConfigurations />;
+        return <AssetTokenBasicInformation next={next} />;
+      case CreateAssetTokenFlowSteps.tokenConfiguration:
+        return <AssetTokenConfigurations next={next} back={back} />;
       case CreateAssetTokenFlowSteps.tokenPrice:
-        return <AssetTokenPrice />;
+        return <AssetTokenPrice submit={submit} back={back} />;
       default:
         return <></>;
     }
   };
 
-  const enumToIndexRecordValue = indexToEnumKeyRecord(CreateAssetTokenFlowSteps);
-  const currentStep = enumToIndexRecordValue[activeStepIndex];
+  const indexToEnumRecordValue = indexToEnumKeyRecord(CreateAssetTokenFlowSteps);
+  const currentStep = indexToEnumRecordValue[activeStepIndex];
 
+  const AssetTokenSteps = Object.values(CreateAssetFlows).filter(
+    (value) => typeof value === 'string'
+  );
   return (
     <Box>
       <Stack mb={3}>
@@ -50,7 +89,7 @@ const CreateAssetToken: React.FC = () => {
       />
       <Box mt="46px">
         <Stepper activeStep={activeStepIndex} sx={{ mb: 8 }}>
-          {steps.map((label, index) => (
+          {AssetTokenSteps.map((label, index) => (
             <Step key={index}>
               <StepLabel>{label}</StepLabel>
             </Step>
@@ -59,18 +98,6 @@ const CreateAssetToken: React.FC = () => {
       </Box>
       <Grid item xs={12} sm={10} md={8} lg={8}>
         {getStepContent(currentStep)}
-        <Stack gap={3} direction={'row'} mt={3}>
-          <Button
-            sx={{ marginTop: '20px', width: '100%' }}
-            type="submit"
-            onClick={() => {
-              if (activeStepIndex < steps.length - 1) {
-                setActiveStepIndex((prevStep) => prevStep + 1);
-              }
-            }}>
-            {t(`${assetTokenNamespace}.continue`)}
-          </Button>
-        </Stack>
       </Grid>
     </Box>
   );
