@@ -52,7 +52,7 @@ const IssuerSignUpStepperContext = createContext<IssuerSignUpStepperContextProps
 const { Provider } = IssuerSignUpStepperContext;
 
 export const IssuerSignUpStepperProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [activeStep, setActiveStep] = useState(IssuerSignUpFlowSteps.CreatePassword);
+  const [activeStep, setActiveStep] = useState(IssuerSignUpFlowSteps.Country);
   const [userId, setUserId] = useState('');
   const { updateError, findError } = useAuthError();
   const [registerUserPayload, setRegisterUserPayload] = useState<IssuerUserRequestDto>({

@@ -70,7 +70,7 @@ const Password: FC<WithSignUpStepperContextProps> = ({
           subTitle={t(`${translationNamespace}.subtitle`)}
         />
       </Stack>
-      <Stack gap={3} mt={3}>
+      <Stack gap={3} mt={3} sx={{ maxWidth: '43.6rem' }}>
         <PasswordField
           label={t(`${translationNamespace}.password_input_label`)}
           errorValue={errors}
