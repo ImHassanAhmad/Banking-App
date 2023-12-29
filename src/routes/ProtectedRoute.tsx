@@ -20,7 +20,7 @@ const ProtectedRoute: React.FC<IProtectedRouterProps> = ({ redirectPath = '/logi
     if (email === '') {
       navigate('/login');
     } else if (!postOnboardingCompleted) {
-      navigate(`/${RouteNames.POST_ONBOARDING}`);
+      navigate(`/${RouteNames.ISSUER_ONBOARDING}`);
     }
   }, [postOnboardingCompleted, email]);
 

@@ -1,4 +1,4 @@
-import { type FC } from 'react';
+import { useState, type FC } from 'react';
 import { Box, Button } from '@mui/material';
 import { RouteNames } from '@app/constants/routes';
 import { useTranslation } from 'react-i18next';
@@ -8,17 +8,24 @@ import { type SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import UploadField from '../UploadFile/UploadFile';
-import type { IKycForm, IKycProps } from '../../types';
+import type { IKycForm, IKycProps, ObjectType } from '../../types';
 import BackButton from '@app/components/BackButton';
 import { useAppSelector } from '@app/store/hooks';
 import { useIssuerDetailsMutation } from '@app/store/api/onboarding';
 import type { IssuerDetailsEntity } from '@app/server/database/entity';
 
-const translationNamespace = RouteNames.POST_ONBOARDING;
+const translationNamespace = RouteNames.ISSUER_ONBOARDING;
 
-const Kyc: FC<IKycProps> = ({ submit, back, uploadedFiles, setter }) => {
+const IssuerKyc: FC<IKycProps> = ({ submit, previousStep, uploadedFiles, setter }) => {
   const { email } = useAppSelector((state) => state.userData);
   const { kyc: kycState } = useAppSelector((state) => state.postOnboarding);
+
+  const [uploadFieldsErrors, setUploadFieldsErrors] = useState<any>({
+    passport: false,
+    national_id: false,
+    residence_proof: false,
+    profile_picture: false
+  });
 
   const { t } = useTranslation();
   const [postDetails] = useIssuerDetailsMutation();
@@ -32,6 +39,16 @@ const Kyc: FC<IKycProps> = ({ submit, back, uploadedFiles, setter }) => {
     role: yup.string().required('Role is required')
   });
 
+  const checkUndefined = (obj: ObjectType): ObjectType => {
+    const result: ObjectType = {};
+
+    Object.keys(obj).forEach((key) => {
+      result[key] = !obj[key];
+    });
+
+    return result;
+  };
+
   const {
     register,
     handleSubmit,
@@ -44,25 +61,30 @@ const Kyc: FC<IKycProps> = ({ submit, back, uploadedFiles, setter }) => {
   });
 
   const onSubmit: SubmitHandler<IKycForm> = (data) => {
-    postDetails({
-      id: email,
-      kyc: {
-        form: data,
-        uploadedFiles: {
-          passport: uploadedFiles.passport?.name as string,
-          national_id: uploadedFiles.national_id?.name as string,
-          residence_proof: uploadedFiles.residence_proof?.name as string,
-          profile_picture: uploadedFiles.profile_picture?.name as string
+    const errorFields = checkUndefined(uploadedFiles);
+    if (Object.values(errorFields).includes(true)) {
+      setUploadFieldsErrors(errorFields);
+    } else {
+      postDetails({
+        id: email,
+        kyc: {
+          form: data,
+          uploadedFiles: {
+            passport: uploadedFiles.passport?.name as string,
+            national_id: uploadedFiles.national_id?.name as string,
+            residence_proof: uploadedFiles.residence_proof?.name as string,
+            profile_picture: uploadedFiles.profile_picture?.name as string
+          }
         }
-      }
-    })
-      .unwrap()
-      .then((response: IssuerDetailsEntity) => {
-        submit(data);
       })
-      .catch((error) => {
-        console.error(error);
-      });
+        .unwrap()
+        .then((response: IssuerDetailsEntity) => {
+          submit(data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
   };
 
   return (
@@ -106,13 +128,19 @@ const Kyc: FC<IKycProps> = ({ submit, back, uploadedFiles, setter }) => {
             },
             { name: 'profile_picture', state: uploadedFiles.profile_picture }
           ].map(({ name, state }) => (
-            <UploadField name={name} key={name} state={state} setter={setter} />
+            <UploadField
+              name={name}
+              key={name}
+              state={state}
+              setter={setter}
+              error={uploadFieldsErrors[name]}
+            />
           ))}
         </Box>
         <Box m="20px 0" display="flex" justifyContent="flex-end" alignItems="center">
           <BackButton
             onClick={() => {
-              back(getValues());
+              previousStep(getValues());
             }}
           />
         </Box>
@@ -124,4 +152,4 @@ const Kyc: FC<IKycProps> = ({ submit, back, uploadedFiles, setter }) => {
   );
 };
 
-export default Kyc;
+export default IssuerKyc;

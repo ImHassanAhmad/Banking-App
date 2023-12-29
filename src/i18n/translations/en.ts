@@ -385,7 +385,7 @@ const en: LanguageResource = {
   'legal-representative': {
     title: 'Are you the legal representative or director of this company?'
   },
-  'post-onboarding': {
+  'issuer-onboarding': {
     company_structure: 'Company Structure',
     legal_representative: 'Legal Representatives',
     kyc: 'KYC',

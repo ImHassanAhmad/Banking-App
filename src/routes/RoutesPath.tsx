@@ -8,7 +8,7 @@ import PersonalInformation from '@app/pages/PersonalInformation';
 import Address from '@app/pages/Address';
 import QuestionsList from '@app/pages/QuestionsList';
 // import OnboardingUserType from '@app/pages/OnboardingUserType';
-import PostOnboarding from '@app/pages/PostOnboarding';
+import IssuerOnboarding from '@app/pages/IssuerOnboarding';
 import Dashboard from '@app/pages/Dashboard';
 
 const Welcome = lazy(async () => await import('@app/pages/Welcome'));
@@ -44,6 +44,6 @@ export const publicRoutes: IRouteConfig[] = [
 ];
 
 export const privateRoutes: IRouteConfig[] = [
-  { path: RouteNames.POST_ONBOARDING, element: PostOnboarding },
+  { path: RouteNames.ISSUER_ONBOARDING, element: IssuerOnboarding },
   { path: RouteNames.DASHBOARD, element: Dashboard }
 ];

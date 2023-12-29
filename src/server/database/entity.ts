@@ -3,7 +3,7 @@ import type {
   IKycForm,
   ILegalRepresentativeForm,
   IUploadedFilesEntity
-} from '@app/pages/PostOnboarding/types';
+} from '@app/pages/IssuerOnboarding/types';
 
 export interface BaseEntity {
   id: string;

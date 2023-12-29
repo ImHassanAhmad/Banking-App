@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import EmailCodeVerification from '@app/components/EmailCodeVerification/EmailCodeVerification';
 import { useLoginStepper } from '@app/context/LoginStepperContext';
 import { useResendLoginOtpMutation, useVerifyLoginOtpMutation } from '@app/store/api/login';
@@ -7,21 +7,21 @@ import { type ResendLoginOtpResponseDto } from 'types';
 import { type AuthFetchQueryError, AuthErrorLevel } from '@app/common/types';
 import { useAuthError } from '@app/context/AuthErrorContext';
 import { LoginFlowSteps } from '@app/layout/LoginStepper/types';
-import type { UserEntity } from '@app/server/database/entity';
+import type { IssuerDetailsEntity, UserEntity } from '@app/server/database/entity';
 import { RouteNames } from '@app/constants/routes';
-import { useGetIssuerDetailsQuery } from '@app/store/api/onboarding';
+import { useLazyGetIssuerDetailsQuery } from '@app/store/api/onboarding';
 import { setEmail, setPostOnboardingCompleted } from '@app/store/slices/userData';
 import { useAppDispatch } from '@app/store/hooks';
 import {
   setCompanyStructure,
   setLegalRepresentatives,
   setStep
-} from '@app/store/slices/postOnboarding';
+} from '@app/store/slices/issuerOnboarding';
+import { PostOnboardingFlowSteps } from '../IssuerOnboarding/types';
 
 const LoginEmailCodeVerification: React.FC = () => {
   const dispatch = useAppDispatch();
   const [isInvalid, setOtpValidity] = useState<boolean>(false);
-  const [id, setId] = useState<string | undefined>();
   const [codeRequested, setCodeRequested] = useState(true);
 
   const { otpId, email, setOtpId, activeStep, setActiveStep } = useLoginStepper();
@@ -30,33 +30,7 @@ const LoginEmailCodeVerification: React.FC = () => {
   const navigate = useNavigate();
   const { updateError } = useAuthError();
 
-  const { data: issuerDetails, isSuccess: userDetailsSuccess } = useGetIssuerDetailsQuery(
-    id as string,
-    {
-      skip: !id
-    }
-  );
-
-  useEffect(() => {
-    if (userDetailsSuccess) {
-      const { completed, companyStructure, legalRepresentatives } = issuerDetails;
-      dispatch(setPostOnboardingCompleted(completed));
-      if (issuerDetails && completed) {
-        navigate(`/${RouteNames.DASHBOARD}`);
-      } else {
-        if (legalRepresentatives) {
-          dispatch(setLegalRepresentatives(legalRepresentatives));
-          dispatch(setStep(2));
-        } else if (companyStructure) {
-          dispatch(setCompanyStructure(companyStructure));
-          dispatch(setStep(1));
-        } else {
-          dispatch(setStep(0));
-        }
-        navigate(`/${RouteNames.POST_ONBOARDING}`);
-      }
-    }
-  }, [userDetailsSuccess]);
+  const [getIssuerDetails] = useLazyGetIssuerDetailsQuery();
 
   const apiErrorHandler = ({ message, errorLevel }: AuthFetchQueryError): void => {
     switch (errorLevel) {
@@ -74,7 +48,30 @@ const LoginEmailCodeVerification: React.FC = () => {
       .unwrap()
       .then((response: UserEntity) => {
         dispatch(setEmail(response.email));
-        setId(response.email);
+        getIssuerDetails(response.email as string)
+          .unwrap()
+          .then((response: IssuerDetailsEntity) => {
+            const { completed, companyStructure, legalRepresentatives } = response;
+            dispatch(setPostOnboardingCompleted(completed));
+            if (response && completed) {
+              navigate(`/${RouteNames.DASHBOARD}`);
+            } else {
+              if (legalRepresentatives) {
+                dispatch(setLegalRepresentatives(legalRepresentatives));
+                dispatch(setStep(PostOnboardingFlowSteps.Kyc));
+              } else if (companyStructure) {
+                dispatch(setCompanyStructure(companyStructure));
+                dispatch(setStep(PostOnboardingFlowSteps.LegalRespresentative));
+              } else {
+                dispatch(setStep(PostOnboardingFlowSteps.CompanyStructure));
+              }
+              navigate(`/${RouteNames.ISSUER_ONBOARDING}`);
+            }
+          })
+          .catch((error) => {
+            apiErrorHandler(error);
+            navigate(`/${RouteNames.ISSUER_ONBOARDING}`);
+          });
       })
       .catch(apiErrorHandler);
   };

@@ -4,21 +4,21 @@ import { RouteNames } from '@app/constants/routes';
 import { useTranslation } from 'react-i18next';
 import CompanyStructure from './components/CompanyStructure';
 import LegalRepresentatives from './components/LegalRepresentatives';
-import Kyc from './components/Kyc';
+import Kyc from './components/IssuerKyc';
 import { useAppDispatch, useAppSelector } from '@app/store/hooks';
 import {
   setCompanyStructure,
   setKyc,
   setLegalRepresentatives,
   setStep
-} from '@app/store/slices/postOnboarding';
-import type { DataType, IUploadedFiles } from './types';
+} from '@app/store/slices/issuerOnboarding';
+import { PostOnboardingFlowSteps, type DataType, type IUploadedFiles } from './types';
 import { setPostOnboardingCompleted } from '@app/store/slices/userData';
 import DoneIcon from '@mui/icons-material/Done';
 import { useTheme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 
-const translationNamespace = RouteNames.POST_ONBOARDING;
+const translationNamespace = RouteNames.ISSUER_ONBOARDING;
 
 const PostOnboarding: FC = () => {
   const dispatch = useAppDispatch();
@@ -29,10 +29,10 @@ const PostOnboarding: FC = () => {
   const { activeStep } = useAppSelector((state) => state.postOnboarding);
 
   const [uploadedFiles, setUploadedFiles] = useState<IUploadedFiles>({
-    passport: null,
-    national_id: null,
-    residence_proof: null,
-    profile_picture: null
+    passport: undefined,
+    national_id: undefined,
+    residence_proof: undefined,
+    profile_picture: undefined
   });
 
   const steps = [
@@ -53,25 +53,25 @@ const PostOnboarding: FC = () => {
     });
   };
 
-  const next = (data: DataType): void => {
+  const nextStep = (data: DataType): void => {
     retainState(data);
     setActiveStep(+1);
   };
 
-  const back = (data: DataType): void => {
+  const previousStep = (data: DataType): void => {
     retainState(data);
     setActiveStep(-1);
   };
 
   const retainState = (data: DataType): void => {
     switch (activeStep) {
-      case 0:
+      case PostOnboardingFlowSteps.CompanyStructure:
         dispatch(setCompanyStructure(data));
         break;
-      case 1:
+      case PostOnboardingFlowSteps.LegalRespresentative:
         dispatch(setLegalRepresentatives(data));
         break;
-      case 2:
+      case PostOnboardingFlowSteps.Kyc:
         dispatch(setKyc(data));
         break;
 
@@ -85,14 +85,21 @@ const PostOnboarding: FC = () => {
     dispatch(setPostOnboardingCompleted(true));
   };
 
-  const getStepContent = (step: number): any => {
+  const getStepContent = (step: PostOnboardingFlowSteps): any => {
     switch (step) {
-      case 0:
-        return <CompanyStructure next={next} />;
-      case 1:
-        return <LegalRepresentatives next={next} back={back} />;
-      case 2:
-        return <Kyc submit={submit} back={back} uploadedFiles={uploadedFiles} setter={setter} />;
+      case PostOnboardingFlowSteps.CompanyStructure:
+        return <CompanyStructure nextStep={nextStep} />;
+      case PostOnboardingFlowSteps.LegalRespresentative:
+        return <LegalRepresentatives nextStep={nextStep} previousStep={previousStep} />;
+      case PostOnboardingFlowSteps.Kyc:
+        return (
+          <Kyc
+            submit={submit}
+            previousStep={previousStep}
+            uploadedFiles={uploadedFiles}
+            setter={setter}
+          />
+        );
       default:
         return 'Unknown step';
     }

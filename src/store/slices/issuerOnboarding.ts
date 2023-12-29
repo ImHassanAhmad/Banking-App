@@ -1,12 +1,13 @@
 import type {
   ICompanyStructureForm,
   IKycForm,
-  ILegalRepresentativeForm
-} from '@app/pages/PostOnboarding/types';
+  ILegalRepresentativeForm,
+  PostOnboardingFlowSteps
+} from '@app/pages/IssuerOnboarding/types';
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState: {
-  activeStep: number;
+  activeStep: PostOnboardingFlowSteps;
   companyStructure: ICompanyStructureForm | null;
   legalRepresentatives: ILegalRepresentativeForm | null;
   kyc: IKycForm | null;

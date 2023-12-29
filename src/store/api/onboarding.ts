@@ -138,5 +138,5 @@ export const {
   useResendEmailConfirmationMutation,
   useResendPhoneConfirmationMutation,
   useIssuerDetailsMutation,
-  useGetIssuerDetailsQuery
+  useLazyGetIssuerDetailsQuery
 } = onBoardingApi;

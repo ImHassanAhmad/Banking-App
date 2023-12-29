@@ -15,32 +15,36 @@ import { useTheme } from '@mui/material/styles';
 import { CROSS_ICON2 } from '@app/assets/images';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import type { ICompanyStructureForm, ICompanyStructureProps, IUbo } from '../../types';
+import type {
+  ILegalRepresentative,
+  ILegalRepresentativeForm,
+  ILegalRepresentatives
+} from '../../types';
 import { useAppSelector } from '@app/store/hooks';
+import BackButton from '@app/components/BackButton';
 import { useIssuerDetailsMutation } from '@app/store/api/onboarding';
 import type { IssuerDetailsEntity } from '@app/server/database/entity';
 
-const translationNamespace = RouteNames.POST_ONBOARDING;
+const translationNamespace = RouteNames.ISSUER_ONBOARDING;
 
-const CompanyStructure: FC<ICompanyStructureProps> = ({ next }) => {
+const LegalRepresentatives: FC<ILegalRepresentatives> = ({ nextStep, previousStep }) => {
   const { email } = useAppSelector((state) => state.userData);
-
-  const [postDetails] = useIssuerDetailsMutation();
-
-  const { companyStructure: companyStructureState } = useAppSelector(
+  const { legalRepresentatives: legalRepresentativesState } = useAppSelector(
     (state) => state.postOnboarding
   );
+
+  const [postDetails] = useIssuerDetailsMutation();
   const { t } = useTranslation();
   const theme = useTheme();
 
-  const defaultValue: IUbo = { type: '', name: '', email: '' };
+  const defaultValue: ILegalRepresentative = { name: '', email: '', phone: '' };
 
   const schema = yup.object().shape({
-    ubos: yup.array().of(
+    legalRepresentative: yup.array().of(
       yup.object().shape({
-        type: yup.string().required('Type is required'),
         name: yup.string().required('Name is required'),
-        email: yup.string().email('Invalid email format').required('Email is required')
+        email: yup.string().email('Invalid email format').required('Email is required'),
+        phone: yup.string().required('Phone number is required')
       })
     )
   });
@@ -49,22 +53,23 @@ const CompanyStructure: FC<ICompanyStructureProps> = ({ next }) => {
     register,
     handleSubmit,
     control,
-    formState: { errors }
-  } = useForm<ICompanyStructureForm>({
-    defaultValues: companyStructureState ?? {
-      ubos: [defaultValue]
+    formState: { errors },
+    getValues
+  } = useForm<ILegalRepresentativeForm>({
+    defaultValues: legalRepresentativesState ?? {
+      legalRepresentative: [defaultValue]
     },
     mode: 'onBlur',
-    resolver: yupResolver(schema) as Resolver<ICompanyStructureForm>
+    resolver: yupResolver(schema) as Resolver<ILegalRepresentativeForm>
   });
 
-  const { fields, append, remove } = useFieldArray({ name: 'ubos', control });
+  const { fields, append, remove } = useFieldArray({ name: 'legalRepresentative', control });
 
-  const onSubmit: SubmitHandler<ICompanyStructureForm> = (data) => {
-    postDetails({ id: email, companyStructure: data })
+  const onSubmit: SubmitHandler<ILegalRepresentativeForm> = (data) => {
+    postDetails({ id: email, legalRepresentatives: data })
       .unwrap()
       .then((response: IssuerDetailsEntity) => {
-        next(data);
+        nextStep(data);
       })
       .catch((error) => {
         console.error(error);
@@ -73,10 +78,7 @@ const CompanyStructure: FC<ICompanyStructureProps> = ({ next }) => {
 
   return (
     <Box mt="40px">
-      <Heading
-        title={t(`${translationNamespace}.company_structure_title`)}
-        subTitle={t(`${translationNamespace}.company_structure_subtitle`)}
-      />
+      <Heading title={t(`${translationNamespace}.legal_representative_title`)} subTitle="" />
       <form
         onSubmit={(event) => {
           void handleSubmit(onSubmit)(event);
@@ -116,32 +118,39 @@ const CompanyStructure: FC<ICompanyStructureProps> = ({ next }) => {
               </Box>
               <Textfield
                 register={register}
-                name={`ubos.${index}.type`}
-                label={t(`${translationNamespace}.type`)}
-                errorValue={errors?.ubos?.[index]?.type as FieldError}
-              />
-              <Textfield
-                register={register}
-                name={`ubos.${index}.name`}
+                name={`legalRepresentative.${index}.name`}
                 label={t(`${translationNamespace}.name`)}
-                errorValue={errors?.ubos?.[index]?.name as FieldError}
+                errorValue={errors?.legalRepresentative?.[index]?.name as FieldError}
               />
               <Textfield
                 register={register}
-                name={`ubos.${index}.email`}
+                name={`legalRepresentative.${index}.email`}
                 label={t(`${translationNamespace}.email`)}
-                errorValue={errors?.ubos?.[index]?.email as FieldError}
+                errorValue={errors?.legalRepresentative?.[index]?.email as FieldError}
+              />
+              <Textfield
+                register={register}
+                name={`legalRepresentative.${index}.phone`}
+                label={t(`${translationNamespace}.phone`)}
+                errorValue={errors?.legalRepresentative?.[index]?.phone as FieldError}
               />
             </Box>
           );
         })}
-        <Button
-          sx={{ marginBottom: '20px' }}
-          onClick={() => {
-            append(defaultValue);
-          }}>
-          {t(`${translationNamespace}.add_ubo`)}
-        </Button>
+        <Box m="20px 0" display="flex" justifyContent="space-between" alignItems="center">
+          <Button
+            onClick={() => {
+              append(defaultValue);
+            }}>
+            {t(`${translationNamespace}.add_legal_representative`)}
+          </Button>
+          <BackButton
+            onClick={() => {
+              previousStep(getValues());
+            }}
+          />
+        </Box>
+
         <Button type="submit" fullWidth>
           {t(`${translationNamespace}.continue`)}
         </Button>
@@ -150,4 +159,4 @@ const CompanyStructure: FC<ICompanyStructureProps> = ({ next }) => {
   );
 };
 
-export default CompanyStructure;
+export default LegalRepresentatives;

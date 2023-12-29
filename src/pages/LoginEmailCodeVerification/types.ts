@@ -9,7 +9,7 @@ import type {
   IKycForm,
   ILegalRepresentativeForm,
   IUploadedFilesEntity
-} from '../PostOnboarding/types';
+} from '../IssuerOnboarding/types';
 
 export type VerifyEmailRequestDto = VerifyPhoneRequestDto;
 export type VerifyEmailResponseDto = VerifyPhoneResponseDto;

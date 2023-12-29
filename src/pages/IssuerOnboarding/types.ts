@@ -1,5 +1,5 @@
 export interface ICompanyStructureProps {
-  next: (data: ICompanyStructureForm) => void;
+  nextStep: (data: ICompanyStructureForm) => void;
 }
 
 export interface IUbo {
@@ -19,13 +19,13 @@ export interface ILegalRepresentative {
 }
 
 export interface ILegalRepresentatives {
-  next: (data: ILegalRepresentativeForm) => void;
-  back: (data: ILegalRepresentativeForm) => void;
+  nextStep: (data: ILegalRepresentativeForm) => void;
+  previousStep: (data: ILegalRepresentativeForm) => void;
 }
 
 export interface IKycProps {
   submit: (data: IKycForm) => void;
-  back: (data: IKycForm) => void;
+  previousStep: (data: IKycForm) => void;
   uploadedFiles: IUploadedFiles;
   setter: (name: string, file: File) => void;
 }
@@ -43,15 +43,16 @@ export interface IKycForm {
 
 export interface IUploadFileProps {
   name: string;
-  state: File | null;
+  state?: File;
   setter: (name: string, file: File) => void;
+  error: boolean;
 }
 
 export interface IUploadedFiles {
-  passport: File | null;
-  national_id: File | null;
-  residence_proof: File | null;
-  profile_picture: File | null;
+  passport?: File;
+  national_id?: File;
+  residence_proof?: File;
+  profile_picture?: File;
 }
 
 export interface IUploadedFilesEntity {
@@ -60,5 +61,13 @@ export interface IUploadedFilesEntity {
   residence_proof: string;
   profile_picture: string;
 }
+
+export enum PostOnboardingFlowSteps {
+  CompanyStructure = 0,
+  LegalRespresentative = 1,
+  Kyc = 2
+}
+
+export type ObjectType = Record<string, any>;
 
 export type DataType = ICompanyStructureForm | ILegalRepresentativeForm | IKycForm;

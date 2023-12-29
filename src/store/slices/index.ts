@@ -1,6 +1,6 @@
 import userDataSlice from './userData';
 import createAssetTokenSlice from './CreateAssetToken';
-import postOnboardingSlice from './postOnboarding';
+import postOnboardingSlice from './issuerOnboarding';
 
 export const reducerSlices = [
   { name: userDataSlice.name, reducer: userDataSlice.reducer },

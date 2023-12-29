@@ -37,7 +37,7 @@ const pl: LanguageResource = {
   'legal-representative': {},
   'us-person': {},
   'create-asset-token': {},
-  'post-onboarding': {},
+  'issuer-onboarding': {},
   dashboard: {}
 };
 

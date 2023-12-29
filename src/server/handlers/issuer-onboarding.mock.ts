@@ -7,7 +7,7 @@ import { issuerDetailsService } from '../database/service';
 import type { PostOnboardingRequest } from '../database/type';
 import type { IssuerDetailsEntity } from '../database/entity';
 
-const postOnboardingSchema = yup.object().shape({
+const issuerOnboardingSchema = yup.object().shape({
   companyStructure: yup.lazy((value) => {
     if (value != null && typeof value === 'object') {
       return yup.object().shape({
@@ -57,7 +57,7 @@ const postOnboardingSchema = yup.object().shape({
   })
 });
 
-const postOnboardingHandler: HttpHandler = http.post<
+const issuerOnboardingHandler: HttpHandler = http.post<
   PathParams,
   PostOnboardingRequest,
   IssuerDetailsEntity
@@ -70,31 +70,31 @@ const postOnboardingHandler: HttpHandler = http.post<
       StrictResponse<IssuerDetailsEntity>
     > => {
       const requestData: PostOnboardingRequest = await request.json();
-      const issuerDetails = postOnboardingSchema.validateSync(requestData) as PostOnboardingRequest;
+      const issuerDetails = issuerOnboardingSchema.validateSync(
+        requestData
+      ) as PostOnboardingRequest;
 
       const { companyStructure, legalRepresentatives, kyc, id } = issuerDetails;
 
-      let response;
+      let response: IssuerDetailsEntity;
 
       if (companyStructure) {
         const doExist = await issuerDetailsService.getById(id);
         if (doExist) response = await issuerDetailsService.update(id, { id, companyStructure });
         else response = await issuerDetailsService.add({ id, companyStructure, completed: false });
-      }
-
-      if (legalRepresentatives) {
+      } else if (legalRepresentatives) {
         response = await issuerDetailsService.update(id, {
           id,
           legalRepresentatives
         });
-      }
-
-      if (kyc) {
+      } else if (kyc) {
         response = await issuerDetailsService.update(id, {
           id,
           kyc,
           completed: true
         });
+      } else {
+        throw new yup.ValidationError('Incorrect request body', null);
       }
 
       return HttpResponse.json<IssuerDetailsEntity>(response);
@@ -102,10 +102,10 @@ const postOnboardingHandler: HttpHandler = http.post<
   )
 );
 
-const getPostOnboardingDetailsHandler: HttpHandler = http.get<
+const getIssuerOnboardingDetailsHandler: HttpHandler = http.get<
   PathParams,
   null,
-  IssuerDetailsEntity
+  IssuerDetailsEntity | null
 >('*/v1/sme/onboarding/issuer-details/:id', async ({ params }) => {
   const { id } = params;
 
@@ -113,8 +113,10 @@ const getPostOnboardingDetailsHandler: HttpHandler = http.get<
     throw new yup.ValidationError('Id is required', null, 'id');
   } else {
     const response = await issuerDetailsService.getById(id as string);
-    return HttpResponse.json<IssuerDetailsEntity>(response);
+    if (response) return HttpResponse.json<IssuerDetailsEntity>(response);
+    else return HttpResponse.json(null, { status: 400 });
+    // await issuerDetailsService.remove(id as string);
   }
 });
 
-export const handlers = [postOnboardingHandler, getPostOnboardingDetailsHandler];
+export const handlers = [issuerOnboardingHandler, getIssuerOnboardingDetailsHandler];
