@@ -2,28 +2,28 @@ import type { LanguageResource } from '@app/i18n/types';
 
 const en: LanguageResource = {
   home: {
-    title: 'Welcome to W1TTY Business',
+    title: 'Welcome to W1TTY',
     subtitle: 'Everything you need to run your business in one place',
-    login_option_title: 'Log in to your business account',
+    login_option_title: 'Log in to your account',
     login_option_subtitle: 'Enter your account',
-    create_option_title: 'Create a new business account',
+    create_option_title: 'Create a new account',
     create_option_subtitle: 'Get your company onto W1TTY'
   },
   'register-investor': {
-    title: 'Create a W1TTY business account',
+    title: 'Create a W1TTY issuer account',
     subtitle: 'Already have an account?  ',
     signin: 'Sign In',
     continue: 'Continue'
   },
   'register-issuer': {
-    title: 'Create a W1TTY business account',
+    title: 'Create a W1TTY investor account',
     subtitle: 'Already have an account?  ',
     signin: 'Sign In',
     continue: 'Continue'
   },
   onboarding: {
     title: 'Choose Account Type',
-    subtitle: 'Everything you need to run your business in one place',
+    subtitle: 'Do you wish to issue tokens or trade tokens',
     login_option_title: 'Create Investor Account',
     login_option_subtitle: 'Join as an Investor',
     create_option_title: 'Create Issuer Account',
