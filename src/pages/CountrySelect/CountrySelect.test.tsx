@@ -7,7 +7,12 @@ import { store } from '@app/store';
 import { ALL_COUNTRIES } from '@app/constants/countries';
 import { RouteNames } from '@app/constants/routes';
 import transformation from '@app/utils/LanguageTransformation';
-import { useInvestorSignUpStepper } from '@app/context/InvestorSignUpStepperContext';
+import {
+  type InvestorSignUpStepperContextProps,
+  useInvestorSignUpStepper
+} from '@app/context/InvestorSignUpStepperContext';
+import { type IssuerSignUpStepperContextProps } from '@app/context/IssuerSignUpStepperContext';
+import { onBoardType } from '@app/common/types';
 
 var mockAllCountres = ALL_COUNTRIES;
 const mockLanguage = en;
@@ -37,21 +42,23 @@ jest.mock(
     }) as any
 );
 
-const renderCountrySelect = (): void => {
-  const props = useInvestorSignUpStepper();
+const renderCountrySelect = (
+  props: Partial<IssuerSignUpStepperContextProps | InvestorSignUpStepperContextProps> = {}
+): void => {
+  const defaultProps = useInvestorSignUpStepper();
   render(
     <Provider store={store}>
-      <CountrySelect {...props} />
+      <CountrySelect {...{ ...defaultProps, ...props }} />
     </Provider>
   );
 };
 
 describe('CountrySelect', () => {
   it('renders the country select form', () => {
-    renderCountrySelect();
+    renderCountrySelect({ onBoardType: onBoardType.Investor });
 
-    expect(screen.getByText(en[RouteNames.COUNTRY].title)).toBeInTheDocument();
-    expect(screen.getByText(en[RouteNames.COUNTRY].subtitle)).toBeInTheDocument();
+    expect(screen.getByText(en[RouteNames.COUNTRY].investor_title)).toBeInTheDocument();
+    expect(screen.getByText(en[RouteNames.COUNTRY].investor_subtitle)).toBeInTheDocument();
     expect(screen.getByText(en[RouteNames.COUNTRY].continue)).toBeInTheDocument();
   });
   it('change country select option', () => {

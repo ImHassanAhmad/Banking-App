@@ -90,7 +90,6 @@ describe('AboutServices', () => {
   it('enables continue button when required checkboxes checked', async () => {
     const { getByRole, clickCheckboxByLabel } = setup();
 
-    clickCheckboxByLabel(translation.visa_card_policy);
     clickCheckboxByLabel(translation.terms_conditions);
     clickCheckboxByLabel(translation.privacy_policy);
     clickCheckboxByLabel(translation.prices_limits);
