@@ -17,6 +17,7 @@ import { Provider } from 'react-redux';
 import { store } from './store';
 import { IssuerSignUpStepperProvider } from './context/IssuerSignUpStepperContext';
 import { InvestorSignUpStepperProvider } from './context/InvestorSignUpStepperContext';
+import { CreateNewAssetProvider } from './context/CreateNewAssetStepperContext';
 const App: React.FC = () => {
   const { themeMode } = useAppSelector((state) => state.userData);
   const theme = React.useMemo(() => getTheme(themeMode), [themeMode]);
@@ -29,11 +30,13 @@ const App: React.FC = () => {
             <AuthErrorProvider>
               <IssuerSignUpStepperProvider>
                 <InvestorSignUpStepperProvider>
-                  <LoginStepperProvider>
-                    <ErrorBoundary FallbackComponent={ErrorFallback}>
-                      <AppRoutes />
-                    </ErrorBoundary>
-                  </LoginStepperProvider>
+                  <CreateNewAssetProvider>
+                    <LoginStepperProvider>
+                      <ErrorBoundary FallbackComponent={ErrorFallback}>
+                        <AppRoutes />
+                      </ErrorBoundary>
+                    </LoginStepperProvider>
+                  </CreateNewAssetProvider>
                 </InvestorSignUpStepperProvider>
               </IssuerSignUpStepperProvider>
             </AuthErrorProvider>
