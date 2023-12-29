@@ -269,12 +269,20 @@ export type WithSignUpStepperContextProps<T = any> = (
   T;
 
 export interface AssetRequestDto {
-  name: string;
-  description: string;
-  image: File;
-  websiteURL?: string;
-  socialMediaLink?: string;
-  logoURL?: string;
+  AssetName?: string;
+  AssetDescription?: string;
+  AssetWebsite?: string;
+  Logo?: string;
+  Reddit?: string;
+  Twitter?: string;
+  Telegram?: string;
+  Whitepaper?: string;
+  Discord?: string;
+  uploadProspectus?: string;
+  businessModel?: string;
+  financialModel?: string;
+  businessPlan?: string;
+  valuationReport?: string;
 }
 
 export interface AssetResponseDto {

@@ -28,6 +28,7 @@ const lt: LanguageResource = {
   'business-regulation': {},
   'business-revenue': {},
   'business-turnover': {},
+  'create-new-asset': {},
   'upload-documents': {},
   'income-range': {},
   'personal-information': {},

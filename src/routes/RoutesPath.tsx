@@ -21,6 +21,7 @@ const EmailCodeVerification = lazy(
   async () => await import('@app/pages/LoginEmailCodeVerification')
 );
 const SourceOfFunding = lazy(async () => await import('@app/pages/SourceOfFunding'));
+const CreateNewAsset = lazy(async () => await import('@app/pages/CreateNewAsset'));
 
 export const publicRoutes: IRouteConfig[] = [
   {
@@ -33,6 +34,7 @@ export const publicRoutes: IRouteConfig[] = [
   { path: RouteNames.VERIFY_EMAIL, element: EmailCodeVerification },
   { path: RouteNames.LOGIN, element: Login },
   { path: RouteNames.NOT_FOUND, element: NotFound },
+  { path: RouteNames.CREATE_NEW_ASSET, element: CreateNewAsset },
   { path: RouteNames.UPLOAD_DOCUMENTS, element: UploadDocuments },
   { path: RouteNames.SOURCE_OF_FUNDING, element: SourceOfFunding },
   { path: RouteNames.INCOME_RANGE, element: IncomeRange },
