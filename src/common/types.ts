@@ -68,6 +68,7 @@ export interface UserRequestDto extends CaptchaTokenRequest {
   password?: string;
   shortenPhoneNumber?: string;
   phoneNumberCountryCode?: string;
+  countryOfIncorporation?: TCountryCode;
   vis?: boolean;
   visaTncAgreed?: boolean;
   wittyTncAgreed?: boolean;
@@ -80,7 +81,6 @@ export interface InvestorUserRequestDto extends UserRequestDto {
   firstName?: string;
   lastName?: string;
   dateOfBirth?: string;
-  countryOfIncorporation?: TCountryCode;
   postalCode?: number;
   city?: string;
   street?: string;
@@ -92,7 +92,6 @@ export interface InvestorUserRequestDto extends UserRequestDto {
 }
 
 export interface IssuerUserRequestDto extends UserRequestDto {
-  countryOfIncorporation?: TCountryCode;
   companyName?: string;
   registrationNumber?: string;
   dateOfRegister?: string;
