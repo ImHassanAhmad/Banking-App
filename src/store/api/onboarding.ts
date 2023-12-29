@@ -49,6 +49,16 @@ export const onBoardingApi = createApi({
         return transformErrorResponse(baseQueryReturnValue as AuthApiError, meta, arg);
       }
     }),
+    registerInvestor: builder.mutation<RegisterUserResponseDto, RegisterUserRequestDto>({
+      query: (body) => ({
+        url: '/v1/sme/onboarding/register-investor',
+        method: 'POST',
+        body
+      }),
+      transformErrorResponse(baseQueryReturnValue, meta, arg) {
+        return transformErrorResponse(baseQueryReturnValue as AuthApiError, meta, arg);
+      }
+    }),
     verifyEmail: builder.mutation<VerifyEmailResponseDto, VerifyEmailRequestDto>({
       query: (body) => ({
         url: '/v1/sme/onboarding/verify-email',
@@ -101,6 +111,7 @@ export const onBoardingApi = createApi({
 export const {
   useOnBoardingDictionaryApiQuery,
   useRegisterUserMutation,
+  useRegisterInvestorMutation,
   useVerifyEmailMutation,
   useVerifyPhoneMutation,
   useResendEmailConfirmationMutation,

@@ -11,10 +11,10 @@ import {
 } from 'react';
 import {
   type RegisterUserResponseDto,
-  type RegisterUserRequestDto,
   type AuthFetchQueryError,
   AuthErrorLevel,
-  onBoardType
+  onBoardType,
+  type IssuerUserRequestDto
 } from '@app/common/types';
 import { useAuthError } from './AuthErrorContext';
 import { type IErrorMessage } from 'types';
@@ -22,7 +22,7 @@ import AuthErrorWrapper from '@app/layout/AuthErrorWrapper';
 import { enumToIndexRecord, indexToEnumKeyRecord } from '@app/utils/enum';
 
 export interface RegisterUserCallBackParams {
-  payload: RegisterUserRequestDto;
+  payload: IssuerUserRequestDto;
   onSuccess: (response: RegisterUserResponseDto) => void;
   onError?: (error: AuthFetchQueryError) => void;
 }
@@ -31,14 +31,14 @@ export interface IssuerSignUpStepperContextProps {
   activeStep: IssuerSignUpFlowSteps;
   userId: string;
   isLoading: boolean;
-  userPayload: RegisterUserRequestDto;
+  userPayload: IssuerUserRequestDto;
   activeStepError?: IErrorMessage;
   onBoardType: onBoardType;
   registerUser: (params: RegisterUserCallBackParams) => void;
   setUserId: Dispatch<SetStateAction<string>>;
   updateActiveStep: () => void;
   goBack: (backStep: number) => void;
-  updateUserPayload: (data: Partial<RegisterUserRequestDto>) => void;
+  updateUserPayload: (data: Partial<IssuerUserRequestDto>) => void;
 }
 
 const IssuerSignUpStepperContext = createContext<IssuerSignUpStepperContextProps>({
@@ -52,10 +52,10 @@ const IssuerSignUpStepperContext = createContext<IssuerSignUpStepperContextProps
 const { Provider } = IssuerSignUpStepperContext;
 
 export const IssuerSignUpStepperProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [activeStep, setActiveStep] = useState(IssuerSignUpFlowSteps.Country);
+  const [activeStep, setActiveStep] = useState(IssuerSignUpFlowSteps.CreatePassword);
   const [userId, setUserId] = useState('');
   const { updateError, findError } = useAuthError();
-  const [registerUserPayload, setRegisterUserPayload] = useState<RegisterUserRequestDto>({
+  const [registerUserPayload, setRegisterUserPayload] = useState<IssuerUserRequestDto>({
     dryRun: true
   });
   const [register, { isLoading }] = useRegisterUserMutation();
@@ -79,12 +79,16 @@ export const IssuerSignUpStepperProvider: FC<PropsWithChildren> = ({ children })
   };
 
   const updateActiveStep = (): void => {
-    const nextActiveStep: IssuerSignUpFlowSteps = indexToEnumKeyRecord(IssuerSignUpFlowSteps)[
-      enumToIndexRecord(IssuerSignUpFlowSteps)[activeStep] + 1
-    ] as IssuerSignUpFlowSteps;
+    if (activeStep === IssuerSignUpFlowSteps.MobileVerify) {
+      setRegisterUserPayload({ dryRun: true });
+    }
+
+    const nextActiveStep: IssuerSignUpFlowSteps =
+      (indexToEnumKeyRecord(IssuerSignUpFlowSteps)[
+        enumToIndexRecord(IssuerSignUpFlowSteps)[activeStep] + 1
+      ] as IssuerSignUpFlowSteps) || IssuerSignUpFlowSteps.Country;
 
     updateError(nextActiveStep, undefined);
-
     setActiveStep(nextActiveStep);
   };
 
@@ -99,7 +103,7 @@ export const IssuerSignUpStepperProvider: FC<PropsWithChildren> = ({ children })
     onError = () => {}
   }: RegisterUserCallBackParams): void => {
     const registerFormData = { ...registerUserPayload, ...payload };
-    let apiPayload: RegisterUserRequestDto = { dryRun: true };
+    let apiPayload: IssuerUserRequestDto = { dryRun: true };
     switch (activeStep) {
       case IssuerSignUpFlowSteps.Country:
         apiPayload.countryOfIncorporation = registerFormData.countryOfIncorporation;
@@ -137,7 +141,7 @@ export const IssuerSignUpStepperProvider: FC<PropsWithChildren> = ({ children })
 
   const activeStepError = findError(activeStep);
 
-  const updateUserPayload = (data: Partial<RegisterUserRequestDto>): void => {
+  const updateUserPayload = (data: Partial<IssuerUserRequestDto>): void => {
     setRegisterUserPayload({ ...registerUserPayload, ...data });
     console.log(registerUserPayload, data);
   };

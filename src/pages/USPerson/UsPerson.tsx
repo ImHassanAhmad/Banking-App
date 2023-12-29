@@ -13,28 +13,20 @@ const UsPerson: FC<WithSignUpStepperContextProps> = ({
   updateActiveStep,
   registerUser,
   isLoading,
-  userPayload
+  userPayload,
+  updateUserPayload
 }) => {
   const { t } = useTranslation();
 
-  // const submit = (value: string): void => {
-  //   registerUser({
-  //     payload: { dryRun: true, UsPerson: value },
-  //     onSuccess: () => {
-  //       updateActiveStep();
-  //     }
-  //   });
-  // };
   return (
     <Box sx={{ width: '70%' }}>
       <OnboardingList
         title={t(`${transactionResource}.title`)}
         subtitle={t(`${transactionResource}.subtitle`)}
         itemList={BINARY_ANSWER_OPTIONS}
-        onItemClick={(e) => {
+        onItemClick={(option) => {
+          updateUserPayload({ isUsResident: option === 'Yes' });
           updateActiveStep();
-          // tempoarirlly comment until msw api is not ready
-          // submit(e);
         }}
       />
     </Box>

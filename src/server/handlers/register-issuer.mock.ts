@@ -1,6 +1,6 @@
 import { http, type HttpHandler, HttpResponse, type PathParams, type StrictResponse } from 'msw';
 import * as yup from 'yup';
-import { type MockRegisterUserResponse } from '../constants/common.const';
+import { INVALID_OTP_CODE, type MockRegisterUserResponse } from '../constants/common.const';
 import withErrorHandler from '../middleware/withErrorHandler';
 import { type ResponseResolverInfo } from 'msw/lib/core/handlers/RequestHandler';
 import { type HttpRequestResolverExtras } from 'msw/lib/core/handlers/HttpHandler';
@@ -11,8 +11,9 @@ import { type VerifyPhoneRequestDto } from '@app/pages/MobileCodeVerification/ty
 import { type VerifyEmailRequestDto } from '@app/pages/LoginEmailCodeVerification/types';
 
 const userRegistrationSchema = yup.object().shape({
+  id: yup.string(),
   countryOfIncorporation: yup.string(),
-  email: yup.string().email(),
+  email: yup.string().email().required(),
   password: yup.string().min(13),
   shortenPhoneNumber: yup.string(),
   phoneNumberCountryCode: yup.string(),
@@ -29,10 +30,15 @@ const userRegistrationSchema = yup.object().shape({
   dryRun: yup.boolean()
 });
 
-const otpCodeSceheme: yup.ObjectSchema<VerifyPhoneRequestDto> = yup.object().shape({
-  userId: yup.string().required(),
-  otpCode: yup.string().required()
-});
+const otpCodeSceheme: yup.ObjectSchema<VerifyEmailRequestDto | VerifyPhoneRequestDto> = yup
+  .object()
+  .shape({
+    userId: yup.string().required(),
+    otpCode: yup
+      .string()
+      .required()
+      .matches(/444444/g, INVALID_OTP_CODE)
+  });
 
 const registerUIssuerHandler: HttpHandler = http.post<
   PathParams,
@@ -61,7 +67,10 @@ const registerUIssuerHandler: HttpHandler = http.post<
       }
 
       if (!dryRun) {
-        const user = (await userService.add({ id: rest.email, ...issuer })) as Issuer;
+        const user = (await userService.add({
+          ...issuer,
+          id: rest.email ?? 'email does not exist'
+        })) as Issuer;
 
         return HttpResponse.json<MockRegisterUserResponse>({ userId: user.email });
       }
@@ -80,9 +89,6 @@ const otpHandler = withErrorHandler(
     const requestData: VerifyPhoneRequestDto = await request.json();
 
     otpCodeSceheme.validateSync(requestData);
-    const { otpCode } = requestData;
-    if (otpCode !== '444444')
-      throw new yup.ValidationError('Entered otp is not valid', null, 'otpCode');
     return HttpResponse.json({});
   }
 );

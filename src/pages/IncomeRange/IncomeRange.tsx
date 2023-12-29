@@ -11,8 +11,8 @@ const transactionResource = RouteNames.INCOME_RANGE;
 const IncomeRange: FC<WithSignUpStepperContextProps> = ({
   updateActiveStep,
   registerUser,
-  isLoading,
-  userPayload
+  userPayload: { incomeRange },
+  updateUserPayload
 }) => {
   const { t } = useTranslation();
 
@@ -22,7 +22,9 @@ const IncomeRange: FC<WithSignUpStepperContextProps> = ({
         title={t(`${transactionResource}.title`)}
         subtitle=""
         itemList={RevenueRange}
-        onItemClick={() => {
+        defaultValue={incomeRange}
+        onItemClick={(topic: string) => {
+          updateUserPayload({ incomeRange: topic });
           updateActiveStep();
         }}
       />

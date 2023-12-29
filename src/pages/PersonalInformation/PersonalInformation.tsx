@@ -1,6 +1,5 @@
 import { Stack, Button } from '@mui/material';
 import Heading from '@app/components/Heading';
-import { format } from 'date-fns';
 import { useState, type FC } from 'react';
 import { RouteNames } from '@app/constants/routes';
 import { useTranslation } from 'react-i18next';
@@ -9,7 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Textfield from '@app/components/Textfield';
 import Calendar from '@app/components/Calendar';
-import { type WithSignUpStepperContextProps } from '@app/common/types';
+import { type AuthFetchQueryError, type WithSignUpStepperContextProps } from '@app/common/types';
 
 interface IForm {
   firstName: string;
@@ -23,7 +22,7 @@ const PersonalInformation: FC<WithSignUpStepperContextProps> = ({
   updateActiveStep,
   registerUser,
   isLoading,
-  userPayload
+  userPayload: { firstName, lastName, dateOfBirth }
 }) => {
   const { t } = useTranslation();
   const [fieldErrors] = useState<FieldError>();
@@ -42,16 +41,23 @@ const PersonalInformation: FC<WithSignUpStepperContextProps> = ({
     control,
     handleSubmit,
     formState: { errors },
-    getValues,
     setValue
   } = useForm<IForm>({
     mode: 'onBlur',
     resolver: yupResolver(schema)
   });
 
-  const onSubmit: SubmitHandler<IForm> = async () => {
-    updateActiveStep();
-    console.log('data', format(new Date(getValues('dateOfBirth') as string), 'dd/MM/yyyy'));
+  const onSubmit: SubmitHandler<IForm> = async (data: IForm) => {
+    registerUser({
+      payload: {
+        ...data,
+        dryRun: true
+      },
+      onSuccess: () => {
+        updateActiveStep();
+      },
+      onError: (error: AuthFetchQueryError) => {}
+    });
   };
 
   return (
@@ -69,6 +75,7 @@ const PersonalInformation: FC<WithSignUpStepperContextProps> = ({
               name="firstName"
               label={t(`${translationNamespace}.first_name`)}
               register={register}
+              defaultValue={firstName}
               errorValue={errors?.firstName ?? fieldErrors}
               fullWidth
             />
@@ -77,6 +84,7 @@ const PersonalInformation: FC<WithSignUpStepperContextProps> = ({
               name="lastName"
               label={t(`${translationNamespace}.last_name`)}
               register={register}
+              defaultValue={lastName}
               errorValue={errors?.lastName ?? fieldErrors}
               fullWidth
             />
@@ -85,6 +93,7 @@ const PersonalInformation: FC<WithSignUpStepperContextProps> = ({
               name="dateOfBirth"
               control={control}
               label={t(`${translationNamespace}.DOB`)}
+              defaultValue={dateOfBirth}
               handleChange={(newValue) => {
                 setValue('dateOfBirth', newValue);
               }}

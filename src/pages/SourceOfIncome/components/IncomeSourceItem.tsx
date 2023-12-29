@@ -13,15 +13,15 @@ const labelStyle = {
   }
 };
 
-const FundingSourceItem: React.FC<FundingSourceItemProps> = ({ title, onChange }) => {
+const FundingSourceItem: React.FC<FundingSourceItemProps> = ({ title, checked, onChange }) => {
   const checkboxStyle = {
     '& .MuiSvgIcon-root': {
       paddingLeft: '20px'
     }
   };
-  const [checked, setChecked] = useState(false);
+  const [_checked, setChecked] = useState(checked);
   const handleCheckboxChange = (): void => {
-    setChecked(!checked);
+    setChecked(!_checked);
     onChange();
   };
   return (

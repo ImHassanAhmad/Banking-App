@@ -8,13 +8,14 @@ import Address from '@app/pages/Address';
 import PhoneNumber from '@app/pages/PhoneNumber';
 import IncomeRange from '@app/pages/IncomeRange';
 import QuestionsList from '@app/pages/QuestionsList';
-import UploadDocument from '@app/pages/UploadDocuments';
 import SourceOfIncome from '@app/pages/SourceOfIncome';
 import UsPerson from '@app/pages/USPerson/UsPerson';
 import { InvestorSignUpFlowSteps, InvestorSignUpFlowStepsIndices } from './types';
 import { useInvestorSignUpStepper } from '@app/context/InvestorSignUpStepperContext';
 import BackButton from '@app/components/BackButton';
 import { type WithSignUpStepperContextProps } from '@app/common/types';
+import MobileCodeVerification from '@app/pages/MobileCodeVerification';
+import RegisterEmailCodeVerification from '@app/pages/RegisterEmailCodeVerification';
 
 const investorFlowComponent = (
   activeStep: InvestorSignUpFlowSteps
@@ -30,16 +31,18 @@ const investorFlowComponent = (
       return PhoneNumber;
     case InvestorSignUpFlowSteps.IncomeRange:
       return IncomeRange;
-    case InvestorSignUpFlowSteps.SourceOfIncome:
-      return SourceOfIncome;
     case InvestorSignUpFlowSteps.UsPerson:
       return UsPerson;
+    case InvestorSignUpFlowSteps.SourceOfIncome:
+      return SourceOfIncome;
     case InvestorSignUpFlowSteps.Questionaire:
       return QuestionsList;
-    case InvestorSignUpFlowSteps.UploadDocument:
-      return UploadDocument;
     case InvestorSignUpFlowSteps.CreatePassword:
       return Password;
+    case InvestorSignUpFlowSteps.EmailVerify:
+      return RegisterEmailCodeVerification;
+    case InvestorSignUpFlowSteps.MobileVerify:
+      return MobileCodeVerification;
     default:
   }
 };

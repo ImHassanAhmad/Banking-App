@@ -55,7 +55,6 @@ const issuerFlowComponent = (
       return BusinessType;
     case IssuerSignUpFlowSteps.FundingSource:
       return SourceOfFunding;
-
     default:
       return undefined;
   }

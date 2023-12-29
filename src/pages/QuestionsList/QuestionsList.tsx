@@ -21,11 +21,14 @@ const QuestionsList: FC<WithSignUpStepperContextProps> = ({
   updateActiveStep,
   registerUser,
   isLoading,
-  userPayload
+  userPayload: { wittyNews },
+  updateUserPayload
 }) => {
   const { t } = useTranslation();
-  const [checkList, setCheckList] = useState<CheckListType>(CHECK_LIST);
-
+  const [checkList, setCheckList] = useState<CheckListType>({
+    ...CHECK_LIST,
+    news_promotions: { ...CHECK_LIST.news_promotions, checked: wittyNews }
+  });
   const isAllNonOptionalChecked = Object.values(checkList).every(({ optional, checked }) => {
     if (!optional) return checked;
 
@@ -70,6 +73,7 @@ const QuestionsList: FC<WithSignUpStepperContextProps> = ({
               disabled={!isAllNonOptionalChecked}
               sx={{ textTransform: 'uppercase', marginTop: '2rem' }}
               onClick={() => {
+                updateUserPayload({ wittyNews: checkList.news_promotions.checked });
                 updateActiveStep();
               }}
               fullWidth>
