@@ -384,7 +384,33 @@ const en: LanguageResource = {
   },
   'legal-representative': {
     title: 'Are you the legal representative or director of this company?'
-  }
+  },
+  'issuer-onboarding': {
+    company_structure: 'Company Structure',
+    legal_representative: 'Legal Representatives',
+    kyc: 'KYC',
+    company_structure_title: 'UBOs',
+    company_structure_subtitle: 'Add directors/shareholders having more than 25% in company',
+    legal_representative_title: 'Legal Representative',
+    type: 'Type',
+    name: 'Name',
+    email: 'Email',
+    phone: 'Phone number',
+    add_ubo: 'add another UBO',
+    add_legal_representative: 'add another Legal Rsepresentative',
+    continue: 'Continue',
+    submit: 'Submit',
+    role: 'Role',
+    choose_file: 'Choose File',
+    passport: 'Passport',
+    national_id: 'National ID',
+    residence_proof: 'Residence Proof',
+    profile_picture: 'Profile Picture',
+    success_message:
+      'Your Details have been submitted and being review meanwhile you can start exploring',
+    dashboard_button: 'Go to Dashboard'
+  },
+  dashboard: {}
 };
 
 export default en;

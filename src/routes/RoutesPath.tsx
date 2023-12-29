@@ -8,6 +8,8 @@ import PersonalInformation from '@app/pages/PersonalInformation';
 import Address from '@app/pages/Address';
 import QuestionsList from '@app/pages/QuestionsList';
 // import OnboardingUserType from '@app/pages/OnboardingUserType';
+import IssuerOnboarding from '@app/pages/IssuerOnboarding';
+import Dashboard from '@app/pages/Dashboard';
 
 const Welcome = lazy(async () => await import('@app/pages/Welcome'));
 const Login = lazy(async () => await import('@app/layout/LoginStepper'));
@@ -41,4 +43,7 @@ export const publicRoutes: IRouteConfig[] = [
   { path: RouteNames.SOURCE_OF_FUNDING, element: SourceOfFunding }
 ];
 
-export const privateRoutes: IRouteConfig[] = [];
+export const privateRoutes: IRouteConfig[] = [
+  { path: RouteNames.ISSUER_ONBOARDING, element: IssuerOnboarding },
+  { path: RouteNames.DASHBOARD, element: Dashboard }
+];

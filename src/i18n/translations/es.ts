@@ -36,7 +36,9 @@ const es: LanguageResource = {
   'register-issuer': {},
   'legal-representative': {},
   'us-person': {},
-  'create-asset-token': {}
+  'create-asset-token': {},
+  'issuer-onboarding': {},
+  dashboard: {}
 };
 
 export default es;

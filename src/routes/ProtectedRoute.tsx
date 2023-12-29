@@ -3,14 +3,27 @@ import IdleTimerWrapper from '@app/layout/IdleTimer/IdleTimerWrapper';
 import Sidebar from '@app/layout/Sidebar';
 import auth from '@app/utils/auth';
 import { Box } from '@mui/material';
-import React, { useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
 import type { IProtectedRouterProps } from './types';
+import { useAppSelector } from '@app/store/hooks';
+import { RouteNames } from '@app/constants/routes';
 // import { useRefreshTokenMutation } from '@app/store/api/login';
 const timeout = 10_000;
 const promptBeforeIdle = 4_000;
 
 const ProtectedRoute: React.FC<IProtectedRouterProps> = ({ redirectPath = '/login' }) => {
+  const navigate = useNavigate();
+  const { postOnboardingCompleted, email } = useAppSelector((state) => state.userData);
+
+  useEffect(() => {
+    if (email === '') {
+      navigate('/login');
+    } else if (!postOnboardingCompleted) {
+      navigate(`/${RouteNames.ISSUER_ONBOARDING}`);
+    }
+  }, [postOnboardingCompleted, email]);
+
   const [showSessionExpiry, setShowSessionExpiry] = useState<boolean>(false);
   // const [refresh, { isloading }] = useRefreshTokenMutation();
   const onIdle = (): void => {

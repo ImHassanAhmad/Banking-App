@@ -8,12 +8,16 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState: {
   themeMode: IThemeMode;
   supportedCountries: SupportedCountriesIncorporation & SupportedCountriesPhone;
+  postOnboardingCompleted: boolean;
+  email: string;
 } = {
   themeMode: 'LIGHT',
   supportedCountries: {
     supportedCountriesOfIncorporation: [],
     supportedPhoneCountries: []
-  }
+  },
+  postOnboardingCompleted: false,
+  email: ''
 };
 
 export const userDataSlice = createSlice({
@@ -25,10 +29,17 @@ export const userDataSlice = createSlice({
     },
     setSupportedCountries: (state, { payload }) => {
       state.supportedCountries = payload;
+    },
+    setPostOnboardingCompleted: (state, { payload }) => {
+      state.postOnboardingCompleted = payload;
+    },
+    setEmail: (state, { payload }) => {
+      state.email = payload;
     }
   }
 });
 
-export const { setThemeMode, setSupportedCountries } = userDataSlice.actions;
+export const { setThemeMode, setSupportedCountries, setPostOnboardingCompleted, setEmail } =
+  userDataSlice.actions;
 
-export default userDataSlice.reducer;
+export default userDataSlice;
