@@ -9,8 +9,6 @@ export enum InvestorSignUpFlowSteps {
   UsPerson = 'UsPerson',
   SourceOfIncome = 'SourceOfIncome',
   Questionaire = 'Questionaire',
-  // TODO: has to be discuss
-  // UploadDocument = 'UploadDocument',
   CreatePassword = 'CreatePassword',
   EmailVerify = 'EmailVerify',
   MobileVerify = 'MobileVerify'
