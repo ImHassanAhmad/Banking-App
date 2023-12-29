@@ -69,13 +69,22 @@ const IssuerSignUpStepper: FC = () => {
   const activeStepIndex = useMemo(() => IssuerFlowStepsIndices[activeStep], [activeStep]);
 
   const IssuerFlowComponent = issuerFlowComponent(activeStep);
+
+  const hideBackButton = [
+    IssuerSignUpFlowSteps.MobileVerify,
+    IssuerSignUpFlowSteps.EmailVerify
+  ].includes(activeStep);
   return (
     <Stack>
-      <BackButton
-        onClick={() => {
-          activeStepIndex ? goBack(activeStepIndex - 1) : navigate(-1);
-        }}
-      />
+      {hideBackButton ? (
+        <></>
+      ) : (
+        <BackButton
+          onClick={() => {
+            activeStepIndex ? goBack(activeStepIndex - 1) : navigate(-1);
+          }}
+        />
+      )}
       <Stepper
         activeStep={IssuerFlowStepsIndices[activeStep]}
         sx={{

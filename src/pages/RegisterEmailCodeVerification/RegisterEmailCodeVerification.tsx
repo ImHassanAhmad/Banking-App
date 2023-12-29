@@ -65,6 +65,7 @@ const RegisterEmailCodeVerification: FC<WithSignUpStepperContextProps> = ({
       isInvalid={isInvalid}
       codeSent={codeRequested}
       onCodeComplete={(code) => {
+        setOtpValidity(false);
         verifyOtp(code);
       }}
       onResendVerification={() => {
