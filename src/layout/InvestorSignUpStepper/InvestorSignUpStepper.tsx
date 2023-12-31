@@ -12,11 +12,14 @@ import RegisterEmail from '@app/pages/RegisterEmail';
 import SocialSecurityNumber from '@app/pages/SocialSecurityNumber/SocialSecurityNumber';
 import SourceOfIncome from '@app/pages/SourceOfIncome';
 import UsPerson from '@app/pages/USPerson/UsPerson';
-import UploadDocument from '@app/pages/UploadDocuments';
 import { Grid, Stack, Stepper } from '@mui/material';
 import { type ComponentType, type FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { InvestorSignUpFlowSteps } from './types';
+
+import MobileCodeVerification from '@app/pages/MobileCodeVerification';
+import RegisterEmailCodeVerification from '@app/pages/RegisterEmailCodeVerification';
+
 const investorFlowComponent = (
   activeStep: InvestorSignUpFlowSteps
 ): ComponentType<WithSignUpStepperContextProps> | undefined => {
@@ -31,20 +34,22 @@ const investorFlowComponent = (
       return PhoneNumber;
     case InvestorSignUpFlowSteps.IncomeRange:
       return IncomeRange;
-    case InvestorSignUpFlowSteps.SourceOfIncome:
-      return SourceOfIncome;
     case InvestorSignUpFlowSteps.UsPerson:
       return UsPerson;
     case InvestorSignUpFlowSteps.SecurityNumber:
       return SocialSecurityNumber;
     case InvestorSignUpFlowSteps.CountryTaxes:
       return CountryTaxes;
+    case InvestorSignUpFlowSteps.SourceOfIncome:
+      return SourceOfIncome;
     case InvestorSignUpFlowSteps.Questionaire:
       return QuestionsList;
-    case InvestorSignUpFlowSteps.UploadDocument:
-      return UploadDocument;
     case InvestorSignUpFlowSteps.CreatePassword:
       return Password;
+    case InvestorSignUpFlowSteps.EmailVerify:
+      return RegisterEmailCodeVerification;
+    case InvestorSignUpFlowSteps.MobileVerify:
+      return MobileCodeVerification;
     default:
   }
 };

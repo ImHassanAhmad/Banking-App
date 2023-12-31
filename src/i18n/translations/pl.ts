@@ -15,6 +15,7 @@ const pl: LanguageResource = {
   'account-statement-modal': {},
   'country-not-supported': {},
   'region-not-supported': {},
+  'legal-check': {},
   'privacy-policy': {},
   'about-our-services': {},
   'business-category': {},
@@ -27,6 +28,7 @@ const pl: LanguageResource = {
   'business-regulation': {},
   'business-revenue': {},
   'business-turnover': {},
+  'create-new-asset': {},
   'upload-documents': {},
   'income-range': {},
   'security-number': {},
@@ -38,7 +40,9 @@ const pl: LanguageResource = {
   'register-issuer': {},
   'legal-representative': {},
   'us-person': {},
-  'create-asset-token': {}
+  'create-asset-token': {},
+  'issuer-onboarding': {},
+  dashboard: {}
 };
 
 export default pl;

@@ -8,10 +8,10 @@ import Subtract from '@app/assets/images/Subtract.svg';
 import { type FieldError } from 'react-hook-form';
 import {
   type RegisterUserResponseDto,
-  type RegisterUserRequestDto,
   type AuthFetchQueryError,
   AuthErrorLevel,
-  type WithSignUpStepperContextProps
+  type WithSignUpStepperContextProps,
+  type UserRequestDto
 } from '@app/common/types';
 import Loader from '@app/components/Loader';
 import WarningAlert from '@app/components/WarningAlert';
@@ -26,7 +26,7 @@ const Password: FC<WithSignUpStepperContextProps> = ({
   activeStepError: error
 }) => {
   const { t } = useTranslation();
-  const [regUserPayload, setRegUserPayload] = useState<RegisterUserRequestDto>({ dryRun: true });
+  const [regUserPayload, setRegUserPayload] = useState<UserRequestDto>({ dryRun: true });
   const [errors, setFieldErrors] = useState<FieldError>();
 
   // const reRef = React.createRef<ReCAPTCHA>();
@@ -70,7 +70,7 @@ const Password: FC<WithSignUpStepperContextProps> = ({
           subTitle={t(`${translationNamespace}.subtitle`)}
         />
       </Stack>
-      <Stack gap={3} mt={3}>
+      <Stack gap={3} mt={3} sx={{ maxWidth: '43.6rem' }}>
         <PasswordField
           label={t(`${translationNamespace}.password_input_label`)}
           errorValue={errors}

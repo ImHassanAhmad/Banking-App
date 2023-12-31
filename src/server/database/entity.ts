@@ -1,3 +1,10 @@
+import type {
+  ICompanyStructureForm,
+  IKycForm,
+  ILegalRepresentativeForm,
+  IUploadedFilesEntity
+} from '@app/pages/IssuerOnboarding/types';
+
 export interface BaseEntity {
   id: string;
 }
@@ -19,14 +26,28 @@ export interface Issuer extends User {
 }
 
 export interface Investor extends User {
-  countryOfResidence: string;
+  firstName?: string;
+  lastName?: string;
+  dateOfBirth?: string;
+  countryOfResidence?: string;
+  postalCode?: number;
+  city?: string;
+  street?: string;
+  houseNo?: string;
+  incomeRange?: string;
+  priceAndLimit?: boolean;
 }
 
-export interface User {
-  email: string;
-  password: string;
-  shortenPhoneNumber: string;
-  phoneNumberCountryCode: string;
+export interface User extends BaseEntity {
+  email?: string;
+  password?: string;
+  shortenPhoneNumber?: string;
+  phoneNumberCountryCode?: string;
+  vis?: boolean;
+  visaTncAgreed?: boolean;
+  wittyTncAgreed?: boolean;
+  privacyPolicy?: boolean;
+  wittyNews?: boolean;
 }
 
 export type UserEntity = BaseEntity & (Issuer | Investor);
@@ -37,4 +58,11 @@ export interface AssetEntity extends BaseEntity {
 
 export interface TokenEntity extends BaseEntity {
   tokenId: string;
+}
+
+export interface IssuerDetailsEntity extends BaseEntity {
+  completed?: boolean;
+  companyStructure?: ICompanyStructureForm;
+  legalRepresentatives?: ILegalRepresentativeForm;
+  kyc?: { form: IKycForm | null; uploadedFiles: IUploadedFilesEntity };
 }

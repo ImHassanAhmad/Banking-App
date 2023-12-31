@@ -7,8 +7,8 @@ import {
 import { type ValidationError } from 'yup';
 
 export const MOCK_LOGIN_EMAIL = 'test@witty.tech';
-export const MOCK_LOGIN_PASSWORD = 'Pass123456789@';
-export const MOCK_CAPTCHA_VALUE = 'mock-captcha';
+export const MOCK_LOGIN_EMAIL_TOO_MANY_ATTEMPTS = 'test1@witty.tech';
+export const MOCK_LOGIN_EMAIL_SOMETHING_WENTWRONG = 'test3@witty.tech';
 
 export const LOGIN_RESPONSE: VerifyLoginOTPResponseDto = {
   otpId: '1ee45ddf-957a-4011-a90c-8cad4b415f98'

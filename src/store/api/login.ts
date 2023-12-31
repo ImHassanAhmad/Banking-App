@@ -9,6 +9,7 @@ import {
   type LoginRequest
 } from 'types';
 import { type AuthApiError, transformErrorResponse } from '@app/common/types';
+import type { UserEntity } from '@app/server/database/entity';
 
 export const loginApi = createApi({
   reducerPath: 'login',
@@ -25,7 +26,7 @@ export const loginApi = createApi({
         return transformErrorResponse(baseQueryReturnValue as AuthApiError, meta, arg);
       }
     }),
-    verifyLoginOtp: builder.mutation<RefreshSessionDto, VerifyLoginOTPRequestDto>({
+    verifyLoginOtp: builder.mutation<UserEntity, VerifyLoginOTPRequestDto>({
       query: (body) => ({
         url: 'v1/sme/onboarding/authentication/verify-login-otp',
         method: 'POST',

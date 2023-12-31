@@ -13,7 +13,8 @@ const UsPerson: FC<WithSignUpStepperContextProps> = ({
   updateActiveStep,
   registerUser,
   isLoading,
-  userPayload
+  userPayload,
+  updateUserPayload
 }) => {
   const { t } = useTranslation();
 

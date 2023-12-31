@@ -85,7 +85,7 @@ const Login: FC = () => {
     <Stack mt={4}>
       <BackButton
         onClick={() => {
-          navigate(-1);
+          recentlyRegistered ? navigate('/') : navigate(-1);
         }}
       />
       <Stack mt={5}>

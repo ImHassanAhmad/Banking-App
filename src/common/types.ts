@@ -64,6 +64,48 @@ export interface RegisterUserRequestDto extends CaptchaTokenRequest {
   dryRun: boolean;
 }
 
+export interface UserRequestDto extends CaptchaTokenRequest {
+  email?: string;
+  password?: string;
+  shortenPhoneNumber?: string;
+  phoneNumberCountryCode?: string;
+  countryOfIncorporation?: TCountryCode;
+  vis?: boolean;
+  visaTncAgreed?: boolean;
+  wittyTncAgreed?: boolean;
+  privacyPolicy?: boolean;
+  wittyNews?: boolean;
+  dryRun: boolean;
+}
+
+export interface InvestorUserRequestDto extends UserRequestDto {
+  firstName?: string;
+  lastName?: string;
+  dateOfBirth?: string;
+  postalCode?: number;
+  city?: string;
+  street?: string;
+  houseNo?: string;
+  incomeRange?: string;
+  priceAndLimit?: boolean;
+  isUsResident?: boolean;
+  sourceOfIncome?: string[];
+}
+
+export interface IssuerUserRequestDto extends UserRequestDto {
+  companyName?: string;
+  registrationNumber?: string;
+  dateOfRegister?: string;
+  tradingName?: string;
+  isBusinessRegulated?: boolean;
+  isLegalRepresentative?: boolean;
+  businessType?: BusinessTypes;
+  businessCategory?: BusinessCategoryType;
+  businessSubCategory?: string;
+  businessRevenue?: string;
+  fundingSources?: string[];
+}
+
 export type CountryWithIcon = ICountryData & { icon: string };
 export type CountrySelectOption = Pick<CountryWithIcon, 'name' | 'iso2' | 'icon'>;
 export interface RegisterUser {
@@ -228,12 +270,20 @@ export type WithSignUpStepperContextProps<T = any> = (
   T;
 
 export interface AssetRequestDto {
-  name: string;
-  description: string;
-  image: File;
-  websiteURL?: string;
-  socialMediaLink?: string;
-  logoURL?: string;
+  AssetName?: string;
+  AssetDescription?: string;
+  AssetWebsite?: string;
+  Logo?: string;
+  Reddit?: string;
+  Twitter?: string;
+  Telegram?: string;
+  Whitepaper?: string;
+  Discord?: string;
+  uploadProspectus?: string;
+  businessModel?: string;
+  financialModel?: string;
+  businessPlan?: string;
+  valuationReport?: string;
 }
 
 export interface AssetResponseDto {

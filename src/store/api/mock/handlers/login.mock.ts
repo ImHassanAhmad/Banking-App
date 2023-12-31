@@ -19,8 +19,6 @@ import withErrorHandler from '../middleware/withErrorHandler';
 import { type HttpRequestResolverExtras } from 'msw/lib/core/handlers/HttpHandler';
 import { type ResponseResolverInfo } from 'msw/lib/core/handlers/RequestHandler';
 
-let INCORRECT_LOGINS_COUNT: number = 0;
-
 const loginScheme: yup.ObjectSchema<LoginRequest> = yup.object().shape({
   email: yup.string().email().required(),
   password: yup.string().min(13).required(),
@@ -47,17 +45,12 @@ const loginHandler: HttpHandler = http.post<PathParams, LoginRequest, MockLoginR
     }: ResponseResolverInfo<HttpRequestResolverExtras<PathParams>, LoginRequest>): Promise<
       StrictResponse<MockLoginResponse>
     > => {
-      const loginRequestPayload: LoginRequest = (request.body ??
-        (await request.json())) as LoginRequest;
+      const loginRequestPayload: LoginRequest = await request.json();
 
       loginScheme.validateSync(loginRequestPayload);
-      const { email, password, captchaToken } = loginRequestPayload;
+      const { email } = loginRequestPayload;
 
-      if (
-        email === constants.loginConstants.MOCK_LOGIN_EMAIL &&
-        password === constants.loginConstants.MOCK_LOGIN_PASSWORD &&
-        captchaToken
-      )
+      if (email === constants.loginConstants.MOCK_LOGIN_EMAIL)
         return HttpResponse.json<VerifyLoginOTPResponseDto>(
           constants.loginConstants.LOGIN_RESPONSE,
           {
@@ -65,12 +58,10 @@ const loginHandler: HttpHandler = http.post<PathParams, LoginRequest, MockLoginR
           }
         );
 
-      INCORRECT_LOGINS_COUNT += 1;
-
-      if (INCORRECT_LOGINS_COUNT > 5 && INCORRECT_LOGINS_COUNT < 10)
+      if (email === constants.loginConstants.MOCK_LOGIN_EMAIL_TOO_MANY_ATTEMPTS)
         throw new ApiError(constants.loginConstants.TOO_MANY_INVALID_LOGIN_ATTEMPTS);
 
-      if (INCORRECT_LOGINS_COUNT > 10)
+      if (email === constants.loginConstants.MOCK_LOGIN_EMAIL_SOMETHING_WENTWRONG)
         throw new ApiError(constants.commonConstants.SOMETHING_WENT_WRONG, 500);
 
       throw new ApiError(constants.loginConstants.INCORRECT_LOGIN_DATA);

@@ -5,6 +5,7 @@ import { type ResponseResolverInfo } from 'msw/lib/core/handlers/RequestHandler'
 import { FIELD_ERROR_RESPONSE } from '../constants/login.const';
 import { ValidationError } from 'yup';
 import { ERROR_MESSAGE_RESPONSE, SYSTEM_ERROR_RESPONSE } from '../constants/common.const';
+import { delay } from '../utils';
 
 export class ApiError extends ValidationError {
   status: number;
@@ -26,7 +27,8 @@ const parseErrorType = (error: ApiError): OnboardingError => {
 };
 
 const withErrorHandler = (resolver: any): any => {
-  return (input: ResponseResolverInfo<HttpRequestResolverExtras<PathParams>>) => {
+  return async (input: ResponseResolverInfo<HttpRequestResolverExtras<PathParams>>) => {
+    await delay(500);
     return resolver(input).catch((error: ApiError) => {
       const errorBody: OnboardingError = parseErrorType(error);
       return HttpResponse.json<OnboardingError>(errorBody, {

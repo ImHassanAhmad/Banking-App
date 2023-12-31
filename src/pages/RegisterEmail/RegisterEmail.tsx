@@ -70,14 +70,14 @@ const RegisterEmail: FC<WithSignUpStepperContextProps> = ({
   };
 
   return (
-    <Stack mt={4} sx={{ width: '100%' }}>
-      <Stack mt={4}>
+    <Stack mt={5} sx={{ width: '100%' }}>
+      <Stack>
         <Heading
           title={t(`${translationNamespace}.title`)}
           subTitle={t(`${translationNamespace}.subtitle`)}
         />
       </Stack>
-      <Stack gap={3} mt={3}>
+      <Stack gap={3} mt={3} maxWidth={'43.6rem'}>
         <form
           onSubmit={(event) => {
             void handleSubmit(onSubmit)(event);

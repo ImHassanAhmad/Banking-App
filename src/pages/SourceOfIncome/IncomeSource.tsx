@@ -10,19 +10,20 @@ import { type WithSignUpStepperContextProps } from '@app/common/types';
 import { IncomeSources } from '@app/common/types';
 const sourceOfFundingNamespace = RouteNames.SOURCE_OF_INCOME;
 const incomeSourcesArray: string[] = Object.values(IncomeSources);
-const CHECK_LIST: CheckList = incomeSourcesArray.reduce<CheckList>((obj, key) => {
-  obj[key] = { checked: false };
-  return obj;
-}, {});
 
 const SourceOfIncome: FC<WithSignUpStepperContextProps> = ({
   updateActiveStep,
   registerUser,
   isLoading,
-  userPayload
+  userPayload: { sourceOfIncome = [] },
+  updateUserPayload
 }) => {
   const { t } = useTranslation();
   const [checkedItems, setCheckedItems] = useState<string[]>([]);
+  const CHECK_LIST: CheckList = incomeSourcesArray.reduce<CheckList>((obj, key) => {
+    obj[key] = { checked: sourceOfIncome.findIndex((value: string) => value === key) > -1 };
+    return obj;
+  }, {});
   const [checkList, setCheckList] = useState<CheckList>(CHECK_LIST);
 
   const isAtLeastOneChecked = (): boolean =>
@@ -52,6 +53,10 @@ const SourceOfIncome: FC<WithSignUpStepperContextProps> = ({
   };
 
   const handleSave = (): void => {
+    const sourceOfIncome: string[] = Object.keys(checkList).filter(
+      (key: string) => checkList[key].checked
+    );
+    updateUserPayload({ sourceOfIncome });
     updateActiveStep();
   };
 

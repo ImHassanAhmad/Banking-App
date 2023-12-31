@@ -36,7 +36,7 @@ describe('IssuerStepper Component', () => {
   it('render the signup stepper component', async () => {
     render(<IssuerStepper />, { wrapper });
     await waitFor(() => {
-      expect(screen.getByText(en[RouteNames.COUNTRY].title)).toBeInTheDocument();
+      expect(screen.getByText(en[RouteNames.COUNTRY].issuer_title)).toBeInTheDocument();
     });
   });
 });

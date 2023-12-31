@@ -55,7 +55,6 @@ const issuerFlowComponent = (
       return BusinessType;
     case IssuerSignUpFlowSteps.FundingSource:
       return SourceOfFunding;
-
     default:
       return undefined;
   }
@@ -69,13 +68,22 @@ const IssuerSignUpStepper: FC = () => {
   const activeStepIndex = useMemo(() => IssuerFlowStepsIndices[activeStep], [activeStep]);
 
   const IssuerFlowComponent = issuerFlowComponent(activeStep);
+
+  const hideBackButton = [
+    IssuerSignUpFlowSteps.MobileVerify,
+    IssuerSignUpFlowSteps.EmailVerify
+  ].includes(activeStep);
   return (
-    <Stack>
-      <BackButton
-        onClick={() => {
-          activeStepIndex ? goBack(activeStepIndex - 1) : navigate(-1);
-        }}
-      />
+    <Stack pt={5}>
+      {hideBackButton ? (
+        <></>
+      ) : (
+        <BackButton
+          onClick={() => {
+            activeStepIndex ? goBack(activeStepIndex - 1) : navigate(-1);
+          }}
+        />
+      )}
       <Stepper
         activeStep={IssuerFlowStepsIndices[activeStep]}
         sx={{
@@ -84,7 +92,7 @@ const IssuerSignUpStepper: FC = () => {
             alignItems: 'flex-start'
           }
         }}>
-        <Grid item lg={8} md={10} sm={10} xs={12}>
+        <Grid item lg={10} md={10} sm={10} xs={12}>
           {IssuerFlowComponent ? <IssuerFlowComponent {...props} /> : <></>}
         </Grid>
       </Stepper>

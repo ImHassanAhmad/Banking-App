@@ -1,5 +1,11 @@
 import { type Table } from 'dexie';
-import { type UserEntity, type BaseEntity, type AssetEntity, type TokenEntity } from './entity';
+import type {
+  UserEntity,
+  BaseEntity,
+  AssetEntity,
+  TokenEntity,
+  IssuerDetailsEntity
+} from './entity';
 import { database } from '.';
 
 class DatabaseService<T extends BaseEntity> {
@@ -18,8 +24,8 @@ class DatabaseService<T extends BaseEntity> {
     return { ...entity };
   }
 
-  async update(entity: T): Promise<T> {
-    await this.table.put(entity);
+  async update(id: string, entity: T): Promise<T> {
+    await this.table.put(entity, id);
     return entity;
   }
 
@@ -31,3 +37,6 @@ class DatabaseService<T extends BaseEntity> {
 export const userService = new DatabaseService<UserEntity>(database.users);
 export const assetService = new DatabaseService<AssetEntity>(database.assets);
 export const tokensService = new DatabaseService<TokenEntity>(database.tokens);
+export const issuerDetailsService = new DatabaseService<IssuerDetailsEntity>(
+  database.issuerDetails
+);

@@ -2,28 +2,28 @@ import type { LanguageResource } from '@app/i18n/types';
 
 const en: LanguageResource = {
   home: {
-    title: 'Welcome to W1TTY Business',
+    title: 'Welcome to W1TTY',
     subtitle: 'Everything you need to run your business in one place',
-    login_option_title: 'Log in to your business account',
+    login_option_title: 'Log in to your account',
     login_option_subtitle: 'Enter your account',
-    create_option_title: 'Create a new business account',
+    create_option_title: 'Create a new account',
     create_option_subtitle: 'Get your company onto W1TTY'
   },
   'register-investor': {
-    title: 'Create a W1TTY business account',
+    title: 'Create a W1TTY issuer account',
     subtitle: 'Already have an account?  ',
     signin: 'Sign In',
     continue: 'Continue'
   },
   'register-issuer': {
-    title: 'Create a W1TTY business account',
+    title: 'Create a W1TTY investor account',
     subtitle: 'Already have an account?  ',
     signin: 'Sign In',
     continue: 'Continue'
   },
   onboarding: {
     title: 'Choose Account Type',
-    subtitle: 'Everything you need to run your business in one place',
+    subtitle: 'Do you wish to issue tokens or trade tokens',
     login_option_title: 'Create Investor Account',
     login_option_subtitle: 'Join as an Investor',
     create_option_title: 'Create Issuer Account',
@@ -129,6 +129,11 @@ const en: LanguageResource = {
     title: 'We’re not in your region yet',
     subtitle: 'Phone numbers from this region is not supported.',
     change: 'CHANGE REGION'
+  },
+  'legal-check': {
+    title: 'Unable to proceed !',
+    subtitle: 'Only legal representatives are allowed to create an account.',
+    OK: 'OK'
   },
   'privacy-policy': {
     title: 'Privacy Policy',
@@ -275,6 +280,42 @@ const en: LanguageResource = {
     other: 'Other',
     continue: 'Continue'
   },
+  'create-new-asset': {
+    create_new_asset: 'Create New Asset',
+    continue: 'Continue',
+    AssetInformation: 'Asset Information',
+    AssetDocuments: 'Asset Documents',
+    AssetMultiMediaLinks: 'Asset Multi Media Links',
+    fill_asset_information: 'Fill in the Asset Information',
+    asset_name: 'Asset Short Name',
+    asset_description: 'Asset Description',
+    asset_website: 'Asset Website (Optional)',
+    asset_logo: 'Asset Logo/Image',
+    upload_the_asset: 'Upload the Asset Documents',
+    upload_prospectus: 'Upload Prospectus',
+    upload_prospectus_d:
+      'This document provides details about an investment offering to the public. It includes company overview, legal information, risk, terms of the offering etc.',
+    business_model: 'Business Model',
+    business_model_d:
+      'Business Model provides the details about the business, planned activities along with supporting flows',
+    financial_model: 'Financial Model',
+    financial_model_d:
+      'Financial model including current and forecasted figures for the next 3 years (balance sheet, cash-flow, profit and loss accounts) (per activity)',
+    business_plan: 'Business Plan',
+    business_plan_d: '',
+    valuation_report: 'Valuation Report',
+    valuation_report_d:
+      'Done by them through a third party, but we will also do our valuation via our provider',
+    fill_asset_multi: 'Fill in the Asset Multi Media links',
+    Reddit: 'Reddit Link',
+    Twitter: 'Twitter Link',
+    Telegram: 'Telegram Link',
+    Whitepaper: 'Whitepaper Link',
+    Discord: 'Discord Link',
+    choose_file: 'Choose File',
+    asset_creation_success: 'Asset Creation has been successfully completed!',
+    back_to_home: 'Back to home'
+  },
   'source-of-income': {
     title: 'Source of Income',
     subtitle:
@@ -400,7 +441,33 @@ const en: LanguageResource = {
   },
   'legal-representative': {
     title: 'Are you the legal representative or director of this company?'
-  }
+  },
+  'issuer-onboarding': {
+    company_structure: 'Company Structure',
+    legal_representative: 'Legal Representatives',
+    kyc: 'KYC',
+    company_structure_title: 'UBOs',
+    company_structure_subtitle: 'Add directors/shareholders having more than 25% in company',
+    legal_representative_title: 'Legal Representative',
+    type: 'Type',
+    name: 'Name',
+    email: 'Email',
+    phone: 'Phone number',
+    add_ubo: 'add another UBO',
+    add_legal_representative: 'add another Legal Rsepresentative',
+    continue: 'Continue',
+    submit: 'Submit',
+    role: 'Role',
+    choose_file: 'Choose File',
+    passport: 'Passport',
+    national_id: 'National ID',
+    residence_proof: 'Residence Proof',
+    profile_picture: 'Profile Picture',
+    success_message:
+      'Your Details have been submitted and being review meanwhile you can start exploring',
+    dashboard_button: 'Go to Dashboard'
+  },
+  dashboard: {}
 };
 
 export default en;
