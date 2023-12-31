@@ -6,7 +6,10 @@ import Heading from '@app/components/Heading';
 import { Box, Button, Stack, Typography } from '@mui/material';
 import Textfield from '@app/components/Textfield';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-import { type WithSignUpStepperContextProps } from '@app/common/types';
+import { type WithSignUpStepperContextProps, type CountrySelectOption } from '@app/common/types';
+import CountrySelector from '@app/components/CountrySelector';
+import { ALL_COUNTRIES } from '@app/constants/countries';
+
 const SecurityNumber = RouteNames.SECURITY_NUMBER;
 
 const SocialSecurityNumber: FC<WithSignUpStepperContextProps> = ({
@@ -18,33 +21,59 @@ const SocialSecurityNumber: FC<WithSignUpStepperContextProps> = ({
   const { t } = useTranslation();
   const [currentInput, setCurrentInput] = useState('');
   const [textInputArray, setTextInputArray] = useState<string[]>([]);
+  const [country, setCountry] = useState<CountrySelectOption | undefined>(
+    ALL_COUNTRIES
+      ? ALL_COUNTRIES[
+          ALL_COUNTRIES.findIndex(
+            (_: CountrySelectOption) => _.iso2 === userPayload.countryOfIncorporation
+          )
+        ]
+      : undefined
+  );
+  const countrySelectHandler = (value: CountrySelectOption): void => {
+    setCountry(value);
+  };
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setCurrentInput(event.target.value);
   };
   const handleButtonClick = useCallback(() => {
     if (!currentInput) return;
-    setTextInputArray((prevArray) => {
-      const updatedArray = [...prevArray, currentInput];
-      console.log(updatedArray);
-      return updatedArray;
+    registerUser({
+      payload: {
+        countryOfIncorporation: country?.iso2,
+        SocialSecurityNumber: [...textInputArray, currentInput],
+        dryRun: true
+      },
+
+      onSuccess: () => {
+        console.log('onSuccess called');
+        setTextInputArray((prevArray) => {
+          const updatedArray = [...prevArray, currentInput];
+          return updatedArray;
+        });
+        setCurrentInput('');
+
+        updateActiveStep();
+      }
     });
-    setCurrentInput('');
-    updateActiveStep();
-    console.log(textInputArray);
-  }, [currentInput]);
+  }, [currentInput, userPayload, updateActiveStep, textInputArray]);
 
   return (
     <>
       <Stack sx={{ width: '552px' }}>
         <Heading title={t(`${SecurityNumber}.title`)} subTitle={''} />
-        <Box sx={{ display: 'flex', gap: '5px', marginTop: '20px' }}>
-          <img
-            src="https://th.bing.com/th/id/R.37c8735fab040fc407c0d325d2b06190?rik=4f8O1hENs%2fq5%2fQ&pid=ImgRaw&r=0"
-            style={{ width: '24px', height: '24px' }}
+        <Box>
+          <CountrySelector
+            placeholder={
+              ALL_COUNTRIES && ALL_COUNTRIES.length > 0 ? `${ALL_COUNTRIES[0].name}` : ''
+            }
+            // placeholder='selecting'
+            onChange={countrySelectHandler}
+            selectedCountry={country}
+            readOnly={true}
           />
-          <Typography>{t(`${SecurityNumber}.states`)}</Typography>
         </Box>
-        <Typography sx={{ marginTop: '20px', width: '436px' }}>
+        <Typography sx={{ marginTop: '15px', width: '436px' }}>
           {t(`${SecurityNumber}.statesdetail`)}{' '}
         </Typography>
         <Box sx={{ marginTop: '20px' }}>
@@ -56,15 +85,15 @@ const SocialSecurityNumber: FC<WithSignUpStepperContextProps> = ({
               gap: '5px',
               background: '#EBEBEB',
               borderRadius: '10px',
-              padding: '5px',
               marginTop: '10px',
               width: '300px',
-              paddingTop: '13px'
+              alignItems: 'center',
+              height: '40px',
+              padding: '5px'
             }}>
-            <Typography>
-              <ErrorOutlineIcon />
-            </Typography>
-            <Typography>{t(`${SecurityNumber}.stateserror`)}</Typography>
+            <ErrorOutlineIcon />
+
+            <Typography variant="body2">{t(`${SecurityNumber}.stateserror`)}</Typography>
           </Box>
         </Box>
         <Button
@@ -74,12 +103,6 @@ const SocialSecurityNumber: FC<WithSignUpStepperContextProps> = ({
           onClick={handleButtonClick}>
           {t(`${SecurityNumber}.continue`)}
         </Button>
-
-        {/* <ul style={{ fontSize: '30px' }}>
-          {textInputArray.map((text, index) => (
-            <li key={index}>{text}</li>
-          ))}
-        </ul> */}
       </Stack>
     </>
   );

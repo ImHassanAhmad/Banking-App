@@ -5,4 +5,7 @@ export interface ICountrySelectorProps {
   selectedCountry?: CountrySelectOption;
   onChange: (v: CountrySelectOption) => void;
   isDisabled?: boolean;
+  searchIcon?: string; // Optional property
+  arrowIcon?: string;
+  readOnly?: boolean;
 }

@@ -9,6 +9,7 @@ import { type WithSignUpStepperContextProps, type CountrySelectOption } from '@a
 import { NOT_SUPPORTED_MODES } from '@app/constants';
 import CountrySelector from '@app/components/CountrySelector';
 import { ALL_COUNTRIES } from '@app/constants/countries';
+import { ARROW_RIGHT, SEARCH_ICON } from '@app/assets/images';
 
 const translationNamespace = RouteNames.COUNTRY;
 
@@ -67,6 +68,8 @@ const CountrySelect: FC<WithSignUpStepperContextProps> = ({
           placeholder={t(`${translationNamespace}.placeholder`)}
           onChange={countrySelectHandler}
           selectedCountry={country}
+          searchIcon={SEARCH_ICON}
+          arrowIcon={ARROW_RIGHT}
         />
         <Stack width={'100%'} height={'5.4rem'} alignItems={'center'} justifyContent={'center'}>
           {isLoading ? (

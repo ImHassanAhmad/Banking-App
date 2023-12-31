@@ -339,7 +339,8 @@ const en: LanguageResource = {
     states: 'The United States',
     statesdetail: 'Enter your Social Security Number (SSN) for the United States',
     stateserror: 'Whats a SSN or its equivalent?',
-    continue: 'CONTINUE'
+    continue: 'CONTINUE',
+    placeholder: '#######'
   },
   'pay-country-taxes': {
     title: 'Do you pay taxes in other countries?',

@@ -59,6 +59,7 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
   const [activeStep, setActiveStep] = useState(InvestorSignUpFlowSteps.IncomeRange);
   const [userId, setUserId] = useState('');
   const { updateError, findError } = useAuthError();
+
   const [registerUserPayload, setRegisterUserPayload] = useState<RegisterUserRequestDto>({
     dryRun: true
   });
@@ -82,13 +83,13 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
     }
   };
 
-  const updateActiveStep = (): void => {
+  const updateActiveStep = (nextStep?: InvestorSignUpFlowSteps): void => {
     const nextActiveStep: InvestorSignUpFlowSteps = indexToEnumKeyRecord(InvestorSignUpFlowSteps)[
       enumToIndexRecord(InvestorSignUpFlowSteps)[activeStep] + 1
     ] as InvestorSignUpFlowSteps;
 
     updateError(nextActiveStep, undefined);
-    setActiveStep(nextActiveStep);
+    setActiveStep(nextStep ?? nextActiveStep);
   };
 
   const goBack = (backStep: number): void => {

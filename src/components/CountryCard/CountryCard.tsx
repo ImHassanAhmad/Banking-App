@@ -1,19 +1,24 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-interface CustomComponentProps {
+interface CountryCardProps {
   imageSrc?: string;
   text: string;
   code: string;
   customStyle: React.CSSProperties;
 }
 
-const CustomComponent: React.FC<CustomComponentProps> = ({ imageSrc, text, code, customStyle }) => {
-  const defaultImageStyle = {
-    width: '24px',
-    height: '24px'
-  };
-
+type StyleProps = React.CSSProperties & {
+  objectFit?: React.CSSProperties['objectFit'];
+};
+const defaultImageStyle: StyleProps = {
+  width: '27px',
+  height: '27px',
+  marginRight: '10px',
+  borderRadius: '50%',
+  objectFit: 'cover'
+};
+const CountryCard: React.FC<CountryCardProps> = ({ imageSrc, text, code, customStyle }) => {
   return (
     <Box
       sx={{
@@ -39,4 +44,4 @@ const CustomComponent: React.FC<CustomComponentProps> = ({ imageSrc, text, code,
   );
 };
 
-export default CustomComponent;
+export default CountryCard;

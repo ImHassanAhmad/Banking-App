@@ -5,40 +5,36 @@ import { useTranslation } from 'react-i18next';
 import Heading from '@app/components/Heading';
 import { Button, Stack, Typography, Box } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import CustomComponent from '@app/components/CustomInput/CustomInput';
+import CountryCard from '@app/components/CountryCard/CountryCard';
 import { type WithSignUpStepperContextProps } from '@app/common/types';
+import { getCountryFlag } from '@app/assets/flags';
 
 const taxescountry = RouteNames.PAY_COUNTRY_TAXES;
 const CountryTaxes: FC<WithSignUpStepperContextProps> = ({
   updateActiveStep,
-  registerUser,
-  isLoading,
-  userPayload,
   goBack,
-  activeStepIndex
+  activeStepIndex,
+  userPayload
 }) => {
   const { t } = useTranslation();
-
   const addCountry = (): void => {
-    console.log(activeStepIndex);
     goBack(activeStepIndex - 1);
   };
-
   return (
     <>
       <Stack sx={{ width: '436px' }}>
         <Heading title={t(`${taxescountry}.title`)} subTitle={t(`${taxescountry}.countrydetail`)} />
 
-        <CustomComponent
-          imageSrc="https://th.bing.com/th/id/R.37c8735fab040fc407c0d325d2b06190?rik=4f8O1hENs%2fq5%2fQ&pid=ImgRaw&r=0"
+        <CountryCard
+          imageSrc={getCountryFlag('PK')}
           text={`${t(`${taxescountry}.poland`)}`}
           code="98765AB"
           customStyle={{}}
         />
-        <CustomComponent
-          imageSrc="https://th.bing.com/th/id/R.37c8735fab040fc407c0d325d2b06190?rik=4f8O1hENs%2fq5%2fQ&pid=ImgRaw&r=0"
+        <CountryCard
+          imageSrc={getCountryFlag('US')}
           text={`${t(`${taxescountry}.states`)}`}
-          code="567651522AB"
+          code={userPayload.companyName}
           customStyle={{}}
         />
 
@@ -55,12 +51,10 @@ const CountryTaxes: FC<WithSignUpStepperContextProps> = ({
             height: '5.2rem',
             marginTop: '8px',
             cursor: 'pointer',
-            paddingTop: '13px'
+            alignItem: 'center'
           }}>
-          <Typography>
-            <AddCircleOutlineIcon />
-          </Typography>
-          <Typography sx={{ marginBottom: '5px' }}>{t(`${taxescountry}.addcountry`)}</Typography>
+          <AddCircleOutlineIcon />
+          <Typography>{t(`${taxescountry}.addcountry`)}</Typography>
         </Box>
         <Button
           sx={{ marginTop: '20px', width: '400px' }}
