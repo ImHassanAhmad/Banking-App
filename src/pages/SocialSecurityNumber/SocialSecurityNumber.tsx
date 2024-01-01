@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useCallback, useState, type FC } from 'react';
+import React, { useState, type FC } from 'react';
 import { RouteNames } from '@app/constants/routes';
 import { useTranslation } from 'react-i18next';
 import Heading from '@app/components/Heading';
@@ -16,18 +16,14 @@ const SocialSecurityNumber: FC<WithSignUpStepperContextProps> = ({
   updateActiveStep,
   registerUser,
   isLoading,
+  updateUserPayload,
   userPayload
 }) => {
   const { t } = useTranslation();
   const [currentInput, setCurrentInput] = useState('');
-  const [textInputArray, setTextInputArray] = useState<string[]>([]);
   const [country, setCountry] = useState<CountrySelectOption | undefined>(
     ALL_COUNTRIES
-      ? ALL_COUNTRIES[
-          ALL_COUNTRIES.findIndex(
-            (_: CountrySelectOption) => _.iso2 === userPayload.countryOfIncorporation
-          )
-        ]
+      ? ALL_COUNTRIES[ALL_COUNTRIES.findIndex((_: CountrySelectOption) => _.iso2 === userPayload)]
       : undefined
   );
   const countrySelectHandler = (value: CountrySelectOption): void => {
@@ -36,46 +32,57 @@ const SocialSecurityNumber: FC<WithSignUpStepperContextProps> = ({
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setCurrentInput(event.target.value);
   };
-  const handleButtonClick = useCallback(() => {
-    if (!currentInput) return;
-    registerUser({
-      payload: {
-        countryOfIncorporation: country?.iso2,
-        SocialSecurityNumber: [...textInputArray, currentInput],
-        dryRun: true
-      },
 
-      onSuccess: () => {
-        console.log('onSuccess called');
-        setTextInputArray((prevArray) => {
-          const updatedArray = [...prevArray, currentInput];
-          return updatedArray;
-        });
-        setCurrentInput('');
-
-        updateActiveStep();
-      }
+  const handleSubmit = (): void => {
+    // if (!currentInput || !country) return updateActiveStep();
+    updateUserPayload({
+      socialSecurityNumber: [
+        ...userPayload.socialSecurityNumber,
+        { country: country?.name, taxNumber: currentInput, iso: country?.iso2 }
+      ]
     });
-  }, [currentInput, userPayload, updateActiveStep, textInputArray]);
+    updateActiveStep();
+  };
 
   return (
     <>
       <Stack sx={{ width: '552px' }}>
         <Heading title={t(`${SecurityNumber}.title`)} subTitle={''} />
-        <Box>
-          <CountrySelector
-            placeholder={
-              ALL_COUNTRIES && ALL_COUNTRIES.length > 0 ? `${ALL_COUNTRIES[0].name}` : ''
+        <Box
+          sx={{
+            '& .css-111er8s-MuiFormControl-root-MuiTextField-root': {
+              background: 'white',
+              width: '200px',
+              borderRadius: '12px'
+            },
+            '& .css-pqyibd-MuiInputBase-root-MuiOutlinedInput-root': {
+              background: 'white',
+              width: '200px',
+              borderRadius: '12px'
+            },
+            '& .styles_arrow__rDwFn': {
+              position: 'absolute',
+              right: '0px',
+              left: '30%'
+            },
+            '& css-124nlmo .styles_arrow__rDwFn': {
+              position: 'absolute',
+              right: '0px',
+              left: '30%'
+            },
+            '& .styles_search__K1Wxz': {
+              position: 'absolute',
+              right: '0px',
+              left: '30%'
             }
-            // placeholder='selecting'
+          }}>
+          <CountrySelector
+            placeholder="Select Country"
             onChange={countrySelectHandler}
             selectedCountry={country}
-            readOnly={true}
           />
         </Box>
-        <Typography sx={{ marginTop: '15px', width: '436px' }}>
-          {t(`${SecurityNumber}.statesdetail`)}{' '}
-        </Typography>
+        <Typography sx={{ width: '436px' }}>{t(`${SecurityNumber}.statesdetail`)} </Typography>
         <Box sx={{ marginTop: '20px' }}>
           <Textfield sx={{ width: '400px' }} value={currentInput} onChange={handleInputChange} />
 
@@ -96,11 +103,7 @@ const SocialSecurityNumber: FC<WithSignUpStepperContextProps> = ({
             <Typography variant="body2">{t(`${SecurityNumber}.stateserror`)}</Typography>
           </Box>
         </Box>
-        <Button
-          sx={{ marginTop: '20px', width: '400px' }}
-          disabled={!currentInput}
-          type="submit"
-          onClick={handleButtonClick}>
+        <Button sx={{ marginTop: '20px', width: '400px' }} type="submit" onClick={handleSubmit}>
           {t(`${SecurityNumber}.continue`)}
         </Button>
       </Stack>

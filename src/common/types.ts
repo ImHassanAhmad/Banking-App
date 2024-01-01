@@ -60,7 +60,6 @@ export interface RegisterUserRequestDto extends CaptchaTokenRequest {
   businessSubCategory?: string;
   businessRevenue?: string;
   fundingSources?: string[];
-  socialSecurityNumber?: string[];
   dryRun: boolean;
 }
 
@@ -78,6 +77,12 @@ export interface UserRequestDto extends CaptchaTokenRequest {
   dryRun: boolean;
 }
 
+export interface socialSecurityNumber {
+  country: string;
+  taxNumber: string;
+  iso: TCountryCode;
+}
+
 export interface InvestorUserRequestDto extends UserRequestDto {
   firstName?: string;
   lastName?: string;
@@ -90,6 +95,7 @@ export interface InvestorUserRequestDto extends UserRequestDto {
   priceAndLimit?: boolean;
   isUsResident?: boolean;
   sourceOfIncome?: string[];
+  socialSecurityNumber?: socialSecurityNumber[];
 }
 
 export interface IssuerUserRequestDto extends UserRequestDto {

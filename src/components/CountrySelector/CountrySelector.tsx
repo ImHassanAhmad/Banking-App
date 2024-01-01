@@ -77,7 +77,7 @@ const CountrySelector: React.FC<ICountrySelectorProps> = ({
             inputProps={{
               ...params.inputProps,
               style: {
-                marginLeft: selectedCountry ? '5rem' : ''
+                marginLeft: selectedCountry ? '4rem' : ''
               },
               autoComplete: 'new-password',
               'data-testid': 'selector-content-input'

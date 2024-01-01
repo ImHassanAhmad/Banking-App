@@ -61,7 +61,8 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
   const [userId, setUserId] = useState('');
   const { updateError, findError } = useAuthError();
   const [registerUserPayload, setRegisterUserPayload] = useState<InvestorUserRequestDto>({
-    dryRun: true
+    dryRun: true,
+    socialSecurityNumber: []
   });
   const [register, { isLoading }] = useRegisterInvestorMutation();
   const handleError = (
@@ -135,11 +136,15 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
       case InvestorSignUpFlowSteps.Questionaire:
         apiPayload.wittyNews = registerFormData.wittyNews;
         break;
+      case InvestorSignUpFlowSteps.UsPerson:
+        apiPayload.isUsResident = registerFormData.isUsResident;
+        break;
       case InvestorSignUpFlowSteps.CreatePassword:
         apiPayload = { ...registerFormData, dryRun: false };
         break;
       default:
     }
+
     setRegisterUserPayload({ ...registerUserPayload, ...payload });
     const userPayload = {
       vis: true,

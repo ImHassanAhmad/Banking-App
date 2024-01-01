@@ -19,14 +19,13 @@ const UsPerson: FC<WithSignUpStepperContextProps> = ({
   const { t } = useTranslation();
 
   const submit = (value: string): void => {
-    updateActiveStep();
-    // tempoarirlly comment until msw api is not ready
-    // registerUser({
-    //   payload: { dryRun: true, UsPerson: value },
-    //   onSuccess: () => {
-    //     updateActiveStep();
-    //   }
-    // });
+    const usResident = !!value.includes('Yes');
+    registerUser({
+      payload: { dryRun: true, isUsResident: usResident },
+      onSuccess: () => {
+        updateActiveStep(usResident ? 'SecurityNumber' : 'CountryTaxes');
+      }
+    });
   };
   return (
     <Box sx={{ width: '70%' }}>
