@@ -18,7 +18,7 @@ const UsPerson: FC<WithSignUpStepperContextProps> = ({
 }) => {
   const { t } = useTranslation();
 
-  const submit = (value: string): void => {
+  const handleSubmit = (value: string): void => {
     const usResident = !!value.includes('Yes');
     registerUser({
       payload: { dryRun: true, isUsResident: usResident },
@@ -34,7 +34,7 @@ const UsPerson: FC<WithSignUpStepperContextProps> = ({
         subtitle={t(`${transactionResource}.subtitle`)}
         itemList={BINARY_ANSWER_OPTIONS}
         onItemClick={(e) => {
-          submit(e);
+          handleSubmit(e);
         }}
       />
     </Box>
