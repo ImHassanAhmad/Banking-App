@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, Stack, Typography } from '@mui/material';
 import UploadButton from '../UploadButton';
 import { RouteNames } from '@app/constants/routes';
@@ -8,51 +8,42 @@ import { useCreateNewAssetStepper } from '@app/context/CreateNewAssetStepperCont
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { type AssetDocumentsRequestDto } from '@app/common/types';
+import { useUploadAssetLegalDocumentsMutation } from '@app/store/api/asset';
 
 const createNewAssetNamespace = RouteNames.CREATE_NEW_ASSET;
-interface IForm {
-  uploadProspectus: string;
-  businessModel: string;
-  financialModel: string;
-  businessPlan: string;
-  valuationReport: string;
-}
+
 const AssetDocuments: React.FC = () => {
   const { t } = useTranslation();
-  const { updateActiveStep, updateAssetPayload, assetPayload } = useCreateNewAssetStepper();
-  const [selectedFiles, setSelectedFiles] = useState<Record<string, File | null>>({});
-  const schema = yup.object().shape({
-    uploadProspectus: yup.string().required('File is required'),
-    businessModel: yup.string().required('File is required'),
-    financialModel: yup.string().required('File is required'),
-    businessPlan: yup.string().required('File is required'),
-    valuationReport: yup.string().required('File is required')
-  });
-  const { handleSubmit } = useForm<IForm>({
+  const { assetPayload, updateActiveStep, updateAssetPayload } = useCreateNewAssetStepper();
+  const [uploadAssetLegalDocuments, { isLoading }] = useUploadAssetLegalDocumentsMutation();
+  const schema: yup.ObjectSchema<AssetDocumentsRequestDto> = yup.object().shape({
+    prospectus: yup.mixed().required('File is required'),
+    businessModel: yup.mixed().required('File is required'),
+    financialModel: yup.mixed().required('File is required'),
+    businessPlan: yup.mixed().required('File is required'),
+    valuationReport: yup.mixed().required('File is required')
+  }) as any;
+
+  const { handleSubmit, setValue, getValues } = useForm<AssetDocumentsRequestDto>({
     mode: 'onChange',
     resolver: yupResolver(schema),
-    defaultValues: {
-      uploadProspectus: assetPayload.uploadProspectus,
-      businessModel: assetPayload.businessModel,
-      financialModel: assetPayload.financialModel,
-      businessPlan: assetPayload.businessPlan,
-      valuationReport: assetPayload.valuationReport
-    }
+    defaultValues: assetPayload as any
   });
   const handleFileChange =
-    (label: string) =>
+    (value: string) =>
     (event: React.ChangeEvent<HTMLInputElement>): void => {
       const file = event.target.files?.[0];
-      setSelectedFiles((prevFiles) => ({ ...prevFiles, [label]: file ?? null }));
+      if (file) setValue(value as Documents, file);
     };
 
-  const onSubmit: SubmitHandler<IForm> = (data) => {
+  const onSubmit: SubmitHandler<AssetDocumentsRequestDto> = (data: AssetDocumentsRequestDto) => {
+    console.log('tester submit ', data);
+    console.log(uploadAssetLegalDocuments);
     updateAssetPayload(data);
     updateActiveStep();
   };
-  const handleUpload = (label: string) => (): void => {
-    console.log('Uploading file:', selectedFiles[label]);
-  };
+
   return (
     <form
       onSubmit={(event) => {
@@ -62,14 +53,13 @@ const AssetDocuments: React.FC = () => {
         <Typography sx={{ fontSize: '2.4rem', fontWeight: 500, mb: 2 }}>
           {t(`${createNewAssetNamespace}.upload_the_asset`)}
         </Typography>
-        {Object.values(Documents).map((label) => (
+        {Object.values(Documents).map((value: string) => (
           <UploadButton
-            key={label}
-            label={t(`${createNewAssetNamespace}.${label}`)}
-            description={t(`${createNewAssetNamespace}.${label}_d`)}
-            selectedFile={selectedFiles[label]}
-            handleFileChange={handleFileChange(label)}
-            handleUpload={handleUpload(label)}
+            key={value}
+            label={t(`${createNewAssetNamespace}.${value}`)}
+            description={t(`${createNewAssetNamespace}.${value}_d`)}
+            selectedFile={getValues(value as Documents)}
+            handleFileChange={handleFileChange(value)}
           />
         ))}
         <Stack gap={3} direction={'row'} mt={3} sx={{ width: '70%' }}>
@@ -79,7 +69,7 @@ const AssetDocuments: React.FC = () => {
               width: '100%'
             }}
             type="submit"
-            onClick={updateActiveStep}>
+            disabled={isLoading}>
             {t(`${createNewAssetNamespace}.continue`)}
           </Button>
         </Stack>

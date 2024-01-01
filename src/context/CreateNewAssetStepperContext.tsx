@@ -2,23 +2,34 @@ import React, { createContext, useState, useContext } from 'react';
 import { CreateNewAssetSteps } from '../pages/CreateNewAsset/types';
 import { enumToIndexRecord, indexToEnumKeyRecord } from '@app/utils/enum';
 import { useNavigate } from 'react-router-dom';
-import { type AssetRequestDto } from '@app/common/types';
+import {
+  type AssetSocialMediaRequestDto,
+  type AssetDocumentsRequestDto,
+  type AssetInformationRequestDto,
+  type AssetRequestDto
+} from '@app/common/types';
+
+export interface AssetPayload {
+  [CreateNewAssetSteps.AssetInformation]: AssetInformationRequestDto;
+  [CreateNewAssetSteps.AssetDocuments]?: AssetDocumentsRequestDto;
+  [CreateNewAssetSteps.AssetMultiMediaLinks]?: AssetSocialMediaRequestDto;
+  [CreateNewAssetSteps.AssetCreationSuccess]?: AssetInformationRequestDto;
+}
 
 export interface CreateNewAssetContextProps {
   activeStep: CreateNewAssetSteps;
+  assetPayload: AssetPayload;
+  assetId: string;
   updateActiveStep: () => void;
   goBack: (backStep: number) => void;
-  assetPayload: AssetRequestDto;
-  updateAssetPayload: (newState: AssetRequestDto) => void;
+  updateAssetPayload: (newState: AssetRequestDto, assetId?: string) => void;
 }
 
 const CreateNewAssetStepperContext = createContext<CreateNewAssetContextProps>({
   activeStep: CreateNewAssetSteps.AssetInformation,
-  updateActiveStep: () => {},
-  goBack: () => {},
-  assetPayload: {}, // Add a default value
-  updateAssetPayload: () => {} // Add a default function
-});
+  assetPayload: { [CreateNewAssetSteps.AssetInformation]: {} },
+  assetId: ''
+} as any);
 
 const { Provider } = CreateNewAssetStepperContext;
 
@@ -27,11 +38,15 @@ const IndexToCreateNewAssetSteps = indexToEnumKeyRecord(CreateNewAssetSteps);
 
 export const CreateNewAssetProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [activeStep, setActiveStep] = useState(CreateNewAssetSteps.AssetInformation);
-  const [assetPayload, setAssetPayload] = useState<AssetRequestDto>({}); // Replace with your form state type
+  const [assetPayload, setAssetPayload] = useState<AssetPayload>({
+    [CreateNewAssetSteps.AssetInformation]: {}
+  }); // Replace with your form state type
+  const [assetId, setAssetId] = useState('');
   const navigate = useNavigate();
 
-  const updateAssetPayload = (newState: AssetRequestDto): void => {
-    setAssetPayload((prevState: AssetRequestDto) => ({ ...prevState, ...newState }));
+  const updateAssetPayload = (newState: AssetRequestDto, assetId?: string): void => {
+    setAssetPayload((prevState: AssetPayload) => ({ ...prevState, [activeStep]: newState }));
+    if (assetId) setAssetId(assetId);
   };
 
   const updateActiveStep = (): void => {
@@ -57,9 +72,10 @@ export const CreateNewAssetProvider: React.FC<{ children: React.ReactNode }> = (
 
   const value = {
     activeStep,
+    assetPayload: assetPayload[activeStep] as AssetPayload,
+    assetId,
     updateActiveStep,
     goBack,
-    assetPayload,
     updateAssetPayload
   };
 

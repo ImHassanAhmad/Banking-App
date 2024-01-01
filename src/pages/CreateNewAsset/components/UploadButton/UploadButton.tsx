@@ -9,8 +9,7 @@ const UploadButton: React.FC<UploadButtonProps> = ({
   label,
   description,
   selectedFile,
-  handleFileChange,
-  handleUpload
+  handleFileChange
 }) => (
   <Box
     borderRadius={1}
@@ -44,7 +43,7 @@ const UploadButton: React.FC<UploadButtonProps> = ({
           label={label}
           selectedFile={selectedFile}
           handleFileChange={handleFileChange}
-          handleUpload={handleUpload}
+          handleUpload={() => {}}
         />
       </Box>
     </Box>

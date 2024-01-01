@@ -6,22 +6,22 @@ export interface UploadButtonProps {
   description: string;
   selectedFile: File | null;
   handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  handleUpload: () => void;
+  // handleUpload: () => void;
 }
 export enum SocialMediaLinks {
-  Reddit = 'Reddit',
-  Twitter = 'Twitter',
-  Telegram = 'Telegram',
-  Whitepaper = 'Whitepaper',
-  Discord = 'Discord'
+  Reddit = 'reddit',
+  Twitter = 'twitter',
+  Telegram = 'telegram',
+  Whitepaper = 'whitepaper',
+  Discord = 'discord'
 }
 
 export enum Documents {
-  UploadProspectus = 'upload_prospectus',
-  BusinessModel = 'business_model',
-  FinancialModel = 'financial_model',
-  BusinessPlan = 'business_plan',
-  ValuationReport = 'valuation_report'
+  Prospectus = 'prospectus',
+  BusinessModel = 'businessModel',
+  FinancialModel = 'financialModel',
+  BusinessPlan = 'businessPlan',
+  ValuationReport = 'valuationReport'
 }
 export enum CreateNewAssetSteps {
   AssetInformation = 'AssetInformation',

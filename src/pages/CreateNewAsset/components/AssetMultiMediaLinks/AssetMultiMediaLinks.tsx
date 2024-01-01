@@ -8,24 +8,17 @@ import { useTranslation } from 'react-i18next';
 import { SocialMediaLinks } from '../../types';
 import Textfield from '@app/components/Textfield';
 import { useCreateNewAssetStepper } from '@app/context/CreateNewAssetStepperContext';
+import { type AssetSocialMediaRequestDto } from '@app/common/types';
 
 const createNewAssetNamespace = RouteNames.CREATE_NEW_ASSET;
 
-interface IForm {
-  Reddit: string;
-  Twitter: string;
-  Telegram: string;
-  Whitepaper: string;
-  Discord: string;
-}
-
-const schema = yup.object().shape({
-  Reddit: yup.string().url('Must be a valid URL').required(),
-  Twitter: yup.string().url('Must be a valid URL').required(),
-  Telegram: yup.string().url('Must be a valid URL').required(),
-  Whitepaper: yup.string().url('Must be a valid URL').required(),
-  Discord: yup.string().url('Must be a valid URL').required()
-});
+const schema: yup.ObjectSchema<AssetSocialMediaRequestDto> = yup.object().shape({
+  reddit: yup.string().url('Must be a valid URL').required(),
+  twitter: yup.string().url('Must be a valid URL').required(),
+  telegram: yup.string().url('Must be a valid URL').required(),
+  whitepaper: yup.string().url('Must be a valid URL').required(),
+  discord: yup.string().url('Must be a valid URL').required()
+}) as yup.ObjectSchema<AssetSocialMediaRequestDto>;
 
 const AssetMultiMediaLinks: React.FC = () => {
   const { t } = useTranslation();
@@ -35,13 +28,15 @@ const AssetMultiMediaLinks: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors, isValid }
-  } = useForm<IForm>({
+  } = useForm<AssetSocialMediaRequestDto>({
     mode: 'onBlur',
     resolver: yupResolver(schema),
-    defaultValues: assetPayload
+    defaultValues: assetPayload as AssetSocialMediaRequestDto
   });
 
-  const onSubmit: SubmitHandler<IForm> = (data) => {
+  const onSubmit: SubmitHandler<AssetSocialMediaRequestDto> = (
+    data: AssetSocialMediaRequestDto
+  ) => {
     updateAssetPayload(data);
     updateActiveStep();
   };

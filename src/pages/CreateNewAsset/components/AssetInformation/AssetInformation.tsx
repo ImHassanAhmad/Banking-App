@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Stack, Typography, Box, Avatar, Button } from '@mui/material';
+import { Stack, Typography, Box, Avatar, Button, CircularProgress } from '@mui/material';
 import FilterIcon from '@mui/icons-material/Filter';
 import { RouteNames } from '@app/constants/routes';
 import { useTranslation } from 'react-i18next';
@@ -8,58 +8,62 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Textfield from '@app/components/Textfield';
 import { useCreateNewAssetStepper } from '@app/context/CreateNewAssetStepperContext';
-
-interface IForm {
-  AssetName: string;
-  AssetDescription: string;
-  AssetWebsite: string;
-  Logo: any;
-}
+import {
+  type AssetResponseDto,
+  type AssetInformationRequestDto,
+  type RequestError
+} from '@app/common/types';
+import { useCreateAssetMutation } from '@app/store/api/asset';
 
 const createNewAssetNamespace = RouteNames.CREATE_NEW_ASSET;
 
 const AssetInformation: React.FC = () => {
   const { t } = useTranslation();
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [fieldErrors] = useState<FieldError>();
   const { assetPayload, updateAssetPayload, updateActiveStep } = useCreateNewAssetStepper();
+  const [createAsset, { isLoading }] = useCreateAssetMutation();
 
-  const schema = yup.object().shape({
-    AssetName: yup.string().required('name is required'),
-    AssetDescription: yup.string().required('Description is required'),
-    AssetWebsite: yup.string().url('Website must be a valid URL').required('Website is required'),
-    Logo: yup.mixed().required('Logo is required')
-  });
+  const schema: yup.ObjectSchema<AssetInformationRequestDto> = yup.object().shape({
+    assetName: yup.string().required('name is required'),
+    assetDescription: yup.string().required('Description is required'),
+    assetWebsite: yup.string().url('Website must be a valid URL').required('Website is required'),
+    logo: yup.mixed().required('Logo is required')
+  }) as any;
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid }
-  } = useForm<IForm>({
+    formState: { errors, isValid },
+    setValue
+  } = useForm<AssetInformationRequestDto>({
     mode: 'onBlur',
-    resolver: yupResolver(schema),
-    defaultValues: assetPayload
+    resolver: yupResolver<AssetInformationRequestDto>(schema),
+    defaultValues: assetPayload as AssetInformationRequestDto
   });
 
-  const onSubmit: SubmitHandler<IForm> = (data) => {
-    if (selectedFile) {
-      // Add the file name to the form data
-      const dataWithFileName = { ...data, logo: selectedFile.name };
-      updateAssetPayload(dataWithFileName);
-    } else {
-      updateAssetPayload(data);
-    }
-    updateActiveStep();
+  const onSubmit: SubmitHandler<AssetInformationRequestDto> = (
+    data: AssetInformationRequestDto
+  ) => {
+    createAsset(data)
+      .unwrap()
+      .then(({ assetId }: AssetResponseDto) => {
+        updateAssetPayload(data, assetId);
+        updateActiveStep();
+      })
+      .catch(({ message, errorLevel }: RequestError) => {
+        // TODO: handle error
+        console.log('error ', message, ' error level ', errorLevel);
+      });
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const file = event.target.files?.[0];
-    setSelectedFile(file ?? null);
     // Create a preview URL
     if (file) {
       const url = URL.createObjectURL(file);
       setPreview(url);
+      setValue('logo', file);
     }
   };
 
@@ -75,16 +79,16 @@ const AssetInformation: React.FC = () => {
         <Box display="flex" flexDirection="row" gap={3} sx={{ width: '100%' }}>
           <Stack sx={{ flexBasis: '70%' }} gap={2}>
             <Textfield
-              name="AssetName"
+              name="assetName"
               register={register}
-              errorValue={errors?.AssetName ?? fieldErrors}
+              errorValue={errors?.assetName ?? fieldErrors}
               label={t(`${createNewAssetNamespace}.asset_name`)}
               variant="outlined"
             />
             <Textfield
-              name="AssetDescription"
+              name="assetDescription"
               register={register}
-              errorValue={errors?.AssetDescription ?? fieldErrors}
+              errorValue={errors?.assetDescription ?? fieldErrors}
               multiline
               rows={3}
               variant="outlined"
@@ -96,9 +100,9 @@ const AssetInformation: React.FC = () => {
               }}
             />
             <Textfield
-              name="AssetWebsite"
+              name="assetWebsite"
               register={register}
-              errorValue={errors?.AssetWebsite ?? fieldErrors}
+              errorValue={errors?.assetWebsite ?? fieldErrors}
               label={t(`${createNewAssetNamespace}.asset_website`)}
               variant="outlined"
             />
@@ -126,7 +130,7 @@ const AssetInformation: React.FC = () => {
                 </Avatar>
               </label>
               <input
-                {...register('Logo')} // Add this line
+                {...register('logo')} // Add this line
                 id="logo-upload"
                 name="Logo"
                 type="file"
@@ -146,8 +150,8 @@ const AssetInformation: React.FC = () => {
               //   activeStep === CreateNewAssetSteps.AssetCreationSuccess ? '#EBEBEB' : '#BAFF2A'
             }}
             type="submit"
-            disabled={!isValid || !selectedFile}>
-            {t(`${createNewAssetNamespace}.continue`)}
+            disabled={!isValid || isLoading}>
+            {t(`${createNewAssetNamespace}.continue`)} {isLoading ?? <CircularProgress />}
           </Button>
         </Stack>
       </Stack>

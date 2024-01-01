@@ -214,6 +214,11 @@ export interface AuthFetchQueryError {
   errorLevel: AuthErrorLevel;
 }
 
+export interface RequestError {
+  message: string;
+  errorLevel: AuthErrorLevel;
+}
+
 export const transformErrorResponse = (
   errorPayload: AuthApiError,
   meta: any,
@@ -267,27 +272,54 @@ export type WithSignUpStepperContextProps<T = any> = (
   | IssuerSignUpStepperContextProps
 ) &
   T;
-
-export interface AssetRequestDto {
-  AssetName?: string;
-  AssetDescription?: string;
-  AssetWebsite?: string;
-  Logo?: string;
-  Reddit?: string;
-  Twitter?: string;
-  Telegram?: string;
-  Whitepaper?: string;
-  Discord?: string;
-  uploadProspectus?: string;
-  businessModel?: string;
-  financialModel?: string;
-  businessPlan?: string;
-  valuationReport?: string;
-}
-
 export interface AssetResponseDto {
-  assetId: string;
+  assetId?: string;
 }
+
+export interface AssetInformationRequestDto {
+  assetName?: string;
+  assetDescription?: string;
+  assetWebsite?: string;
+  logo?: File;
+}
+
+export interface AssetDocumentsRequestDto extends AssetResponseDto {
+  prospectus: File;
+  businessModel: File;
+  financialModel: File;
+  businessPlan: File;
+  valuationReport: File;
+}
+
+export interface AssetSocialMediaRequestDto extends AssetResponseDto {
+  reddit?: string;
+  twitter?: string;
+  telegram?: string;
+  whitepaper?: string;
+  discord?: string;
+}
+
+export type AssetRequestDto =
+  | AssetInformationRequestDto
+  | AssetDocumentsRequestDto
+  | AssetSocialMediaRequestDto;
+
+// export interface AssetRequestDto {
+//   AssetName?: string;
+//   AssetDescription?: string;
+//   AssetWebsite?: string;
+//   Logo?: string;
+//   Reddit?: string;
+//   Twitter?: string;
+//   Telegram?: string;
+//   Whitepaper?: string;
+//   Discord?: string;
+//   uploadProspectus?: string;
+//   businessModel?: string;
+//   financialModel?: string;
+//   businessPlan?: string;
+//   valuationReport?: string;
+// }
 
 export interface AssetLegalDocumentsRequestDto {
   assetId: string;

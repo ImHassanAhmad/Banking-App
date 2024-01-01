@@ -20,15 +20,15 @@ const createAssetHandler: HttpHandler = http.post<
   withErrorHandler(
     async ({
       request
-    }: ResponseResolverInfo<HttpRequestResolverExtras<PathParams>, AssetRequestDto>): Promise<
+    }: ResponseResolverInfo<HttpRequestResolverExtras<PathParams>, any>): Promise<
       StrictResponse<MockAssetCreationResponse>
     > => {
-      const assetRequestPayload: AssetRequestDto = await request.json();
+      // const assetRequestPayload: AssetRequestDto = await request.json();
 
-      Object.entries(assetRequestPayload).forEach(([key, value]) => {
-        if (!value)
-          throw new ValidationError(constants.commonConstants.FIELD_REQUIRED(key), null, key);
-      });
+      // Object.entries(assetRequestPayload).forEach(([key, value]) => {
+      //   if (!value)
+      //     throw new ValidationError(constants.commonConstants.FIELD_REQUIRED(key), null, key);
+      // });
 
       return HttpResponse.json<AssetResponseDto>(
         { assetId: '' },
