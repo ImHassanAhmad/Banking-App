@@ -302,3 +302,21 @@ export enum onBoardType {
   Issuer = 'issuer',
   Investor = 'investor'
 }
+
+export interface AssetTokenCreationRequestDTO {
+  tokenName: string;
+  tokenSymbol: string;
+  totalSupply: number | null;
+  numberOfDecimal: number | null;
+  pausable: boolean;
+  mintable: boolean;
+  burnable: boolean;
+  capped: boolean;
+  currency: string;
+  buyPrice: number;
+  logo: File;
+}
+
+export interface AssetTokenCreationResponseDTO extends AssetTokenCreationRequestDTO {
+  id: string;
+}
