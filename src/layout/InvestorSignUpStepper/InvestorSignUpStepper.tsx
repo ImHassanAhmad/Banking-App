@@ -9,7 +9,7 @@ import PhoneNumber from '@app/pages/PhoneNumber';
 import IncomeRange from '@app/pages/IncomeRange';
 import QuestionsList from '@app/pages/QuestionsList';
 import SourceOfIncome from '@app/pages/SourceOfIncome';
-import UsPerson from '@app/pages/USPerson/UsPerson';
+import UsPerson from '@app/pages/USPerson';
 import { InvestorSignUpFlowSteps, InvestorSignUpFlowStepsIndices } from './types';
 import { useInvestorSignUpStepper } from '@app/context/InvestorSignUpStepperContext';
 import BackButton from '@app/components/BackButton';

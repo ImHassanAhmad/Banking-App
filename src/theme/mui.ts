@@ -43,6 +43,7 @@ export const getTheme = (mode: IThemeMode): ThemeOptions => {
       },
       success: {
         main: '#07B375',
+        dark: '#66BB6A',
         light: '#01915F'
       },
       info: {
