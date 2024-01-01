@@ -56,7 +56,6 @@ const SourceOfIncome: FC<WithSignUpStepperContextProps> = ({
     const sourceOfIncome: string[] = Object.keys(checkList).filter(
       (key: string) => checkList[key].checked
     );
-    console.log('LOA', sourceOfIncome);
     updateUserPayload({ sourceOfIncome });
     updateActiveStep();
   };
