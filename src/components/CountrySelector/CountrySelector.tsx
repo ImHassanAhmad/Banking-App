@@ -19,7 +19,6 @@ const CountrySelector: React.FC<ICountrySelectorProps> = ({
 }) => {
   const theme: any = useTheme();
   const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
-  console.log('selel', selectedCountry);
   return (
     <Autocomplete
       disabled={isDisabled}

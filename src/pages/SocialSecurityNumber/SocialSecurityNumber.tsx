@@ -43,7 +43,6 @@ const SocialSecurityTax: FC<WithSignUpStepperContextProps> = ({
     // Dependencies array to control the rerun of this effect; only when userPayload.usResident changes.
   }, [userPayload.isUsResident, userPayload.socialSecurityNumber]);
 
-  console.log(country);
   const handleSubmit = (): void => {
     // if (!currentInput || !country) return updateActiveStep();
     updateUserPayload({
