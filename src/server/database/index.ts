@@ -20,7 +20,7 @@ export class AppDatabase extends Dexie {
       users:
         'id, email, password, shortenPhoneNumber, phoneNumberCountryCode, countryOfIncorporation, visaTncAgreed, wittyTncAgreed, companyName, registrationNumber, dateOfRegister, tradingName, isLegalRepresentative, businessType, businessCategory, isBusinessRegulated, businessRevenue, fundingSources, firstName, lastName, dateOfBirth, postalCode, city, street, houseNo, incomeRange, priceAndLimit, isUsResident, sourceOfIncome',
       tokens:
-        'id, tokenName, tokenSymbol, totalSupply, numberOfDecimal, pausable, mintable, burnable, capped, currency, buyPrice',
+        'id, tokenName, tokenSymbol, totalSupply, numberOfDecimal, pausable, mintable, burnable, capped, currency, buyPrice, tokenLogo',
       assets: 'id',
       issuerDetails: 'id, completed, companyStructure, legalRepresentatives, kyc, issuerId'
     });

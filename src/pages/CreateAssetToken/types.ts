@@ -29,6 +29,7 @@ export interface ITokenBasicInfoForm {
   tokenSymbol: string;
   totalSupply: number | null;
   numberOfDecimal: number | null;
+  tokenLogo: File | undefined;
 }
 export interface IUploadLogo {
   uploadLogo: File | null;

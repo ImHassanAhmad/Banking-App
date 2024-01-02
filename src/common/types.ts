@@ -314,7 +314,7 @@ export interface AssetTokenCreationRequestDTO {
   capped: boolean;
   currency: string;
   buyPrice: number;
-  logo: File;
+  tokenLogo: File;
 }
 
 export interface AssetTokenCreationResponseDTO extends AssetTokenCreationRequestDTO {
