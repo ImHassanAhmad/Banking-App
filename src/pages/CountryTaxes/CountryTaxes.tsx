@@ -6,7 +6,7 @@ import Heading from '@app/components/Heading';
 import { Button, Stack, Typography, Box } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import CountryCard from '@app/components/CountryCard/CountryCard';
-import { type socialSecurityNumber, type WithSignUpStepperContextProps } from '@app/common/types';
+import { type SocialSecurityNumber, type WithSignUpStepperContextProps } from '@app/common/types';
 import { getCountryFlag } from '@app/assets/flags';
 
 const taxescountry = RouteNames.PAY_COUNTRY_TAXES;
@@ -14,23 +14,36 @@ const CountryTaxes: FC<WithSignUpStepperContextProps> = ({
   updateActiveStep,
   goBack,
   activeStepIndex,
-  userPayload
+  userPayload,
+  updateUserPayload
 }) => {
   const { t } = useTranslation();
   const addCountry = (): void => {
     goBack(activeStepIndex - 1);
+  };
+
+  const updateCountryTax = (code: string): void => {
+    console.log(code);
+    updateUserPayload({
+      socialSecurityNumber: userPayload.socialSecurityNumber.filter(
+        (v: SocialSecurityNumber) => v.taxNumber !== code
+      )
+    });
   };
   return (
     <>
       <Stack sx={{ width: '436px' }}>
         <Heading title={t(`${taxescountry}.title`)} subTitle={t(`${taxescountry}.countrydetail`)} />
         {userPayload.socialSecurityNumber?.length > 0 &&
-          userPayload.socialSecurityNumber.map((v: socialSecurityNumber, i: number) => (
+          userPayload.socialSecurityNumber.map((v: SocialSecurityNumber, i: number) => (
             <CountryCard
               key={i}
               imageSrc={getCountryFlag(v.iso)}
               text={v.country}
               code={v.taxNumber}
+              onClick={(code) => {
+                updateCountryTax(code);
+              }}
               customStyle={{}}
             />
           ))}

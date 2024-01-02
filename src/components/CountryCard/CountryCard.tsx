@@ -1,11 +1,13 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import { CROSS_ICON } from '@app/assets/images';
 interface CountryCardProps {
   imageSrc?: string;
   text: string;
   code: string;
   customStyle: React.CSSProperties;
+  onClick: (code: string) => void;
 }
 
 type StyleProps = React.CSSProperties & {
@@ -18,7 +20,13 @@ const defaultImageStyle: StyleProps = {
   borderRadius: '50%',
   objectFit: 'cover'
 };
-const CountryCard: React.FC<CountryCardProps> = ({ imageSrc, text, code, customStyle }) => {
+const CountryCard: React.FC<CountryCardProps> = ({
+  imageSrc,
+  text,
+  code,
+  onClick,
+  customStyle
+}) => {
   return (
     <Box
       sx={{
@@ -32,14 +40,28 @@ const CountryCard: React.FC<CountryCardProps> = ({ imageSrc, text, code, customS
         height: '5.2rem',
         marginTop: '8px',
         cursor: 'pointer',
-        paddingTop: '13px'
+        justifyContent: 'space-between',
+        padding: '10px'
       }}>
-      <Typography>{imageSrc && <img src={imageSrc} style={{ ...defaultImageStyle }} />}</Typography>
-      <Typography sx={{ marginBottom: '10px', fontSize: '15px' }}>
-        {text}
-        <br />
-        {code}
-      </Typography>
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Typography>
+          {imageSrc && <img src={imageSrc} style={{ ...defaultImageStyle }} />}
+        </Typography>
+        <Typography sx={{ fontSize: '15px' }}>
+          {text}
+          <br />
+          {code}
+        </Typography>
+      </Box>
+      <Box
+        component={'img'}
+        src={CROSS_ICON}
+        alt="info icon"
+        sx={{ width: '16px', height: '16px', padding: '8px' }}
+        onClick={() => {
+          onClick(code);
+        }}
+      />
     </Box>
   );
 };
