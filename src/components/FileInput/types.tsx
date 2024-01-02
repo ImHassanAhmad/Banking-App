@@ -8,6 +8,7 @@ export interface FileInputProps {
   required?: boolean;
   error?: string;
   ref?: any;
+  noBorder?: boolean;
 }
 
 export interface FileDisplayProps {

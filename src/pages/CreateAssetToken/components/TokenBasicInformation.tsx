@@ -134,6 +134,7 @@ const TokenBasicInformation: FC<ITokenBasicInfoProps> = ({ next }) => {
               handleFileChange={handleFileChange}
               handleUpload={handleUpload}
               label={t(`${assetTokenNamespace}.upload_logo`)}
+              noBorder
             />
           </Box>
           {errors.tokenLogo?.message && !selectedFile && (

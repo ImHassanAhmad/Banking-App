@@ -10,17 +10,17 @@ const FileInput: React.FC<FileInputProps> = ({
   handleFileChange,
   handleUpload,
   required,
-  error
+  error,
+  noBorder
 }) => {
   const theme = useTheme();
   return (
     <Box
       sx={{
-        border: 1,
+        border: noBorder ? 0 : 1,
+        borderRadius: 1.5,
         borderColor: theme.palette.grey[300]
       }}
-      border={1}
-      borderRadius={1.5}
       display="flex"
       alignItems="center">
       <input
