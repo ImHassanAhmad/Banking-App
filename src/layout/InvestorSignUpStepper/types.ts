@@ -8,6 +8,8 @@ export enum InvestorSignUpFlowSteps {
   IncomeRange = 'IncomeRange',
   VerifyIdentity = 'VerifyIdentity',
   UsPerson = 'UsPerson',
+  SecurityNumber = 'SecurityNumber',
+  CountryTaxes = 'CountryTaxes',
   SourceOfIncome = 'SourceOfIncome',
   Questionaire = 'Questionaire',
   CreatePassword = 'CreatePassword',

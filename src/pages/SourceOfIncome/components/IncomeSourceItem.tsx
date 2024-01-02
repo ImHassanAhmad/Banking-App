@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import { Checkbox, FormControlLabel, Box } from '@mui/material';
 import { type FundingSourceItemProps } from '../types';
-
+import AddIcon from '@mui/icons-material/Add';
+import DoneIcon from '@mui/icons-material/Done';
 const labelStyle = {
   display: 'flex',
   flexDirection: 'row-reverse',
@@ -43,26 +44,8 @@ const FundingSourceItem: React.FC<FundingSourceItemProps> = ({ title, checked, o
               sx={checkboxStyle}
               checked={checked}
               onChange={handleCheckboxChange}
-              icon={
-                <span
-                  style={{
-                    fontSize: '2.5rem',
-                    color: theme.palette.common.black,
-                    marginBottom: '0.4rem'
-                  }}>
-                  +
-                </span>
-              }
-              checkedIcon={
-                <span
-                  style={{
-                    color: theme.palette.success.dark,
-                    fontSize: '2.5rem',
-                    marginBottom: '0.4rem'
-                  }}>
-                  &#10003;
-                </span>
-              }
+              icon={<AddIcon />}
+              checkedIcon={<DoneIcon />}
             />
           }
           label={title}

@@ -32,6 +32,8 @@ const pl: LanguageResource = {
   'create-new-asset': {},
   'upload-documents': {},
   'income-range': {},
+  'security-number': {},
+  'pay-country-taxes': {},
   'personal-information': {},
   address: {},
   'questions-list': {},

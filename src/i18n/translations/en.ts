@@ -383,6 +383,22 @@ const en: LanguageResource = {
     delete_selfie: 'Delete',
     continue: 'Continue'
   },
+  'security-number': {
+    title: 'Social Security Number',
+    states: 'The United States',
+    statesdetail: 'Enter your Social Security Number (SSN) for the United States',
+    stateserror: 'Whats a SSN or its equivalent?',
+    continue: 'CONTINUE',
+    placeholder: '#######'
+  },
+  'pay-country-taxes': {
+    title: 'Do you pay taxes in other countries?',
+    countrydetail: 'Please indicate all the countries in which you are resident for tax purposes',
+    addcountry: 'Add Country',
+    states: 'The United States',
+    poland: 'Poland',
+    continue: 'CONTINUE'
+  },
   'personal-information': {
     title: 'Personal Information',
     subtitle: '',

@@ -1,4 +1,7 @@
-import { InvestorSignUpFlowSteps } from '@app/layout/InvestorSignUpStepper/types';
+import {
+  InvestorSignUpFlowSteps,
+  InvestorSignUpFlowStepsIndices
+} from '@app/layout/InvestorSignUpStepper/types';
 import { useRegisterInvestorMutation } from '@app/store/api/onboarding';
 import {
   type Dispatch,
@@ -7,7 +10,8 @@ import {
   useState,
   useContext,
   type FC,
-  type PropsWithChildren
+  type PropsWithChildren,
+  useMemo
 } from 'react';
 import {
   type RegisterUserResponseDto,
@@ -38,6 +42,7 @@ export interface InvestorSignUpStepperContextProps {
   setUserId: Dispatch<SetStateAction<string>>;
   updateActiveStep: () => void;
   goBack: (backStep: number) => void;
+  activeStepIndex: number;
   updateUserPayload: (data: Partial<InvestorUserRequestDto>) => void;
 }
 
@@ -52,11 +57,12 @@ const InvestorSignUpStepperContext = createContext<InvestorSignUpStepperContextP
 const { Provider } = InvestorSignUpStepperContext;
 
 export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [activeStep, setActiveStep] = useState(InvestorSignUpFlowSteps.VerifyIdentity);
+  const [activeStep, setActiveStep] = useState(InvestorSignUpFlowSteps.NameAndDateOfBirth);
   const [userId, setUserId] = useState('');
   const { updateError, findError } = useAuthError();
   const [registerUserPayload, setRegisterUserPayload] = useState<InvestorUserRequestDto>({
-    dryRun: true
+    dryRun: true,
+    socialSecurityNumber: []
   });
   const [register, { isLoading }] = useRegisterInvestorMutation();
   const handleError = (
@@ -78,7 +84,7 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
     }
   };
 
-  const updateActiveStep = (): void => {
+  const updateActiveStep = (nextStep?: InvestorSignUpFlowSteps): void => {
     if (activeStep === InvestorSignUpFlowSteps.MobileVerify) {
       setRegisterUserPayload({ dryRun: true });
     }
@@ -89,7 +95,7 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
       ] as InvestorSignUpFlowSteps) || InvestorSignUpFlowSteps.NameAndDateOfBirth;
 
     updateError(nextActiveStep, undefined);
-    setActiveStep(nextActiveStep);
+    setActiveStep(nextStep ?? nextActiveStep);
   };
 
   const goBack = (backStep: number): void => {
@@ -130,12 +136,19 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
       case InvestorSignUpFlowSteps.Questionaire:
         apiPayload.wittyNews = registerFormData.wittyNews;
         break;
+      case InvestorSignUpFlowSteps.UsPerson:
+        apiPayload.isUsResident = registerFormData.isUsResident;
+        break;
+      case InvestorSignUpFlowSteps.SourceOfIncome:
+        apiPayload.sourceOfIncome = registerFormData.sourceOfIncome;
+        break;
       case InvestorSignUpFlowSteps.CreatePassword:
         // sourceOfIncome temporarily added to prevent an error during the account creation for the investor.
-        apiPayload = { ...registerFormData, sourceOfIncome: 'revenue', dryRun: false };
+        apiPayload = { ...registerFormData, dryRun: false };
         break;
       default:
     }
+
     setRegisterUserPayload({ ...registerUserPayload, ...payload });
     const userPayload = {
       vis: true,
@@ -154,6 +167,7 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
   };
 
   const activeStepError = findError(activeStep);
+  const activeStepIndex = useMemo(() => InvestorSignUpFlowStepsIndices[activeStep], [activeStep]);
 
   const updateUserPayload = (data: Partial<InvestorUserRequestDto>): void => {
     setRegisterUserPayload({ ...registerUserPayload, ...data });
@@ -166,6 +180,7 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
     userPayload: registerUserPayload,
     activeStepError: findError(activeStep),
     onBoardType: onBoardType.Investor,
+    activeStepIndex,
     updateActiveStep,
     setUserId,
     registerUser,

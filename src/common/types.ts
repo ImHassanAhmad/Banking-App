@@ -77,6 +77,12 @@ export interface UserRequestDto extends CaptchaTokenRequest {
   dryRun: boolean;
 }
 
+export interface SocialSecurityInformation {
+  country: string;
+  taxNumber: string;
+  iso: TCountryCode;
+}
+
 export interface InvestorUserRequestDto extends UserRequestDto {
   firstName?: string;
   lastName?: string;
@@ -88,7 +94,8 @@ export interface InvestorUserRequestDto extends UserRequestDto {
   incomeRange?: string;
   priceAndLimit?: boolean;
   isUsResident?: boolean;
-  sourceOfIncome?: string;
+  sourceOfIncome?: string[];
+  socialSecurityNumber?: SocialSecurityInformation[];
 }
 
 export interface IssuerUserRequestDto extends UserRequestDto {
@@ -301,4 +308,22 @@ export interface AssetLegalDocumentsRequestDto {
 export enum onBoardType {
   Issuer = 'issuer',
   Investor = 'investor'
+}
+
+export interface AssetTokenCreationRequestDTO {
+  tokenName: string;
+  tokenSymbol: string;
+  totalSupply?: number;
+  numberOfDecimal?: number;
+  pausable: boolean;
+  mintable: boolean;
+  burnable: boolean;
+  capped: boolean;
+  currency: string;
+  buyPrice: number;
+  logo: File;
+}
+
+export interface AssetTokenCreationResponseDTO extends AssetTokenCreationRequestDTO {
+  id: string;
 }
