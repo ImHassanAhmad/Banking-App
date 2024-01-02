@@ -9,7 +9,7 @@ import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import {
   type WithSignUpStepperContextProps,
   type CountrySelectOption,
-  type SocialSecurityNumber
+  type SocialSecurityInformation
 } from '@app/common/types';
 import CountrySelector from '@app/components/CountrySelector';
 import { ALL_COUNTRIES } from '@app/constants/countries';
@@ -32,14 +32,14 @@ const SocialSecurityTax: FC<WithSignUpStepperContextProps> = ({
   };
 
   useEffect(() => {
-    if (
-      userPayload.isUsResident &&
-      !userPayload.socialSecurityNumber.some((ssn: SocialSecurityNumber) => ssn.iso === 'US')
-    ) {
-      setCountry(
-        ALL_COUNTRIES ? ALL_COUNTRIES.find((_: CountrySelectOption) => _.iso2 === 'US') : undefined
-      );
-    }
+    if (!userPayload.isUsResident) return;
+    if (userPayload.socialSecurityNumber.some((ssn: SocialSecurityInformation) => ssn.iso === 'US'))
+      return;
+
+    setCountry(
+      ALL_COUNTRIES ? ALL_COUNTRIES.find((_: CountrySelectOption) => _.iso2 === 'US') : undefined
+    );
+
     // Dependencies array to control the rerun of this effect; only when userPayload.usResident changes.
   }, [userPayload.isUsResident, userPayload.socialSecurityNumber]);
 
