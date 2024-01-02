@@ -6,7 +6,14 @@ import { type CalendarProps } from './types';
 import { Controller } from 'react-hook-form';
 import dayjs from 'dayjs';
 
-const Calendar: FC<CalendarProps> = ({ name, control, label, defaultValue, handleChange }) => {
+const Calendar: FC<CalendarProps> = ({
+  name,
+  control,
+  label,
+  defaultValue,
+  errorValue,
+  handleChange
+}) => {
   return (
     <Controller
       name={name}
@@ -20,6 +27,13 @@ const Calendar: FC<CalendarProps> = ({ name, control, label, defaultValue, handl
               onChange={(date) => {
                 field.onChange(date);
                 handleChange?.(date);
+              }}
+              slotProps={{
+                // To display error message
+                textField: {
+                  error: !!errorValue,
+                  helperText: errorValue?.message
+                }
               }}
               format="DD.MM.YYYY"
             />

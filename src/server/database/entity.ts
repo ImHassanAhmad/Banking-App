@@ -87,3 +87,16 @@ export interface IssuerDetailsEntity extends BaseEntity {
   legalRepresentatives?: ILegalRepresentativeForm;
   kyc?: { form: IKycForm | null; uploadedFiles: IUploadedFilesEntity };
 }
+
+export interface AssetTokenCreationEntity extends BaseEntity {
+  tokenName: string;
+  tokenSymbol: string;
+  totalSupply: number | null;
+  numberOfDecimal: number | null;
+  pausable: boolean;
+  mintable: boolean;
+  burnable: boolean;
+  capped: boolean;
+  currency: string;
+  buyPrice: number;
+}

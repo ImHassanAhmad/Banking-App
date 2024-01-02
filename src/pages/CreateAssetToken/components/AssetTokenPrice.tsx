@@ -7,27 +7,21 @@ import { useAppSelector } from '@app/store/hooks';
 import * as yup from 'yup';
 import { type Resolver, type SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-
 const assetTokenNamespace = RouteNames.CREATE_ASSET_TOKEN;
-
 export const AssetTokenPrice: FC<ITokenPriceProps> = ({ back, submit }) => {
   const { t } = useTranslation();
   const { tokenConfig: tokenConfigState } = useAppSelector((state) => state.createAssetToken); // Redux state
-
   const defaultValue: ITokenPriceForm = {
     currency: '',
     buyPrice: 0
   };
-
   const schema = yup.object().shape({
     currency: yup.string().required('currency is required'),
     buyPrice: yup.number().required('Price is required')
   });
-
   const { tokenPrice: tokenPriceState } = useAppSelector((state) => state.createAssetToken);
-
-  const onSubmit: SubmitHandler<ITokenPriceForm> = (data: ITokenPriceForm): void => {
-    submit();
+  const onSubmit: SubmitHandler<ITokenPriceForm> = (data) => {
+    submit(data);
   };
   const {
     register,
@@ -71,7 +65,6 @@ export const AssetTokenPrice: FC<ITokenPriceProps> = ({ back, submit }) => {
           fullWidth
         />
       </Stack>
-
       <Button type="submit" fullWidth sx={{ marginTop: '2rem' }}>
         {t(`${assetTokenNamespace}.continue`)}
       </Button>

@@ -6,9 +6,10 @@ import CustomChecbox from '@app/components/CustomChecbox';
 
 const labelStyle = {
   '& .MuiTypography-root': {
-    fontSize: '16px',
+    fontSize: '1.6rem',
     opacity: '1 !important'
   },
+  minHeight: '6rem',
   gap: '1rem',
   '& .Mui-disabled': {
     color: 'black !important'
@@ -16,8 +17,12 @@ const labelStyle = {
 };
 
 const checkboxStyle = (disabled: boolean | undefined): any => ({
+  '&.MuiCheckbox-root': {
+    '& input': { position: 'relative' }
+  },
   '& .MuiSvgIcon-root': {
     fontSize: 22,
+
     opacity: disabled ? 0.5 : 1 // Adjust opacity for disabled or enabled states
   }
   // '&.Mui-disabled': {

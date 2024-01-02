@@ -28,7 +28,6 @@ const Password: FC<WithSignUpStepperContextProps> = ({
   const { t } = useTranslation();
   const [regUserPayload, setRegUserPayload] = useState<UserRequestDto>({ dryRun: true });
   const [errors, setFieldErrors] = useState<FieldError>();
-
   // const reRef = React.createRef<ReCAPTCHA>();
   // const SiteKey = process.env.REACT_APP_GOOGLE_RECAPTHA_SITEKEY;
 

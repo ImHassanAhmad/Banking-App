@@ -3,8 +3,8 @@ import type {
   UserEntity,
   BaseEntity,
   AssetEntity,
-  TokenEntity,
-  IssuerDetailsEntity
+  IssuerDetailsEntity,
+  AssetTokenCreationEntity
 } from './entity';
 import { database } from '.';
 
@@ -37,7 +37,8 @@ class DatabaseService<T extends BaseEntity> {
 
 export const userService = new DatabaseService<UserEntity>(database.users);
 export const assetService = new DatabaseService<AssetEntity>(database.assets);
-export const tokensService = new DatabaseService<TokenEntity>(database.tokens);
 export const issuerDetailsService = new DatabaseService<IssuerDetailsEntity>(
   database.issuerDetails
 );
+
+export const tokensService = new DatabaseService<AssetTokenCreationEntity>(database.tokens);

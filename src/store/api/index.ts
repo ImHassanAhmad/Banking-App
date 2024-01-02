@@ -1,5 +1,5 @@
 import { onBoardingApi } from './onboarding';
 import { loginApi } from './login';
-import { assetApi } from './asset';
+import { assetTokenApi } from './tokens';
 
-export const apiEndpoints = [onBoardingApi, loginApi, assetApi];
+export const apiEndpoints = [onBoardingApi, loginApi, assetTokenApi];
