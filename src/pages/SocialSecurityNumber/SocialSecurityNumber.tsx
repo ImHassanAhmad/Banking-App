@@ -1,31 +1,29 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, type FC } from 'react';
+import React, { useState, type FC, useEffect } from 'react';
 import { RouteNames } from '@app/constants/routes';
 import { useTranslation } from 'react-i18next';
 import Heading from '@app/components/Heading';
 import { Box, Button, Stack, Typography } from '@mui/material';
 import Textfield from '@app/components/Textfield';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-import { type WithSignUpStepperContextProps, type CountrySelectOption } from '@app/common/types';
+import {
+  type WithSignUpStepperContextProps,
+  type CountrySelectOption,
+  type SocialSecurityNumber
+} from '@app/common/types';
 import CountrySelector from '@app/components/CountrySelector';
 import { ALL_COUNTRIES } from '@app/constants/countries';
 
 const SecurityNumber = RouteNames.SECURITY_NUMBER;
 
-const SocialSecurityNumber: FC<WithSignUpStepperContextProps> = ({
+const SocialSecurityTax: FC<WithSignUpStepperContextProps> = ({
   updateActiveStep,
-  registerUser,
-  isLoading,
   updateUserPayload,
   userPayload
 }) => {
   const { t } = useTranslation();
   const [currentInput, setCurrentInput] = useState('');
-  const [country, setCountry] = useState<CountrySelectOption | undefined>(
-    ALL_COUNTRIES
-      ? ALL_COUNTRIES[ALL_COUNTRIES.findIndex((_: CountrySelectOption) => _.iso2 === userPayload)]
-      : undefined
-  );
+  const [country, setCountry] = useState<CountrySelectOption | undefined>();
   const countrySelectHandler = (value: CountrySelectOption): void => {
     setCountry(value);
   };
@@ -33,6 +31,19 @@ const SocialSecurityNumber: FC<WithSignUpStepperContextProps> = ({
     setCurrentInput(event.target.value);
   };
 
+  useEffect(() => {
+    if (
+      userPayload.isUsResident &&
+      !userPayload.socialSecurityNumber.some((ssn: SocialSecurityNumber) => ssn.iso === 'US')
+    ) {
+      setCountry(
+        ALL_COUNTRIES ? ALL_COUNTRIES.find((_: CountrySelectOption) => _.iso2 === 'US') : undefined
+      );
+    }
+    // Dependencies array to control the rerun of this effect; only when userPayload.usResident changes.
+  }, [userPayload.isUsResident, userPayload.socialSecurityNumber]);
+
+  console.log(country);
   const handleSubmit = (): void => {
     // if (!currentInput || !country) return updateActiveStep();
     updateUserPayload({
@@ -77,7 +88,7 @@ const SocialSecurityNumber: FC<WithSignUpStepperContextProps> = ({
             }
           }}>
           <CountrySelector
-            placeholder="Select Country"
+            placeholder={country?.name ?? 'Select Country'}
             onChange={countrySelectHandler}
             selectedCountry={country}
           />
@@ -111,4 +122,4 @@ const SocialSecurityNumber: FC<WithSignUpStepperContextProps> = ({
   );
 };
 
-export default SocialSecurityNumber;
+export default SocialSecurityTax;

@@ -19,6 +19,7 @@ const CountrySelector: React.FC<ICountrySelectorProps> = ({
 }) => {
   const theme: any = useTheme();
   const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
+  console.log('selel', selectedCountry);
   return (
     <Autocomplete
       disabled={isDisabled}
@@ -26,6 +27,7 @@ const CountrySelector: React.FC<ICountrySelectorProps> = ({
       id="country-select"
       options={ALL_COUNTRIES ?? []}
       value={selectedCountry as CountrySelectOption}
+      defaultValue={selectedCountry}
       onOpen={() => {
         setIsPopupOpen(true);
       }}
