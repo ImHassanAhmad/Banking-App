@@ -17,6 +17,7 @@ export const RouteNames = {
   BUSINESS_CATEGORY: 'business-category',
   SOURCE_OF_FUNDING: 'source-of-funding',
   SOURCE_OF_INCOME: 'source-of-income',
+  VERIFY_IDENTITY: 'verify-identity',
   BUSINESS_DESCRIPTION: 'business-description',
   BUSINESS_REGULATION: 'business-regulation',
   US_Person: 'us-person',

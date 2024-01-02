@@ -6,6 +6,7 @@ export enum InvestorSignUpFlowSteps {
   Email = 'Email',
   Mobile = 'Mobile',
   IncomeRange = 'IncomeRange',
+  VerifyIdentity = 'VerifyIdentity',
   UsPerson = 'UsPerson',
   SourceOfIncome = 'SourceOfIncome',
   Questionaire = 'Questionaire',

@@ -21,6 +21,7 @@ const es: LanguageResource = {
   'business-category': {},
   'source-of-funding': {},
   'source-of-income': {},
+  'verify-identity': {},
   '*': {},
   help: {},
   'company-information': {},

@@ -7,6 +7,7 @@ import Password from '@app/pages/Password';
 import Address from '@app/pages/Address';
 import PhoneNumber from '@app/pages/PhoneNumber';
 import IncomeRange from '@app/pages/IncomeRange';
+import VerifyIdentity from '@app/pages/VerifyIdentity';
 import QuestionsList from '@app/pages/QuestionsList';
 import SourceOfIncome from '@app/pages/SourceOfIncome';
 import UsPerson from '@app/pages/USPerson';
@@ -31,6 +32,8 @@ const investorFlowComponent = (
       return PhoneNumber;
     case InvestorSignUpFlowSteps.IncomeRange:
       return IncomeRange;
+    case InvestorSignUpFlowSteps.VerifyIdentity:
+      return VerifyIdentity;
     case InvestorSignUpFlowSteps.UsPerson:
       return UsPerson;
     case InvestorSignUpFlowSteps.SourceOfIncome:
