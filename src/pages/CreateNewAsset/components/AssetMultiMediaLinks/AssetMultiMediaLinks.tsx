@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Stack, Typography, Button } from '@mui/material';
+import { Stack, Typography, Button, CircularProgress } from '@mui/material';
 import { useForm, type SubmitHandler, type FieldError } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -8,7 +8,12 @@ import { useTranslation } from 'react-i18next';
 import { SocialMediaLinks } from '../../types';
 import Textfield from '@app/components/Textfield';
 import { useCreateNewAssetStepper } from '@app/context/CreateNewAssetStepperContext';
-import { type AssetSocialMediaRequestDto } from '@app/common/types';
+import {
+  type AssetResponseDto,
+  type RequestError,
+  type AssetSocialMediaRequestDto
+} from '@app/common/types';
+import { useAddSocialMediaLinksMutation } from '@app/store/api/asset';
 
 const createNewAssetNamespace = RouteNames.CREATE_NEW_ASSET;
 
@@ -23,7 +28,9 @@ const schema: yup.ObjectSchema<AssetSocialMediaRequestDto> = yup.object().shape(
 const AssetMultiMediaLinks: React.FC = () => {
   const { t } = useTranslation();
   const [fieldErrors] = useState<FieldError>();
-  const { assetPayload, updateAssetPayload, updateActiveStep } = useCreateNewAssetStepper();
+  const { assetId, assetPayload, updateAssetPayload, updateActiveStep } =
+    useCreateNewAssetStepper();
+  const [addSocialMediaLinks, { isLoading }] = useAddSocialMediaLinksMutation();
   const {
     register,
     handleSubmit,
@@ -37,8 +44,15 @@ const AssetMultiMediaLinks: React.FC = () => {
   const onSubmit: SubmitHandler<AssetSocialMediaRequestDto> = (
     data: AssetSocialMediaRequestDto
   ) => {
-    updateAssetPayload(data);
-    updateActiveStep();
+    addSocialMediaLinks({ ...data, assetId })
+      .unwrap()
+      .then((response: AssetResponseDto) => {
+        updateAssetPayload(data);
+        updateActiveStep();
+      })
+      .catch(({ message, errorLevel }: RequestError) => {
+        console.log('error: {message: ', message, ', errorLevel: ', errorLevel, ' }');
+      });
   };
 
   return (
@@ -69,8 +83,8 @@ const AssetMultiMediaLinks: React.FC = () => {
               width: '100%'
             }}
             type="submit"
-            disabled={!isValid}>
-            {t(`${createNewAssetNamespace}.continue`)}
+            disabled={!isValid || isLoading}>
+            {t(`${createNewAssetNamespace}.continue`)} {isLoading ?? <CircularProgress />}
           </Button>
         </Stack>
       </Stack>

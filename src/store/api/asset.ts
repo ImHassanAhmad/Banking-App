@@ -44,13 +44,14 @@ export const assetApi = createApi({
           valuationReport
         } = body;
         const formData: FormData = new FormData();
+        if (assetId) formData.append('assetId', assetId);
         formData.append('business_model', businessModel);
         formData.append('business_plan', businessPlan);
         formData.append('financial_model', financialModel);
         formData.append('prospectus', prospectus);
         formData.append('valuation_report', valuationReport);
         return {
-          url: `v1/sme/asset/upload/documents/${assetId}`,
+          url: `v1/sme/asset/upload/documents`,
           method: 'POST',
           headers: {
             'Content-Type': 'multipart/form-data;'

@@ -53,7 +53,7 @@ const AssetInformation: React.FC = () => {
       })
       .catch(({ message, errorLevel }: RequestError) => {
         // TODO: handle error
-        console.log('error ', message, ' error level ', errorLevel);
+        console.log('error: {message: ', message, ', errorLevel: ', errorLevel, ' }');
       });
   };
 

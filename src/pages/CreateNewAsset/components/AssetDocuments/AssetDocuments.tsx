@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Stack, Typography } from '@mui/material';
 import UploadButton from '../UploadButton';
 import { RouteNames } from '@app/constants/routes';
@@ -8,15 +8,22 @@ import { useCreateNewAssetStepper } from '@app/context/CreateNewAssetStepperCont
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { type AssetDocumentsRequestDto } from '@app/common/types';
+import {
+  type AssetResponseDto,
+  type AssetDocumentsRequestDto,
+  type RequestError
+} from '@app/common/types';
 import { useUploadAssetLegalDocumentsMutation } from '@app/store/api/asset';
 
 const createNewAssetNamespace = RouteNames.CREATE_NEW_ASSET;
 
 const AssetDocuments: React.FC = () => {
   const { t } = useTranslation();
-  const { assetPayload, updateActiveStep, updateAssetPayload } = useCreateNewAssetStepper();
+  const { assetPayload, assetId, updateActiveStep, updateAssetPayload } =
+    useCreateNewAssetStepper();
+  const [selectedFiles, setSelectedFiles] = useState<Record<string, File | null>>({});
   const [uploadAssetLegalDocuments, { isLoading }] = useUploadAssetLegalDocumentsMutation();
+
   const schema: yup.ObjectSchema<AssetDocumentsRequestDto> = yup.object().shape({
     prospectus: yup.mixed().required('File is required'),
     businessModel: yup.mixed().required('File is required'),
@@ -25,7 +32,7 @@ const AssetDocuments: React.FC = () => {
     valuationReport: yup.mixed().required('File is required')
   }) as any;
 
-  const { handleSubmit, setValue, getValues } = useForm<AssetDocumentsRequestDto>({
+  const { handleSubmit, setValue } = useForm<AssetDocumentsRequestDto>({
     mode: 'onChange',
     resolver: yupResolver(schema),
     defaultValues: assetPayload as any
@@ -35,13 +42,30 @@ const AssetDocuments: React.FC = () => {
     (event: React.ChangeEvent<HTMLInputElement>): void => {
       const file = event.target.files?.[0];
       if (file) setValue(value as Documents, file);
+      setSelectedFiles((prevFiles) => ({ ...prevFiles, [value]: file ?? null }));
     };
 
+  useEffect(() => {
+    setSelectedFiles((prevFiles) => {
+      const state = { ...prevFiles };
+      Object.entries(assetPayload).forEach(([key, value]: any) => {
+        state[key] = value;
+      });
+      return state;
+    });
+  }, []);
+
   const onSubmit: SubmitHandler<AssetDocumentsRequestDto> = (data: AssetDocumentsRequestDto) => {
-    console.log('tester submit ', data);
-    console.log(uploadAssetLegalDocuments);
-    updateAssetPayload(data);
-    updateActiveStep();
+    uploadAssetLegalDocuments({ assetId, ...data })
+      .unwrap()
+      .then((response: AssetResponseDto) => {
+        updateAssetPayload(data);
+        updateActiveStep();
+      })
+      .catch(({ message, errorLevel }: RequestError) => {
+        // TODO: handle error
+        console.log('error: {message: ', message, ', errorLevel: ', errorLevel, ' }');
+      });
   };
 
   return (
@@ -58,7 +82,7 @@ const AssetDocuments: React.FC = () => {
             key={value}
             label={t(`${createNewAssetNamespace}.${value}`)}
             description={t(`${createNewAssetNamespace}.${value}_d`)}
-            selectedFile={getValues(value as Documents)}
+            selectedFile={selectedFiles[value]}
             handleFileChange={handleFileChange(value)}
           />
         ))}
