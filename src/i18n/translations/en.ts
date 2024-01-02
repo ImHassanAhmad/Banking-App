@@ -307,11 +307,11 @@ const en: LanguageResource = {
     valuationReport_d:
       'Done by them through a third party, but we will also do our valuation via our provider',
     fill_asset_multi: 'Fill in the Asset Multi Media links',
-    Reddit: 'Reddit Link',
-    Twitter: 'Twitter Link',
-    Telegram: 'Telegram Link',
-    Whitepaper: 'Whitepaper Link',
-    Discord: 'Discord Link',
+    reddit: 'Reddit Link',
+    twitter: 'Twitter Link',
+    telegram: 'Telegram Link',
+    whitepaper: 'Whitepaper Link',
+    discord: 'Discord Link',
     choose_file: 'Choose File',
     asset_creation_success: 'Asset Creation has been successfully completed!',
     back_to_home: 'Back to home'
