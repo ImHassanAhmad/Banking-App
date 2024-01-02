@@ -1,1 +1,1 @@
-export { default } from './IncomeSource';
+export { default } from './SourceOfIncome';

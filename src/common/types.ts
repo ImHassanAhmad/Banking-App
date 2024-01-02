@@ -88,7 +88,7 @@ export interface InvestorUserRequestDto extends UserRequestDto {
   incomeRange?: string;
   priceAndLimit?: boolean;
   isUsResident?: boolean;
-  sourceOfIncome?: string[];
+  sourceOfIncome?: string;
 }
 
 export interface IssuerUserRequestDto extends UserRequestDto {

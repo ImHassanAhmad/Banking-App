@@ -131,7 +131,8 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
         apiPayload.wittyNews = registerFormData.wittyNews;
         break;
       case InvestorSignUpFlowSteps.CreatePassword:
-        apiPayload = { ...registerFormData, dryRun: false };
+        // sourceOfIncome temporarily added to prevent an error during the account creation for the investor.
+        apiPayload = { ...registerFormData, sourceOfIncome: 'revenue', dryRun: false };
         break;
       default:
     }

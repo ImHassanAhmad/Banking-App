@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTheme } from '@mui/material/styles';
 import { Checkbox, FormControlLabel, Box } from '@mui/material';
 import { type FundingSourceItemProps } from '../types';
 
@@ -14,6 +15,8 @@ const labelStyle = {
 };
 
 const FundingSourceItem: React.FC<FundingSourceItemProps> = ({ title, checked, onChange }) => {
+  const theme = useTheme();
+
   const checkboxStyle = {
     '& .MuiSvgIcon-root': {
       paddingLeft: '20px'
@@ -29,9 +32,9 @@ const FundingSourceItem: React.FC<FundingSourceItemProps> = ({ title, checked, o
       <Box
         sx={{
           cursor: 'pointer',
-          border: `1px solid ${checked ? '#32CD32' : 'gray'}`,
-          marginBottom: '4px',
-          borderRadius: '10px'
+          border: `0.1rem solid ${checked ? theme.palette.success.dark : theme.palette.grey[900]}`,
+          marginBottom: '0.4rem',
+          borderRadius: '1rem'
         }}
         onClick={onChange}>
         <FormControlLabel
@@ -41,10 +44,22 @@ const FundingSourceItem: React.FC<FundingSourceItemProps> = ({ title, checked, o
               checked={checked}
               onChange={handleCheckboxChange}
               icon={
-                <span style={{ fontSize: '25px', color: 'black', marginBottom: '4px' }}>+</span>
+                <span
+                  style={{
+                    fontSize: '2.5rem',
+                    color: theme.palette.common.black,
+                    marginBottom: '0.4rem'
+                  }}>
+                  +
+                </span>
               }
               checkedIcon={
-                <span style={{ color: '#32CD32', fontSize: '25px', marginBottom: '4px' }}>
+                <span
+                  style={{
+                    color: theme.palette.success.dark,
+                    fontSize: '2.5rem',
+                    marginBottom: '0.4rem'
+                  }}>
                   &#10003;
                 </span>
               }
