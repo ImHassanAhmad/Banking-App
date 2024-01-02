@@ -1,8 +1,7 @@
-import { Stack, Card } from '@mui/material';
+import { Stack, Card, Grid } from '@mui/material';
 import { type FC } from 'react';
 import homeIcon from '@app/assets/images/home.svg';
 import adduserIcon from '@app/assets/images/add-user.svg';
-// import AuthOption from './components/AuthOption';
 import { useNavigate } from 'react-router-dom';
 import { RouteNames } from '@app/constants/routes';
 import { useTranslation } from 'react-i18next';
@@ -16,7 +15,7 @@ const Welcome: FC = () => {
   const { t } = useTranslation();
 
   return (
-    <>
+    <Grid item lg={7} md={10} sm={10} xs={12}>
       <Stack mt={12} data-testid="welcome-screen-wrapper">
         <Heading
           title={t(`${welcomeNamespace}.title`)}
@@ -50,7 +49,7 @@ const Welcome: FC = () => {
           </Card>
         </Stack>
       </Stack>
-    </>
+    </Grid>
   );
 };
 
