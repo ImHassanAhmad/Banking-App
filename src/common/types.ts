@@ -77,6 +77,12 @@ export interface UserRequestDto extends CaptchaTokenRequest {
   dryRun: boolean;
 }
 
+export interface SocialSecurityInformation {
+  country: string;
+  taxNumber: string;
+  iso: TCountryCode;
+}
+
 export interface InvestorUserRequestDto extends UserRequestDto {
   firstName?: string;
   lastName?: string;
@@ -88,7 +94,8 @@ export interface InvestorUserRequestDto extends UserRequestDto {
   incomeRange?: string;
   priceAndLimit?: boolean;
   isUsResident?: boolean;
-  sourceOfIncome?: string;
+  sourceOfIncome?: string[];
+  socialSecurityNumber?: SocialSecurityInformation[];
 }
 
 export interface IssuerUserRequestDto extends UserRequestDto {

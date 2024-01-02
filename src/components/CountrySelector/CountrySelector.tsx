@@ -26,6 +26,7 @@ const CountrySelector: React.FC<ICountrySelectorProps> = ({
       id="country-select"
       options={ALL_COUNTRIES ?? []}
       value={selectedCountry as CountrySelectOption}
+      defaultValue={selectedCountry}
       onOpen={() => {
         setIsPopupOpen(true);
       }}
@@ -77,7 +78,7 @@ const CountrySelector: React.FC<ICountrySelectorProps> = ({
             inputProps={{
               ...params.inputProps,
               style: {
-                marginLeft: selectedCountry ? '5rem' : ''
+                marginLeft: selectedCountry ? '4rem' : ''
               },
               autoComplete: 'new-password',
               'data-testid': 'selector-content-input'

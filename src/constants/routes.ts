@@ -25,6 +25,8 @@ export const RouteNames = {
   CREATE_NEW_ASSET: 'create-new-asset',
   UPLOAD_DOCUMENTS: 'upload-documents',
   INCOME_RANGE: 'income-range',
+  SECURITY_NUMBER: 'security-number',
+  PAY_COUNTRY_TAXES: 'pay-country-taxes',
   PERSONAL_INFORMATION: 'personal-information',
   ADDRESS: 'address',
   QUESTIONS_LIST: 'questions-list',

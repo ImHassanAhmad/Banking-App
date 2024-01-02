@@ -1,19 +1,22 @@
-import { Stack, Stepper, Grid } from '@mui/material';
-import { type FC, useMemo, type ComponentType } from 'react';
-import PersonalInformation from '@app/pages/PersonalInformation';
-import RegisterEmail from '@app/pages/RegisterEmail';
-import { useNavigate } from 'react-router-dom';
-import Password from '@app/pages/Password';
-import Address from '@app/pages/Address';
-import PhoneNumber from '@app/pages/PhoneNumber';
-import IncomeRange from '@app/pages/IncomeRange';
-import QuestionsList from '@app/pages/QuestionsList';
-import SourceOfIncome from '@app/pages/SourceOfIncome';
-import UsPerson from '@app/pages/USPerson';
-import { InvestorSignUpFlowSteps, InvestorSignUpFlowStepsIndices } from './types';
-import { useInvestorSignUpStepper } from '@app/context/InvestorSignUpStepperContext';
-import BackButton from '@app/components/BackButton';
 import { type WithSignUpStepperContextProps } from '@app/common/types';
+import BackButton from '@app/components/BackButton';
+import { useInvestorSignUpStepper } from '@app/context/InvestorSignUpStepperContext';
+import Address from '@app/pages/Address';
+import CountryTaxes from '@app/pages/CountryTaxes/CountryTaxes';
+import IncomeRange from '@app/pages/IncomeRange';
+import Password from '@app/pages/Password';
+import PersonalInformation from '@app/pages/PersonalInformation';
+import PhoneNumber from '@app/pages/PhoneNumber';
+import QuestionsList from '@app/pages/QuestionsList';
+import RegisterEmail from '@app/pages/RegisterEmail';
+import SocialSecurityNumber from '@app/pages/SocialSecurityNumber/SocialSecurityNumber';
+import SourceOfIncome from '@app/pages/SourceOfIncome';
+import UsPerson from '@app/pages/USPerson/UsPerson';
+import { Grid, Stack, Stepper } from '@mui/material';
+import { type ComponentType, type FC } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { InvestorSignUpFlowSteps } from './types';
+
 import MobileCodeVerification from '@app/pages/MobileCodeVerification';
 import RegisterEmailCodeVerification from '@app/pages/RegisterEmailCodeVerification';
 
@@ -33,6 +36,10 @@ const investorFlowComponent = (
       return IncomeRange;
     case InvestorSignUpFlowSteps.UsPerson:
       return UsPerson;
+    case InvestorSignUpFlowSteps.SecurityNumber:
+      return SocialSecurityNumber;
+    case InvestorSignUpFlowSteps.CountryTaxes:
+      return CountryTaxes;
     case InvestorSignUpFlowSteps.SourceOfIncome:
       return SourceOfIncome;
     case InvestorSignUpFlowSteps.Questionaire:
@@ -50,9 +57,7 @@ const investorFlowComponent = (
 const IssuerSignUpStepper: FC = () => {
   const navigate = useNavigate();
   const props = useInvestorSignUpStepper();
-  const { activeStep, goBack } = props;
-
-  const activeStepIndex = useMemo(() => InvestorSignUpFlowStepsIndices[activeStep], [activeStep]);
+  const { activeStep, goBack, activeStepIndex } = props;
 
   const InvestorFlowComponent = investorFlowComponent(activeStep);
   return (
