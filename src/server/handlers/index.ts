@@ -3,11 +3,13 @@ import { handlers as registerInvestorHandler } from './register-investor.mock';
 import { handlers as loginMockApiHandler } from './login.mock';
 import { handlers as assetMockApiHandler } from './asset.mock';
 import { handlers as postOnboardingHandler } from './issuer-onboarding.mock';
+import { handlers as tokenApiHandler } from './token.mock';
 
 export default [
   ...registerIssuerHandler,
   ...registerInvestorHandler,
   ...loginMockApiHandler,
   ...assetMockApiHandler,
-  ...postOnboardingHandler
+  ...postOnboardingHandler,
+  ...tokenApiHandler
 ];
