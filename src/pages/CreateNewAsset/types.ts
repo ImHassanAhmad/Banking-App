@@ -1,12 +1,25 @@
 import type React from 'react';
 import { enumToIndexRecord } from '@app/utils/enum';
+import { type AssetDocumentsRequestDto } from '@app/common/types';
+import { type UseFormRegister } from 'react-hook-form';
 
 export interface UploadButtonProps {
   label: string;
   description: string;
   selectedFile: File | null;
   handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  register: UseFormRegister<AssetDocumentsRequestDto>;
+  documentValue: keyof AssetDocumentsRequestDto;
   // handleUpload: () => void;
+}
+
+export interface FileInputProps {
+  label: string;
+  selectedFile: File | null;
+  handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleUpload: () => void;
+  register: UseFormRegister<AssetDocumentsRequestDto>;
+  documentValue: keyof AssetDocumentsRequestDto;
 }
 export enum SocialMediaLinks {
   Reddit = 'reddit',
