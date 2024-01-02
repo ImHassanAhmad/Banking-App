@@ -1,7 +1,6 @@
 import React, { createContext, useState, useContext } from 'react';
 import { CreateNewAssetSteps } from '../pages/CreateNewAsset/types';
 import { enumToIndexRecord, indexToEnumKeyRecord } from '@app/utils/enum';
-import { useNavigate } from 'react-router-dom';
 import {
   type AssetSocialMediaRequestDto,
   type AssetDocumentsRequestDto,
@@ -42,7 +41,6 @@ export const CreateNewAssetProvider: React.FC<{ children: React.ReactNode }> = (
     [CreateNewAssetSteps.AssetInformation]: {} as any
   }); // Replace with your form state type
   const [assetId, setAssetId] = useState('');
-  const navigate = useNavigate();
 
   const updateAssetPayload = (newState: AssetRequestDto, assetId?: string): void => {
     setAssetPayload((prevState: AssetPayload) => ({ ...prevState, [activeStep]: newState }));
@@ -50,16 +48,12 @@ export const CreateNewAssetProvider: React.FC<{ children: React.ReactNode }> = (
   };
 
   const updateActiveStep = (): void => {
-    if (activeStep === CreateNewAssetSteps.AssetCreationSuccess) {
-      navigate('/');
-    } else {
-      const nextActiveStep: CreateNewAssetSteps = IndexToCreateNewAssetSteps[
-        CreateNewAssetStepsIndices[activeStep] + 1
-      ] as CreateNewAssetSteps;
+    const nextActiveStep: CreateNewAssetSteps = IndexToCreateNewAssetSteps[
+      CreateNewAssetStepsIndices[activeStep] + 1
+    ] as CreateNewAssetSteps;
 
-      if (nextActiveStep) {
-        setActiveStep(nextActiveStep);
-      }
+    if (nextActiveStep) {
+      setActiveStep(nextActiveStep);
     }
   };
 

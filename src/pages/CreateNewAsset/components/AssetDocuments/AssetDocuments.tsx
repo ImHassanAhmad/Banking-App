@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Stack, Typography } from '@mui/material';
+import { Button, CircularProgress, Stack, Typography } from '@mui/material';
 import UploadButton from '../UploadButton';
 import { RouteNames } from '@app/constants/routes';
 import { useTranslation } from 'react-i18next';
-import { Documents } from '../../types';
+import { AllowedFileFormats, Documents } from '../../types';
 import { useCreateNewAssetStepper } from '@app/context/CreateNewAssetStepperContext';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import WarningAlert from '@app/components/WarningAlert';
 import {
   type AssetResponseDto,
   type AssetDocumentsRequestDto,
@@ -16,54 +17,43 @@ import {
 import { useUploadAssetLegalDocumentsMutation } from '@app/store/api/asset';
 
 const createNewAssetNamespace = RouteNames.CREATE_NEW_ASSET;
-
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 const AssetDocuments: React.FC = () => {
   const { t } = useTranslation();
   const { assetPayload, assetId, updateActiveStep, updateAssetPayload } =
     useCreateNewAssetStepper();
   const [selectedFiles, setSelectedFiles] = useState<Record<string, File | null>>({});
   const [uploadAssetLegalDocuments, { isLoading }] = useUploadAssetLegalDocumentsMutation();
+  const [apiError, setApiError] = useState<RequestError>();
 
-  const schema: yup.ObjectSchema<AssetDocumentsRequestDto> = yup.object().shape({
-    prospectus: yup
-      .mixed()
-      .test(
-        'file',
-        'upload_prospectus is required',
-        (value) => value instanceof File && value != null
-      )
-      .required('upload_prospectus is required'),
-    businessModel: yup
-      .mixed()
-      .test('file', 'business_model is required', (value) => value instanceof File && value != null)
-      .required('business_model is required'),
-    financialModel: yup
-      .mixed()
-      .test(
-        'file',
-        'financial_model is required',
-        (value) => value instanceof File && value != null
-      )
-      .required('financial_model is required'),
-    businessPlan: yup
-      .mixed()
-      .test('file', 'business_plan is required', (value) => value instanceof File && value != null)
-      .required('business_plan is required'),
-    valuationReport: yup
-      .mixed()
-      .test(
-        'file',
-        'valuation_report is required',
-        (value) => value instanceof File && value != null
-      )
-      .required('valuation_report is required')
-  }) as any;
+  const fileSchema = yup
+    .mixed()
+    .test('fileSize', 'The file is too large', (value) => {
+      if (value instanceof File && value != null) {
+        return value.size <= MAX_FILE_SIZE;
+      }
+      return true; // Return true if the value is not a File or is null
+    })
+    .test('fileType', 'Unsupported File Format', (value) => {
+      if (value instanceof File) {
+        const supportedFormats = Object.values(AllowedFileFormats);
+        return supportedFormats.some((format) => value.name.endsWith(format));
+      }
+      return true; // Return true if the value is not a File
+    })
+    .test('file', 'File is required', (value) => value instanceof File && value != null)
+    .required('File is required');
+
+  const schema: yup.ObjectSchema<AssetDocumentsRequestDto> = yup
+    .object()
+    .shape(Object.fromEntries(Object.values(Documents).map((doc) => [doc, fileSchema]))) as any;
+
   const {
     handleSubmit,
     setValue,
     register,
     trigger,
-    formState: { isValid }
+    formState: { isValid, errors }
   } = useForm<AssetDocumentsRequestDto>({
     mode: 'onChange',
     resolver: yupResolver(schema),
@@ -96,18 +86,19 @@ const AssetDocuments: React.FC = () => {
         updateAssetPayload(data);
         updateActiveStep();
       })
-      .catch(({ message, errorLevel }: RequestError) => {
-        // TODO: handle error
-        console.log('error: {message: ', message, ', errorLevel: ', errorLevel, ' }');
+      .catch((error: RequestError) => {
+        console.log('error: ', error);
+        setApiError(error);
       });
   };
-
+  console.log('Error', errors);
   return (
     <form
       onSubmit={(event) => {
         void handleSubmit(onSubmit)(event);
       }}>
       <Stack gap={1}>
+        {apiError && <WarningAlert message={apiError.message} />}
         <Typography sx={{ fontSize: '2.4rem', fontWeight: 500, mb: 2 }}>
           {t(`${createNewAssetNamespace}.upload_the_asset`)}
         </Typography>
@@ -120,6 +111,7 @@ const AssetDocuments: React.FC = () => {
             handleFileChange={handleFileChange(value)}
             register={register}
             documentValue={value as keyof AssetDocumentsRequestDto}
+            error={errors[value as keyof AssetDocumentsRequestDto]}
           />
         ))}
         <Stack gap={3} direction={'row'} mt={3} sx={{ width: '70%' }}>
@@ -130,7 +122,7 @@ const AssetDocuments: React.FC = () => {
             }}
             type="submit"
             disabled={isLoading || !isValid}>
-            {t(`${createNewAssetNamespace}.continue`)}
+            {t(`${createNewAssetNamespace}.continue`)} {isLoading ?? <CircularProgress />}
           </Button>
         </Stack>
       </Stack>

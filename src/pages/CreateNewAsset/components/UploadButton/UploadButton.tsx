@@ -11,7 +11,8 @@ const UploadButton: React.FC<UploadButtonProps> = ({
   selectedFile,
   handleFileChange,
   register,
-  documentValue
+  documentValue,
+  error
 }) => (
   <Box
     borderRadius={1}
@@ -32,24 +33,27 @@ const UploadButton: React.FC<UploadButtonProps> = ({
           </IconButton>
         </Tooltip>
       </Box>
-      <Box
-        border={1}
-        borderColor="grey.300"
-        borderRadius={1}
-        display="flex"
-        alignItems="center"
-        flexGrow={1}
-        maxWidth="100%"
-        overflow="hidden">
-        <FileInput
-          label={label}
-          selectedFile={selectedFile}
-          handleFileChange={handleFileChange}
-          handleUpload={() => {}}
-          register={register}
-          documentValue={documentValue}
-        />
-      </Box>
+      <Tooltip title={error ? error.message : ''}>
+        <Box
+          border={1}
+          borderColor={error ? 'error.main' : 'grey.300'}
+          color={error ? 'error.main' : ''}
+          borderRadius={1}
+          display="flex"
+          alignItems="center"
+          flexGrow={1}
+          maxWidth="100%"
+          overflow="hidden">
+          <FileInput
+            label={label}
+            selectedFile={selectedFile}
+            handleFileChange={handleFileChange}
+            handleUpload={() => {}}
+            register={register}
+            documentValue={documentValue}
+          />
+        </Box>
+      </Tooltip>
     </Box>
   </Box>
 );

@@ -8,6 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Textfield from '@app/components/Textfield';
 import { useCreateNewAssetStepper } from '@app/context/CreateNewAssetStepperContext';
+import WarningAlert from '@app/components/WarningAlert';
 import {
   type AssetResponseDto,
   type AssetInformationRequestDto,
@@ -23,6 +24,7 @@ const AssetInformation: React.FC = () => {
   const [fieldErrors] = useState<FieldError>();
   const { assetPayload, updateAssetPayload, updateActiveStep } = useCreateNewAssetStepper();
   const [createAsset, { isLoading }] = useCreateAssetMutation();
+  const [apiError, setApiError] = useState<RequestError>();
 
   const schema: yup.ObjectSchema<AssetInformationRequestDto> = yup.object().shape({
     assetName: yup.string().required('name is required'),
@@ -58,9 +60,9 @@ const AssetInformation: React.FC = () => {
         updateAssetPayload(data, assetId);
         updateActiveStep();
       })
-      .catch(({ message, errorLevel }: RequestError) => {
-        // TODO: handle error
-        console.log('error: {message: ', message, ', errorLevel: ', errorLevel, ' }');
+      .catch((error: RequestError) => {
+        console.log('error: ', error);
+        setApiError(error);
       });
   };
 
@@ -85,6 +87,7 @@ const AssetInformation: React.FC = () => {
         void handleSubmit(onSubmit)(event);
       }}>
       <Stack gap={2}>
+        {apiError && <WarningAlert message={apiError.message} />}
         <Typography sx={{ fontSize: '2.4rem', fontWeight: 500, mb: 2 }}>
           {t(`${createNewAssetNamespace}.fill_asset_information`)}
         </Typography>
@@ -145,7 +148,7 @@ const AssetInformation: React.FC = () => {
                 </Avatar>
               </label>
               <input
-                {...register('logo')} // Add this line
+                {...register('logo')}
                 id="logo-upload"
                 name="logo"
                 type="file"
@@ -161,8 +164,6 @@ const AssetInformation: React.FC = () => {
             sx={{
               marginTop: '20px',
               width: '100%'
-              // backgroundColor:
-              //   activeStep === CreateNewAssetSteps.AssetCreationSuccess ? '#EBEBEB' : '#BAFF2A'
             }}
             type="submit"
             disabled={!isValid || !preview || isLoading}>
