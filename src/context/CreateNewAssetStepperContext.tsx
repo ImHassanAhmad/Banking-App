@@ -39,7 +39,7 @@ const IndexToCreateNewAssetSteps = indexToEnumKeyRecord(CreateNewAssetSteps);
 export const CreateNewAssetProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [activeStep, setActiveStep] = useState(CreateNewAssetSteps.AssetInformation);
   const [assetPayload, setAssetPayload] = useState<AssetPayload>({
-    [CreateNewAssetSteps.AssetInformation]: {}
+    [CreateNewAssetSteps.AssetInformation]: {} as any
   }); // Replace with your form state type
   const [assetId, setAssetId] = useState('');
   const navigate = useNavigate();

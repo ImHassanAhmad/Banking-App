@@ -25,7 +25,8 @@ class DatabaseService<T extends BaseEntity> {
   }
 
   async update(id: string, entity: T): Promise<T> {
-    await this.table.put(entity, id);
+    const payload = await this.table.get(id);
+    await this.table.put({ ...payload, ...entity }, id);
     return entity;
   }
 

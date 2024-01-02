@@ -46,13 +46,14 @@ const AssetDocuments: React.FC = () => {
     };
 
   useEffect(() => {
-    setSelectedFiles((prevFiles) => {
-      const state = { ...prevFiles };
-      Object.entries(assetPayload).forEach(([key, value]: any) => {
-        state[key] = value;
+    if (assetPayload)
+      setSelectedFiles((prevFiles) => {
+        const state = { ...prevFiles };
+        Object.entries(assetPayload).forEach(([key, value]: any) => {
+          state[key] = value;
+        });
+        return state;
       });
-      return state;
-    });
   }, []);
 
   const onSubmit: SubmitHandler<AssetDocumentsRequestDto> = (data: AssetDocumentsRequestDto) => {

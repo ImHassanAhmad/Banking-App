@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Stack, Typography, Box, Avatar, Button, CircularProgress } from '@mui/material';
 import FilterIcon from '@mui/icons-material/Filter';
 import { RouteNames } from '@app/constants/routes';
@@ -39,8 +39,13 @@ const AssetInformation: React.FC = () => {
   } = useForm<AssetInformationRequestDto>({
     mode: 'onBlur',
     resolver: yupResolver<AssetInformationRequestDto>(schema),
-    defaultValues: assetPayload as AssetInformationRequestDto
+    defaultValues: assetPayload as any
   });
+
+  useEffect(() => {
+    const { logo } = assetPayload as any;
+    if (logo) setImagePreview(logo);
+  }, []);
 
   const onSubmit: SubmitHandler<AssetInformationRequestDto> = (
     data: AssetInformationRequestDto
@@ -61,10 +66,14 @@ const AssetInformation: React.FC = () => {
     const file = event.target.files?.[0];
     // Create a preview URL
     if (file) {
-      const url = URL.createObjectURL(file);
-      setPreview(url);
       setValue('logo', file);
+      setImagePreview(file);
     }
+  };
+
+  const setImagePreview = (file: File): void => {
+    const url = URL.createObjectURL(file);
+    setPreview(url);
   };
 
   return (
@@ -150,7 +159,7 @@ const AssetInformation: React.FC = () => {
               //   activeStep === CreateNewAssetSteps.AssetCreationSuccess ? '#EBEBEB' : '#BAFF2A'
             }}
             type="submit"
-            disabled={!isValid || isLoading}>
+            disabled={!isValid || !preview || isLoading}>
             {t(`${createNewAssetNamespace}.continue`)} {isLoading ?? <CircularProgress />}
           </Button>
         </Stack>

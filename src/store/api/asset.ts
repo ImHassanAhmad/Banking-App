@@ -8,6 +8,7 @@ import {
   type AssetDocumentsRequestDto,
   type AssetSocialMediaRequestDto
 } from '@app/common/types';
+import { Documents } from '@app/pages/CreateNewAsset/types';
 
 export const assetApi = createApi({
   reducerPath: 'asset',
@@ -16,16 +17,13 @@ export const assetApi = createApi({
   endpoints: (builder) => ({
     createAsset: builder.mutation<AssetResponseDto, AssetInformationRequestDto>({
       query: (body) => {
-        const { logo } = body;
+        const { assetName, assetDescription, assetWebsite, logo } = body;
         const formData: FormData = new FormData();
         if (logo) formData.append('logo', logo);
-        formData.append('data', JSON.stringify(body));
+        formData.append('data', JSON.stringify({ assetName, assetDescription, assetWebsite }));
         return {
           url: 'v1/sme/asset/create',
           method: 'POST',
-          headers: {
-            'Content-Type': 'multipart/form-data;'
-          },
           body: formData
         };
       },
@@ -45,17 +43,14 @@ export const assetApi = createApi({
         } = body;
         const formData: FormData = new FormData();
         if (assetId) formData.append('assetId', assetId);
-        formData.append('business_model', businessModel);
-        formData.append('business_plan', businessPlan);
-        formData.append('financial_model', financialModel);
-        formData.append('prospectus', prospectus);
-        formData.append('valuation_report', valuationReport);
+        formData.append(Documents.BusinessModel, businessModel);
+        formData.append(Documents.BusinessPlan, businessPlan);
+        formData.append(Documents.FinancialModel, financialModel);
+        formData.append(Documents.Prospectus, prospectus);
+        formData.append(Documents.ValuationReport, valuationReport);
         return {
           url: `v1/sme/asset/upload/documents`,
           method: 'POST',
-          headers: {
-            'Content-Type': 'multipart/form-data;'
-          },
           body: formData
         };
       },

@@ -277,10 +277,10 @@ export interface AssetResponseDto {
 }
 
 export interface AssetInformationRequestDto {
-  assetName?: string;
-  assetDescription?: string;
-  assetWebsite?: string;
-  logo?: File;
+  assetName: string;
+  assetDescription: string;
+  assetWebsite: string;
+  logo: File;
 }
 
 export interface AssetDocumentsRequestDto extends AssetResponseDto {
