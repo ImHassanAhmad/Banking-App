@@ -306,8 +306,8 @@ export enum onBoardType {
 export interface AssetTokenCreationRequestDTO {
   tokenName: string;
   tokenSymbol: string;
-  totalSupply: number | null;
-  numberOfDecimal: number | null;
+  totalSupply?: number;
+  numberOfDecimal?: number;
   pausable: boolean;
   mintable: boolean;
   burnable: boolean;
