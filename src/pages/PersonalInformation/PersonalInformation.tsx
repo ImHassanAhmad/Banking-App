@@ -13,7 +13,7 @@ import { type AuthFetchQueryError, type WithSignUpStepperContextProps } from '@a
 interface IForm {
   firstName: string;
   lastName: string;
-  dateOfBirth?: string;
+  dateOfBirth: string;
 }
 
 const translationNamespace = RouteNames.PERSONAL_INFORMATION;
@@ -30,9 +30,9 @@ const PersonalInformation: FC<WithSignUpStepperContextProps> = ({
   const schema = yup
     .object()
     .shape({
-      firstName: yup.string().required(),
-      lastName: yup.string().required(),
-      dateOfBirth: yup.string()
+      firstName: yup.string().required('First name is required'),
+      lastName: yup.string().required('Last name is required'),
+      dateOfBirth: yup.string().required('Date of birth is required')
     })
     .required();
 
@@ -40,8 +40,7 @@ const PersonalInformation: FC<WithSignUpStepperContextProps> = ({
     register,
     control,
     handleSubmit,
-    formState: { errors },
-    setValue
+    formState: { errors }
   } = useForm<IForm>({
     mode: 'onBlur',
     resolver: yupResolver(schema)
@@ -96,9 +95,6 @@ const PersonalInformation: FC<WithSignUpStepperContextProps> = ({
               control={control}
               label={t(`${translationNamespace}.DOB`)}
               defaultValue={dateOfBirth}
-              handleChange={(newValue) => {
-                setValue('dateOfBirth', newValue);
-              }}
               errorValue={errors?.dateOfBirth ?? fieldErrors}
             />
           </Stack>

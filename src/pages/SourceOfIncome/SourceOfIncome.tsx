@@ -8,13 +8,12 @@ import IncomeSourceItem from './components/IncomeSourceItem';
 import { type CheckList } from '../SourceOfFunding/types';
 import { type WithSignUpStepperContextProps } from '@app/common/types';
 import { IncomeSources } from '@app/common/types';
+
 const sourceOfFundingNamespace = RouteNames.SOURCE_OF_INCOME;
 const incomeSourcesArray: string[] = Object.values(IncomeSources);
 
 const SourceOfIncome: FC<WithSignUpStepperContextProps> = ({
   updateActiveStep,
-  registerUser,
-  isLoading,
   userPayload: { sourceOfIncome = [] },
   updateUserPayload
 }) => {
@@ -24,6 +23,7 @@ const SourceOfIncome: FC<WithSignUpStepperContextProps> = ({
     obj[key] = { checked: sourceOfIncome.findIndex((value: string) => value === key) > -1 };
     return obj;
   }, {});
+
   const [checkList, setCheckList] = useState<CheckList>(CHECK_LIST);
 
   const isAtLeastOneChecked = (): boolean =>
@@ -61,7 +61,7 @@ const SourceOfIncome: FC<WithSignUpStepperContextProps> = ({
   };
 
   return (
-    <Stack sx={{ width: '552px' }}>
+    <Stack mt={4} sx={{ width: '100%' }}>
       <Stack mt={4}>
         <Heading
           title={t(`${sourceOfFundingNamespace}.title`)}
@@ -85,7 +85,7 @@ const SourceOfIncome: FC<WithSignUpStepperContextProps> = ({
         </Stack>
         <Button
           disabled={!isAtLeastOneChecked()}
-          sx={{ marginTop: '20px', width: '436px' }}
+          sx={{ marginTop: '2rem', width: '100%' }}
           type="submit"
           onClick={handleSave}>
           {t(`${sourceOfFundingNamespace}.continue`)}

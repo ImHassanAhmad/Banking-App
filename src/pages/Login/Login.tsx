@@ -82,7 +82,7 @@ const Login: FC = () => {
   };
 
   return (
-    <Stack mt={4}>
+    <Stack mt={4} sx={{ width: '100%' }}>
       <BackButton
         onClick={() => {
           recentlyRegistered ? navigate('/') : navigate(-1);
@@ -105,7 +105,7 @@ const Login: FC = () => {
           />
         )}
       </Stack>
-      <Grid item xs={12} sm={10} md={8} lg={8}>
+      <Grid item xs={12} sm={10} md={10} lg={6}>
         <form
           role={'form-id'}
           onSubmit={(event) => {

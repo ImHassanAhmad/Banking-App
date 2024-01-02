@@ -11,10 +11,9 @@ const transactionResource = RouteNames.US_Person;
 
 const UsPerson: FC<WithSignUpStepperContextProps> = ({
   updateActiveStep,
-  registerUser,
-  isLoading,
-  userPayload,
-  updateUserPayload
+  userPayload: { isUsResident },
+  updateUserPayload,
+  registerUser
 }) => {
   const { t } = useTranslation();
 
@@ -28,7 +27,7 @@ const UsPerson: FC<WithSignUpStepperContextProps> = ({
     });
   };
   return (
-    <Box sx={{ width: '70%' }}>
+    <Box sx={{ width: '100%' }}>
       <OnboardingList
         title={t(`${transactionResource}.title`)}
         subtitle={t(`${transactionResource}.subtitle`)}
@@ -36,6 +35,7 @@ const UsPerson: FC<WithSignUpStepperContextProps> = ({
         onItemClick={(e) => {
           handleSubmit(e);
         }}
+        defaultValue={isUsResident ? 'Yes' : 'No'}
       />
     </Box>
   );
