@@ -25,14 +25,46 @@ const AssetDocuments: React.FC = () => {
   const [uploadAssetLegalDocuments, { isLoading }] = useUploadAssetLegalDocumentsMutation();
 
   const schema: yup.ObjectSchema<AssetDocumentsRequestDto> = yup.object().shape({
-    prospectus: yup.mixed().required('File is required'),
-    businessModel: yup.mixed().required('File is required'),
-    financialModel: yup.mixed().required('File is required'),
-    businessPlan: yup.mixed().required('File is required'),
-    valuationReport: yup.mixed().required('File is required')
+    prospectus: yup
+      .mixed()
+      .test(
+        'file',
+        'upload_prospectus is required',
+        (value) => value instanceof File && value != null
+      )
+      .required('upload_prospectus is required'),
+    businessModel: yup
+      .mixed()
+      .test('file', 'business_model is required', (value) => value instanceof File && value != null)
+      .required('business_model is required'),
+    financialModel: yup
+      .mixed()
+      .test(
+        'file',
+        'financial_model is required',
+        (value) => value instanceof File && value != null
+      )
+      .required('financial_model is required'),
+    businessPlan: yup
+      .mixed()
+      .test('file', 'business_plan is required', (value) => value instanceof File && value != null)
+      .required('business_plan is required'),
+    valuationReport: yup
+      .mixed()
+      .test(
+        'file',
+        'valuation_report is required',
+        (value) => value instanceof File && value != null
+      )
+      .required('valuation_report is required')
   }) as any;
-
-  const { handleSubmit, setValue } = useForm<AssetDocumentsRequestDto>({
+  const {
+    handleSubmit,
+    setValue,
+    register,
+    trigger,
+    formState: { isValid }
+  } = useForm<AssetDocumentsRequestDto>({
     mode: 'onChange',
     resolver: yupResolver(schema),
     defaultValues: assetPayload as any
@@ -42,6 +74,7 @@ const AssetDocuments: React.FC = () => {
     (event: React.ChangeEvent<HTMLInputElement>): void => {
       const file = event.target.files?.[0];
       if (file) setValue(value as Documents, file);
+      void trigger(value as Documents);
       setSelectedFiles((prevFiles) => ({ ...prevFiles, [value]: file ?? null }));
     };
 
@@ -85,6 +118,8 @@ const AssetDocuments: React.FC = () => {
             description={t(`${createNewAssetNamespace}.${value}_d`)}
             selectedFile={selectedFiles[value]}
             handleFileChange={handleFileChange(value)}
+            register={register}
+            documentValue={value as keyof AssetDocumentsRequestDto}
           />
         ))}
         <Stack gap={3} direction={'row'} mt={3} sx={{ width: '70%' }}>
@@ -94,7 +129,7 @@ const AssetDocuments: React.FC = () => {
               width: '100%'
             }}
             type="submit"
-            disabled={isLoading}>
+            disabled={isLoading || !isValid}>
             {t(`${createNewAssetNamespace}.continue`)}
           </Button>
         </Stack>

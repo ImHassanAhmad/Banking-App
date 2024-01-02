@@ -28,14 +28,18 @@ const AssetInformation: React.FC = () => {
     assetName: yup.string().required('name is required'),
     assetDescription: yup.string().required('Description is required'),
     assetWebsite: yup.string().url('Website must be a valid URL').required('Website is required'),
-    logo: yup.mixed().required('Logo is required')
+    logo: yup
+      .mixed()
+      .test((file) => file instanceof File && file != null)
+      .required('Logo is required')
   }) as any;
 
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
-    setValue
+    setValue,
+    trigger
   } = useForm<AssetInformationRequestDto>({
     mode: 'onBlur',
     resolver: yupResolver<AssetInformationRequestDto>(schema),
@@ -47,9 +51,7 @@ const AssetInformation: React.FC = () => {
     if (logo) setImagePreview(logo);
   }, []);
 
-  const onSubmit: SubmitHandler<AssetInformationRequestDto> = (
-    data: AssetInformationRequestDto
-  ) => {
+  const onSubmit: SubmitHandler<AssetInformationRequestDto> = (data: any) => {
     createAsset(data)
       .unwrap()
       .then(({ assetId }: AssetResponseDto) => {
@@ -68,6 +70,7 @@ const AssetInformation: React.FC = () => {
     if (file) {
       setValue('logo', file);
       setImagePreview(file);
+      void trigger('logo');
     }
   };
 
@@ -103,6 +106,9 @@ const AssetInformation: React.FC = () => {
               variant="outlined"
               label={t(`${createNewAssetNamespace}.asset_description`)}
               sx={{
+                '& textarea': {
+                  paddingTop: 'inherit'
+                },
                 '& .css-14hd1mb-MuiInputBase-root-MuiOutlinedInput-root': {
                   boxSizing: 'content-box'
                 }
@@ -141,7 +147,7 @@ const AssetInformation: React.FC = () => {
               <input
                 {...register('logo')} // Add this line
                 id="logo-upload"
-                name="Logo"
+                name="logo"
                 type="file"
                 style={{ display: 'none' }}
                 onChange={handleFileChange}
