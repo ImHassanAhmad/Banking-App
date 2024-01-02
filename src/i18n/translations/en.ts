@@ -375,6 +375,14 @@ const en: LanguageResource = {
   'income-range': {
     title: 'Income Range'
   },
+  'verify-identity': {
+    title: 'Verify Identity',
+    upload_address_proof: 'Upload Proof of Address',
+    upload_id_card: 'Upload ID Card',
+    take_selfie: 'Take Selfie',
+    delete_selfie: 'Delete',
+    continue: 'Continue'
+  },
   'security-number': {
     title: 'Social Security Number',
     states: 'The United States',

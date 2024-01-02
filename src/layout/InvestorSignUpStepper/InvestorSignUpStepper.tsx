@@ -1,21 +1,22 @@
-import { type WithSignUpStepperContextProps } from '@app/common/types';
-import BackButton from '@app/components/BackButton';
-import { useInvestorSignUpStepper } from '@app/context/InvestorSignUpStepperContext';
-import Address from '@app/pages/Address';
-import CountryTaxes from '@app/pages/CountryTaxes/CountryTaxes';
-import IncomeRange from '@app/pages/IncomeRange';
-import Password from '@app/pages/Password';
+import { Stack, Stepper, Grid } from '@mui/material';
+import { type FC, type ComponentType } from 'react';
 import PersonalInformation from '@app/pages/PersonalInformation';
-import PhoneNumber from '@app/pages/PhoneNumber';
-import QuestionsList from '@app/pages/QuestionsList';
 import RegisterEmail from '@app/pages/RegisterEmail';
-import SocialSecurityNumber from '@app/pages/SocialSecurityNumber/SocialSecurityNumber';
-import SourceOfIncome from '@app/pages/SourceOfIncome';
-import UsPerson from '@app/pages/USPerson/UsPerson';
-import { Grid, Stack, Stepper } from '@mui/material';
-import { type ComponentType, type FC } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Password from '@app/pages/Password';
+import Address from '@app/pages/Address';
+import PhoneNumber from '@app/pages/PhoneNumber';
+import IncomeRange from '@app/pages/IncomeRange';
+import VerifyIdentity from '@app/pages/VerifyIdentity';
+import QuestionsList from '@app/pages/QuestionsList';
+import SourceOfIncome from '@app/pages/SourceOfIncome';
+import UsPerson from '@app/pages/USPerson';
+import SocialSecurityNumber from '@app/pages/SocialSecurityNumber';
+import CountryTaxes from '@app/pages/CountryTaxes';
 import { InvestorSignUpFlowSteps } from './types';
+import { useInvestorSignUpStepper } from '@app/context/InvestorSignUpStepperContext';
+import BackButton from '@app/components/BackButton';
+import { type WithSignUpStepperContextProps } from '@app/common/types';
 
 import MobileCodeVerification from '@app/pages/MobileCodeVerification';
 import RegisterEmailCodeVerification from '@app/pages/RegisterEmailCodeVerification';
@@ -34,6 +35,8 @@ const investorFlowComponent = (
       return PhoneNumber;
     case InvestorSignUpFlowSteps.IncomeRange:
       return IncomeRange;
+    case InvestorSignUpFlowSteps.VerifyIdentity:
+      return VerifyIdentity;
     case InvestorSignUpFlowSteps.UsPerson:
       return UsPerson;
     case InvestorSignUpFlowSteps.SecurityNumber:
