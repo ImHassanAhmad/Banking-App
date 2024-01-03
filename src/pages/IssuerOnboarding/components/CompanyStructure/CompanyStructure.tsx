@@ -72,7 +72,7 @@ const CompanyStructure: FC<ICompanyStructureProps> = ({ nextStep }) => {
   };
 
   return (
-    <Box mt="40px">
+    <Box mt="40px" data-testid="company-structure">
       <Heading
         title={t(`${translationNamespace}.company_structure_title`)}
         subTitle={t(`${translationNamespace}.company_structure_subtitle`)}
@@ -84,6 +84,7 @@ const CompanyStructure: FC<ICompanyStructureProps> = ({ nextStep }) => {
         {fields.map((field, index) => {
           return (
             <Box
+              data-testid={`company-structure-form-${index}`}
               display="flex"
               flexDirection="column"
               justifyContent="center"
@@ -94,6 +95,7 @@ const CompanyStructure: FC<ICompanyStructureProps> = ({ nextStep }) => {
                 <Typography>{index + 1}.</Typography>
                 {index > 0 && (
                   <Box
+                    data-testid={`company-structure-remove-${index}`}
                     sx={{ cursor: 'pointer' }}
                     width="25px"
                     height="25px"
@@ -116,18 +118,27 @@ const CompanyStructure: FC<ICompanyStructureProps> = ({ nextStep }) => {
               </Box>
               <Textfield
                 register={register}
+                inputProps={{
+                  'data-testid': `ubos.${index}.type`
+                }}
                 name={`ubos.${index}.type`}
                 label={t(`${translationNamespace}.type`)}
                 errorValue={errors?.ubos?.[index]?.type as FieldError}
               />
               <Textfield
                 register={register}
+                inputProps={{
+                  'data-testid': `ubos.${index}.name`
+                }}
                 name={`ubos.${index}.name`}
                 label={t(`${translationNamespace}.name`)}
                 errorValue={errors?.ubos?.[index]?.name as FieldError}
               />
               <Textfield
                 register={register}
+                inputProps={{
+                  'data-testid': `ubos.${index}.email`
+                }}
                 name={`ubos.${index}.email`}
                 label={t(`${translationNamespace}.email`)}
                 errorValue={errors?.ubos?.[index]?.email as FieldError}
@@ -136,13 +147,14 @@ const CompanyStructure: FC<ICompanyStructureProps> = ({ nextStep }) => {
           );
         })}
         <Button
+          data-testid="company-structure-add"
           sx={{ marginBottom: '20px' }}
           onClick={() => {
             append(defaultValue);
           }}>
           {t(`${translationNamespace}.add_ubo`)}
         </Button>
-        <Button type="submit" fullWidth>
+        <Button type="submit" fullWidth data-testid="company-structure-continue">
           {t(`${translationNamespace}.continue`)}
         </Button>
       </form>
