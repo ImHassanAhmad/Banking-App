@@ -53,6 +53,7 @@ const CreateAssetToken: React.FC = () => {
       tokenSymbol: tokenBasicInfoState.tokenSymbol,
       totalSupply: tokenBasicInfoState.totalSupply,
       numberOfDecimal: tokenBasicInfoState.numberOfDecimal,
+      tokenLogo: tokenBasicInfoState.tokenLogo.name,
       pausable: tokenConfigState.pausable,
       mintable: tokenConfigState.mintable,
       burnable: tokenConfigState.burnable,

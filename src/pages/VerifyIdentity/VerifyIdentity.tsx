@@ -3,6 +3,7 @@ import Webcam from 'react-webcam';
 import { type SubmitHandler, useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { InfoModal } from '@app/components/Modals';
 import { Stack, Box, Button, Typography, FormHelperText } from '@mui/material';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -32,6 +33,7 @@ const VerifyIdentity: FC<WithSignUpStepperContextProps> = ({
   const { t } = useTranslation();
   const webcamRef = useRef<Webcam>(null);
   const [imageURL, setImageURL] = useState<string | null>(null);
+  const [openModal, setOpenModal] = useState(false);
 
   const schema = yup
     .object()
@@ -102,8 +104,9 @@ const VerifyIdentity: FC<WithSignUpStepperContextProps> = ({
   const requestCameraPermission = async (): Promise<void> => {
     try {
       const permissions = await navigator.permissions.query({ name: 'camera' as PermissionName });
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      console.log(permissions, stream);
+      if (permissions.state === 'denied') {
+        setOpenModal(true);
+      }
     } catch (error) {
       console.error('Error accessing camera:', error);
     }
@@ -121,6 +124,15 @@ const VerifyIdentity: FC<WithSignUpStepperContextProps> = ({
 
   return (
     <Stack sx={{ width: '100%' }}>
+      <InfoModal
+        open={openModal}
+        buttonText={t(`${verifyIdentityNamespace}.modal_btn_title`)}
+        title={t(`${verifyIdentityNamespace}.modal_title`)}
+        subtitle={t(`${verifyIdentityNamespace}.modal_subtitle`)}
+        handleClose={() => {
+          setOpenModal(false);
+        }}
+      />
       <form
         onSubmit={(event) => {
           void handleSubmit(onSubmit)(event);

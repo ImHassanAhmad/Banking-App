@@ -37,11 +37,10 @@ const IncomeSourceItem: React.FC<IncomeSourceItemProps> = ({ title, checked, onC
       <Box
         sx={{
           cursor: 'pointer',
-          border: `0.1rem solid ${checked ? theme.palette.success.dark : theme.palette.grey[900]}`,
+          border: `0.1rem solid ${checked ? theme.palette.success.main : theme.palette.grey[900]}`,
           marginBottom: '0.4rem',
           borderRadius: '1rem'
-        }}
-        onClick={onChange}>
+        }}>
         <FormControlLabel
           control={
             <Checkbox

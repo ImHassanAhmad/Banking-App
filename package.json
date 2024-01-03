@@ -240,6 +240,6 @@
     ]
   },
   "msw": {
-    "workerDirectory": "public"
+    "workerDirectory": "./public"
   }
 }

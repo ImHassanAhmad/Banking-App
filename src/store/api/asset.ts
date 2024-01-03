@@ -4,28 +4,63 @@ import {
   transformErrorResponse,
   type AuthApiError,
   type AssetResponseDto,
-  type AssetRequestDto,
-  type AssetLegalDocumentsRequestDto
+  type AssetInformationRequestDto,
+  type AssetDocumentsRequestDto,
+  type AssetSocialMediaRequestDto
 } from '@app/common/types';
+import { Documents } from '@app/pages/CreateNewAsset/types';
 
 export const assetApi = createApi({
   reducerPath: 'asset',
   baseQuery: smeBaseQuery,
   tagTypes: ['createAsset'],
   endpoints: (builder) => ({
-    createAsset: builder.mutation<AssetResponseDto, AssetRequestDto>({
-      query: (body) => ({
-        url: 'v1/sme/asset/create',
-        method: 'POST',
-        body
-      }),
+    createAsset: builder.mutation<AssetResponseDto, AssetInformationRequestDto>({
+      query: (body) => {
+        const { assetName, assetDescription, assetWebsite, logo } = body;
+        const formData: FormData = new FormData();
+        if (logo) formData.append('logo', logo);
+        formData.append('data', JSON.stringify({ assetName, assetDescription, assetWebsite }));
+        return {
+          url: 'v1/sme/asset/create',
+          method: 'POST',
+          body: formData
+        };
+      },
       transformErrorResponse(baseQueryReturnValue, meta, arg) {
         return transformErrorResponse(baseQueryReturnValue as AuthApiError, meta, arg);
       }
     }),
-    uploadAssetLegalDocuments: builder.mutation<AssetResponseDto, AssetLegalDocumentsRequestDto>({
+    uploadAssetLegalDocuments: builder.mutation<AssetResponseDto, AssetDocumentsRequestDto>({
+      query: (body) => {
+        const {
+          assetId,
+          businessModel,
+          businessPlan,
+          financialModel,
+          prospectus,
+          valuationReport
+        } = body;
+        const formData: FormData = new FormData();
+        if (assetId) formData.append('assetId', assetId);
+        formData.append(Documents.BusinessModel, businessModel);
+        formData.append(Documents.BusinessPlan, businessPlan);
+        formData.append(Documents.FinancialModel, financialModel);
+        formData.append(Documents.Prospectus, prospectus);
+        formData.append(Documents.ValuationReport, valuationReport);
+        return {
+          url: `v1/sme/asset/upload/documents`,
+          method: 'POST',
+          body: formData
+        };
+      },
+      transformErrorResponse(baseQueryReturnValue, meta, arg) {
+        return transformErrorResponse(baseQueryReturnValue as AuthApiError, meta, arg);
+      }
+    }),
+    addSocialMediaLinks: builder.mutation<AssetResponseDto, AssetSocialMediaRequestDto>({
       query: (body) => ({
-        url: 'v1/sme/asset/legal/upload',
+        url: 'v1/sme/asset/social/links',
         method: 'POST',
         body
       }),
@@ -36,4 +71,8 @@ export const assetApi = createApi({
   })
 });
 
-export const { useCreateAssetMutation } = assetApi;
+export const {
+  useCreateAssetMutation,
+  useUploadAssetLegalDocumentsMutation,
+  useAddSocialMediaLinksMutation
+} = assetApi;
