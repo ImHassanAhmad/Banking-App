@@ -3,9 +3,8 @@ import * as yup from 'yup';
 import withErrorHandler from '../middleware/withErrorHandler';
 import { type ResponseResolverInfo } from 'msw/lib/core/handlers/RequestHandler';
 import { type HttpRequestResolverExtras } from 'msw/lib/core/handlers/HttpHandler';
-import { issuerDetailsService } from '../database/service';
-import type { PostOnboardingRequest } from '../database/type';
-import type { IssuerDetailsEntity } from '../database/entity';
+import type { PostOnboardingRequest } from '@app/server/database/type';
+import type { IssuerDetailsEntity } from '@app/server/database/entity';
 
 const issuerOnboardingSchema = yup.object().shape({
   companyStructure: yup.lazy((value) => {
@@ -79,20 +78,26 @@ const issuerOnboardingHandler: HttpHandler = http.post<
       let response: IssuerDetailsEntity;
 
       if (companyStructure) {
-        const doExist = await issuerDetailsService.getById(id);
-        if (doExist) response = await issuerDetailsService.update(id, { id, companyStructure });
-        else response = await issuerDetailsService.add({ id, companyStructure, completed: false });
+        response = { id, companyStructure };
       } else if (legalRepresentatives) {
-        response = await issuerDetailsService.update(id, {
+        response = {
           id,
           legalRepresentatives
-        });
+        };
       } else if (kyc) {
-        response = await issuerDetailsService.update(id, {
+        response = {
           id,
-          kyc,
+          kyc: {
+            form: kyc.form,
+            uploadedFiles: {
+              passport: kyc.uploadedFiles.passport ?? 'dummy',
+              national_id: kyc.uploadedFiles.national_id ?? 'dummy',
+              residence_proof: kyc.uploadedFiles.residence_proof ?? 'dummy',
+              profile_picture: kyc.uploadedFiles.profile_picture ?? 'dummy'
+            }
+          },
           completed: true
-        });
+        };
       } else {
         throw new yup.ValidationError('Incorrect request body', null);
       }
@@ -112,8 +117,21 @@ const getIssuerOnboardingDetailsHandler: HttpHandler = http.get<
   if (!id) {
     throw new yup.ValidationError('Id is required', null, 'id');
   } else {
-    const response = await issuerDetailsService.getById(id as string);
-    // await issuerDetailsService.remove(id as string);
+    const response: IssuerDetailsEntity = {
+      id: id as string,
+      completed: false,
+      companyStructure: undefined,
+      legalRepresentatives: undefined,
+      kyc: {
+        form: null,
+        uploadedFiles: {
+          passport: '',
+          national_id: '',
+          residence_proof: '',
+          profile_picture: ''
+        }
+      }
+    };
     if (response) return HttpResponse.json<IssuerDetailsEntity>(response);
     else return HttpResponse.json(null, { status: 400 });
   }

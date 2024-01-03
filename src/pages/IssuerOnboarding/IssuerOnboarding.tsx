@@ -13,14 +13,13 @@ import {
   setStep
 } from '@app/store/slices/issuerOnboarding';
 import { PostOnboardingFlowSteps, type DataType, type IUploadedFiles } from './types';
-import { setPostOnboardingCompleted } from '@app/store/slices/userData';
 import DoneIcon from '@mui/icons-material/Done';
 import { useTheme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 
 const translationNamespace = RouteNames.ISSUER_ONBOARDING;
 
-const PostOnboarding: FC = () => {
+const IssuerOnboarding: FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const theme = useTheme();
@@ -80,11 +79,6 @@ const PostOnboarding: FC = () => {
     }
   };
 
-  const submit = (data: DataType): void => {
-    retainState(data);
-    dispatch(setPostOnboardingCompleted(true));
-  };
-
   const getStepContent = (step: PostOnboardingFlowSteps): any => {
     switch (step) {
       case PostOnboardingFlowSteps.CompanyStructure:
@@ -92,14 +86,7 @@ const PostOnboarding: FC = () => {
       case PostOnboardingFlowSteps.LegalRespresentative:
         return <LegalRepresentatives nextStep={nextStep} previousStep={previousStep} />;
       case PostOnboardingFlowSteps.Kyc:
-        return (
-          <Kyc
-            submit={submit}
-            previousStep={previousStep}
-            uploadedFiles={uploadedFiles}
-            setter={setter}
-          />
-        );
+        return <Kyc previousStep={previousStep} uploadedFiles={uploadedFiles} setter={setter} />;
       default:
         return 'Unknown step';
     }
@@ -140,15 +127,15 @@ const PostOnboarding: FC = () => {
           </Box>
         ) : (
           <>
-            <Stepper activeStep={activeStep} sx={{ mb: 5 }}>
-              {steps.map((label) => {
+            <Stepper activeStep={activeStep} sx={{ mb: 5 }} data-testid="issuer-onboarding-stepper">
+              {steps.map((label, index) => {
                 const stepProps: { completed?: boolean } = {};
                 const labelProps: {
                   optional?: React.ReactNode;
                 } = {};
 
                 return (
-                  <Step key={label} {...stepProps}>
+                  <Step key={index} {...stepProps}>
                     <StepLabel {...labelProps}>{label}</StepLabel>
                   </Step>
                 );
@@ -162,4 +149,4 @@ const PostOnboarding: FC = () => {
   );
 };
 
-export default PostOnboarding;
+export default IssuerOnboarding;

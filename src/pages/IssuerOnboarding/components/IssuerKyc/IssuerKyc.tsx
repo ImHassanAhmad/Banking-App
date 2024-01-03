@@ -10,13 +10,15 @@ import * as yup from 'yup';
 import UploadField from '../UploadFile/UploadFile';
 import type { IKycForm, IKycProps, ObjectType } from '../../types';
 import BackButton from '@app/components/BackButton';
-import { useAppSelector } from '@app/store/hooks';
+import { useAppDispatch, useAppSelector } from '@app/store/hooks';
 import { useIssuerDetailsMutation } from '@app/store/api/onboarding';
 import type { IssuerDetailsEntity } from '@app/server/database/entity';
+import { setPostOnboardingCompleted } from '@app/store/slices/userData';
 
 const translationNamespace = RouteNames.ISSUER_ONBOARDING;
 
-const IssuerKyc: FC<IKycProps> = ({ submit, previousStep, uploadedFiles, setter }) => {
+const IssuerKyc: FC<IKycProps> = ({ previousStep, uploadedFiles, setter }) => {
+  const dispatch = useAppDispatch();
   const { email } = useAppSelector((state) => state.userData);
   const { kyc: kycState } = useAppSelector((state) => state.postOnboarding);
 
@@ -79,7 +81,7 @@ const IssuerKyc: FC<IKycProps> = ({ submit, previousStep, uploadedFiles, setter 
       })
         .unwrap()
         .then((response: IssuerDetailsEntity) => {
-          submit(data);
+          dispatch(setPostOnboardingCompleted(true));
         })
         .catch((error) => {
           console.error(error);
@@ -88,7 +90,7 @@ const IssuerKyc: FC<IKycProps> = ({ submit, previousStep, uploadedFiles, setter 
   };
 
   return (
-    <Box mt="40px">
+    <Box mt="40px" data-testid="issuer-kyc">
       <Heading title={t(`${translationNamespace}.kyc`)} subTitle="" />
       <form
         onSubmit={(event) => {
@@ -98,24 +100,36 @@ const IssuerKyc: FC<IKycProps> = ({ submit, previousStep, uploadedFiles, setter 
           <Textfield
             register={register}
             name="name"
+            inputProps={{
+              'data-testid': 'name'
+            }}
             label={t(`${translationNamespace}.name`)}
             errorValue={errors?.name}
           />
           <Textfield
             register={register}
             name="email"
+            inputProps={{
+              'data-testid': 'email'
+            }}
             label={t(`${translationNamespace}.email`)}
             errorValue={errors?.email}
           />
           <Textfield
             register={register}
             name="phone"
+            inputProps={{
+              'data-testid': 'phone'
+            }}
             label={t(`${translationNamespace}.phone`)}
             errorValue={errors?.phone}
           />
           <Textfield
             register={register}
             name="role"
+            inputProps={{
+              'data-testid': 'role'
+            }}
             label={t(`${translationNamespace}.role`)}
             errorValue={errors?.role}
           />
@@ -139,12 +153,13 @@ const IssuerKyc: FC<IKycProps> = ({ submit, previousStep, uploadedFiles, setter 
         </Box>
         <Box m="20px 0" display="flex" justifyContent="flex-end" alignItems="center">
           <BackButton
+            data-testid="issuer-kyc-back"
             onClick={() => {
               previousStep(getValues());
             }}
           />
         </Box>
-        <Button type="submit" fullWidth>
+        <Button type="submit" fullWidth data-testid="issuer-kyc-submit">
           {t(`${translationNamespace}.submit`)}
         </Button>
       </form>
