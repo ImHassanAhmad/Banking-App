@@ -78,7 +78,7 @@ const IssuerSignUpStepper: FC = () => {
             alignItems: 'flex-start'
           }
         }}>
-        <Grid item lg={8} md={10} sm={10} xs={12}>
+        <Grid item lg={7} md={10} sm={10} xs={12}>
           {InvestorFlowComponent ? (
             <InvestorFlowComponent {...props}></InvestorFlowComponent>
           ) : (

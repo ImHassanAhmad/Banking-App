@@ -57,7 +57,7 @@ const InvestorSignUpStepperContext = createContext<InvestorSignUpStepperContextP
 const { Provider } = InvestorSignUpStepperContext;
 
 export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [activeStep, setActiveStep] = useState(InvestorSignUpFlowSteps.NameAndDateOfBirth);
+  const [activeStep, setActiveStep] = useState(InvestorSignUpFlowSteps.VerifyIdentity);
   const [userId, setUserId] = useState('');
   const { updateError, findError } = useAuthError();
   const [registerUserPayload, setRegisterUserPayload] = useState<InvestorUserRequestDto>({
@@ -129,6 +129,11 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
       case InvestorSignUpFlowSteps.IncomeRange:
         apiPayload.incomeRange = registerFormData.incomeRange;
         break;
+      case InvestorSignUpFlowSteps.VerifyIdentity:
+        apiPayload.idCardImage = registerFormData.idCardImage;
+        apiPayload.addressProofImage = registerFormData.addressProofImage;
+        apiPayload.selfieImage = registerFormData.selfieImage;
+        break;
       case InvestorSignUpFlowSteps.Mobile:
         apiPayload.phoneNumberCountryCode = registerFormData.phoneNumberCountryCode;
         apiPayload.shortenPhoneNumber = registerFormData.shortenPhoneNumber;
@@ -143,7 +148,6 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
         apiPayload.sourceOfIncome = registerFormData.sourceOfIncome;
         break;
       case InvestorSignUpFlowSteps.CreatePassword:
-        // sourceOfIncome temporarily added to prevent an error during the account creation for the investor.
         apiPayload = { ...registerFormData, dryRun: false };
         break;
       default:

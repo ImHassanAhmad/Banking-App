@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import { Checkbox, FormControlLabel, Box } from '@mui/material';
-import { type FundingSourceItemProps } from '../types';
+import { type IncomeSourceItemProps } from '../../types';
 import AddIcon from '@mui/icons-material/Add';
 import DoneIcon from '@mui/icons-material/Done';
+
 const labelStyle = {
   display: 'flex',
   flexDirection: 'row-reverse',
@@ -15,7 +16,7 @@ const labelStyle = {
   }
 };
 
-const FundingSourceItem: React.FC<FundingSourceItemProps> = ({ title, checked, onChange }) => {
+const IncomeSourceItem: React.FC<IncomeSourceItemProps> = ({ title, checked, onChange }) => {
   const theme = useTheme();
 
   const checkboxStyle = {
@@ -23,11 +24,14 @@ const FundingSourceItem: React.FC<FundingSourceItemProps> = ({ title, checked, o
       paddingLeft: '20px'
     }
   };
+
   const [_checked, setChecked] = useState(checked);
+
   const handleCheckboxChange = (): void => {
     setChecked(!_checked);
     onChange();
   };
+
   return (
     <Box sx={{}}>
       <Box
@@ -45,7 +49,7 @@ const FundingSourceItem: React.FC<FundingSourceItemProps> = ({ title, checked, o
               checked={checked}
               onChange={handleCheckboxChange}
               icon={<AddIcon />}
-              checkedIcon={<DoneIcon />}
+              checkedIcon={<DoneIcon color="success" />}
             />
           }
           label={title}
@@ -56,4 +60,4 @@ const FundingSourceItem: React.FC<FundingSourceItemProps> = ({ title, checked, o
   );
 };
 
-export default FundingSourceItem;
+export default IncomeSourceItem;

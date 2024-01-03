@@ -96,6 +96,9 @@ export interface InvestorUserRequestDto extends UserRequestDto {
   isUsResident?: boolean;
   sourceOfIncome?: string[];
   socialSecurityNumber?: SocialSecurityInformation[];
+  idCardImage?: File;
+  addressProofImage?: File;
+  selfieImage?: File;
 }
 
 export interface IssuerUserRequestDto extends UserRequestDto {
