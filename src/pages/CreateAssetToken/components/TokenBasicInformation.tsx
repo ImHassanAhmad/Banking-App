@@ -1,5 +1,5 @@
 import React, { type FC, useState } from 'react';
-import { Box, Button, Stack, TextField } from '@mui/material';
+import { Button, Stack, TextField } from '@mui/material';
 import FileInput from '@app/components/FileInput';
 import { RouteNames } from '@app/constants/routes';
 import { useTranslation } from 'react-i18next';
@@ -115,19 +115,12 @@ const TokenBasicInformation: FC<ITokenBasicInfoProps> = ({ next }) => {
         />
 
         <Stack>
-          <Box
-            border={1}
-            borderColor="grey.300"
-            borderRadius={1}
-            display="flex"
-            alignItems="center">
-            <FileInput
-              selectedFile={selectedFile}
-              handleFileChange={handleFileChange}
-              handleUpload={handleUpload}
-              label={t(`${assetTokenNamespace}.upload_logo`)}
-            />
-          </Box>
+          <FileInput
+            selectedFile={selectedFile}
+            handleFileChange={handleFileChange}
+            handleUpload={handleUpload}
+            label={t(`${assetTokenNamespace}.upload_logo`)}
+          />
         </Stack>
         <Button type="submit" fullWidth sx={{ marginTop: '2rem' }}>
           {t(`${assetTokenNamespace}.continue`)}

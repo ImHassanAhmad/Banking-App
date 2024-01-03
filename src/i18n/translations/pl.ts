@@ -25,6 +25,7 @@ const pl: LanguageResource = {
   'tax-reporter': {},
   'source-of-income': {},
   'political-exposed-person': {},
+  'verify-identity': {},
   '*': {},
   help: {},
   'company-information': {},

@@ -7,25 +7,32 @@ import { RouteNames } from '@app/constants/routes';
 import { useTranslation } from 'react-i18next';
 import AssetTokenConfigurations from './components/AssetTokenConfiguration';
 import { AssetTokenPrice } from './components/AssetTokenPrice';
-import { CreateAssetFlows, CreateAssetTokenFlowSteps, type CreateAssetTokenType } from './types';
+import {
+  CreateAssetFlows,
+  CreateAssetTokenFlowSteps,
+  type ITokenPriceForm,
+  type CreateAssetTokenType
+} from './types';
 import { indexToEnumKeyRecord } from '@app/utils/enum';
-import { useAppDispatch } from '@app/store/hooks';
+import { useAppDispatch, useAppSelector } from '@app/store/hooks';
 import {
   setTokenBasicInfo,
   setTokenConfig,
   setTokenPrice
 } from '@app/store/slices/CreateAssetToken';
-
+import { useCreateAssetTokenMutation } from '@app/store/api/tokens';
+import { type AssetTokenCreationRequestDTO } from '@app/common/types';
 const assetTokenNamespace = RouteNames.CREATE_ASSET_TOKEN;
-
 const steps = Object.values(CreateAssetTokenFlowSteps);
 const CreateAssetToken: React.FC = () => {
   const { t } = useTranslation();
 
   const [activeStepIndex, setActiveStepIndex] = useState<number>(0);
+  const { tokenBasicInfo: tokenBasicInfoState } = useAppSelector((state) => state.createAssetToken);
+  const { tokenConfig: tokenConfigState } = useAppSelector((state) => state.createAssetToken); // Redux state
+  const [createAssetToken] = useCreateAssetTokenMutation();
 
   const dispatch = useAppDispatch();
-
   const next = (data: CreateAssetTokenType): void => {
     console.log('here is data', data);
     if (activeStepIndex < steps.length - 1) {
@@ -38,9 +45,31 @@ const CreateAssetToken: React.FC = () => {
     retainState(data);
     setActiveStepIndex((prevStep) => prevStep - 1);
   };
-
-  const submit = (): void => {};
-
+  const submit = (data: ITokenPriceForm): void => {
+    console.log('all data', { tokenBasicInfoState, tokenConfigState, tokenPriceState: data });
+    retainState(data);
+    const apiPayload = {
+      tokenName: tokenBasicInfoState.tokenName,
+      tokenSymbol: tokenBasicInfoState.tokenSymbol,
+      totalSupply: tokenBasicInfoState.totalSupply,
+      numberOfDecimal: tokenBasicInfoState.numberOfDecimal,
+      pausable: tokenConfigState.pausable,
+      mintable: tokenConfigState.mintable,
+      burnable: tokenConfigState.burnable,
+      capped: tokenConfigState.capped,
+      currency: data?.currency,
+      buyPrice: data?.buyPrice
+    };
+    createAssetToken(apiPayload as AssetTokenCreationRequestDTO)
+      .unwrap()
+      .then((res) => {
+        console.log('here is our response', res);
+      })
+      .catch((err: any) => {
+        console.log('here is our error', err);
+      });
+    // Code that might throw an error
+  };
   const retainState = (data: CreateAssetTokenType): void => {
     switch (currentStep) {
       case CreateAssetTokenFlowSteps.tokenBasicInformation:
@@ -52,7 +81,6 @@ const CreateAssetToken: React.FC = () => {
       case CreateAssetTokenFlowSteps.tokenPrice:
         dispatch(setTokenPrice(data));
         break;
-
       default:
         break;
     }
@@ -69,10 +97,8 @@ const CreateAssetToken: React.FC = () => {
         return <></>;
     }
   };
-
   const indexToEnumRecordValue = indexToEnumKeyRecord(CreateAssetTokenFlowSteps);
   const currentStep = indexToEnumRecordValue[activeStepIndex];
-
   const AssetTokenSteps = Object.values(CreateAssetFlows).filter(
     (value) => typeof value === 'string'
   );
@@ -102,5 +128,4 @@ const CreateAssetToken: React.FC = () => {
     </Box>
   );
 };
-
 export default CreateAssetToken;

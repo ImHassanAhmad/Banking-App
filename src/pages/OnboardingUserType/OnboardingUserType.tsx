@@ -1,4 +1,4 @@
-import { Stack, Card } from '@mui/material';
+import { Stack, Card, Grid } from '@mui/material';
 import { type FC } from 'react';
 import homeIcon from '@app/assets/images/home.svg';
 import adduserIcon from '@app/assets/images/add-user.svg';
@@ -16,42 +16,44 @@ const OnboardingUserType: FC = () => {
   const navigate = useNavigate();
 
   return (
-    <Stack mt={4}>
-      <BackButton />
-      <Stack mt={4} data-testid="welcome-screen-wrapper">
-        <Heading
-          title={t(`${userTypeNamespace}.title`)}
-          subTitle={t(`${userTypeNamespace}.subtitle`)}
-        />
-        <Stack mt={6}>
-          <Card
-            sx={{
-              boxSizing: 'border-box',
-              borderRadius: '1.6rem'
-            }}>
-            <AuthOption
-              onClick={() => {
-                navigate(`/${RouteNames.INVESTOR_SIGNUP}`);
-              }}
-              title={t(`${userTypeNamespace}.login_option_title`)}
-              subTitle={t(`${userTypeNamespace}.login_option_subtitle`)}
-              icon={homeIcon}
-              borderType="top"
-            />
-            <AuthOption
-              onClick={() => {
-                navigate(`/${RouteNames.ISSUER_SIGNUP}`);
-              }}
-              title={t(`${userTypeNamespace}.create_option_title`)}
-              subTitle={t(`${userTypeNamespace}.create_option_subtitle`)}
-              icon={adduserIcon}
-              iconWidth={22}
-              borderType="bottom"
-            />
-          </Card>
+    <Grid item lg={7} md={10} sm={10} xs={12}>
+      <Stack mt={4}>
+        <BackButton />
+        <Stack mt={4} data-testid="welcome-screen-wrapper">
+          <Heading
+            title={t(`${userTypeNamespace}.title`)}
+            subTitle={t(`${userTypeNamespace}.subtitle`)}
+          />
+          <Stack mt={6}>
+            <Card
+              sx={{
+                boxSizing: 'border-box',
+                borderRadius: '1.6rem'
+              }}>
+              <AuthOption
+                onClick={() => {
+                  navigate(`/${RouteNames.INVESTOR_SIGNUP}`);
+                }}
+                title={t(`${userTypeNamespace}.login_option_title`)}
+                subTitle={t(`${userTypeNamespace}.login_option_subtitle`)}
+                icon={homeIcon}
+                borderType="top"
+              />
+              <AuthOption
+                onClick={() => {
+                  navigate(`/${RouteNames.ISSUER_SIGNUP}`);
+                }}
+                title={t(`${userTypeNamespace}.create_option_title`)}
+                subTitle={t(`${userTypeNamespace}.create_option_subtitle`)}
+                icon={adduserIcon}
+                iconWidth={22}
+                borderType="bottom"
+              />
+            </Card>
+          </Stack>
         </Stack>
       </Stack>
-    </Stack>
+    </Grid>
   );
 };
 
