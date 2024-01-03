@@ -99,4 +99,5 @@ export interface AssetTokenCreationEntity extends BaseEntity {
   capped: boolean;
   currency: string;
   buyPrice: number;
+  tokenLogo: string;
 }
