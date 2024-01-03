@@ -15,6 +15,7 @@ import {
   type RequestError
 } from '@app/common/types';
 import { useUploadAssetLegalDocumentsMutation } from '@app/store/api/asset';
+import { createFileSchema } from '@app/utils/createFileSchema';
 
 const createNewAssetNamespace = RouteNames.CREATE_NEW_ASSET;
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
@@ -26,23 +27,7 @@ const AssetDocuments: React.FC = () => {
   const [uploadAssetLegalDocuments, { isLoading }] = useUploadAssetLegalDocumentsMutation();
   const [apiError, setApiError] = useState<RequestError>();
 
-  const fileSchema = yup
-    .mixed()
-    .test('fileSize', 'The file is too large', (value) => {
-      if (value instanceof File && value != null) {
-        return value.size <= MAX_FILE_SIZE;
-      }
-      return true; // Return true if the value is not a File or is null
-    })
-    .test('fileType', 'Unsupported File Format', (value) => {
-      if (value instanceof File) {
-        const supportedFormats = Object.values(AllowedFileFormats);
-        return supportedFormats.some((format) => value.name.endsWith(format));
-      }
-      return true; // Return true if the value is not a File
-    })
-    .test('file', 'File is required', (value) => value instanceof File && value != null)
-    .required('File is required');
+  const fileSchema = createFileSchema(MAX_FILE_SIZE, Object.values(AllowedFileFormats));
 
   const schema: yup.ObjectSchema<AssetDocumentsRequestDto> = yup
     .object()

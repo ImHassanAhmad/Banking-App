@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Stack, Typography, Box, Avatar, Button, CircularProgress } from '@mui/material';
+import { Stack, Typography, Box, Avatar, Button, CircularProgress, Tooltip } from '@mui/material';
 import FilterIcon from '@mui/icons-material/Filter';
 import { RouteNames } from '@app/constants/routes';
 import { useTranslation } from 'react-i18next';
@@ -15,9 +15,11 @@ import {
   type RequestError
 } from '@app/common/types';
 import { useCreateAssetMutation } from '@app/store/api/asset';
+import { createFileSchema } from '@app/utils/createFileSchema';
+import { AllowedFileFormats } from '../../types';
 
 const createNewAssetNamespace = RouteNames.CREATE_NEW_ASSET;
-
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 const AssetInformation: React.FC = () => {
   const { t } = useTranslation();
   const [preview, setPreview] = useState<string | null>(null);
@@ -30,10 +32,7 @@ const AssetInformation: React.FC = () => {
     assetName: yup.string().required('name is required'),
     assetDescription: yup.string().required('Description is required'),
     assetWebsite: yup.string().url('Website must be a valid URL').required('Website is required'),
-    logo: yup
-      .mixed()
-      .test((file) => file instanceof File && file != null)
-      .required('Logo is required')
+    logo: createFileSchema(MAX_FILE_SIZE, Object.values(AllowedFileFormats))
   }) as any;
 
   const {
@@ -125,38 +124,41 @@ const AssetInformation: React.FC = () => {
               variant="outlined"
             />
           </Stack>
-          <Stack
-            borderRadius={1}
-            display="flex"
-            flexDirection="column"
-            p={2}
-            sx={{ flexBasis: '30%' }}>
-            <Box>
-              <label htmlFor="logo-upload">
-                <Avatar
-                  src={preview ?? undefined}
-                  variant="square"
-                  sx={{
-                    width: 150,
-                    height: 150,
-                    marginRight: 2,
-                    marginBottom: 2,
-                    borderRadius: 1,
-                    backgroundColor: '#EBEBEB'
-                  }}>
-                  <FilterIcon sx={{ color: '#000000', width: 75, height: 75 }} />
-                </Avatar>
-              </label>
-              <input
-                {...register('logo')}
-                id="logo-upload"
-                name="logo"
-                type="file"
-                style={{ display: 'none' }}
-                onChange={handleFileChange}
-              />
-              <span style={{ fontSize: '16px' }}>{t(`${createNewAssetNamespace}.asset_logo`)}</span>
-            </Box>
+          <Stack display="flex" flexDirection="column" p={2} sx={{ flexBasis: '30%' }}>
+            <Tooltip title={errors.logo ? errors.logo.message : ''}>
+              <Box
+                borderColor={errors.logo ? 'error.main' : ''}
+                color={errors.logo ? 'error.main' : ''}>
+                <label htmlFor="logo-upload">
+                  <Box border={1} borderRadius={1} sx={{ width: 150, height: 150 }}>
+                    <Avatar
+                      src={preview ?? undefined}
+                      variant="square"
+                      sx={{
+                        width: 150,
+                        height: 150,
+                        marginRight: 2,
+                        marginBottom: 2,
+                        borderRadius: 1,
+                        backgroundColor: '#EBEBEB'
+                      }}>
+                      <FilterIcon sx={{ color: '#000000', width: 75, height: 75 }} />
+                    </Avatar>
+                  </Box>
+                </label>
+                <input
+                  {...register('logo')}
+                  id="logo-upload"
+                  name="logo"
+                  type="file"
+                  style={{ display: 'none' }}
+                  onChange={handleFileChange}
+                />
+                <span style={{ fontSize: '16px' }}>
+                  {t(`${createNewAssetNamespace}.asset_logo`)}
+                </span>
+              </Box>
+            </Tooltip>
           </Stack>
         </Box>
         <Stack gap={3} direction={'row'} mt={3} sx={{ width: '70%' }}>
