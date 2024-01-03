@@ -26,6 +26,9 @@ const userRegistrationSchema = yup.object<InvestorUserRequestDto>().shape({
   priceAndLimit: yup.string(),
   isUsResident: yup.string(),
   sourceOfIncome: yup.array().of(yup.string()),
+  idCardImage: yup.mixed(),
+  addressProofImage: yup.mixed(),
+  selfieImage: yup.mixed(),
   visaTncAgreed: yup.boolean(),
   wittyTncAgreed: yup.boolean(),
   dryRun: yup.boolean().required()
