@@ -46,7 +46,7 @@ const en: LanguageResource = {
     investor_title: 'Select country of residence',
     investor_subtitle: 'Which country are your located in?',
     placeholder: 'Select country',
-    continue: 'CONTINUE',
+    continue: 'Continue',
     by_registering: 'By registering, you accept our ',
     terms_of_use: 'Terms of us',
     and: ' and ',
@@ -55,20 +55,20 @@ const en: LanguageResource = {
   'register-mobile': {
     title: 'Phone number',
     subtitle: 'Enter phone number. We’ll send you a confirmation code',
-    continue: 'CONTINUE'
+    continue: 'Continue'
   },
   'register-email': {
     title: 'E-mail',
     subtitle: 'Enter the email address you want to use to open an account',
     email_input_label: 'Enter your e-mail address',
     password_input_label: 'Password',
-    continue: 'CONTINUE'
+    continue: 'Continue'
   },
   'create-password': {
     title: 'Create password',
     subtitle: 'This password will be used to long into your account',
     email_input_label: 'Password',
-    continue: 'CONTINUE',
+    continue: 'Continue',
     password_must_have: 'Your password must have',
     weak_password: 'Weak password',
     average: 'Average',
@@ -329,6 +329,45 @@ const en: LanguageResource = {
     other: 'Other',
     continue: 'Continue'
   },
+  'invester-occupation': {
+    title: 'Occupation',
+    subtitle: 'What is your employment status?',
+    agriculture: 'Agriculture',
+    craftwork_trade: 'Craftwork/Trade',
+    service_it: 'Service/IT',
+    medical_paramedical: 'Medical/Paramedical',
+    art_culture_sport: 'Art/Culture/Sport',
+    construction_pubic_works: 'Construction/Pubic works',
+    education: 'Education',
+    continue: 'Continue'
+  },
+  'political-expose': {
+    title: 'Are you a Politically Exposed Person (PEP)?',
+    subtitle:
+      'Have you or any of your close family members are asssociates been elected to polimnent political positionsor assigned high profile public roles in the last 12 months?',
+    stateserror: 'What does it mean?',
+    number_name: '[Number Name]',
+    yes: 'Yes',
+    no: 'No'
+  },
+  'political-exposed-person': {
+    title: 'Are you a Politically Exposed Person (PEP)?',
+    subtitle:
+      'Whom of your close family members are asssociates have been elected to polimnent political positionsor assigned high profile public roles in the last 12 months?',
+    stateserror: 'What does it mean?',
+    myself: 'MySelf',
+    Myfamilymember: 'My family member',
+    Mycloseassociate: 'My close associate',
+    continue: 'Continue'
+  },
+  'tax-reporter': {
+    title: 'Your PESEL',
+    subtitle: 'FOR tax reporting purposes,please enter your PESEL in Poland.',
+    stateserror: 'Remember,its very important that the code is correct as per your documents.',
+    number_name: '[Number Name]',
+
+    continue: 'Continue'
+  },
   '*': {
     title: '404',
     sub_title: 'Page Not Found',
@@ -380,7 +419,7 @@ const en: LanguageResource = {
     states: 'The United States',
     statesdetail: 'Enter your Social Security Number (SSN) for the United States',
     stateserror: 'Whats a SSN or its equivalent?',
-    continue: 'CONTINUE',
+    continue: 'Continue',
     placeholder: '#######'
   },
   'pay-country-taxes': {
@@ -389,7 +428,7 @@ const en: LanguageResource = {
     addcountry: 'Add Country',
     states: 'The United States',
     poland: 'Poland',
-    continue: 'CONTINUE'
+    continue: 'Continue'
   },
   'personal-information': {
     title: 'Personal Information',
