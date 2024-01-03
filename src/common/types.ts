@@ -100,6 +100,11 @@ export interface InvestorUserRequestDto extends UserRequestDto {
   city?: string;
   street?: string;
   houseNo?: string;
+  address1?: string;
+  address2?: string;
+  country?: string;
+  longitude?: number;
+  latitude?: number;
   incomeRange?: string;
   priceAndLimit?: boolean;
   isUsResident?: boolean;

@@ -135,6 +135,17 @@ const en: LanguageResource = {
     subtitle: 'Only legal representatives are allowed to create an account.',
     OK: 'OK'
   },
+  'geo-permission': {
+    title: 'Allow us to track your geo-location',
+    subtitle: 'We will block any attempt if someone other than you tries to access your account.',
+    OK: 'GIVE PERMISSION',
+    cancel: 'CANCEL'
+  },
+  'geo-permission-denied': {
+    title: 'Unable to proceed !',
+    subtitle: 'Please enable location services manually and refresh the page.',
+    OK: 'OK'
+  },
   'privacy-policy': {
     title: 'Privacy Policy',
     subtitle: 'Valid as of September 14, 2021',
@@ -450,9 +461,10 @@ const en: LanguageResource = {
     title: 'Address',
     postal_code: 'Postal Code',
     city: 'City',
-    street: 'Street',
-    house_no: 'House No.',
-    continue: 'Continue'
+    address1: 'Address 1',
+    address2: 'Address 2 ( optional )',
+    continue: 'Continue',
+    placeholder: 'Select country'
   },
   'questions-list': {
     title: 'Questions',

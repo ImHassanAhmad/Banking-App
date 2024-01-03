@@ -5,5 +5,7 @@ export const ModalNames = {
   COUNTRY_NOT_SUPPORTED: 'country-not-supported',
   REGION_NOT_SUPPORTED: 'region-not-supported',
   PRIVACY_POLICY: 'privacy-policy',
-  LEGAL_CHECK: 'legal-check'
+  LEGAL_CHECK: 'legal-check',
+  GEO_PERMISSION: 'geo-permission',
+  GEO_PERMISSION_DENIED: 'geo-permission-denied'
 } as const;
