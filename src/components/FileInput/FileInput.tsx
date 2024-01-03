@@ -18,7 +18,12 @@ const FileInput: React.FC<FileInputProps> = ({ selectedFile, label, handleFileCh
         }}>
         <Button variant="contained" component="label" sx={{ minWidth: '30%' }}>
           {label ?? 'Choose File'}
-          <input type="file" hidden onChange={handleFileChange} />
+          <input
+            type="file"
+            hidden
+            onChange={handleFileChange}
+            accept=".pdf, .doc, .docx, .jpg, .jpeg, .png"
+          />
         </Button>
         <FileDisplay selectedFile={selectedFile} />
       </Box>

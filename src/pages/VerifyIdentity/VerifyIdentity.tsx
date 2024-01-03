@@ -1,6 +1,5 @@
-import { type FC, useEffect, useState, useRef, useCallback, type ChangeEvent } from 'react';
+import { type FC, useEffect, useState, useRef, useCallback } from 'react';
 import Webcam from 'react-webcam';
-import { toast } from 'react-toastify';
 import { type SubmitHandler, useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -12,9 +11,9 @@ import { useTranslation } from 'react-i18next';
 import Heading from '@app/components/Heading';
 import FileInput from '@app/components/FileInput';
 import { type WithSignUpStepperContextProps, type AuthFetchQueryError } from '@app/common/types';
-import { checkFileSize } from '@app/utils/fileSize';
 import { imageSrcToFile } from '@app/utils/imageSrcToFile';
 import { fileToImageSrc } from '@app/utils/fileToImageSrc';
+import { validateFile } from '@app/utils/validateFile';
 
 interface IForm {
   idCardImage: File;
@@ -33,13 +32,34 @@ const VerifyIdentity: FC<WithSignUpStepperContextProps> = ({
   const { t } = useTranslation();
   const webcamRef = useRef<Webcam>(null);
   const [imageURL, setImageURL] = useState<string | null>(null);
-  console.log('POP', idCardImage, addressProofImage, selfieImage);
+
   const schema = yup
     .object()
     .shape({
-      idCardImage: yup.mixed().required('ID card is required'),
-      addressProofImage: yup.mixed().required('Proof of address is required'),
-      selfieImage: yup.mixed().required('Selfie image is required')
+      idCardImage: yup
+        .mixed()
+        .test(
+          'fileType',
+          'Invalid file type',
+          async (value) => await validateFile(value as File, 'ID Card', 5)
+        )
+        .required('ID card is required'),
+      addressProofImage: yup
+        .mixed()
+        .test(
+          'fileType',
+          'Invalid file type',
+          async (value) => await validateFile(value as File, 'ID Card', 5)
+        )
+        .required('Proof of address is required'),
+      selfieImage: yup
+        .mixed()
+        .test(
+          'fileType',
+          'Invalid file type',
+          async (value) => await validateFile(value as File, 'ID Card', 5)
+        )
+        .required('Selfie image is required')
     })
     .required();
 
@@ -61,7 +81,6 @@ const VerifyIdentity: FC<WithSignUpStepperContextProps> = ({
         setImageURL(url);
       }
     };
-
     void fetchSelfieImageURL();
   }, [selfieImage]);
 
@@ -99,24 +118,6 @@ const VerifyIdentity: FC<WithSignUpStepperContextProps> = ({
       if (file) setValue('selfieImage', file);
     }
   }, []);
-
-  const handleIdCardImage = (event: ChangeEvent<HTMLInputElement>): void => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const result = checkFileSize(file, 5);
-      if (!result) toast.error('File size exceeds 5 MB limit');
-      else setValue('idCardImage', file);
-    }
-  };
-
-  const handleAddressProofImage = (event: ChangeEvent<HTMLInputElement>): void => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const result = checkFileSize(file, 5);
-      if (!result) toast.error('File size exceeds 5 MB limit');
-      else setValue('addressProofImage', file);
-    }
-  };
 
   return (
     <Stack sx={{ width: '100%' }}>
@@ -176,7 +177,9 @@ const VerifyIdentity: FC<WithSignUpStepperContextProps> = ({
               render={({ field }) => (
                 <FileInput
                   selectedFile={field.value ?? idCardImage}
-                  handleFileChange={handleIdCardImage}
+                  handleFileChange={(ev) => {
+                    setValue('idCardImage', ev.target.files?.[0]);
+                  }}
                   required={true}
                   error={errors.idCardImage ? 'ID Card is required' : ''}
                 />
@@ -193,7 +196,9 @@ const VerifyIdentity: FC<WithSignUpStepperContextProps> = ({
               render={({ field }) => (
                 <FileInput
                   selectedFile={field.value ?? addressProofImage}
-                  handleFileChange={handleAddressProofImage}
+                  handleFileChange={(ev) => {
+                    setValue('addressProofImage', ev.target.files?.[0]);
+                  }}
                   required={true}
                   error={errors.addressProofImage ? 'Proof of address is required' : ''}
                 />
