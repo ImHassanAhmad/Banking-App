@@ -16,6 +16,8 @@ const es: LanguageResource = {
   'country-not-supported': {},
   'region-not-supported': {},
   'legal-check': {},
+  'geo-permission': {},
+  'geo-permission-denied': {},
   'privacy-policy': {},
   'about-our-services': {},
   'business-category': {},

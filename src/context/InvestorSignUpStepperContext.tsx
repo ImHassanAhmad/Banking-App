@@ -120,8 +120,10 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
       case InvestorSignUpFlowSteps.Address:
         apiPayload.postalCode = registerFormData.postalCode;
         apiPayload.city = registerFormData.city;
-        apiPayload.street = registerFormData.street;
-        apiPayload.houseNo = registerFormData.houseNo;
+        apiPayload.address2 = registerFormData.address2;
+        apiPayload.address1 = registerFormData.address1;
+        apiPayload.longitude = registerFormData.longitude;
+        apiPayload.latitude = registerFormData.latitude;
         break;
       case InvestorSignUpFlowSteps.Email:
         apiPayload.email = registerFormData.email;

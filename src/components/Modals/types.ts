@@ -21,6 +21,17 @@ export interface InfoModalProps {
   buttonText: string;
   handleClose: () => void;
 }
+
+export interface ConfirmationModalProps {
+  open: boolean;
+  title: string;
+  subtitle: string;
+  leftButtonText: string;
+  leftButtonOnclickHandler?: () => void;
+  rightButtonText: string;
+  rightButtonOnclickHandler?: () => void;
+  handleClose: () => void;
+}
 export interface ErrorOrWarningModalProps {
   open: boolean;
   title?: string;
