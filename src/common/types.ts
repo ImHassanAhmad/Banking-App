@@ -38,6 +38,15 @@ export enum IncomeSources {
   GoodSales = 'sales_of_goods',
   Other = 'other'
 }
+export enum InvesterOccupation {
+  Agriculture = 'agriculture',
+  Education = 'education',
+  CraftworkTrade = 'craftwork_trade',
+  ServiceIt = 'service_it',
+  MedicalParamedical = 'medical_paramedical',
+  ArtCultureSport = 'art_culture_sport',
+  ConstructionPubicWorks = 'construction_pubic_works'
+}
 
 export interface RegisterUserRequestDto extends CaptchaTokenRequest {
   countryOfIncorporation?: TCountryCode;
@@ -95,6 +104,7 @@ export interface InvestorUserRequestDto extends UserRequestDto {
   priceAndLimit?: boolean;
   isUsResident?: boolean;
   sourceOfIncome?: string[];
+  investerOccupation?: string[];
   socialSecurityNumber?: SocialSecurityInformation[];
 }
 

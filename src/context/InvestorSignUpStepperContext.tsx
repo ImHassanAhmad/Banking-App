@@ -142,6 +142,10 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
       case InvestorSignUpFlowSteps.SourceOfIncome:
         apiPayload.sourceOfIncome = registerFormData.sourceOfIncome;
         break;
+      case InvestorSignUpFlowSteps.InvesterOccupation:
+        apiPayload.investerOccupation = registerFormData.investerOccupation;
+        break;
+
       case InvestorSignUpFlowSteps.CreatePassword:
         // sourceOfIncome temporarily added to prevent an error during the account creation for the investor.
         apiPayload = { ...registerFormData, dryRun: false };
