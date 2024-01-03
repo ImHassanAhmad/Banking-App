@@ -28,4 +28,4 @@ export type MockRegisterUserResponse =
   | OnboardingError
   | Record<string, any>;
 export type MockVerifySignUpOtpResponse = null | OnboardingError;
-export type MockAssetCreationResponse = AssetResponseDto | OnboardingError;
+export type MockAssetResponse = AssetResponseDto | OnboardingError;

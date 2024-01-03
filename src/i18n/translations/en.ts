@@ -292,26 +292,26 @@ const en: LanguageResource = {
     asset_website: 'Asset Website (Optional)',
     asset_logo: 'Asset Logo/Image',
     upload_the_asset: 'Upload the Asset Documents',
-    upload_prospectus: 'Upload Prospectus',
-    upload_prospectus_d:
+    prospectus: 'Upload Prospectus',
+    prospectus_d:
       'This document provides details about an investment offering to the public. It includes company overview, legal information, risk, terms of the offering etc.',
-    business_model: 'Business Model',
-    business_model_d:
+    businessModel: 'Business Model',
+    businessModel_d:
       'Business Model provides the details about the business, planned activities along with supporting flows',
-    financial_model: 'Financial Model',
-    financial_model_d:
+    financialModel: 'Financial Model',
+    financialModel_d:
       'Financial model including current and forecasted figures for the next 3 years (balance sheet, cash-flow, profit and loss accounts) (per activity)',
-    business_plan: 'Business Plan',
-    business_plan_d: '',
-    valuation_report: 'Valuation Report',
-    valuation_report_d:
+    businessPlan: 'Business Plan',
+    businessPlan_d: '',
+    valuationReport: 'Valuation Report',
+    valuationReport_d:
       'Done by them through a third party, but we will also do our valuation via our provider',
     fill_asset_multi: 'Fill in the Asset Multi Media links',
-    Reddit: 'Reddit Link',
-    Twitter: 'Twitter Link',
-    Telegram: 'Telegram Link',
-    Whitepaper: 'Whitepaper Link',
-    Discord: 'Discord Link',
+    reddit: 'Reddit Link',
+    twitter: 'Twitter Link',
+    telegram: 'Telegram Link',
+    whitepaper: 'Whitepaper Link',
+    discord: 'Discord Link',
     choose_file: 'Choose File',
     asset_creation_success: 'Asset Creation has been successfully completed!',
     back_to_home: 'Back to home'

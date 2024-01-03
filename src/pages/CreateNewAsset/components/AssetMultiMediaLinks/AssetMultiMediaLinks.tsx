@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Stack, Typography, Button } from '@mui/material';
+import { Stack, Typography, Button, CircularProgress } from '@mui/material';
 import { useForm, type SubmitHandler, type FieldError } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -8,42 +8,53 @@ import { useTranslation } from 'react-i18next';
 import { SocialMediaLinks } from '../../types';
 import Textfield from '@app/components/Textfield';
 import { useCreateNewAssetStepper } from '@app/context/CreateNewAssetStepperContext';
+import WarningAlert from '@app/components/WarningAlert';
+import {
+  type AssetResponseDto,
+  type RequestError,
+  type AssetSocialMediaRequestDto
+} from '@app/common/types';
+import { useAddSocialMediaLinksMutation } from '@app/store/api/asset';
 
 const createNewAssetNamespace = RouteNames.CREATE_NEW_ASSET;
 
-interface IForm {
-  Reddit: string;
-  Twitter: string;
-  Telegram: string;
-  Whitepaper: string;
-  Discord: string;
-}
-
-const schema = yup.object().shape({
-  Reddit: yup.string().url('Must be a valid URL').required(),
-  Twitter: yup.string().url('Must be a valid URL').required(),
-  Telegram: yup.string().url('Must be a valid URL').required(),
-  Whitepaper: yup.string().url('Must be a valid URL').required(),
-  Discord: yup.string().url('Must be a valid URL').required()
-});
+const urlSchema = yup.string().url('Must be a valid URL').required();
+const schema: yup.ObjectSchema<AssetSocialMediaRequestDto> = yup
+  .object()
+  .shape(
+    Object.fromEntries(Object.values(SocialMediaLinks).map((link) => [link, urlSchema]))
+  ) as yup.ObjectSchema<AssetSocialMediaRequestDto>;
 
 const AssetMultiMediaLinks: React.FC = () => {
   const { t } = useTranslation();
   const [fieldErrors] = useState<FieldError>();
-  const { assetPayload, updateAssetPayload, updateActiveStep } = useCreateNewAssetStepper();
+  const [apiError, setApiError] = useState<RequestError>();
+  const { assetId, assetPayload, updateAssetPayload, updateActiveStep } =
+    useCreateNewAssetStepper();
+  const [addSocialMediaLinks, { isLoading }] = useAddSocialMediaLinksMutation();
   const {
     register,
     handleSubmit,
     formState: { errors, isValid }
-  } = useForm<IForm>({
+  } = useForm<AssetSocialMediaRequestDto>({
     mode: 'onBlur',
     resolver: yupResolver(schema),
-    defaultValues: assetPayload
+    defaultValues: assetPayload as AssetSocialMediaRequestDto
   });
 
-  const onSubmit: SubmitHandler<IForm> = (data) => {
-    updateAssetPayload(data);
-    updateActiveStep();
+  const onSubmit: SubmitHandler<AssetSocialMediaRequestDto> = (
+    data: AssetSocialMediaRequestDto
+  ) => {
+    addSocialMediaLinks({ ...data, assetId })
+      .unwrap()
+      .then((response: AssetResponseDto) => {
+        updateAssetPayload(data);
+        updateActiveStep();
+      })
+      .catch((error: RequestError) => {
+        console.log('error: ', error);
+        setApiError(error);
+      });
   };
 
   return (
@@ -53,6 +64,7 @@ const AssetMultiMediaLinks: React.FC = () => {
       }}>
       <Stack>
         <Stack gap={2} sx={{ width: '70%' }}>
+          {apiError && <WarningAlert message={apiError.message} />}
           <Typography sx={{ fontSize: '2.4rem', fontWeight: 500, mb: 2 }}>
             {t(`${createNewAssetNamespace}.fill_asset_multi`)}
           </Typography>
@@ -74,8 +86,8 @@ const AssetMultiMediaLinks: React.FC = () => {
               width: '100%'
             }}
             type="submit"
-            disabled={!isValid}>
-            {t(`${createNewAssetNamespace}.continue`)}
+            disabled={!isValid || isLoading}>
+            {t(`${createNewAssetNamespace}.continue`)} {isLoading ?? <CircularProgress />}
           </Button>
         </Stack>
       </Stack>

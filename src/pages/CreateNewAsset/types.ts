@@ -1,33 +1,55 @@
 import type React from 'react';
 import { enumToIndexRecord } from '@app/utils/enum';
+import { type AssetDocumentsRequestDto } from '@app/common/types';
+import { type FieldError, type UseFormRegister } from 'react-hook-form';
 
 export interface UploadButtonProps {
   label: string;
   description: string;
   selectedFile: File | null;
   handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  register: UseFormRegister<AssetDocumentsRequestDto>;
+  documentValue: keyof AssetDocumentsRequestDto;
+  error: FieldError | undefined;
+}
+
+export interface FileInputProps {
+  label: string;
+  selectedFile: File | null;
+  handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleUpload: () => void;
+  register: UseFormRegister<AssetDocumentsRequestDto>;
+  documentValue: keyof AssetDocumentsRequestDto;
 }
 export enum SocialMediaLinks {
-  Reddit = 'Reddit',
-  Twitter = 'Twitter',
-  Telegram = 'Telegram',
-  Whitepaper = 'Whitepaper',
-  Discord = 'Discord'
+  Reddit = 'reddit',
+  Twitter = 'twitter',
+  Telegram = 'telegram',
+  Whitepaper = 'whitepaper',
+  Discord = 'discord'
 }
 
 export enum Documents {
-  UploadProspectus = 'upload_prospectus',
-  BusinessModel = 'business_model',
-  FinancialModel = 'financial_model',
-  BusinessPlan = 'business_plan',
-  ValuationReport = 'valuation_report'
+  Prospectus = 'prospectus',
+  BusinessModel = 'businessModel',
+  FinancialModel = 'financialModel',
+  BusinessPlan = 'businessPlan',
+  ValuationReport = 'valuationReport'
 }
 export enum CreateNewAssetSteps {
   AssetInformation = 'AssetInformation',
   AssetDocuments = 'AssetDocuments',
   AssetMultiMediaLinks = 'AssetMultiMediaLinks',
   AssetCreationSuccess = 'AssetCreationSuccess'
+}
+
+export enum AllowedFileFormats {
+  PDF = '.pdf',
+  DOC = '.doc',
+  DOCX = '.docx',
+  JPG = '.jpg',
+  JPEG = '.jpeg',
+  PNG = '.png'
 }
 
 type CreateNewAssetStepsExcludingSuccess = Exclude<
