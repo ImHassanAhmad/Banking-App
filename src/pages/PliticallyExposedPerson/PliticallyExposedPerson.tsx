@@ -15,14 +15,13 @@ import Heading from '@app/components/Heading';
 import { type WithSignUpStepperContextProps } from '@app/common/types';
 import React from 'react';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-
+import { EXPOSED_PERSON } from '@app/constants/investor-onboarding';
 const politicalexposedperson = RouteNames.POLITICAL_EXPOSED_PERSON;
 
 const PoliticalExposedPerson: React.FC<WithSignUpStepperContextProps> = ({
   updateActiveStep,
   userPayload
 }) => {
-  console.log(userPayload);
   const { t } = useTranslation();
 
   const handleSave = (): void => {
@@ -55,27 +54,16 @@ const PoliticalExposedPerson: React.FC<WithSignUpStepperContextProps> = ({
         </Box>
         <FormControl sx={{ width: '98%' }}>
           <RadioGroup>
-            <FormControlLabel
-              value={t(`${politicalexposedperson}.myself`)}
-              control={<Radio />}
-              label={t(`${politicalexposedperson}.myself`)}
-              labelPlacement="start"
-              style={{ justifyContent: 'space-between' }}
-            />
-            <FormControlLabel
-              value={t(`${politicalexposedperson}.Myfamilymember`)}
-              control={<Radio />}
-              label={t(`${politicalexposedperson}.Myfamilymember`)}
-              labelPlacement="start"
-              style={{ justifyContent: 'space-between' }}
-            />
-            <FormControlLabel
-              value={t(`${politicalexposedperson}.Mycloseassociate`)}
-              control={<Radio />}
-              label={t(`${politicalexposedperson}.Mycloseassociate`)}
-              labelPlacement="start"
-              style={{ justifyContent: 'space-between' }}
-            />
+            {EXPOSED_PERSON.map((v) => (
+              <FormControlLabel
+                key={v.value}
+                value={v.value}
+                control={<Radio />}
+                label={v.label}
+                labelPlacement="start"
+                style={{ justifyContent: 'space-between' }}
+              />
+            ))}
           </RadioGroup>
         </FormControl>
         <Button type="submit" onClick={handleSave} sx={{ flexGrow: 1, marginTop: '20px' }}>

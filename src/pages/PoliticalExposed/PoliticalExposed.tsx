@@ -6,14 +6,13 @@ import Heading from '@app/components/Heading';
 import { type WithSignUpStepperContextProps } from '@app/common/types';
 import React from 'react';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-
+import { BINARY_ANSWER_OPTIONS } from '@app/constants/issuer-onboarding';
 const politicalexposed = RouteNames.POLITICAL_EXPOSED;
 
 const PoliticalExposed: React.FC<WithSignUpStepperContextProps> = ({
   updateActiveStep,
   userPayload
 }) => {
-  console.log(userPayload);
   const { t } = useTranslation();
 
   const handleSave = (): void => {
@@ -45,12 +44,11 @@ const PoliticalExposed: React.FC<WithSignUpStepperContextProps> = ({
           <Typography variant="body2">{t(`${politicalexposed}.stateserror`)}</Typography>
         </Box>
         <Box sx={{ display: 'flex', gap: '10px', width: '100%    ', marginTop: '20px' }}>
-          <Button type="submit" onClick={handleSave} sx={{ flexGrow: 1 }}>
-            {t(`${politicalexposed}.yes`)}
-          </Button>
-          <Button type="submit" onClick={handleSave} sx={{ flexGrow: 1 }}>
-            {t(`${politicalexposed}.no`)}
-          </Button>
+          {BINARY_ANSWER_OPTIONS.map((v) => (
+            <Button type="submit" onClick={handleSave} sx={{ flexGrow: 1 }} key={v.id}>
+              {v.topic}
+            </Button>
+          ))}
         </Box>
       </Stack>
     </Stack>
