@@ -20,6 +20,10 @@ import { type WithSignUpStepperContextProps } from '@app/common/types';
 
 import MobileCodeVerification from '@app/pages/MobileCodeVerification';
 import RegisterEmailCodeVerification from '@app/pages/RegisterEmailCodeVerification';
+import InvesterOccupation from '@app/pages/InvesterOccupation/InvesterOccupation';
+import PoliticalExposed from '@app/pages/PoliticalExposed';
+import TaxReporter from '@app/pages/TaxReporter';
+import PoliticalExposedPerson from '@app/pages/PliticallyExposedPerson/PliticallyExposedPerson';
 
 const investorFlowComponent = (
   activeStep: InvestorSignUpFlowSteps
@@ -45,6 +49,14 @@ const investorFlowComponent = (
       return CountryTaxes;
     case InvestorSignUpFlowSteps.SourceOfIncome:
       return SourceOfIncome;
+    case InvestorSignUpFlowSteps.InvesterOccupation:
+      return InvesterOccupation;
+    case InvestorSignUpFlowSteps.TaxReporter:
+      return TaxReporter;
+    case InvestorSignUpFlowSteps.PoliticalExposed:
+      return PoliticalExposed;
+    case InvestorSignUpFlowSteps.PoliticalExposedPerson:
+      return PoliticalExposedPerson;
     case InvestorSignUpFlowSteps.Questionaire:
       return QuestionsList;
     case InvestorSignUpFlowSteps.CreatePassword:
