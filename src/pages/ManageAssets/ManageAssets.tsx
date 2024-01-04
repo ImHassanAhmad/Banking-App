@@ -30,6 +30,24 @@ const assetsArr: AssetsProps[] = [
     logo: 'https://altcoinsbox.com/wp-content/uploads/2023/01/etherscan-logo.jpg',
     price: 0.011,
     status: AssetStatus.PendingApproval
+  },
+  {
+    assetName: 'BTC',
+    assetDescription:
+      'Bitcoin is the first decentralized cryptocurrency. Nodes in the peer-to-peer bitcoin network verify transactions through cryptography and record them in a public distributed ledger, called a blockchain, without central oversight.',
+    assetWebsite: 'https://etherscan.io',
+    logo: 'https://altcoinsbox.com/wp-content/uploads/2023/01/etherscan-logo.jpg',
+    price: 0.011,
+    status: AssetStatus.PendingApproval
+  },
+  {
+    assetName: 'BTC',
+    assetDescription:
+      'Bitcoin is the first decentralized cryptocurrency. Nodes in the peer-to-peer bitcoin network verify transactions through cryptography and record them in a public distributed ledger, called a blockchain, without central oversight.',
+    assetWebsite: 'https://etherscan.io',
+    logo: 'https://altcoinsbox.com/wp-content/uploads/2023/01/etherscan-logo.jpg',
+    price: 0.011,
+    status: AssetStatus.PendingApproval
   }
 ];
 
@@ -45,10 +63,9 @@ const ManageAssets: React.FC = () => {
           subTitle={t(`${translationNamespace}.subtitle`)}
         />
       </Stack>
-      <Stack style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-        <span></span>
+      <Stack style={{ display: 'flex', alignItems: 'flex-end' }}>
         <ButtonWithIcon
-          sx={{ width: '20%' }}
+          sx={{ width: '20%', minWidth: '186px' }}
           title={'Create New Asset'}
           icon={ADD_ICON}
           handleClick={() => {
@@ -56,7 +73,7 @@ const ManageAssets: React.FC = () => {
           }}
         />
       </Stack>
-      <Stack direction={'row'} mt={2}>
+      <Stack direction={'row'} mt={2} sx={{ display: 'flex', flexWrap: 'wrap' }}>
         {assetsArr.map((data: AssetsProps, i: number) => (
           <AssetItem key={i} {...data} />
         ))}

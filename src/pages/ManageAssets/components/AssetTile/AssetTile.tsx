@@ -9,7 +9,8 @@ const style = {
   boxShadow: 8,
   borderRadius: 1.25,
   width: '214px',
-  height: '311.5px'
+  height: '311.5px',
+  marginTop: 2
 };
 
 const styleImgLogo = {
@@ -26,7 +27,8 @@ const styleDescriptionTypography = {
   fontSize: '1.3rem',
   fontWeight: '560px',
   height: '100px',
-  overflow: 'auto'
+  overflow: 'hidden',
+  whiteSpace: 'wrap'
 };
 
 const AssetTile: React.FC<AssetsProps> = ({
@@ -52,7 +54,7 @@ const AssetTile: React.FC<AssetsProps> = ({
         </Typography>
       </Stack>
       <Stack direction={'row'} gap={1}>
-        <Typography style={styleDescriptionTypography} m={1}>
+        <Typography sx={styleDescriptionTypography} m={1}>
           {assetDescription}
         </Typography>
       </Stack>
