@@ -430,7 +430,7 @@ const en: LanguageResource = {
     continue: 'Continue'
   },
   'create-asset-token': {
-    create_new_asset: 'Create new Asset',
+    create_new_asset: 'Create new Token',
     continue: 'Continue',
     token_name: 'Token Name (On Block Chain)',
     token_symbol: 'Token Symbol (On Block Chain)',
@@ -445,7 +445,14 @@ const en: LanguageResource = {
     upload_logo: 'Upload Logo',
     token_basic_info: 'Token Basic Information',
     token_config: 'Token Configuration',
-    token_price: 'Token Price'
+    token_price: 'Token Price',
+    required_name: 'Name is required',
+    required_symbol: 'Symbol is required',
+    not_zero_supply: 'Number of Supply must be greater than 0',
+    not_zero_decimal: 'Number of decimal places must be greater than 0',
+    required_token_logo: 'Token Logo is required',
+    required_currency: 'currency is required',
+    not_zero_price: 'Price is must be greater than 0'
   },
   'legal-representative': {
     title: 'Are you the legal representative or director of this company?'

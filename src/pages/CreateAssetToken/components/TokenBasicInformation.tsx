@@ -33,18 +33,20 @@ const TokenBasicInformation: FC<ITokenBasicInfoProps> = ({ next }) => {
     tokenLogo: undefined
   };
 
+  const { t } = useTranslation();
+
   const schema = yup.object().shape({
-    tokenName: yup.string().required('Name is required'),
-    tokenSymbol: yup.string().required('Symbol is required'),
+    tokenName: yup.string().required(t(`${assetTokenNamespace}.required_name`)),
+    tokenSymbol: yup.string().required(t(`${assetTokenNamespace}.required_symbol`)),
     totalSupply: yup
       .number()
-      .required('Total supply is required')
-      .min(1, 'Number of Decimal places must be greater than 0'),
+      .required()
+      .min(1, t(`${assetTokenNamespace}.not_zero_supply`)),
     numberOfDecimal: yup
       .number()
-      .required('No. of Decimal is required')
-      .min(1, 'Number of Decimal places must be greater than 0'),
-    tokenLogo: yup.mixed().required('Token Logo is required')
+      .required()
+      .min(1, t(`${assetTokenNamespace}.not_zero_decimal`)),
+    tokenLogo: yup.mixed().required(t(`${assetTokenNamespace}.required_token_logo`))
   });
 
   const {
@@ -76,7 +78,6 @@ const TokenBasicInformation: FC<ITokenBasicInfoProps> = ({ next }) => {
     console.log('Uploading file:', selectedFile);
   };
 
-  const { t } = useTranslation();
   return (
     <form
       onSubmit={(event) => {
