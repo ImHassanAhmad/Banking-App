@@ -33,7 +33,6 @@ const CountryCard: React.FC<CountryCardProps> = ({
         display: 'flex',
         gap: '8px',
         background: '#EBEBEB',
-        width: '380px',
         borderRadius: '10px',
         paddingLeft: '15px',
         alignItems: 'center',

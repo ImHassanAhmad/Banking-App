@@ -16,6 +16,7 @@ import { imageSrcToFile } from '@app/utils/imageSrcToFile';
 import { fileToImageSrc } from '@app/utils/fileToImageSrc';
 import { AllowedFileFormats } from '@app/common/types';
 import { createFileSchema } from '@app/utils/createFileSchema';
+import SubmitButton from '@app/components/SubmitButton';
 
 interface IForm {
   idCardImage: File;
@@ -36,6 +37,7 @@ const VerifyIdentity: FC<WithSignUpStepperContextProps> = ({
   const webcamRef = useRef<Webcam>(null);
   const [imageURL, setImageURL] = useState<string | null>(null);
   const [openModal, setOpenModal] = useState(false);
+  const [isCameraPermissionDenied, setCameraPermissionDenied] = useState(false);
 
   const schema = yup
     .object()
@@ -50,11 +52,24 @@ const VerifyIdentity: FC<WithSignUpStepperContextProps> = ({
     control,
     handleSubmit,
     setValue,
+    trigger,
     formState: { errors }
   } = useForm<any>({
     mode: 'onBlur',
     resolver: yupResolver(schema)
   });
+
+  const requestCameraPermission = useCallback(async (): Promise<void> => {
+    try {
+      const permissions = await navigator.permissions.query({ name: 'camera' as PermissionName });
+      if (permissions.state === 'denied') {
+        setOpenModal(true);
+        setCameraPermissionDenied(true);
+      }
+    } catch (error) {
+      console.error('Error accessing camera:', error);
+    }
+  }, []);
 
   useEffect(() => {
     const fetchSelfieImageURL = async (): Promise<void> => {
@@ -65,7 +80,9 @@ const VerifyIdentity: FC<WithSignUpStepperContextProps> = ({
       }
     };
     void fetchSelfieImageURL();
-  }, [selfieImage]);
+
+    void requestCameraPermission();
+  }, [selfieImage, requestCameraPermission]);
 
   const onSubmit: SubmitHandler<IForm> = async (data: IForm) => {
     registerUser({
@@ -82,19 +99,8 @@ const VerifyIdentity: FC<WithSignUpStepperContextProps> = ({
     });
   };
 
-  const requestCameraPermission = async (): Promise<void> => {
-    try {
-      const permissions = await navigator.permissions.query({ name: 'camera' as PermissionName });
-      if (permissions.state === 'denied') {
-        setOpenModal(true);
-      }
-    } catch (error) {
-      console.error('Error accessing camera:', error);
-    }
-  };
-
   const handleCamera = useCallback(async () => {
-    await requestCameraPermission();
+    void requestCameraPermission();
     const imageSrc = webcamRef.current?.getScreenshot();
     if (imageSrc) {
       setImageURL(imageSrc);
@@ -125,6 +131,8 @@ const VerifyIdentity: FC<WithSignUpStepperContextProps> = ({
 
           {imageURL ? (
             <Box component="img" src={imageURL} />
+          ) : isCameraPermissionDenied ? (
+            <></>
           ) : (
             <Webcam
               audio={false}
@@ -172,9 +180,10 @@ const VerifyIdentity: FC<WithSignUpStepperContextProps> = ({
                   selectedFile={field.value ?? idCardImage}
                   handleFileChange={(ev) => {
                     setValue('idCardImage', ev.target.files?.[0]);
+                    void trigger('idCardImage');
                   }}
                   required={true}
-                  error={errors.idCardImage ? 'ID Card is required' : ''}
+                  error={errors.idCardImage?.message as string}
                 />
               )}
             />
@@ -191,21 +200,21 @@ const VerifyIdentity: FC<WithSignUpStepperContextProps> = ({
                   selectedFile={field.value ?? addressProofImage}
                   handleFileChange={(ev) => {
                     setValue('addressProofImage', ev.target.files?.[0]);
+                    void trigger('addressProofImage');
                   }}
                   required={true}
-                  error={errors.addressProofImage ? 'Proof of address is required' : ''}
+                  error={errors?.addressProofImage?.message as string}
                 />
               )}
             />
           </Stack>
 
-          <Button
-            type="submit"
+          <SubmitButton
+            title={t(`${verifyIdentityNamespace}.continue`)}
             disabled={isLoading}
-            sx={{ textTransform: 'uppercase', marginTop: '2rem' }}
-            fullWidth>
-            {t(`${verifyIdentityNamespace}.continue`)}
-          </Button>
+            isLoading={isLoading}
+            sx={{ mt: 4 }}
+          />
         </Stack>
       </form>
     </Stack>

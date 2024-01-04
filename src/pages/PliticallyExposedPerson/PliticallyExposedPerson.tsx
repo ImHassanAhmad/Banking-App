@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import {
   Box,
-  Button,
   FormControl,
   FormControlLabel,
   Radio,
@@ -16,12 +15,10 @@ import { type WithSignUpStepperContextProps } from '@app/common/types';
 import React from 'react';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { EXPOSED_PERSON } from '@app/constants/investor-onboarding';
+import SubmitButton from '@app/components/SubmitButton';
 const politicalexposedperson = RouteNames.POLITICAL_EXPOSED_PERSON;
 
-const PoliticalExposedPerson: React.FC<WithSignUpStepperContextProps> = ({
-  updateActiveStep,
-  userPayload
-}) => {
+const PoliticalExposedPerson: React.FC<WithSignUpStepperContextProps> = ({ updateActiveStep }) => {
   const { t } = useTranslation();
 
   const handleSave = (): void => {
@@ -66,9 +63,12 @@ const PoliticalExposedPerson: React.FC<WithSignUpStepperContextProps> = ({
             ))}
           </RadioGroup>
         </FormControl>
-        <Button type="submit" onClick={handleSave} sx={{ flexGrow: 1, marginTop: '20px' }}>
-          {t(`${politicalexposedperson}.continue`)}
-        </Button>
+
+        <SubmitButton
+          title={t(`${politicalexposedperson}.continue`)}
+          sx={{ mt: 4 }}
+          onClick={handleSave}
+        />
       </Stack>
     </Stack>
   );

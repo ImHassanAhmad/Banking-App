@@ -141,7 +141,7 @@ export const getTheme = (mode: IThemeMode): ThemeOptions => {
         styleOverrides: {
           root: () => ({
             backgroundColor: '#EBEBEB',
-            height: '5.2rem'
+            height: '5.5rem'
           })
         }
       },
@@ -242,10 +242,6 @@ export const getTheme = (mode: IThemeMode): ThemeOptions => {
             ...(ownerState.size === 'medium' && {
               height: '5.2rem'
             }),
-            // width: '16rem',
-            // height: '36px',
-            // borderRadius: '10px',
-            // background: '#ffffff',
             background: '#EBEBEB',
             '.MuiSelect-iconOpen': { color: '#000000' },
             '.MuiSelect-icon': { color: '#000000' },

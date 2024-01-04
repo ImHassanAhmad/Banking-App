@@ -136,13 +136,7 @@ const PasswordField: FC<ITextFieldProps & TextFieldProps> = ({
     ? { onChangeCapture: handlePasswordChange }
     : { onChange: handlePasswordChange, value: password };
   return (
-    <Box
-      ref={containerRef}
-      sx={
-        {
-          // width: '378px'
-        }
-      }>
+    <Box ref={containerRef}>
       <GlobalStyles styles={style} />
       <TextField
         name={name}

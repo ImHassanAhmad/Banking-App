@@ -1,17 +1,20 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
+import { truncateFilename } from '@app/utils/truncateFilename';
 import { type FileDisplayProps } from '../types';
 
 const SelectedFileStyle = {
   fontSize: '1.6rem',
-  wordWrap: 'break-word',
-  whiteSpace: 'pre-wrap',
-  wordBreak: 'break-word',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
   px: 2
 };
 
 export const FileDisplay: React.FC<FileDisplayProps> = ({ selectedFile }) => (
   <Box flexGrow={1}>
-    <Typography sx={SelectedFileStyle}>{selectedFile?.name ?? 'No File Choosen'}</Typography>
+    <Typography sx={SelectedFileStyle}>
+      {selectedFile ? truncateFilename(selectedFile.name, 30) : 'No file chosen'}
+    </Typography>
   </Box>
 );
