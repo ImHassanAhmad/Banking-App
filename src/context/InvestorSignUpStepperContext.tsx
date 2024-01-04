@@ -134,6 +134,9 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
       case InvestorSignUpFlowSteps.IncomeRange:
         apiPayload.incomeRange = registerFormData.incomeRange;
         break;
+      case InvestorSignUpFlowSteps.TaxReporter:
+        apiPayload.peselNumber = registerFormData.peselNumber;
+        break;
       case InvestorSignUpFlowSteps.VerifyIdentity:
         apiPayload.idCardImage = registerFormData.idCardImage;
         apiPayload.addressProofImage = registerFormData.addressProofImage;

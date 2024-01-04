@@ -105,6 +105,7 @@ export interface InvestorUserRequestDto extends UserRequestDto {
   country?: string;
   longitude?: number;
   latitude?: number;
+  peselNumber?: string;
   incomeRange?: string;
   priceAndLimit?: boolean;
   isUsResident?: boolean;
