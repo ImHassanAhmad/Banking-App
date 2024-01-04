@@ -377,3 +377,12 @@ export interface AssetTokenCreationRequestDTO {
 export interface AssetTokenCreationResponseDTO extends AssetTokenCreationRequestDTO {
   id: string;
 }
+
+export enum AllowedFileFormats {
+  PDF = '.pdf',
+  DOC = '.doc',
+  DOCX = '.docx',
+  JPG = '.jpg',
+  JPEG = '.jpeg',
+  PNG = '.png'
+}

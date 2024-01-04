@@ -14,7 +14,8 @@ import FileInput from '@app/components/FileInput';
 import { type WithSignUpStepperContextProps, type AuthFetchQueryError } from '@app/common/types';
 import { imageSrcToFile } from '@app/utils/imageSrcToFile';
 import { fileToImageSrc } from '@app/utils/fileToImageSrc';
-import { validateFile } from '@app/utils/validateFile';
+import { AllowedFileFormats } from '@app/common/types';
+import { createFileSchema } from '@app/utils/createFileSchema';
 
 interface IForm {
   idCardImage: File;
@@ -23,6 +24,7 @@ interface IForm {
 }
 
 const verifyIdentityNamespace = RouteNames.VERIFY_IDENTITY;
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 
 const VerifyIdentity: FC<WithSignUpStepperContextProps> = ({
   updateActiveStep,
@@ -38,30 +40,9 @@ const VerifyIdentity: FC<WithSignUpStepperContextProps> = ({
   const schema = yup
     .object()
     .shape({
-      idCardImage: yup
-        .mixed()
-        .test(
-          'fileType',
-          'Invalid file type',
-          async (value) => await validateFile(value as File, 'ID Card', 5)
-        )
-        .required('ID card is required'),
-      addressProofImage: yup
-        .mixed()
-        .test(
-          'fileType',
-          'Invalid file type',
-          async (value) => await validateFile(value as File, 'ID Card', 5)
-        )
-        .required('Proof of address is required'),
-      selfieImage: yup
-        .mixed()
-        .test(
-          'fileType',
-          'Invalid file type',
-          async (value) => await validateFile(value as File, 'ID Card', 5)
-        )
-        .required('Selfie image is required')
+      idCardImage: createFileSchema(MAX_FILE_SIZE, Object.values(AllowedFileFormats)),
+      addressProofImage: createFileSchema(MAX_FILE_SIZE, Object.values(AllowedFileFormats)),
+      selfieImage: createFileSchema(MAX_FILE_SIZE, Object.values(AllowedFileFormats))
     })
     .required();
 

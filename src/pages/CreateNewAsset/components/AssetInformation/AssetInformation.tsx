@@ -16,7 +16,7 @@ import {
 } from '@app/common/types';
 import { useCreateAssetMutation } from '@app/store/api/asset';
 import { createFileSchema } from '@app/utils/createFileSchema';
-import { AllowedFileFormats } from '../../types';
+import { AllowedFileFormats } from '@app/common/types';
 
 const createNewAssetNamespace = RouteNames.CREATE_NEW_ASSET;
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
