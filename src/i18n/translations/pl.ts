@@ -43,7 +43,8 @@ const pl: LanguageResource = {
   'us-person': {},
   'create-asset-token': {},
   'issuer-onboarding': {},
-  dashboard: {}
+  dashboard: {},
+  'manage-assets': {}
 };
 
 export default pl;

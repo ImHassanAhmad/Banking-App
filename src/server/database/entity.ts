@@ -35,6 +35,7 @@ export interface Investor extends User {
   street?: string;
   houseNo?: string;
   incomeRange?: string;
+  sourceOfIncome?: string[];
   priceAndLimit?: boolean;
 }
 

@@ -25,7 +25,7 @@ const userRegistrationSchema = yup.object<InvestorUserRequestDto>().shape({
   incomeRange: yup.string(),
   priceAndLimit: yup.string(),
   isUsResident: yup.string(),
-  sourceOfIncome: yup.string(),
+  sourceOfIncome: yup.array(),
   visaTncAgreed: yup.boolean(),
   wittyTncAgreed: yup.boolean(),
   dryRun: yup.boolean().required()

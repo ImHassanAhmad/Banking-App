@@ -88,6 +88,7 @@ const uploadAssetLegalDocumentHandler: HttpHandler = http.post<
       AssetDocumentsRequestDto
     >): Promise<StrictResponse<MockAssetResponse>> => {
       const formData: FormData = await request.formData();
+
       const assetDocumentsPayload: AssetDocumentsRequestDto = {
         assetId: formData.get('assetId') as string,
         businessModel: formData.get(Documents.BusinessModel) as File,

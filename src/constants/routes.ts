@@ -34,5 +34,6 @@ export const RouteNames = {
   CREATE_ASSET_TOKEN: 'create-asset-token',
   LEGAL_REPRESENTATIVE: 'legal-representative',
   ISSUER_ONBOARDING: 'issuer-onboarding',
-  DASHBOARD: 'dashboard'
+  DASHBOARD: 'dashboard',
+  MANAGE_ASSETS: 'manage-assets'
 } as const;

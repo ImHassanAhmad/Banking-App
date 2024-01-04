@@ -10,6 +10,7 @@ import QuestionsList from '@app/pages/QuestionsList';
 // import OnboardingUserType from '@app/pages/OnboardingUserType';
 import IssuerOnboarding from '@app/pages/IssuerOnboarding';
 import Dashboard from '@app/pages/Dashboard';
+import ManageAssets from '@app/pages/ManageAssets';
 
 const Welcome = lazy(async () => await import('@app/pages/Welcome'));
 const Login = lazy(async () => await import('@app/layout/LoginStepper'));
@@ -47,5 +48,6 @@ export const publicRoutes: IRouteConfig[] = [
 
 export const privateRoutes: IRouteConfig[] = [
   { path: RouteNames.ISSUER_ONBOARDING, element: IssuerOnboarding },
-  { path: RouteNames.DASHBOARD, element: Dashboard }
+  { path: RouteNames.DASHBOARD, element: Dashboard },
+  { path: RouteNames.MANAGE_ASSETS, element: ManageAssets }
 ];

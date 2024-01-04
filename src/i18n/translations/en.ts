@@ -475,7 +475,11 @@ const en: LanguageResource = {
       'Your Details have been submitted and being review meanwhile you can start exploring',
     dashboard_button: 'Go to Dashboard'
   },
-  dashboard: {}
+  dashboard: {},
+  'manage-assets': {
+    title: 'Manage Assets',
+    subtitle: 'Manage your assets here'
+  }
 };
 
 export default en;
