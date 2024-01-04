@@ -1,1 +1,1 @@
-export { default } from './PliticallyExposedPerson';
+export { default } from './PoliticallyExposedPerson';

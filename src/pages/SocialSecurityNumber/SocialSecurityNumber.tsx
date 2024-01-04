@@ -94,7 +94,12 @@ const SocialSecurityTax: FC<WithSignUpStepperContextProps> = ({
         </Box>
         <Typography sx={{ width: '436px' }}>{t(`${SecurityNumber}.statesdetail`)} </Typography>
         <Box sx={{ marginTop: '20px' }}>
-          <Textfield sx={{ width: '400px' }} value={currentInput} onChange={handleInputChange} />
+          <Textfield
+            sx={{ width: '400px' }}
+            className="inputnumber"
+            value={currentInput}
+            onChange={handleInputChange}
+          />
 
           <Box
             sx={{

@@ -10,10 +10,7 @@ import Textfield from '@app/components/Textfield';
 
 const taxreporter = RouteNames.TAX_REPORTER;
 
-const TaxReporter: React.FC<WithSignUpStepperContextProps> = ({
-  updateActiveStep,
-  userPayload
-}) => {
+const TaxReporter: React.FC<WithSignUpStepperContextProps> = ({ updateActiveStep }) => {
   const { t } = useTranslation();
 
   const handleSave = (): void => {
