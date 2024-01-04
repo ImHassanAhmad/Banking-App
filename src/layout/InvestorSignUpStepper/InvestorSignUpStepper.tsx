@@ -29,12 +29,12 @@ const investorFlowComponent = (
   activeStep: InvestorSignUpFlowSteps
 ): ComponentType<WithSignUpStepperContextProps> | undefined => {
   switch (activeStep) {
+    case InvestorSignUpFlowSteps.Email:
+      return RegisterEmail;
     case InvestorSignUpFlowSteps.NameAndDateOfBirth:
       return PersonalInformation;
     case InvestorSignUpFlowSteps.Address:
       return Address;
-    case InvestorSignUpFlowSteps.Email:
-      return RegisterEmail;
     case InvestorSignUpFlowSteps.Mobile:
       return PhoneNumber;
     case InvestorSignUpFlowSteps.IncomeRange:

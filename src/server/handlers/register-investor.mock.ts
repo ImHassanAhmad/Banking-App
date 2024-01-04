@@ -10,7 +10,7 @@ import { type Investor } from '../database/entity';
 import { type InvestorUserRequestDto } from '@app/common/types';
 
 const userRegistrationSchema = yup.object<InvestorUserRequestDto>().shape({
-  email: yup.string().email().required(),
+  email: yup.string().email(),
   password: yup.string().min(13),
   shortenPhoneNumber: yup.string(),
   phoneNumberCountryCode: yup.string(),
@@ -50,9 +50,9 @@ const registerUInvestorHandler: HttpHandler = http.post<
       const formData: FormData = await request.formData();
       const requestData: InvestorUserRequestDto = {
         ...JSON.parse(formData.get('data') as string),
-        idCardImage: formData.get('idCardImage') as File,
-        addressProofImage: formData.get('addressProofImage') as File,
-        selfieImage: formData.get('selfieImage') as File
+        idCardImage: (formData.get('idCardImage') as File) || {},
+        addressProofImage: (formData.get('addressProofImage') as File) || {},
+        selfieImage: (formData.get('selfieImage') as File) || {}
       };
 
       const userData = userRegistrationSchema.validateSync(requestData) as InvestorUserRequestDto;

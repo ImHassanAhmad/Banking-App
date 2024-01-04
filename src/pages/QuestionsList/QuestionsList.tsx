@@ -1,11 +1,12 @@
 import { type FC, useState, useCallback } from 'react';
-import { Button, Stack } from '@mui/material';
+import { Stack } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import Heading from '@app/components/Heading';
 import { RouteNames } from '@app/constants/routes';
 import CheckboxItem from '@app/components/CheckboxItem';
 import { type CheckListType } from '@app/components/CheckboxItem/types';
 import { type WithSignUpStepperContextProps } from '@app/common/types';
+import SubmitButton from '@app/components/SubmitButton';
 
 const questionsListsNamespace = RouteNames.QUESTIONS_LIST;
 
@@ -69,16 +70,15 @@ const QuestionsList: FC<WithSignUpStepperContextProps> = ({
               />
             ))}
 
-            <Button
+            <SubmitButton
+              title={t(`${questionsListsNamespace}.continue`)}
               disabled={!isAllNonOptionalChecked}
-              sx={{ textTransform: 'uppercase', marginTop: '2rem' }}
+              sx={{ mt: 4 }}
               onClick={() => {
                 updateUserPayload({ wittyNews: checkList.news_promotions.checked });
                 updateActiveStep();
               }}
-              fullWidth>
-              {t(`${questionsListsNamespace}.continue`)}
-            </Button>
+            />
           </Stack>
         </Stack>
       </Stack>

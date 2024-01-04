@@ -47,7 +47,7 @@ export interface InvestorSignUpStepperContextProps {
 }
 
 const InvestorSignUpStepperContext = createContext<InvestorSignUpStepperContextProps>({
-  activeStep: InvestorSignUpFlowSteps.NameAndDateOfBirth,
+  activeStep: InvestorSignUpFlowSteps.Email,
   userId: '',
   error: {},
   isLoading: false,
@@ -57,7 +57,7 @@ const InvestorSignUpStepperContext = createContext<InvestorSignUpStepperContextP
 const { Provider } = InvestorSignUpStepperContext;
 
 export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [activeStep, setActiveStep] = useState(InvestorSignUpFlowSteps.NameAndDateOfBirth);
+  const [activeStep, setActiveStep] = useState(InvestorSignUpFlowSteps.VerifyIdentity);
   const [userId, setUserId] = useState('');
   const { updateError, findError } = useAuthError();
   const [registerUserPayload, setRegisterUserPayload] = useState<InvestorUserRequestDto>({
@@ -65,11 +65,13 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
     socialSecurityNumber: []
   });
   const [register, { isLoading }] = useRegisterInvestorMutation();
+
   const handleError = (
     { message, errorLevel }: AuthFetchQueryError,
     onSuccess: (response: RegisterUserResponseDto) => void,
     onError: (error: AuthFetchQueryError) => void
   ): void => {
+    console.log('CONTEXT', message, errorLevel);
     if (!message) {
       onSuccess({ userId: '' });
       return;
@@ -92,7 +94,7 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
     const nextActiveStep: InvestorSignUpFlowSteps =
       (indexToEnumKeyRecord(InvestorSignUpFlowSteps)[
         enumToIndexRecord(InvestorSignUpFlowSteps)[activeStep] + 1
-      ] as InvestorSignUpFlowSteps) || InvestorSignUpFlowSteps.NameAndDateOfBirth;
+      ] as InvestorSignUpFlowSteps) || InvestorSignUpFlowSteps.Email;
 
     updateError(nextActiveStep, undefined);
     setActiveStep(nextStep ?? nextActiveStep);
@@ -118,6 +120,7 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
         apiPayload.dateOfBirth = registerFormData.dateOfBirth;
         break;
       case InvestorSignUpFlowSteps.Address:
+        apiPayload.country = registerFormData.country;
         apiPayload.postalCode = registerFormData.postalCode;
         apiPayload.city = registerFormData.city;
         apiPayload.address2 = registerFormData.address2;
