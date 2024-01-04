@@ -25,7 +25,10 @@ const userRegistrationSchema = yup.object<InvestorUserRequestDto>().shape({
   incomeRange: yup.string(),
   priceAndLimit: yup.string(),
   isUsResident: yup.string(),
-  sourceOfIncome: yup.string(),
+  sourceOfIncome: yup.array().of(yup.string()),
+  idCardImage: yup.mixed(),
+  addressProofImage: yup.mixed(),
+  selfieImage: yup.mixed(),
   visaTncAgreed: yup.boolean(),
   wittyTncAgreed: yup.boolean(),
   dryRun: yup.boolean().required()
@@ -44,7 +47,14 @@ const registerUInvestorHandler: HttpHandler = http.post<
       HttpRequestResolverExtras<PathParams>,
       InvestorUserRequestDto
     >): Promise<StrictResponse<MockRegisterUserResponse>> => {
-      const requestData: InvestorUserRequestDto = await request.json();
+      const formData: FormData = await request.formData();
+      const requestData: InvestorUserRequestDto = {
+        ...JSON.parse(formData.get('data') as string),
+        idCardImage: formData.get('idCardImage') as File,
+        addressProofImage: formData.get('addressProofImage') as File,
+        selfieImage: formData.get('selfieImage') as File
+      };
+
       const userData = userRegistrationSchema.validateSync(requestData) as InvestorUserRequestDto;
 
       const { dryRun, ...rest } = userData;

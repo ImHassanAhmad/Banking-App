@@ -43,15 +43,6 @@ export enum CreateNewAssetSteps {
   AssetCreationSuccess = 'AssetCreationSuccess'
 }
 
-export enum AllowedFileFormats {
-  PDF = '.pdf',
-  DOC = '.doc',
-  DOCX = '.docx',
-  JPG = '.jpg',
-  JPEG = '.jpeg',
-  PNG = '.png'
-}
-
 type CreateNewAssetStepsExcludingSuccess = Exclude<
   CreateNewAssetSteps,
   CreateNewAssetSteps.AssetCreationSuccess

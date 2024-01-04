@@ -431,6 +431,10 @@ const en: LanguageResource = {
     upload_id_card: 'Upload ID Card',
     take_selfie: 'Take Selfie',
     delete_selfie: 'Delete',
+    modal_title: 'Permission Required',
+    modal_subtitle:
+      'To enable camera access, please manually grant camera permissions in your browser settings',
+    modal_btn_title: 'Close',
     continue: 'Continue'
   },
   'security-number': {

@@ -111,6 +111,9 @@ export interface InvestorUserRequestDto extends UserRequestDto {
   sourceOfIncome?: string[];
   investerOccupation?: string[];
   socialSecurityNumber?: SocialSecurityInformation[];
+  idCardImage?: File;
+  addressProofImage?: File;
+  selfieImage?: File;
 }
 
 export interface IssuerUserRequestDto extends UserRequestDto {
@@ -373,4 +376,13 @@ export interface AssetTokenCreationRequestDTO {
 
 export interface AssetTokenCreationResponseDTO extends AssetTokenCreationRequestDTO {
   id: string;
+}
+
+export enum AllowedFileFormats {
+  PDF = '.pdf',
+  DOC = '.doc',
+  DOCX = '.docx',
+  JPG = '.jpg',
+  JPEG = '.jpeg',
+  PNG = '.png'
 }

@@ -131,6 +131,11 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
       case InvestorSignUpFlowSteps.IncomeRange:
         apiPayload.incomeRange = registerFormData.incomeRange;
         break;
+      case InvestorSignUpFlowSteps.VerifyIdentity:
+        apiPayload.idCardImage = registerFormData.idCardImage;
+        apiPayload.addressProofImage = registerFormData.addressProofImage;
+        apiPayload.selfieImage = registerFormData.selfieImage;
+        break;
       case InvestorSignUpFlowSteps.Mobile:
         apiPayload.phoneNumberCountryCode = registerFormData.phoneNumberCountryCode;
         apiPayload.shortenPhoneNumber = registerFormData.shortenPhoneNumber;
@@ -149,7 +154,6 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
         break;
 
       case InvestorSignUpFlowSteps.CreatePassword:
-        // sourceOfIncome temporarily added to prevent an error during the account creation for the investor.
         apiPayload = { ...registerFormData, dryRun: false };
         break;
       default:

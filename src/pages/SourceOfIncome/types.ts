@@ -4,7 +4,7 @@ export interface IncomeSource {
 
 export type CheckList = Record<string, IncomeSource>;
 
-export interface FundingSourceItemProps extends IncomeSource {
+export interface IncomeSourceItemProps extends IncomeSource {
   onChange: () => void;
   title: string;
 }
