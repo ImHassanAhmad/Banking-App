@@ -530,7 +530,15 @@ const en: LanguageResource = {
       'Your Details have been submitted and being review meanwhile you can start exploring',
     dashboard_button: 'Go to Dashboard'
   },
-  dashboard: {}
+  dashboard: {},
+  'reset-password': {
+    title: 'Reset Password',
+    subtitle: 'Please enter your email',
+    continue: 'Continue',
+    email_input_label: 'Enter your e-mail address',
+    password_input_label: 'New Password',
+    repeat_password_input_label: 'Repeat Password'
+  }
 };
 
 export default en;
