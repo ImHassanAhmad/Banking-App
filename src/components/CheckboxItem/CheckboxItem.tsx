@@ -56,6 +56,7 @@ const CheckboxItem: React.FC<CheckboxItemProps> = ({
     <FormControlLabel
       control={
         <Checkbox
+          data-testid={linkText}
           sx={checkboxStyle(isDisabled)}
           checked={checked}
           onChange={onChange}

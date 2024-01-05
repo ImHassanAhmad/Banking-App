@@ -115,7 +115,7 @@ const CreateAssetToken: React.FC = () => {
         }}
       />
       <Box mt="46px">
-        <Stepper activeStep={activeStepIndex} sx={{ mb: 8 }}>
+        <Stepper activeStep={activeStepIndex} sx={{ mb: 8 }} data-testid="asset-token-stepper">
           {AssetTokenSteps.map((label, index) => (
             <Step key={index}>
               <StepLabel>{label}</StepLabel>
