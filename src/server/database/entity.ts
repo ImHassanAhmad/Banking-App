@@ -34,6 +34,12 @@ export interface Investor extends User {
   city?: string;
   street?: string;
   houseNo?: string;
+  address1?: string;
+  address2?: string;
+  country?: string;
+  longitude?: number;
+  latitude?: number;
+  peselNumber?: string;
   incomeRange?: string;
   sourceOfIncome?: string[];
   priceAndLimit?: boolean;
@@ -100,4 +106,5 @@ export interface AssetTokenCreationEntity extends BaseEntity {
   capped: boolean;
   currency: string;
   buyPrice: number;
+  tokenLogo: string;
 }

@@ -43,6 +43,15 @@ export enum IncomeSources {
   GoodSales = 'sales_of_goods',
   Other = 'other'
 }
+export enum InvesterOccupation {
+  Agriculture = 'agriculture',
+  Education = 'education',
+  CraftworkTrade = 'craftwork_trade',
+  ServiceIt = 'service_it',
+  MedicalParamedical = 'medical_paramedical',
+  ArtCultureSport = 'art_culture_sport',
+  ConstructionPubicWorks = 'construction_pubic_works'
+}
 
 export interface RegisterUserRequestDto extends CaptchaTokenRequest {
   countryOfIncorporation?: TCountryCode;
@@ -96,11 +105,21 @@ export interface InvestorUserRequestDto extends UserRequestDto {
   city?: string;
   street?: string;
   houseNo?: string;
+  address1?: string;
+  address2?: string;
+  country?: string;
+  longitude?: number;
+  latitude?: number;
+  peselNumber?: string;
   incomeRange?: string;
   priceAndLimit?: boolean;
   isUsResident?: boolean;
   sourceOfIncome?: string[];
+  investerOccupation?: string[];
   socialSecurityNumber?: SocialSecurityInformation[];
+  idCardImage?: File;
+  addressProofImage?: File;
+  selfieImage?: File;
 }
 
 export interface IssuerUserRequestDto extends UserRequestDto {
@@ -362,9 +381,18 @@ export interface AssetTokenCreationRequestDTO {
   capped: boolean;
   currency: string;
   buyPrice: number;
-  logo: File;
+  tokenLogo: File;
 }
 
 export interface AssetTokenCreationResponseDTO extends AssetTokenCreationRequestDTO {
   id: string;
+}
+
+export enum AllowedFileFormats {
+  PDF = '.pdf',
+  DOC = '.doc',
+  DOCX = '.docx',
+  JPG = '.jpg',
+  JPEG = '.jpeg',
+  PNG = '.png'
 }

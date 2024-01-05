@@ -20,17 +20,21 @@ import { type WithSignUpStepperContextProps } from '@app/common/types';
 
 import MobileCodeVerification from '@app/pages/MobileCodeVerification';
 import RegisterEmailCodeVerification from '@app/pages/RegisterEmailCodeVerification';
+import InvesterOccupation from '@app/pages/InvesterOccupation/InvesterOccupation';
+import PoliticalExposed from '@app/pages/PoliticalExposed';
+import TaxReporter from '@app/pages/TaxReporter';
+import PoliticalExposedPerson from '@app/pages/PliticallyExposedPerson/PliticallyExposedPerson';
 
 const investorFlowComponent = (
   activeStep: InvestorSignUpFlowSteps
 ): ComponentType<WithSignUpStepperContextProps> | undefined => {
   switch (activeStep) {
+    case InvestorSignUpFlowSteps.Email:
+      return RegisterEmail;
     case InvestorSignUpFlowSteps.NameAndDateOfBirth:
       return PersonalInformation;
     case InvestorSignUpFlowSteps.Address:
       return Address;
-    case InvestorSignUpFlowSteps.Email:
-      return RegisterEmail;
     case InvestorSignUpFlowSteps.Mobile:
       return PhoneNumber;
     case InvestorSignUpFlowSteps.IncomeRange:
@@ -45,6 +49,14 @@ const investorFlowComponent = (
       return CountryTaxes;
     case InvestorSignUpFlowSteps.SourceOfIncome:
       return SourceOfIncome;
+    case InvestorSignUpFlowSteps.InvesterOccupation:
+      return InvesterOccupation;
+    case InvestorSignUpFlowSteps.TaxReporter:
+      return TaxReporter;
+    case InvestorSignUpFlowSteps.PoliticalExposed:
+      return PoliticalExposed;
+    case InvestorSignUpFlowSteps.PoliticalExposedPerson:
+      return PoliticalExposedPerson;
     case InvestorSignUpFlowSteps.Questionaire:
       return QuestionsList;
     case InvestorSignUpFlowSteps.CreatePassword:
@@ -78,7 +90,7 @@ const IssuerSignUpStepper: FC = () => {
             alignItems: 'flex-start'
           }
         }}>
-        <Grid item lg={8} md={10} sm={10} xs={12}>
+        <Grid item lg={7} md={10} sm={10} xs={12}>
           {InvestorFlowComponent ? (
             <InvestorFlowComponent {...props}></InvestorFlowComponent>
           ) : (

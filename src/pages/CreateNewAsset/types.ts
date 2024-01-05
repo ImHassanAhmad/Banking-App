@@ -1,7 +1,7 @@
 import type React from 'react';
 import { enumToIndexRecord } from '@app/utils/enum';
 import { type AssetDocumentsRequestDto } from '@app/common/types';
-import { type UseFormRegister } from 'react-hook-form';
+import { type FieldError, type UseFormRegister } from 'react-hook-form';
 
 export interface UploadButtonProps {
   label: string;
@@ -10,7 +10,7 @@ export interface UploadButtonProps {
   handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   register: UseFormRegister<AssetDocumentsRequestDto>;
   documentValue: keyof AssetDocumentsRequestDto;
-  // handleUpload: () => void;
+  error: FieldError | undefined;
 }
 
 export interface FileInputProps {

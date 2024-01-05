@@ -6,7 +6,7 @@ import type { IUploadFileProps } from '../../types';
 
 const translationNamespace = RouteNames.ISSUER_ONBOARDING;
 
-const UploadField: FC<IUploadFileProps> = ({ name, state, setter, error }) => {
+const UploadFile: FC<IUploadFileProps> = ({ name, state, setter, error }) => {
   const { t } = useTranslation();
 
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -25,7 +25,13 @@ const UploadField: FC<IUploadFileProps> = ({ name, state, setter, error }) => {
   };
 
   return (
-    <Box display="flex" alignItems="center" gap="20px" width="100%" justifyContent="space-between">
+    <Box
+      display="flex"
+      alignItems="center"
+      gap="20px"
+      width="100%"
+      justifyContent="space-between"
+      data-testid="upload-file">
       <input
         id="file-upload"
         type="file"
@@ -33,45 +39,53 @@ const UploadField: FC<IUploadFileProps> = ({ name, state, setter, error }) => {
         onChange={handleFileInputChange}
         accept="image/*"
         ref={fileInputRef}
+        data-testid="upload-file-button"
       />
       <Typography color="#414141">{t(`${translationNamespace}.${name}`)}</Typography>
-      <Box
-        width="330px"
-        bgcolor="#EBEBEB"
-        height="52px"
-        borderRadius="10px"
-        display="flex"
-        alignItems="center"
-        sx={{
-          border: error ? '1px solid #F28274' : ''
-        }}>
+      <Box>
         <Box
-          ml="15px"
+          width="330px"
+          bgcolor="#EBEBEB"
+          height="52px"
+          borderRadius="10px"
           display="flex"
           alignItems="center"
-          height="100%"
-          sx={{ cursor: 'pointer' }}
-          onClick={handleClickUpload}>
-          <Typography color="#414141" whiteSpace="nowrap">
-            {t(`${translationNamespace}.choose_file`)}
+          sx={{
+            border: error ? '1px solid #F28274' : ''
+          }}>
+          <Box
+            ml="15px"
+            display="flex"
+            alignItems="center"
+            height="100%"
+            sx={{ cursor: 'pointer' }}
+            onClick={handleClickUpload}>
+            <Typography color="#414141" whiteSpace="nowrap">
+              {t(`${translationNamespace}.choose_file`)}
+            </Typography>
+          </Box>
+          <Divider orientation="vertical" flexItem sx={{ margin: '0 10px' }} />
+          <Typography
+            color="#414141"
+            sx={{
+              fontSize: '14px',
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              display: 'inline-block',
+              padding: '0 10px'
+            }}>
+            {state?.name ?? 'Select File'}
           </Typography>
         </Box>
-        <Divider orientation="vertical" flexItem sx={{ margin: '0 10px' }} />
-        <Typography
-          color="#414141"
-          sx={{
-            fontSize: '14px',
-            whiteSpace: 'nowrap',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            display: 'inline-block',
-            padding: '0 10px'
-          }}>
-          {state?.name ?? ''}
-        </Typography>
+        {error && (
+          <Typography color="#F28274" fontSize="13px" m="5px 0 0 3px">
+            Required File
+          </Typography>
+        )}
       </Box>
     </Box>
   );
 };
 
-export default UploadField;
+export default UploadFile;
