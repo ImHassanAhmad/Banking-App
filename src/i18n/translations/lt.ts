@@ -50,7 +50,8 @@ const lt: LanguageResource = {
   'create-asset-token': {},
   'issuer-onboarding': {},
   dashboard: {},
-  'manage-assets': {}
+  'manage-assets': {},
+  'reset-password': {}
 };
 
 export default lt;

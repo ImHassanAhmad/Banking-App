@@ -534,6 +534,14 @@ const en: LanguageResource = {
   'manage-assets': {
     title: 'Manage Assets',
     subtitle: 'Manage your assets here'
+  },
+  'reset-password': {
+    title: 'Reset Password',
+    subtitle: 'Please enter your email',
+    continue: 'Continue',
+    email_input_label: 'Enter your e-mail address',
+    password_input_label: 'New Password',
+    repeat_password_input_label: 'Repeat Password'
   }
 };
 
