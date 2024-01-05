@@ -18,7 +18,7 @@ jest.mock('react-i18next', () => ({
 describe('PoliticalExposedPerson Component', () => {
   const mockUpdateActiveStep = jest.fn();
 
-  const setup = () =>
+  const setup = (): any =>
     render(<PoliticalExposedPerson updateActiveStep={mockUpdateActiveStep} userPayload={{}} />);
   it('renders heading and subtitle correctly', () => {
     setup();

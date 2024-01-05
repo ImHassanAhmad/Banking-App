@@ -20,7 +20,7 @@ describe('SocialSecurityTax Component', () => {
     isUsResident: false,
     socialSecurityNumber: []
   };
-  const renderComponent = (userPayload = userPayloadMock) =>
+  const renderComponent = (userPayload = userPayloadMock): any =>
     render(
       <SocialSecurityTax
         updateActiveStep={mockUpdateActiveStep}
