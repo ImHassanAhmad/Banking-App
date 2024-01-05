@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button, CircularProgress, Stack, Typography } from '@mui/material';
-import UploadButton from '../UploadButton';
+import UploadDocuments from '../UploadDocuments';
 import { RouteNames } from '@app/constants/routes';
 import { useTranslation } from 'react-i18next';
 import { Documents } from '../../types';
@@ -37,7 +37,7 @@ const AssetDocuments: React.FC = () => {
   const {
     handleSubmit,
     setValue,
-    register,
+    control,
     trigger,
     formState: { isValid, errors }
   } = useForm<AssetDocumentsRequestDto>({
@@ -77,27 +77,26 @@ const AssetDocuments: React.FC = () => {
         setApiError(error);
       });
   };
-  console.log('Error', errors);
   return (
     <form
       onSubmit={(event) => {
         void handleSubmit(onSubmit)(event);
       }}>
-      <Stack gap={1}>
+      <Stack gap={1} width={'100%'}>
         {apiError && <WarningAlert message={apiError.message} />}
         <Typography sx={{ fontSize: '2.4rem', fontWeight: 500, mb: 2 }}>
           {t(`${createNewAssetNamespace}.upload_the_asset`)}
         </Typography>
         {Object.values(Documents).map((value: string) => (
-          <UploadButton
+          <UploadDocuments
             key={value}
             label={t(`${createNewAssetNamespace}.${value}`)}
             description={t(`${createNewAssetNamespace}.${value}_d`)}
             selectedFile={selectedFiles[value]}
             handleFileChange={handleFileChange(value)}
-            register={register}
             documentValue={value as keyof AssetDocumentsRequestDto}
             error={errors[value as keyof AssetDocumentsRequestDto]}
+            control={control}
           />
         ))}
         <Stack gap={3} direction={'row'} mt={3} sx={{ width: '70%' }}>
