@@ -26,8 +26,8 @@ const translationNamespace = RouteNames.LOGIN;
 const schema = yup
   .object()
   .shape({
-    email: yup.string().email().required(),
-    password: yup.string().required()
+    email: yup.string().email('Email is invalid.').required('Email is required.'),
+    password: yup.string().required('Password is required')
   })
   .required();
 
@@ -162,6 +162,9 @@ const Login: FC = () => {
               cursor: 'pointer',
               textDecorationLine: 'underline',
               letterSpacing: '0.02rem'
+            }}
+            onClick={() => {
+              navigate(`/${RouteNames.RESET_PASSWORD}`);
             }}>
             {t(`${translationNamespace}.forgot_password`)}
           </Typography>

@@ -49,7 +49,8 @@ const lt: LanguageResource = {
   'us-person': {},
   'create-asset-token': {},
   'issuer-onboarding': {},
-  dashboard: {}
+  dashboard: {},
+  'reset-password': {}
 };
 
 export default lt;
