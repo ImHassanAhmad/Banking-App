@@ -1,7 +1,8 @@
-import type {
-  IThemeMode,
-  SupportedCountriesIncorporation,
-  SupportedCountriesPhone
+import {
+  type onBoardType,
+  type IThemeMode,
+  type SupportedCountriesIncorporation,
+  type SupportedCountriesPhone
 } from '@app/common/types';
 import { createSlice } from '@reduxjs/toolkit';
 
@@ -10,6 +11,7 @@ const initialState: {
   supportedCountries: SupportedCountriesIncorporation & SupportedCountriesPhone;
   postOnboardingCompleted: boolean;
   email: string;
+  userType?: onBoardType;
 } = {
   themeMode: 'LIGHT',
   supportedCountries: {
@@ -33,13 +35,14 @@ export const userDataSlice = createSlice({
     setPostOnboardingCompleted: (state, { payload }) => {
       state.postOnboardingCompleted = payload;
     },
-    setEmail: (state, { payload }) => {
-      state.email = payload;
+    setUser: (state, { payload: { email, userType } }) => {
+      state.email = email;
+      state.userType = userType;
     }
   }
 });
 
-export const { setThemeMode, setSupportedCountries, setPostOnboardingCompleted, setEmail } =
+export const { setThemeMode, setSupportedCountries, setPostOnboardingCompleted, setUser } =
   userDataSlice.actions;
 
 export default userDataSlice;

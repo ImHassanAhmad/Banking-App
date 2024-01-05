@@ -1,5 +1,5 @@
 import React, { useState, type FC } from 'react';
-import { Button, Stack } from '@mui/material';
+import { Stack } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { RouteNames } from '@app/constants/routes';
 import Heading from '@app/components/Heading';
@@ -7,6 +7,7 @@ import IncomeSourceItem from './components/IncomeSourceItem';
 import { type CheckList } from '../SourceOfFunding/types';
 import { type WithSignUpStepperContextProps } from '@app/common/types';
 import { IncomeSources } from '@app/common/types';
+import SubmitButton from '@app/components/SubmitButton';
 
 const sourceOfFundingNamespace = RouteNames.SOURCE_OF_INCOME;
 const incomeSourcesArray: string[] = Object.values(IncomeSources);
@@ -61,7 +62,7 @@ const SourceOfIncome: FC<WithSignUpStepperContextProps> = ({
 
   return (
     <Stack mt={4} sx={{ width: '100%' }}>
-      <Stack mt={4}>
+      <Stack>
         <Heading
           title={t(`${sourceOfFundingNamespace}.title`)}
           subTitle={t(`${sourceOfFundingNamespace}.subtitle`)}
@@ -82,13 +83,12 @@ const SourceOfIncome: FC<WithSignUpStepperContextProps> = ({
             </>
           ))}
         </Stack>
-        <Button
+        <SubmitButton
+          title={t(`${sourceOfFundingNamespace}.continue`)}
           disabled={!isAtLeastOneChecked()}
-          sx={{ marginTop: '2rem', width: '100%' }}
-          type="submit"
-          onClick={handleSave}>
-          {t(`${sourceOfFundingNamespace}.continue`)}
-        </Button>
+          sx={{ mt: 4 }}
+          onClick={handleSave}
+        />
       </Stack>
     </Stack>
   );

@@ -47,7 +47,7 @@ export interface InvestorSignUpStepperContextProps {
 }
 
 const InvestorSignUpStepperContext = createContext<InvestorSignUpStepperContextProps>({
-  activeStep: InvestorSignUpFlowSteps.NameAndDateOfBirth,
+  activeStep: InvestorSignUpFlowSteps.Email,
   userId: '',
   error: {},
   isLoading: false,
@@ -57,7 +57,7 @@ const InvestorSignUpStepperContext = createContext<InvestorSignUpStepperContextP
 const { Provider } = InvestorSignUpStepperContext;
 
 export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [activeStep, setActiveStep] = useState(InvestorSignUpFlowSteps.NameAndDateOfBirth);
+  const [activeStep, setActiveStep] = useState(InvestorSignUpFlowSteps.Email);
   const [userId, setUserId] = useState('');
   const { updateError, findError } = useAuthError();
   const [registerUserPayload, setRegisterUserPayload] = useState<InvestorUserRequestDto>({
@@ -65,11 +65,13 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
     socialSecurityNumber: []
   });
   const [register, { isLoading }] = useRegisterInvestorMutation();
+
   const handleError = (
     { message, errorLevel }: AuthFetchQueryError,
     onSuccess: (response: RegisterUserResponseDto) => void,
     onError: (error: AuthFetchQueryError) => void
   ): void => {
+    console.log('CONTEXT', message, errorLevel);
     if (!message) {
       onSuccess({ userId: '' });
       return;
@@ -92,7 +94,7 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
     const nextActiveStep: InvestorSignUpFlowSteps =
       (indexToEnumKeyRecord(InvestorSignUpFlowSteps)[
         enumToIndexRecord(InvestorSignUpFlowSteps)[activeStep] + 1
-      ] as InvestorSignUpFlowSteps) || InvestorSignUpFlowSteps.NameAndDateOfBirth;
+      ] as InvestorSignUpFlowSteps) || InvestorSignUpFlowSteps.Email;
 
     updateError(nextActiveStep, undefined);
     setActiveStep(nextStep ?? nextActiveStep);
@@ -118,16 +120,27 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
         apiPayload.dateOfBirth = registerFormData.dateOfBirth;
         break;
       case InvestorSignUpFlowSteps.Address:
+        apiPayload.country = registerFormData.country;
         apiPayload.postalCode = registerFormData.postalCode;
         apiPayload.city = registerFormData.city;
-        apiPayload.street = registerFormData.street;
-        apiPayload.houseNo = registerFormData.houseNo;
+        apiPayload.address2 = registerFormData.address2;
+        apiPayload.address1 = registerFormData.address1;
+        apiPayload.longitude = registerFormData.longitude;
+        apiPayload.latitude = registerFormData.latitude;
         break;
       case InvestorSignUpFlowSteps.Email:
         apiPayload.email = registerFormData.email;
         break;
       case InvestorSignUpFlowSteps.IncomeRange:
         apiPayload.incomeRange = registerFormData.incomeRange;
+        break;
+      case InvestorSignUpFlowSteps.TaxReporter:
+        apiPayload.peselNumber = registerFormData.peselNumber;
+        break;
+      case InvestorSignUpFlowSteps.VerifyIdentity:
+        apiPayload.idCardImage = registerFormData.idCardImage;
+        apiPayload.addressProofImage = registerFormData.addressProofImage;
+        apiPayload.selfieImage = registerFormData.selfieImage;
         break;
       case InvestorSignUpFlowSteps.Mobile:
         apiPayload.phoneNumberCountryCode = registerFormData.phoneNumberCountryCode;
@@ -147,7 +160,6 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
         break;
 
       case InvestorSignUpFlowSteps.CreatePassword:
-        // sourceOfIncome temporarily added to prevent an error during the account creation for the investor.
         apiPayload = { ...registerFormData, dryRun: false };
         break;
       default:

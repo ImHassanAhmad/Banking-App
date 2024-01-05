@@ -10,7 +10,6 @@ import { NotSupportedModal } from '@app/components/Modals';
 import { NOT_SUPPORTED_MODES } from '@app/constants';
 import { RouteNames } from '@app/constants/routes';
 import {
-  Button,
   FormControl,
   MenuItem,
   Select,
@@ -31,7 +30,7 @@ import { useTranslation } from 'react-i18next';
 import 'react-phone-number-input/style.css';
 import { type FieldError } from 'react-hook-form';
 import { ALL_COUNTRIES } from '@app/constants/countries';
-import Loader from '@app/components/Loader';
+import SubmitButton from '@app/components/SubmitButton';
 
 const mobileVerifyNamespace = RouteNames.MOBILE;
 const translationNamespace = RouteNames.INVESTOR_SIGNUP;
@@ -46,7 +45,12 @@ const getCountryDataByPhone = (phoneCode: string): ICountryData => {
 const PhoneNumberField: FC<WithSignUpStepperContextProps> = ({
   updateActiveStep,
   registerUser,
-  userPayload: { phoneNumberCountryCode, shortenPhoneNumber, countryOfIncorporation },
+  userPayload: {
+    phoneNumberCountryCode,
+    shortenPhoneNumber,
+    countryOfIncorporation,
+    country: countryPayload
+  },
   isLoading
 }) => {
   const { t } = useTranslation();
@@ -129,7 +133,7 @@ const PhoneNumberField: FC<WithSignUpStepperContextProps> = ({
               const country = getCountryData(value as TCountryCode);
               return (
                 <Stack direction={'row'} gap={1}>
-                  <img src={getCountryFlag(country.iso2)} style={setIcon} />
+                  <img src={getCountryFlag(countryPayload || country.iso2)} style={setIcon} />
                   <Typography>+{country.phone[0]}</Typography>
                 </Stack>
               );
@@ -163,13 +167,15 @@ const PhoneNumberField: FC<WithSignUpStepperContextProps> = ({
             errorValue={errors}
           />
         </FormControl>
-        <Button
-          sx={{ textTransform: 'uppercase', height: '5.2rem' }}
+
+        <SubmitButton
+          title={t(`${translationNamespace}.continue`)}
           disabled={!isValid || isLoading}
-          onClick={submit}>
-          {' '}
-          {t(`${translationNamespace}.continue`)} {isLoading && <Loader />}
-        </Button>
+          isLoading={isLoading}
+          sx={{ mt: 4 }}
+          onClick={submit}
+        />
+
         <NotSupportedModal
           open={open}
           handleClose={() => {

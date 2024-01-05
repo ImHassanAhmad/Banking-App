@@ -1,4 +1,4 @@
-import { Stack, Button } from '@mui/material';
+import { Stack } from '@mui/material';
 import Heading from '@app/components/Heading';
 import { useState, type FC } from 'react';
 import { RouteNames } from '@app/constants/routes';
@@ -9,6 +9,7 @@ import * as yup from 'yup';
 import Textfield from '@app/components/Textfield';
 import Calendar from '@app/components/Calendar';
 import { type AuthFetchQueryError, type WithSignUpStepperContextProps } from '@app/common/types';
+import SubmitButton from '@app/components/SubmitButton';
 
 interface IForm {
   firstName: string;
@@ -25,7 +26,7 @@ const PersonalInformation: FC<WithSignUpStepperContextProps> = ({
   userPayload: { firstName, lastName, dateOfBirth }
 }) => {
   const { t } = useTranslation();
-  const [fieldErrors] = useState<FieldError>();
+  const [fieldErrors, setFieldErrors] = useState<FieldError>();
 
   const schema = yup
     .object()
@@ -39,9 +40,15 @@ const PersonalInformation: FC<WithSignUpStepperContextProps> = ({
   const {
     register,
     control,
+    getValues,
     handleSubmit,
     formState: { errors }
   } = useForm<IForm>({
+    defaultValues: {
+      firstName,
+      lastName,
+      dateOfBirth
+    },
     mode: 'onBlur',
     resolver: yupResolver(schema)
   });
@@ -56,14 +63,17 @@ const PersonalInformation: FC<WithSignUpStepperContextProps> = ({
         updateActiveStep();
       },
       onError: (error: AuthFetchQueryError) => {
-        console.error(error);
+        setFieldErrors({
+          type: 'disabled',
+          message: error.message
+        });
       }
     });
   };
 
   return (
     <Stack mt={4} sx={{ width: '100%' }}>
-      <Stack mt={4}>
+      <Stack>
         <Heading title={t(`${translationNamespace}.title`)} subTitle="" />
       </Stack>
       <Stack gap={3} mt={3}>
@@ -94,18 +104,17 @@ const PersonalInformation: FC<WithSignUpStepperContextProps> = ({
               name="dateOfBirth"
               control={control}
               label={t(`${translationNamespace}.DOB`)}
-              defaultValue={dateOfBirth}
+              defaultValue={dateOfBirth || getValues('dateOfBirth')}
               errorValue={errors?.dateOfBirth ?? fieldErrors}
             />
           </Stack>
 
-          <Button
-            disabled={!!Object.keys(errors).length}
-            sx={{ textTransform: 'uppercase', marginTop: '2rem' }}
-            fullWidth
-            type="submit">
-            {t(`${translationNamespace}.continue`)}
-          </Button>
+          <SubmitButton
+            title={t(`${translationNamespace}.continue`)}
+            disabled={!!Object.keys(errors).length || isLoading}
+            isLoading={isLoading}
+            sx={{ mt: 4 }}
+          />
         </form>
       </Stack>
     </Stack>

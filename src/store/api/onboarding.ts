@@ -6,7 +6,8 @@ import {
   type SupportedCountriesIncorporation,
   type SupportedCountriesPhone,
   transformErrorResponse,
-  type AuthApiError
+  type AuthApiError,
+  type InvestorUserRequestDto
 } from '@app/common/types';
 import type {
   IssuerDetailsRequestDto,
@@ -51,12 +52,20 @@ export const onBoardingApi = createApi({
         return transformErrorResponse(baseQueryReturnValue as AuthApiError, meta, arg);
       }
     }),
-    registerInvestor: builder.mutation<RegisterUserResponseDto, RegisterUserRequestDto>({
-      query: (body) => ({
-        url: '/v1/sme/onboarding/register-investor',
-        method: 'POST',
-        body
-      }),
+    registerInvestor: builder.mutation<RegisterUserResponseDto, InvestorUserRequestDto>({
+      query: (body) => {
+        const { idCardImage, addressProofImage, selfieImage, ...restBody } = body;
+        const formData: FormData = new FormData();
+        if (idCardImage) formData.append('idCardImage', idCardImage);
+        if (addressProofImage) formData.append('addressProofImage', addressProofImage);
+        if (selfieImage) formData.append('selfieImage', selfieImage);
+        formData.append('data', JSON.stringify(restBody));
+        return {
+          url: '/v1/sme/onboarding/register-investor',
+          method: 'POST',
+          body: formData
+        };
+      },
       transformErrorResponse(baseQueryReturnValue, meta, arg) {
         return transformErrorResponse(baseQueryReturnValue as AuthApiError, meta, arg);
       }

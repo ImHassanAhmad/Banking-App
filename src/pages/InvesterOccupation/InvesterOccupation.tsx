@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, type FC } from 'react';
-import { Button, Stack } from '@mui/material';
+import { Stack } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { RouteNames } from '@app/constants/routes';
 import Heading from '@app/components/Heading';
@@ -8,6 +8,7 @@ import { type CheckList } from '../InvesterOccupation/types';
 import { type WithSignUpStepperContextProps } from '@app/common/types';
 import { InvesterOccupation } from '@app/common/types';
 import IncomeSourceItem from '../SourceOfIncome/components/IncomeSourceItem';
+import SubmitButton from '@app/components/SubmitButton';
 
 const investeroccupations = RouteNames.INVESTER_OCCUPATION;
 const occupationSourcesArray: string[] = Object.values(InvesterOccupation);
@@ -83,13 +84,13 @@ const InvesterOccupations: FC<WithSignUpStepperContextProps> = ({
             </>
           ))}
         </Stack>
-        <Button
+
+        <SubmitButton
+          title={t(`${investeroccupations}.continue`)}
           disabled={!isAtLeastOneChecked()}
-          sx={{ marginTop: '2rem', width: '100%' }}
-          type="submit"
-          onClick={handleSave}>
-          {t(`${investeroccupations}.continue`)}
-        </Button>
+          sx={{ mt: 4 }}
+          onClick={handleSave}
+        />
       </Stack>
     </Stack>
   );

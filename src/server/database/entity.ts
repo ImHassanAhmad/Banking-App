@@ -34,7 +34,14 @@ export interface Investor extends User {
   city?: string;
   street?: string;
   houseNo?: string;
+  address1?: string;
+  address2?: string;
+  country?: string;
+  longitude?: number;
+  latitude?: number;
+  peselNumber?: string;
   incomeRange?: string;
+  sourceOfIncome?: string[];
   priceAndLimit?: boolean;
 }
 
@@ -52,9 +59,30 @@ export interface User extends BaseEntity {
 
 export type UserEntity = BaseEntity & (Issuer | Investor);
 
-export interface AssetEntity extends BaseEntity {
-  assetId: string;
+export interface AssetInformation extends BaseEntity {
+  assetName: string;
+  assetDescription: string;
+  assetWebsite: string;
+  logo: string;
 }
+
+export interface AssetDocuments extends BaseEntity {
+  prospectus: string;
+  businessModel: string;
+  financialModel: string;
+  businessPlan: string;
+  valuationReport: string;
+}
+
+export interface AssetSocialMediaLinks extends BaseEntity {
+  reddit?: string;
+  twitter?: string;
+  telegram?: string;
+  whitepaper?: string;
+  discord?: string;
+}
+
+export type AssetEntity = AssetInformation | AssetDocuments | AssetSocialMediaLinks;
 
 export interface TokenEntity extends BaseEntity {
   tokenId: string;
@@ -78,4 +106,5 @@ export interface AssetTokenCreationEntity extends BaseEntity {
   capped: boolean;
   currency: string;
   buyPrice: number;
+  tokenLogo: string;
 }

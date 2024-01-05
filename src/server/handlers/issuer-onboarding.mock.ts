@@ -113,9 +113,9 @@ const getIssuerOnboardingDetailsHandler: HttpHandler = http.get<
     throw new yup.ValidationError('Id is required', null, 'id');
   } else {
     const response = await issuerDetailsService.getById(id as string);
+    // await issuerDetailsService.remove(id as string);
     if (response) return HttpResponse.json<IssuerDetailsEntity>(response);
     else return HttpResponse.json(null, { status: 400 });
-    // await issuerDetailsService.remove(id as string);
   }
 });
 

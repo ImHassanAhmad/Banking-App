@@ -16,6 +16,8 @@ const es: LanguageResource = {
   'country-not-supported': {},
   'region-not-supported': {},
   'legal-check': {},
+  'geo-permission': {},
+  'geo-permission-denied': {},
   'privacy-policy': {},
   'about-our-services': {},
   'business-category': {},
@@ -47,7 +49,9 @@ const es: LanguageResource = {
   'us-person': {},
   'create-asset-token': {},
   'issuer-onboarding': {},
-  dashboard: {}
+  dashboard: {},
+  'manage-assets': {},
+  'reset-password': {}
 };
 
 export default es;

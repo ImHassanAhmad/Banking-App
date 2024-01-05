@@ -3,7 +3,7 @@ import React, { useState, type FC, useEffect } from 'react';
 import { RouteNames } from '@app/constants/routes';
 import { useTranslation } from 'react-i18next';
 import Heading from '@app/components/Heading';
-import { Box, Button, Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 import Textfield from '@app/components/Textfield';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import {
@@ -13,12 +13,14 @@ import {
 } from '@app/common/types';
 import CountrySelector from '@app/components/CountrySelector';
 import { ALL_COUNTRIES } from '@app/constants/countries';
+import SubmitButton from '@app/components/SubmitButton';
 
 const SecurityNumber = RouteNames.SECURITY_NUMBER;
 
 const SocialSecurityTax: FC<WithSignUpStepperContextProps> = ({
   updateActiveStep,
   updateUserPayload,
+  isLoading,
   userPayload
 }) => {
   const { t } = useTranslation();
@@ -56,18 +58,16 @@ const SocialSecurityTax: FC<WithSignUpStepperContextProps> = ({
 
   return (
     <>
-      <Stack sx={{ width: '552px' }}>
+      <Stack mt={4} sx={{ width: '100%' }}>
         <Heading title={t(`${SecurityNumber}.title`)} subTitle={''} />
         <Box
           sx={{
             '& .css-111er8s-MuiFormControl-root-MuiTextField-root': {
               background: 'white',
-              width: '200px',
               borderRadius: '12px'
             },
             '& .css-pqyibd-MuiInputBase-root-MuiOutlinedInput-root': {
               background: 'white',
-              width: '200px',
               borderRadius: '12px'
             },
             '& .styles_arrow__rDwFn': {
@@ -92,14 +92,10 @@ const SocialSecurityTax: FC<WithSignUpStepperContextProps> = ({
             selectedCountry={country}
           />
         </Box>
-        <Typography sx={{ width: '436px' }}>{t(`${SecurityNumber}.statesdetail`)} </Typography>
+        <Typography>{t(`${SecurityNumber}.statesdetail`)} </Typography>
+
         <Box sx={{ marginTop: '20px' }}>
-          <Textfield
-            sx={{ width: '400px' }}
-            className="inputnumber"
-            value={currentInput}
-            onChange={handleInputChange}
-          />
+          <Textfield fullWidth value={currentInput} onChange={handleInputChange} />
 
           <Box
             sx={{
@@ -108,7 +104,6 @@ const SocialSecurityTax: FC<WithSignUpStepperContextProps> = ({
               background: '#EBEBEB',
               borderRadius: '10px',
               marginTop: '10px',
-              width: '300px',
               alignItems: 'center',
               height: '40px',
               padding: '5px'
@@ -118,9 +113,14 @@ const SocialSecurityTax: FC<WithSignUpStepperContextProps> = ({
             <Typography variant="body2">{t(`${SecurityNumber}.stateserror`)}</Typography>
           </Box>
         </Box>
-        <Button sx={{ marginTop: '20px', width: '400px' }} type="submit" onClick={handleSubmit}>
-          {t(`${SecurityNumber}.continue`)}
-        </Button>
+
+        <SubmitButton
+          title={t(`${SecurityNumber}.continue`)}
+          disabled={isLoading}
+          isLoading={isLoading}
+          sx={{ mt: 4 }}
+          onClick={handleSubmit}
+        />
       </Stack>
     </>
   );

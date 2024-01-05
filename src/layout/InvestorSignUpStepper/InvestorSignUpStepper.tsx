@@ -23,18 +23,18 @@ import RegisterEmailCodeVerification from '@app/pages/RegisterEmailCodeVerificat
 import InvesterOccupation from '@app/pages/InvesterOccupation/InvesterOccupation';
 import PoliticalExposed from '@app/pages/PoliticalExposed';
 import TaxReporter from '@app/pages/TaxReporter';
-import PoliticalExposedPerson from '@app/pages/PliticallyExposedPerson/PoliticallyExposedPerson';
+import PoliticalExposedPerson from '@app/pages/PoliticallyExposedPerson/PoliticallyExposedPerson';
 
 const investorFlowComponent = (
   activeStep: InvestorSignUpFlowSteps
 ): ComponentType<WithSignUpStepperContextProps> | undefined => {
   switch (activeStep) {
+    case InvestorSignUpFlowSteps.Email:
+      return RegisterEmail;
     case InvestorSignUpFlowSteps.NameAndDateOfBirth:
       return PersonalInformation;
     case InvestorSignUpFlowSteps.Address:
       return Address;
-    case InvestorSignUpFlowSteps.Email:
-      return RegisterEmail;
     case InvestorSignUpFlowSteps.Mobile:
       return PhoneNumber;
     case InvestorSignUpFlowSteps.IncomeRange:
@@ -90,7 +90,7 @@ const IssuerSignUpStepper: FC = () => {
             alignItems: 'flex-start'
           }
         }}>
-        <Grid item lg={8} md={10} sm={10} xs={12}>
+        <Grid item lg={7} md={10} sm={10} xs={12}>
           {InvestorFlowComponent ? (
             <InvestorFlowComponent {...props}></InvestorFlowComponent>
           ) : (

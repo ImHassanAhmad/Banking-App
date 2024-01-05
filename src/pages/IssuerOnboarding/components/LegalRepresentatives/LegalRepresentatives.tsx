@@ -77,7 +77,7 @@ const LegalRepresentatives: FC<ILegalRepresentatives> = ({ nextStep, previousSte
   };
 
   return (
-    <Box mt="40px">
+    <Box mt="40px" data-testid="legal-representatives">
       <Heading title={t(`${translationNamespace}.legal_representative_title`)} subTitle="" />
       <form
         onSubmit={(event) => {
@@ -86,6 +86,7 @@ const LegalRepresentatives: FC<ILegalRepresentatives> = ({ nextStep, previousSte
         {fields.map((field, index) => {
           return (
             <Box
+              data-testid={`legal-representatives-form-${index}`}
               display="flex"
               flexDirection="column"
               justifyContent="center"
@@ -96,6 +97,7 @@ const LegalRepresentatives: FC<ILegalRepresentatives> = ({ nextStep, previousSte
                 <Typography>{index + 1}.</Typography>
                 {index > 0 && (
                   <Box
+                    data-testid={`legal-representatives-remove-${index}`}
                     sx={{ cursor: 'pointer' }}
                     width="25px"
                     height="25px"
@@ -118,18 +120,27 @@ const LegalRepresentatives: FC<ILegalRepresentatives> = ({ nextStep, previousSte
               </Box>
               <Textfield
                 register={register}
+                inputProps={{
+                  'data-testid': `legalRepresentative.${index}.name`
+                }}
                 name={`legalRepresentative.${index}.name`}
                 label={t(`${translationNamespace}.name`)}
                 errorValue={errors?.legalRepresentative?.[index]?.name as FieldError}
               />
               <Textfield
                 register={register}
+                inputProps={{
+                  'data-testid': `legalRepresentative.${index}.email`
+                }}
                 name={`legalRepresentative.${index}.email`}
                 label={t(`${translationNamespace}.email`)}
                 errorValue={errors?.legalRepresentative?.[index]?.email as FieldError}
               />
               <Textfield
                 register={register}
+                inputProps={{
+                  'data-testid': `legalRepresentative.${index}.phone`
+                }}
                 name={`legalRepresentative.${index}.phone`}
                 label={t(`${translationNamespace}.phone`)}
                 errorValue={errors?.legalRepresentative?.[index]?.phone as FieldError}
@@ -139,19 +150,21 @@ const LegalRepresentatives: FC<ILegalRepresentatives> = ({ nextStep, previousSte
         })}
         <Box m="20px 0" display="flex" justifyContent="space-between" alignItems="center">
           <Button
+            data-testid="legal-representatives-add"
             onClick={() => {
               append(defaultValue);
             }}>
             {t(`${translationNamespace}.add_legal_representative`)}
           </Button>
           <BackButton
+            data-testid="legal-representatives-back"
             onClick={() => {
               previousStep(getValues());
             }}
           />
         </Box>
 
-        <Button type="submit" fullWidth>
+        <Button type="submit" fullWidth data-testid="legal-representatives-continue">
           {t(`${translationNamespace}.continue`)}
         </Button>
       </form>

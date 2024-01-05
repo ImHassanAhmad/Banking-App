@@ -135,6 +135,17 @@ const en: LanguageResource = {
     subtitle: 'Only legal representatives are allowed to create an account.',
     OK: 'OK'
   },
+  'geo-permission': {
+    title: 'Allow us to track your geo-location',
+    subtitle: 'We will block any attempt if someone other than you tries to access your account.',
+    OK: 'GIVE PERMISSION',
+    cancel: 'CANCEL'
+  },
+  'geo-permission-denied': {
+    title: 'Unable to proceed !',
+    subtitle: 'Please enable location services manually and refresh the page.',
+    OK: 'OK'
+  },
   'privacy-policy': {
     title: 'Privacy Policy',
     subtitle: 'Valid as of September 14, 2021',
@@ -292,26 +303,26 @@ const en: LanguageResource = {
     asset_website: 'Asset Website (Optional)',
     asset_logo: 'Asset Logo/Image',
     upload_the_asset: 'Upload the Asset Documents',
-    upload_prospectus: 'Upload Prospectus',
-    upload_prospectus_d:
+    prospectus: 'Upload Prospectus',
+    prospectus_d:
       'This document provides details about an investment offering to the public. It includes company overview, legal information, risk, terms of the offering etc.',
-    business_model: 'Business Model',
-    business_model_d:
+    businessModel: 'Business Model',
+    businessModel_d:
       'Business Model provides the details about the business, planned activities along with supporting flows',
-    financial_model: 'Financial Model',
-    financial_model_d:
+    financialModel: 'Financial Model',
+    financialModel_d:
       'Financial model including current and forecasted figures for the next 3 years (balance sheet, cash-flow, profit and loss accounts) (per activity)',
-    business_plan: 'Business Plan',
-    business_plan_d: '',
-    valuation_report: 'Valuation Report',
-    valuation_report_d:
+    businessPlan: 'Business Plan',
+    businessPlan_d: '',
+    valuationReport: 'Valuation Report',
+    valuationReport_d:
       'Done by them through a third party, but we will also do our valuation via our provider',
     fill_asset_multi: 'Fill in the Asset Multi Media links',
-    Reddit: 'Reddit Link',
-    Twitter: 'Twitter Link',
-    Telegram: 'Telegram Link',
-    Whitepaper: 'Whitepaper Link',
-    Discord: 'Discord Link',
+    reddit: 'Reddit Link',
+    twitter: 'Twitter Link',
+    telegram: 'Telegram Link',
+    whitepaper: 'Whitepaper Link',
+    discord: 'Discord Link',
     choose_file: 'Choose File',
     asset_creation_success: 'Asset Creation has been successfully completed!',
     back_to_home: 'Back to home'
@@ -420,6 +431,10 @@ const en: LanguageResource = {
     upload_id_card: 'Upload ID Card',
     take_selfie: 'Take Selfie',
     delete_selfie: 'Delete',
+    modal_title: 'Permission Required',
+    modal_subtitle:
+      'To enable camera access, please manually grant camera permissions in your browser settings',
+    modal_btn_title: 'Close',
     continue: 'Continue'
   },
   'security-number': {
@@ -450,9 +465,10 @@ const en: LanguageResource = {
     title: 'Address',
     postal_code: 'Postal Code',
     city: 'City',
-    street: 'Street',
-    house_no: 'House No.',
-    continue: 'Continue'
+    address1: 'Address 1',
+    address2: 'Address 2 ( optional )',
+    continue: 'Continue',
+    placeholder: 'Select country'
   },
   'questions-list': {
     title: 'Questions',
@@ -469,7 +485,7 @@ const en: LanguageResource = {
     continue: 'Continue'
   },
   'create-asset-token': {
-    create_new_asset: 'Create new Asset',
+    create_new_asset: 'Create new Token',
     continue: 'Continue',
     token_name: 'Token Name (On Block Chain)',
     token_symbol: 'Token Symbol (On Block Chain)',
@@ -484,7 +500,14 @@ const en: LanguageResource = {
     upload_logo: 'Upload Logo',
     token_basic_info: 'Token Basic Information',
     token_config: 'Token Configuration',
-    token_price: 'Token Price'
+    token_price: 'Token Price',
+    required_name: 'Name is required',
+    required_symbol: 'Symbol is required',
+    not_zero_supply: 'Number of Supply must be greater than 0',
+    not_zero_decimal: 'Number of decimal places must be greater than 0',
+    required_token_logo: 'Token Logo is required',
+    required_currency: 'currency is required',
+    not_zero_price: 'Price is must be greater than 0'
   },
   'legal-representative': {
     title: 'Are you the legal representative or director of this company?'
@@ -514,7 +537,19 @@ const en: LanguageResource = {
       'Your Details have been submitted and being review meanwhile you can start exploring',
     dashboard_button: 'Go to Dashboard'
   },
-  dashboard: {}
+  dashboard: {},
+  'manage-assets': {
+    title: 'Manage Assets',
+    subtitle: 'Manage your assets here'
+  },
+  'reset-password': {
+    title: 'Reset Password',
+    subtitle: 'Please enter your email',
+    continue: 'Continue',
+    email_input_label: 'Enter your e-mail address',
+    password_input_label: 'New Password',
+    repeat_password_input_label: 'Repeat Password'
+  }
 };
 
 export default en;

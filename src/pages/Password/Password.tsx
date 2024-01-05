@@ -1,4 +1,4 @@
-import { Stack, Button, Box } from '@mui/material';
+import { Stack, Box } from '@mui/material';
 import Heading from '@app/components/Heading';
 import React, { useState, type FC } from 'react';
 import PasswordField from '@app/components/PasswordField';
@@ -13,8 +13,8 @@ import {
   type WithSignUpStepperContextProps,
   type UserRequestDto
 } from '@app/common/types';
-import Loader from '@app/components/Loader';
 import WarningAlert from '@app/components/WarningAlert';
+import SubmitButton from '@app/components/SubmitButton';
 
 const translationNamespace = RouteNames.CREATE_PASSWORD;
 
@@ -63,7 +63,7 @@ const Password: FC<WithSignUpStepperContextProps> = ({
 
   return (
     <Stack mt={4} sx={{ width: '100%' }}>
-      <Stack mt={4}>
+      <Stack>
         <Heading
           title={t(`${translationNamespace}.title`)}
           subTitle={t(`${translationNamespace}.subtitle`)}
@@ -78,18 +78,18 @@ const Password: FC<WithSignUpStepperContextProps> = ({
         {error?.errorLevel === AuthErrorLevel.Account && (
           <WarningAlert message={error?.message ?? ''} />
         )}
-        {/* <ReCAPTCHA sitekey={SiteKey ?? ''} size="invisible" ref={reRef} /> */}
-        <Button
+
+        <SubmitButton
           startIcon={<Box component="img" src={Subtract} alt="auth" />}
-          sx={{ textTransform: 'uppercase' }}
+          title={t(`${translationNamespace}.create_account`)}
           disabled={isLoading}
+          isLoading={isLoading}
           onClick={() => {
             submit().catch((e) => {
               // TODO handle error cases
             });
-          }}>
-          {t(`${translationNamespace}.create_account`)} {isLoading && <Loader />}
-        </Button>
+          }}
+        />
       </Stack>
     </Stack>
   );

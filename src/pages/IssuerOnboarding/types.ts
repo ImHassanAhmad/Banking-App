@@ -24,7 +24,6 @@ export interface ILegalRepresentatives {
 }
 
 export interface IKycProps {
-  submit: (data: IKycForm) => void;
   previousStep: (data: IKycForm) => void;
   uploadedFiles: IUploadedFiles;
   setter: (name: string, file: File) => void;

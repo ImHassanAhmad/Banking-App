@@ -1,6 +1,6 @@
-import { Stack, Button } from '@mui/material';
+import { Stack } from '@mui/material';
 import Heading from '@app/components/Heading';
-import { useState, type FC } from 'react';
+import { useState, useMemo, type FC } from 'react';
 import { RouteNames } from '@app/constants/routes';
 import { useTranslation } from 'react-i18next';
 import PrivacyTerms from '@app/components/PrivacyTerms';
@@ -9,9 +9,9 @@ import { type SubmitHandler, useForm, type FieldError } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import EmailField from '@app/components/EmailField/EmailField';
-import Loader from '@app/components/Loader';
 import { type WithSignUpStepperContextProps, type AuthFetchQueryError } from '@app/common/types';
 import { ModalNames } from '@app/constants/modals';
+import SubmitButton from '@app/components/SubmitButton';
 
 interface IForm {
   email: string;
@@ -21,7 +21,6 @@ const translationNamespace = RouteNames.REGISTER_EMAIL;
 const emailAlreadyRegisteredNamespace = ModalNames.EMAIL_ALREADY_REGISTERED;
 
 const RegisterEmail: FC<WithSignUpStepperContextProps> = ({
-  activeStep,
   updateActiveStep,
   registerUser,
   isLoading,
@@ -69,8 +68,10 @@ const RegisterEmail: FC<WithSignUpStepperContextProps> = ({
     });
   };
 
+  const isDisabled = useMemo(() => isLoading || errors.email, [isLoading || errors.email]);
+
   return (
-    <Stack mt={5} sx={{ width: '100%' }}>
+    <Stack mt={4} sx={{ width: '100%' }}>
       <Stack>
         <Heading
           title={t(`${translationNamespace}.title`)}
@@ -89,13 +90,13 @@ const RegisterEmail: FC<WithSignUpStepperContextProps> = ({
             fullWidth
             errorValue={errors?.email ?? fieldErrors}
           />
-          <Button
-            disabled={isLoading}
-            sx={{ textTransform: 'uppercase', marginTop: '20px' }}
-            fullWidth
-            type="submit">
-            {t(`${translationNamespace}.continue`)} {isLoading && <Loader />}
-          </Button>
+
+          <SubmitButton
+            title={t(`${translationNamespace}.continue`)}
+            disabled={isDisabled}
+            isLoading={isLoading}
+            sx={{ mt: 4 }}
+          />
         </form>
         <InfoModal
           open={open}
