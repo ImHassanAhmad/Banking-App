@@ -1,38 +1,24 @@
-import { type FC } from 'react';
-import { W1TTY_LOGO } from '@app/assets/images';
-import { Box, Stack } from '@mui/material';
-import Footer from './components/Footer';
+import { type ReactElement, type FC } from 'react';
+import { useSelector } from 'react-redux';
+import { onBoardType } from '@app/common/types';
+import InvestorSidebar from './InvestorSidebar';
+import IssuerSidebar from './IssuerSidebar';
 
 const Sidebar: FC = () => {
-  return (
-    <Box
-      sx={{
-        position: 'fixed',
-        left: 0,
-        top: 0,
-        height: '100vh',
-        width: '33rem',
-        overflowY: 'auto',
-        py: 2,
-        px: 4,
-        boxSizing: 'border-box'
-      }}>
-      <Stack>
-        <Stack sx={{ ml: 2, my: 3, mb: 7 }}>
-          <Box
-            component="img"
-            src={W1TTY_LOGO}
-            alt="home"
-            sx={{
-              width: 100
-            }}
-          />
-        </Stack>
-      </Stack>
+  const { userType } = useSelector((state: any) => state.userData);
 
-      <Footer />
-    </Box>
-  );
+  const renderSidebar = (): ReactElement => {
+    switch (userType) {
+      case onBoardType.Investor:
+        return <InvestorSidebar />;
+      case onBoardType.Issuer:
+        return <IssuerSidebar />;
+      default:
+        return <IssuerSidebar />;
+    }
+  };
+
+  return renderSidebar();
 };
 
 export default Sidebar;

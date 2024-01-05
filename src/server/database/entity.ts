@@ -41,6 +41,7 @@ export interface Investor extends User {
   latitude?: number;
   peselNumber?: string;
   incomeRange?: string;
+  sourceOfIncome?: string[];
   priceAndLimit?: boolean;
 }
 

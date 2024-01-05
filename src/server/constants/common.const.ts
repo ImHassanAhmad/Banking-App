@@ -2,7 +2,8 @@ import {
   type RegisterUserResponseDto,
   type AccountError,
   type OnboardingError,
-  type AssetResponseDto
+  type AssetResponseDto,
+  type AssetListResponse
 } from '@app/common/types';
 import { type ApiError } from '../middleware/withErrorHandler';
 
@@ -29,3 +30,4 @@ export type MockRegisterUserResponse =
   | Record<string, any>;
 export type MockVerifySignUpOtpResponse = null | OnboardingError;
 export type MockAssetResponse = AssetResponseDto | OnboardingError;
+export type MockAssetListResponse = AssetListResponse[] | OnboardingError;

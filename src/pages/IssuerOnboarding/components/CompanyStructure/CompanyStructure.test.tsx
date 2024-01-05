@@ -8,7 +8,7 @@ import { store } from '@app/store';
 import { MemoryRouter as Router } from 'react-router-dom'; // Use MemoryRouter or BrowserRouter based on your needs
 import type { PropsWithChildren, ReactNode } from 'react';
 import { act } from 'react-dom/test-utils';
-import { setEmail } from '@app/store/slices/userData';
+import { setUser } from '@app/store/slices/userData';
 import { setStep } from '@app/store/slices/issuerOnboarding';
 
 const mockLanguage = en;
@@ -85,7 +85,7 @@ describe('CompanyStructure Component', () => {
   });
 
   it('submit form', async () => {
-    store.dispatch(setEmail('dummy@example.com'));
+    store.dispatch(setUser({ email: 'dummy@example.com' }));
 
     render(<CompanyStructure {...mockProps} />, { wrapper });
 

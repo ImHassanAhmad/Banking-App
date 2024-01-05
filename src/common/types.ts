@@ -3,10 +3,15 @@ import { type IssuerSignUpStepperContextProps } from '@app/context/IssuerSignUpS
 import { type BusinessCategoryType } from '@app/pages/BusinessCategory/types';
 import { type BusinessTypes } from '@app/pages/BusinessType/types';
 import { type FieldErrorDto } from '@app/pages/MobileCodeVerification//types';
+import { type Issuer, type UserEntity } from '@app/server/database/entity';
 import { type ICountryData, type TCountryCode } from 'countries-list';
 import { type CaptchaTokenRequest } from 'types';
 
 export type IThemeMode = 'LIGHT' | 'DARK';
+
+export interface BaseIdEntity {
+  id: string;
+}
 export interface AccessTokenRefreshResponse {
   accessToken?: string;
   refreshToken?: string;
@@ -235,6 +240,15 @@ export const isNetworkFetchError = (
   );
 };
 
+export const isIssuer = (userEntity: UserEntity): userEntity is Issuer => {
+  return (
+    'dateOfRegister' in userEntity &&
+    'registrationNumber' in userEntity &&
+    'companyName' in userEntity &&
+    'tradingName' in userEntity
+  );
+};
+
 export interface AuthFetchQueryError {
   message: string;
   errorLevel: AuthErrorLevel;
@@ -330,22 +344,10 @@ export type AssetRequestDto =
   | AssetDocumentsRequestDto
   | AssetSocialMediaRequestDto;
 
-// export interface AssetRequestDto {
-//   AssetName?: string;
-//   AssetDescription?: string;
-//   AssetWebsite?: string;
-//   Logo?: string;
-//   Reddit?: string;
-//   Twitter?: string;
-//   Telegram?: string;
-//   Whitepaper?: string;
-//   Discord?: string;
-//   uploadProspectus?: string;
-//   businessModel?: string;
-//   financialModel?: string;
-//   businessPlan?: string;
-//   valuationReport?: string;
-// }
+export type AssetListResponse = AssetInformationRequestDto &
+  AssetDocumentsRequestDto &
+  AssetSocialMediaRequestDto &
+  BaseIdEntity;
 
 export interface AssetLegalDocumentsRequestDto {
   assetId: string;
@@ -354,6 +356,13 @@ export interface AssetLegalDocumentsRequestDto {
   financialModel: File;
   businessPlan: File;
   valuationReport: File;
+}
+
+export enum AssetStatus {
+  Created = 'Created',
+  PendingApproval = 'PendingApproval',
+  Approved = 'Approved',
+  Live = 'Live'
 }
 
 export enum onBoardType {

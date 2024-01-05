@@ -39,5 +39,6 @@ export const RouteNames = {
   LEGAL_REPRESENTATIVE: 'legal-representative',
   ISSUER_ONBOARDING: 'issuer-onboarding',
   DASHBOARD: 'dashboard',
+  MANAGE_ASSETS: 'manage-assets',
   RESET_PASSWORD: 'reset-password'
 } as const;

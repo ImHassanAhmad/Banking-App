@@ -531,6 +531,10 @@ const en: LanguageResource = {
     dashboard_button: 'Go to Dashboard'
   },
   dashboard: {},
+  'manage-assets': {
+    title: 'Manage Assets',
+    subtitle: 'Manage your assets here'
+  },
   'reset-password': {
     title: 'Reset Password',
     subtitle: 'Please enter your email',

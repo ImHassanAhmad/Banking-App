@@ -50,6 +50,7 @@ const es: LanguageResource = {
   'create-asset-token': {},
   'issuer-onboarding': {},
   dashboard: {},
+  'manage-assets': {},
   'reset-password': {}
 };
 

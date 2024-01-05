@@ -6,7 +6,8 @@ import {
   type AssetResponseDto,
   type AssetInformationRequestDto,
   type AssetDocumentsRequestDto,
-  type AssetSocialMediaRequestDto
+  type AssetSocialMediaRequestDto,
+  type AssetListResponse
 } from '@app/common/types';
 import { Documents } from '@app/pages/CreateNewAsset/types';
 
@@ -19,7 +20,7 @@ export const assetApi = createApi({
       query: (body) => {
         const { assetName, assetDescription, assetWebsite, logo } = body;
         const formData: FormData = new FormData();
-        if (logo) formData.append('logo', logo);
+        formData.append('logo', logo);
         formData.append('data', JSON.stringify({ assetName, assetDescription, assetWebsite }));
         return {
           url: 'v1/sme/asset/create',
@@ -67,6 +68,15 @@ export const assetApi = createApi({
       transformErrorResponse(baseQueryReturnValue, meta, arg) {
         return transformErrorResponse(baseQueryReturnValue as AuthApiError, meta, arg);
       }
+    }),
+    listAssets: builder.query<AssetListResponse[], void>({
+      query: () => ({
+        url: 'v1/sme/asset/list',
+        method: 'GET'
+      }),
+      transformErrorResponse(baseQueryReturnValue, meta, arg) {
+        return transformErrorResponse(baseQueryReturnValue as AuthApiError, meta, arg);
+      }
     })
   })
 });
@@ -74,5 +84,6 @@ export const assetApi = createApi({
 export const {
   useCreateAssetMutation,
   useUploadAssetLegalDocumentsMutation,
-  useAddSocialMediaLinksMutation
+  useAddSocialMediaLinksMutation,
+  useListAssetsQuery
 } = assetApi;
