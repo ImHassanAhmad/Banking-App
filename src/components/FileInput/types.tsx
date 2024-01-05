@@ -9,6 +9,7 @@ export interface FileInputProps {
   error?: string;
   ref?: any;
   noBorder?: boolean;
+  testId?: string;
 }
 
 export interface FileDisplayProps {

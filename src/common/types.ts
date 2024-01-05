@@ -396,3 +396,10 @@ export enum AllowedFileFormats {
   JPEG = '.jpeg',
   PNG = '.png'
 }
+
+export enum AllowedImageFormats {
+  JPG = '.jpg',
+  JPEG = '.jpeg',
+  PNG = '.png',
+  SVG = '.svg'
+}
