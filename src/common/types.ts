@@ -8,6 +8,10 @@ import { type ICountryData, type TCountryCode } from 'countries-list';
 import { type CaptchaTokenRequest } from 'types';
 
 export type IThemeMode = 'LIGHT' | 'DARK';
+
+export interface BaseIdEntity {
+  id: string;
+}
 export interface AccessTokenRefreshResponse {
   accessToken?: string;
   refreshToken?: string;
@@ -320,6 +324,11 @@ export type AssetRequestDto =
   | AssetInformationRequestDto
   | AssetDocumentsRequestDto
   | AssetSocialMediaRequestDto;
+
+export type AssetListResponse = AssetInformationRequestDto &
+  AssetDocumentsRequestDto &
+  AssetSocialMediaRequestDto &
+  BaseIdEntity;
 
 export interface AssetLegalDocumentsRequestDto {
   assetId: string;

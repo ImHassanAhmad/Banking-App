@@ -1,16 +1,18 @@
 import React from 'react';
 import { Card, Stack, Typography } from '@mui/material';
-import { type AssetsProps } from './types';
+import { AssetStatus } from '@app/common/types';
+// import { type AssetsProps } from './types';
 
 const style = {
   top: 2,
-  marginRight: 2,
+  marginRight: 4,
   bgcolor: 'background.paper',
   boxShadow: 8,
   borderRadius: 1.25,
   width: '214px',
   height: '311.5px',
-  marginTop: 2
+  marginTop: 2,
+  cursor: 'pointer'
 };
 
 const styleImgLogo = {
@@ -31,13 +33,13 @@ const styleDescriptionTypography = {
   whiteSpace: 'wrap'
 };
 
-const AssetTile: React.FC<AssetsProps> = ({
+const AssetTile: React.FC<any> = ({
   assetName,
   assetDescription,
   assetWebsite,
-  price,
+  price = 0.001,
   logo,
-  status
+  status = AssetStatus.Approved
 }) => {
   return (
     <Card sx={style}>
@@ -46,7 +48,13 @@ const AssetTile: React.FC<AssetsProps> = ({
           borderRadius: 1.25
         }}
         direction={'row'}>
-        <img src={logo} style={styleImgLogo} />
+        <img
+          src={
+            'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png' ||
+            logo
+          }
+          style={styleImgLogo}
+        />
       </Stack>
       <Stack direction={'row'} gap={1}>
         <Typography style={styleTypography} m={1}>

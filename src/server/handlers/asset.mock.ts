@@ -3,12 +3,13 @@ import {
   type AssetSocialMediaRequestDto,
   type AssetDocumentsRequestDto,
   type AssetInformationRequestDto,
-  type AssetResponseDto
+  type AssetResponseDto,
+  type AssetListResponse
 } from '@app/common/types';
 import withErrorHandler from '../middleware/withErrorHandler';
 import { type HttpRequestResolverExtras } from 'msw/lib/core/handlers/HttpHandler';
 import { type ResponseResolverInfo } from 'msw/lib/core/handlers/RequestHandler';
-import { type MockAssetResponse } from '../constants/common.const';
+import { type MockAssetListResponse, type MockAssetResponse } from '../constants/common.const';
 import { assetService } from '../database/service';
 import * as yup from 'yup';
 import { type AssetInformation } from '../database/entity';
@@ -155,8 +156,17 @@ const addSocialMediaLinksHandler: HttpHandler = http.post<
   )
 );
 
+const listAssetHandler: HttpHandler = http.get<PathParams, any, MockAssetListResponse>(
+  '*/v1/sme/asset/list',
+  withErrorHandler(async (): Promise<StrictResponse<MockAssetListResponse>> => {
+    const assetList: AssetListResponse[] = (await assetService.getAll()) as AssetListResponse[];
+    return HttpResponse.json<AssetListResponse[]>(assetList);
+  })
+);
+
 export const handlers = [
   createAssetHandler,
   uploadAssetLegalDocumentHandler,
-  addSocialMediaLinksHandler
+  addSocialMediaLinksHandler,
+  listAssetHandler
 ];
