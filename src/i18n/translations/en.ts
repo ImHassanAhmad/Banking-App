@@ -366,14 +366,14 @@ const en: LanguageResource = {
     subtitle:
       'Whom of your close family members are asssociates have been elected to polimnent political positionsor assigned high profile public roles in the last 12 months?',
     stateserror: 'What does it mean?',
-    myself: 'MySelf',
+    myself: 'Myself',
     Myfamilymember: 'My family member',
     Mycloseassociate: 'My close associate',
     continue: 'Continue'
   },
   'tax-reporter': {
-    title: 'Your PESEL',
-    subtitle: 'FOR tax reporting purposes,please enter your PESEL in Poland.',
+    title: 'Your PESEL Number / National Identification Number',
+    subtitle: 'FOR tax reporting purposes,please enter your PESEL in',
     stateserror: 'Remember,its very important that the code is correct as per your documents.',
     number_name: '[Number Name]',
 
@@ -466,7 +466,7 @@ const en: LanguageResource = {
     postal_code: 'Postal Code',
     city: 'City',
     address1: 'Address 1',
-    address2: 'Address 2 ( optional )',
+    address2: 'Address 2 (optional)',
     continue: 'Continue',
     placeholder: 'Select country'
   },

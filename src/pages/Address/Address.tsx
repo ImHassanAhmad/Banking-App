@@ -190,6 +190,7 @@ const Address: FC<WithSignUpStepperContextProps> = ({
             leftButtonText={t(`${geoPermissionNamespace}.cancel`)}
             rightButtonText={t(`${geoPermissionNamespace}.OK`)}
             title={t(`${geoPermissionNamespace}.title`)}
+            title2={t(`${geoPermissionNamespace}.title2`)}
             subtitle={t(`${geoPermissionNamespace}.subtitle`)}
             rightButtonOnclickHandler={() => {
               getLocationAndSubmitForm();

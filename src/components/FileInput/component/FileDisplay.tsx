@@ -14,7 +14,7 @@ const SelectedFileStyle = {
 export const FileDisplay: React.FC<FileDisplayProps> = ({ selectedFile }) => (
   <Box flexGrow={1}>
     <Typography sx={SelectedFileStyle}>
-      {selectedFile ? truncateFilename(selectedFile.name, 30) : 'No file chosen'}
+      {selectedFile ? truncateFilename(selectedFile.name, 25) : 'No file chosen'}
     </Typography>
   </Box>
 );

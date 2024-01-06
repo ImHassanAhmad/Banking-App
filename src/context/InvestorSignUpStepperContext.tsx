@@ -57,7 +57,7 @@ const InvestorSignUpStepperContext = createContext<InvestorSignUpStepperContextP
 const { Provider } = InvestorSignUpStepperContext;
 
 export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [activeStep, setActiveStep] = useState(InvestorSignUpFlowSteps.Email);
+  const [activeStep, setActiveStep] = useState(InvestorSignUpFlowSteps.TaxReporter);
   const [userId, setUserId] = useState('');
   const { updateError, findError } = useAuthError();
   const [registerUserPayload, setRegisterUserPayload] = useState<InvestorUserRequestDto>({
@@ -71,7 +71,6 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
     onSuccess: (response: RegisterUserResponseDto) => void,
     onError: (error: AuthFetchQueryError) => void
   ): void => {
-    console.log('CONTEXT', message, errorLevel);
     if (!message) {
       onSuccess({ userId: '' });
       return;
@@ -145,6 +144,9 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
         break;
       case InvestorSignUpFlowSteps.Questionaire:
         apiPayload.wittyNews = registerFormData.wittyNews;
+        break;
+      case InvestorSignUpFlowSteps.TaxReporter:
+        apiPayload.NICNumber = registerFormData.NICNumber;
         break;
       case InvestorSignUpFlowSteps.UsPerson:
         apiPayload.isUsResident = registerFormData.isUsResident;

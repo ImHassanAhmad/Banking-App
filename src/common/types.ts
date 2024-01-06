@@ -108,6 +108,7 @@ export interface InvestorUserRequestDto extends UserRequestDto {
   incomeRange?: string;
   priceAndLimit?: boolean;
   isUsResident?: boolean;
+  NICNumber?: string;
   sourceOfIncome?: string[];
   investerOccupation?: string[];
   socialSecurityNumber?: SocialSecurityInformation[];

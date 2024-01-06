@@ -27,6 +27,7 @@ export interface ConfirmationModalProps {
   title: string;
   subtitle: string;
   leftButtonText: string;
+  title2?: string;
   leftButtonOnclickHandler?: () => void;
   rightButtonText: string;
   rightButtonOnclickHandler?: () => void;
@@ -42,4 +43,9 @@ export interface ErrorOrWarningModalProps {
 export interface PrivacyPolicyProps {
   open: boolean;
   handleClose: () => void;
+}
+
+export interface CommonProps {
+  title: string;
+  subtitle: string;
 }

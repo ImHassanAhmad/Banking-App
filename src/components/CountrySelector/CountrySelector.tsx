@@ -73,13 +73,18 @@ const CountrySelector: React.FC<ICountrySelectorProps> = ({
               borderRadius: '1rem',
               background: theme.palette.grey[700],
               cursor: 'pointer',
-              '.MuiOutlinedInput-notchedOutline': { borderStyle: 'none' }
+              '.MuiOutlinedInput-notchedOutline': { borderStyle: 'none' },
+              '& input::placeholder': {
+                color: '#414141',
+                opacity: 1
+              }
             }}
             inputProps={{
               ...params.inputProps,
               style: {
                 marginLeft: selectedCountry ? '4rem' : ''
               },
+
               autoComplete: 'new-password',
               'data-testid': 'selector-content-input'
             }}
