@@ -48,7 +48,9 @@ const es: LanguageResource = {
   'us-person': {},
   'create-asset-token': {},
   'issuer-onboarding': {},
-  dashboard: {}
+  dashboard: {},
+  'manage-assets': {},
+  'reset-password': {}
 };
 
 export default es;

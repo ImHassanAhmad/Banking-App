@@ -4,17 +4,13 @@ import { useLoginStepper } from '@app/context/LoginStepperContext';
 import { useResendLoginOtpMutation, useVerifyLoginOtpMutation } from '@app/store/api/login';
 import { useNavigate } from 'react-router-dom';
 import { type ResendLoginOtpResponseDto } from 'types';
-import { type AuthFetchQueryError, AuthErrorLevel } from '@app/common/types';
+import { type AuthFetchQueryError, AuthErrorLevel, isIssuer, onBoardType } from '@app/common/types';
 import { useAuthError } from '@app/context/AuthErrorContext';
 import { LoginFlowSteps } from '@app/layout/LoginStepper/types';
-import type {
-  InvestorDetailsEntity,
-  IssuerDetailsEntity,
-  UserEntity
-} from '@app/server/database/entity';
+import type { IssuerDetailsEntity, UserEntity } from '@app/server/database/entity';
 import { RouteNames } from '@app/constants/routes';
 import { useLazyGetIssuerDetailsQuery } from '@app/store/api/onboarding';
-import { setEmail, setPostOnboardingCompleted } from '@app/store/slices/userData';
+import { setUser, setPostOnboardingCompleted } from '@app/store/slices/userData';
 import { useAppDispatch } from '@app/store/hooks';
 import {
   setCompanyStructure,
@@ -47,36 +43,46 @@ const LoginEmailCodeVerification: React.FC = () => {
     }
   };
 
+  const fetchLoggedInUserDetail = (user: UserEntity): void => {
+    if (isIssuer(user)) {
+      const { email } = user;
+      dispatch(setUser({ email, userType: onBoardType.Issuer }));
+
+      getIssuerDetails(user.email as string)
+        .unwrap()
+        .then((response: IssuerDetailsEntity) => {
+          const { completed, companyStructure, legalRepresentatives } = response;
+          dispatch(setPostOnboardingCompleted(completed));
+          if (response && completed) {
+            navigate(`/${RouteNames.DASHBOARD}`);
+          } else {
+            if (legalRepresentatives) {
+              dispatch(setLegalRepresentatives(legalRepresentatives));
+              dispatch(setStep(PostOnboardingFlowSteps.Kyc));
+            } else if (companyStructure) {
+              dispatch(setCompanyStructure(companyStructure));
+              dispatch(setStep(PostOnboardingFlowSteps.LegalRespresentative));
+            } else {
+              dispatch(setStep(PostOnboardingFlowSteps.CompanyStructure));
+            }
+            navigate(`/${RouteNames.ISSUER_ONBOARDING}`);
+          }
+        })
+        .catch((error) => {
+          apiErrorHandler(error);
+          navigate(`/${RouteNames.ISSUER_ONBOARDING}`);
+        });
+    } else {
+      dispatch(setUser({ email, userType: onBoardType.Investor }));
+      navigate(`/${RouteNames.DASHBOARD}`);
+    }
+  };
+
   const verifyOtp = (code: string): void => {
     verifyLoginOtp({ otpCode: code, otpId })
       .unwrap()
-      .then((response: UserEntity) => {
-        dispatch(setEmail(response.email));
-        getIssuerDetails(response.email as string)
-          .unwrap()
-          .then((response: IssuerDetailsEntity & InvestorDetailsEntity) => {
-            const { completed, companyStructure, legalRepresentatives } = response;
-            if (response.accountType === 'investor') navigate(`/${RouteNames.DASHBOARD}`);
-            dispatch(setPostOnboardingCompleted(completed));
-            if (response && completed) {
-              navigate(`/${RouteNames.DASHBOARD}`);
-            } else {
-              if (legalRepresentatives) {
-                dispatch(setLegalRepresentatives(legalRepresentatives));
-                dispatch(setStep(PostOnboardingFlowSteps.Kyc));
-              } else if (companyStructure) {
-                dispatch(setCompanyStructure(companyStructure));
-                dispatch(setStep(PostOnboardingFlowSteps.LegalRespresentative));
-              } else {
-                dispatch(setStep(PostOnboardingFlowSteps.CompanyStructure));
-              }
-              navigate(`/${RouteNames.ISSUER_ONBOARDING}`);
-            }
-          })
-          .catch((error) => {
-            apiErrorHandler(error);
-            navigate(`/${RouteNames.ISSUER_ONBOARDING}`);
-          });
+      .then((userEntity: UserEntity) => {
+        fetchLoggedInUserDetail(userEntity);
       })
       .catch(apiErrorHandler);
   };

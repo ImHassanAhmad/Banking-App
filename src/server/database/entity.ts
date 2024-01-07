@@ -39,7 +39,9 @@ export interface Investor extends User {
   country?: string;
   longitude?: number;
   latitude?: number;
+  peselNumber?: string;
   incomeRange?: string;
+  sourceOfIncome?: string[];
   priceAndLimit?: boolean;
 }
 

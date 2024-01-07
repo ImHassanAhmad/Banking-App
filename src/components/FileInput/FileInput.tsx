@@ -9,7 +9,8 @@ const FileInput: React.FC<FileInputProps> = ({
   label,
   handleFileChange,
   error,
-  noBorder
+  noBorder,
+  testId
 }) => {
   const theme = useTheme();
   return (
@@ -29,6 +30,7 @@ const FileInput: React.FC<FileInputProps> = ({
             hidden
             onChange={handleFileChange}
             accept=".pdf, .doc, .docx, .jpg, .jpeg, .png"
+            data-testid={testId}
           />
         </Button>
         <FileDisplay selectedFile={selectedFile} />

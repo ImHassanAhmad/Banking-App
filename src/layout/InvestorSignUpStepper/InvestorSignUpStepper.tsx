@@ -22,7 +22,7 @@ import RegisterEmailCodeVerification from '@app/pages/RegisterEmailCodeVerificat
 import InvesterOccupation from '@app/pages/InvesterOccupation/InvesterOccupation';
 import PoliticalExposed from '@app/pages/PoliticalExposed';
 import TaxReporter from '@app/pages/TaxReporter';
-import PoliticalExposedPerson from '@app/pages/PliticallyExposedPerson/PliticallyExposedPerson';
+import PoliticalExposedPerson from '@app/pages/PoliticallyExposedPerson/PoliticallyExposedPerson';
 
 const investorFlowComponent = (
   activeStep: InvestorSignUpFlowSteps

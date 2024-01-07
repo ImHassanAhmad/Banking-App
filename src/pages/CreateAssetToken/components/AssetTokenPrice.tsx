@@ -16,8 +16,11 @@ export const AssetTokenPrice: FC<ITokenPriceProps> = ({ back, submit }) => {
     buyPrice: 0
   };
   const schema = yup.object().shape({
-    currency: yup.string().required('currency is required'),
-    buyPrice: yup.number().required('Price is required')
+    currency: yup.string().required(t(`${assetTokenNamespace}.required_currency`)),
+    buyPrice: yup
+      .number()
+      .required()
+      .min(1, t(`${assetTokenNamespace}.not_zero_price`))
   });
   const { tokenPrice: tokenPriceState } = useAppSelector((state) => state.createAssetToken);
   const onSubmit: SubmitHandler<ITokenPriceForm> = (data) => {

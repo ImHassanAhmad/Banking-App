@@ -78,7 +78,6 @@ const Password: FC<WithSignUpStepperContextProps> = ({
         {error?.errorLevel === AuthErrorLevel.Account && (
           <WarningAlert message={error?.message ?? ''} />
         )}
-        {/* <ReCAPTCHA sitekey={SiteKey ?? ''} size="invisible" ref={reRef} /> */}
 
         <SubmitButton
           startIcon={<Box component="img" src={Subtract} alt="auth" />}
