@@ -15,7 +15,7 @@ export enum InvestorSignUpFlowSteps {
   PoliticalExposedPerson = 'PoliticalExposedPerson',
   SourceOfIncome = 'SourceOfIncome',
   InvesterOccupation = 'InvesterOccupation',
-  Questionaire = 'Questionaire',
+  AboutOurServices = 'AboutOurServices',
   CreatePassword = 'CreatePassword',
   EmailVerify = 'EmailVerify',
   MobileVerify = 'MobileVerify'

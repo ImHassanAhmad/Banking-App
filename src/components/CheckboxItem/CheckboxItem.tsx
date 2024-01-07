@@ -23,13 +23,8 @@ const checkboxStyle = (disabled: boolean | undefined): any => ({
   '& .MuiSvgIcon-root': {
     fontSize: 22,
 
-    opacity: disabled ? 0.5 : 1 // Adjust opacity for disabled or enabled states
+    opacity: disabled ? 0.5 : 1
   }
-  // '&.Mui-disabled': {
-  //   '& svg': {
-  //     opacity: disabled ? 0.5 : 1 // Adjust opacity for disabled or enabled states
-  //   }
-  // }
 });
 
 const CheckIcon: React.FC<CheckIconProps> = ({ icon }) => {
@@ -61,7 +56,7 @@ const CheckboxItem: React.FC<CheckboxItemProps> = ({
           onChange={onChange}
           icon={<CheckIcon icon={UNCHECHK_ICON} />}
           checkedIcon={<CustomChecbox />}
-          disabled={isDisabled} // Setting the disabled state
+          disabled={isDisabled}
         />
       }
       sx={labelStyle}

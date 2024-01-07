@@ -4,10 +4,6 @@ import { RouteNames } from '@app/constants/routes';
 import UploadDocuments from '@app/pages/UploadDocuments';
 import IncomeRange from '@app/pages/IncomeRange';
 import CreateAssetToken from '@app/pages/CreateAssetToken/CreateAssetToken';
-import PersonalInformation from '@app/pages/PersonalInformation';
-import Address from '@app/pages/Address';
-import QuestionsList from '@app/pages/QuestionsList';
-// import OnboardingUserType from '@app/pages/OnboardingUserType';
 import IssuerOnboarding from '@app/pages/IssuerOnboarding';
 import Dashboard from '@app/pages/Dashboard';
 
@@ -38,9 +34,6 @@ export const publicRoutes: IRouteConfig[] = [
   { path: RouteNames.UPLOAD_DOCUMENTS, element: UploadDocuments },
   { path: RouteNames.SOURCE_OF_FUNDING, element: SourceOfFunding },
   { path: RouteNames.INCOME_RANGE, element: IncomeRange },
-  { path: RouteNames.PERSONAL_INFORMATION, element: PersonalInformation },
-  { path: RouteNames.ADDRESS, element: Address },
-  { path: RouteNames.QUESTIONS_LIST, element: QuestionsList },
   { path: RouteNames.CREATE_ASSET_TOKEN, element: CreateAssetToken },
   { path: RouteNames.SOURCE_OF_FUNDING, element: SourceOfFunding }
 ];

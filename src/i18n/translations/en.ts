@@ -331,13 +331,19 @@ const en: LanguageResource = {
     title: 'Source of Income',
     subtitle:
       'Please tell us what is the source of funds that you will use to funds your W1tty Account',
-    revenue: 'Revenue',
-    loans_credits: 'Loans/credits',
-    donations: 'Donations',
-    dividend_from_branches: 'Dividend from branches',
-    financial_support: 'Financial support from state / international bodies',
-    sales_of_goods: 'Sales of goods',
-    other: 'Other',
+    loans: 'Loans',
+    student_grant_loans: 'Student grants and loans',
+    investor: 'Investor',
+    sale_of_property: 'Sale of property',
+    self_employed: 'Self-employed',
+    retirement_pension: 'Retirement pension',
+    funds_from_family: 'Funds from family members and relatives',
+    business_and_dividends: 'Business and dividends',
+    savings: 'Savings',
+    rental: 'Rental',
+    stock_trading: 'Stock trading',
+    crypto_trading: 'Crypto trading',
+    gambling_or_betting: 'Gambling and betting',
     continue: 'Continue'
   },
   'invester-occupation': {
@@ -469,20 +475,6 @@ const en: LanguageResource = {
     address2: 'Address 2 (optional)',
     continue: 'Continue',
     placeholder: 'Select country'
-  },
-  'questions-list': {
-    title: 'Questions',
-    subtitle: '',
-    news_promotions:
-      'I would like to keep up with W1TTY news, promotions and personalised deals via any of my provided information.',
-    agree: 'I’ve read and agree to ',
-    terms_conditions: 'Terms and Conditions',
-    privacy_policy: 'Privacy Policy',
-    visa_card_policy: 'VISA Card Terms & Conditions',
-    prices_limits: 'Prices & Limits',
-    select_all: 'Select All',
-    confirm: 'Confirm',
-    continue: 'Continue'
   },
   'create-asset-token': {
     create_new_asset: 'Create new Asset',

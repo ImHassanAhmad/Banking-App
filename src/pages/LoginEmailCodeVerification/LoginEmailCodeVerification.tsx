@@ -7,7 +7,11 @@ import { type ResendLoginOtpResponseDto } from 'types';
 import { type AuthFetchQueryError, AuthErrorLevel } from '@app/common/types';
 import { useAuthError } from '@app/context/AuthErrorContext';
 import { LoginFlowSteps } from '@app/layout/LoginStepper/types';
-import type { IssuerDetailsEntity, UserEntity } from '@app/server/database/entity';
+import type {
+  InvestorDetailsEntity,
+  IssuerDetailsEntity,
+  UserEntity
+} from '@app/server/database/entity';
 import { RouteNames } from '@app/constants/routes';
 import { useLazyGetIssuerDetailsQuery } from '@app/store/api/onboarding';
 import { setEmail, setPostOnboardingCompleted } from '@app/store/slices/userData';
@@ -50,8 +54,9 @@ const LoginEmailCodeVerification: React.FC = () => {
         dispatch(setEmail(response.email));
         getIssuerDetails(response.email as string)
           .unwrap()
-          .then((response: IssuerDetailsEntity) => {
+          .then((response: IssuerDetailsEntity & InvestorDetailsEntity) => {
             const { completed, companyStructure, legalRepresentatives } = response;
+            if (response.accountType === 'investor') navigate(`/${RouteNames.DASHBOARD}`);
             dispatch(setPostOnboardingCompleted(completed));
             if (response && completed) {
               navigate(`/${RouteNames.DASHBOARD}`);

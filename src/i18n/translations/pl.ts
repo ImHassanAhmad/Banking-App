@@ -42,7 +42,6 @@ const pl: LanguageResource = {
   'pay-country-taxes': {},
   'personal-information': {},
   address: {},
-  'questions-list': {},
   'register-investor': {},
   'register-issuer': {},
   'legal-representative': {},

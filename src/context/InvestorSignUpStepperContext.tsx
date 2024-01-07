@@ -57,7 +57,7 @@ const InvestorSignUpStepperContext = createContext<InvestorSignUpStepperContextP
 const { Provider } = InvestorSignUpStepperContext;
 
 export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [activeStep, setActiveStep] = useState(InvestorSignUpFlowSteps.TaxReporter);
+  const [activeStep, setActiveStep] = useState(InvestorSignUpFlowSteps.Email);
   const [userId, setUserId] = useState('');
   const { updateError, findError } = useAuthError();
   const [registerUserPayload, setRegisterUserPayload] = useState<InvestorUserRequestDto>({
@@ -142,7 +142,7 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
         apiPayload.phoneNumberCountryCode = registerFormData.phoneNumberCountryCode;
         apiPayload.shortenPhoneNumber = registerFormData.shortenPhoneNumber;
         break;
-      case InvestorSignUpFlowSteps.Questionaire:
+      case InvestorSignUpFlowSteps.AboutOurServices:
         apiPayload.wittyNews = registerFormData.wittyNews;
         break;
       case InvestorSignUpFlowSteps.TaxReporter:
@@ -169,7 +169,8 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
       vis: true,
       visaTncAgreed: true,
       wittyTncAgreed: true,
-      privacyPolicy: true
+      privacyPolicy: true,
+      accountType: 'investor'
     };
     register({ ...apiPayload, ...userPayload })
       .unwrap()

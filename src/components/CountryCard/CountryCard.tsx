@@ -6,6 +6,7 @@ interface CountryCardProps {
   imageSrc?: string;
   text: string;
   code: string;
+  isRemoveDisabled?: boolean;
   customStyle: React.CSSProperties;
   onClick: (code: string) => void;
 }
@@ -24,6 +25,7 @@ const CountryCard: React.FC<CountryCardProps> = ({
   imageSrc,
   text,
   code,
+  isRemoveDisabled,
   onClick,
   customStyle
 }) => {
@@ -52,15 +54,17 @@ const CountryCard: React.FC<CountryCardProps> = ({
           {code}
         </Typography>
       </Box>
-      <Box
-        component={'img'}
-        src={CROSS_ICON}
-        alt="info icon"
-        sx={{ width: '16px', height: '16px', padding: '8px' }}
-        onClick={() => {
-          onClick(code);
-        }}
-      />
+      {!isRemoveDisabled && (
+        <Box
+          component={'img'}
+          src={CROSS_ICON}
+          alt="info icon"
+          sx={{ width: '16px', height: '16px', padding: '8px' }}
+          onClick={() => {
+            onClick(code);
+          }}
+        />
+      )}
     </Box>
   );
 };

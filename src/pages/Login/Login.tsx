@@ -71,6 +71,7 @@ const Login: FC = () => {
       login({ ...loginPayload, captchaToken })
         .unwrap()
         .then((data: VerifyLoginOTPResponseDto) => {
+          console.log('DOOO', data);
           setOtpId(data.otpId);
           setEmail(loginPayload.email);
           setActiveStep(LoginFlowSteps.LoginOtpVerify);

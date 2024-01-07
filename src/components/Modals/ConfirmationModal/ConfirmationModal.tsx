@@ -18,7 +18,7 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
 
   return (
     <ModalWrapper {...props}>
-      <Box sx={modalStyles} width={{ xs: 250, md: 400 }}>
+      <Box sx={modalStyles} width={{ xs: '70%', sm: '50%', md: '30%' }}>
         <Stack mt={1} gap={2}>
           <Common title={title} subtitle={subtitle} />
           <Stack direction={'row'} alignItems={'center'} justifyContent={'space-between'}>

@@ -21,7 +21,7 @@ const SocialSecurityTax: FC<WithSignUpStepperContextProps> = ({
   updateActiveStep,
   updateUserPayload,
   isLoading,
-  userPayload
+  userPayload: { socialSecurityNumber, isUsResident }
 }) => {
   const { t } = useTranslation();
   const [currentInput, setCurrentInput] = useState('');
@@ -34,22 +34,21 @@ const SocialSecurityTax: FC<WithSignUpStepperContextProps> = ({
   };
 
   useEffect(() => {
-    if (!userPayload.isUsResident) return;
-    if (userPayload.socialSecurityNumber.some((ssn: SocialSecurityInformation) => ssn.iso === 'US'))
-      return;
+    if (!isUsResident) return;
+    if (socialSecurityNumber.some((ssn: SocialSecurityInformation) => ssn.iso === 'US')) return;
 
     setCountry(
       ALL_COUNTRIES ? ALL_COUNTRIES.find((_: CountrySelectOption) => _.iso2 === 'US') : undefined
     );
 
     // Dependencies array to control the rerun of this effect; only when userPayload.usResident changes.
-  }, [userPayload.isUsResident, userPayload.socialSecurityNumber]);
+  }, [isUsResident, socialSecurityNumber]);
 
   const handleSubmit = (): void => {
     // if (!currentInput || !country) return updateActiveStep();
     updateUserPayload({
       socialSecurityNumber: [
-        ...userPayload.socialSecurityNumber,
+        ...socialSecurityNumber,
         { country: country?.name, taxNumber: currentInput, iso: country?.iso2 }
       ]
     });

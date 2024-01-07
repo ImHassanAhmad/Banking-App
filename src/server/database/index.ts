@@ -18,7 +18,7 @@ export class AppDatabase extends Dexie {
     super('Tokenization');
     this.version(1).stores({
       users:
-        'id, email, password, shortenPhoneNumber, phoneNumberCountryCode, countryOfIncorporation, visaTncAgreed, wittyTncAgreed, companyName, registrationNumber, dateOfRegister, tradingName, isLegalRepresentative, businessType, businessCategory, isBusinessRegulated, businessRevenue, fundingSources, firstName, lastName, dateOfBirth, postalCode, city, address1, address2, longitude, latitude, country, incomeRange, priceAndLimit, isUsResident, sourceOfIncome,idCardImage, addressProofImage, selfieImage, NICNumber',
+        'id, email, password, shortenPhoneNumber, phoneNumberCountryCode, countryOfIncorporation, visaTncAgreed, wittyTncAgreed, companyName, registrationNumber, dateOfRegister, tradingName, isLegalRepresentative, businessType, businessCategory, isBusinessRegulated, businessRevenue, fundingSources, firstName, lastName, dateOfBirth, postalCode, city, address1, address2, longitude, latitude, country, incomeRange, priceAndLimit, isUsResident, sourceOfIncome,idCardImage, addressProofImage, selfieImage, NICNumber, accountType',
       tokens:
         'id, tokenName, tokenSymbol, totalSupply, numberOfDecimal, pausable, mintable, burnable, capped, currency, buyPrice, tokenLogo',
       assets:
