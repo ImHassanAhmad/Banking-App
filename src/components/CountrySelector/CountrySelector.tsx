@@ -14,11 +14,13 @@ import { type CountrySelectOption } from '@app/common/types';
 const CountrySelector: React.FC<ICountrySelectorProps> = ({
   placeholder,
   selectedCountry,
+  error,
   onChange,
   isDisabled = false
 }) => {
   const theme: any = useTheme();
   const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
+
   return (
     <Autocomplete
       disabled={isDisabled}
@@ -88,6 +90,8 @@ const CountrySelector: React.FC<ICountrySelectorProps> = ({
               autoComplete: 'new-password',
               'data-testid': 'selector-content-input'
             }}
+            error={!!error}
+            helperText={error}
           />
           <img
             src={isPopupOpen ? SEARCH_ICON : ARROW_RIGHT}

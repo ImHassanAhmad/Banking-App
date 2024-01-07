@@ -446,8 +446,9 @@ const en: LanguageResource = {
   'security-number': {
     title: 'Social Security Number',
     states: 'The United States',
-    statesdetail: 'Enter your Social Security Number (SSN) for the United States',
-    stateserror: 'Whats a SSN or its equivalent?',
+    states_detail: 'Enter your Social Security Number (SSN) for the United States',
+    states_error: 'Whats a SSN or its equivalent?',
+    input_label: 'Security Number',
     continue: 'Continue',
     placeholder: '#######'
   },

@@ -5,4 +5,5 @@ export interface ICountrySelectorProps {
   selectedCountry?: CountrySelectOption;
   onChange: (v: CountrySelectOption) => void;
   isDisabled?: boolean;
+  error?: string;
 }

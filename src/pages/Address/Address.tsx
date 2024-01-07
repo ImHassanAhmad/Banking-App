@@ -63,6 +63,7 @@ const Address: FC<WithSignUpStepperContextProps> = ({
     register,
     setValue,
     control,
+    trigger,
     handleSubmit,
     formState: { errors }
   } = useForm<IForm>({
@@ -127,10 +128,12 @@ const Address: FC<WithSignUpStepperContextProps> = ({
               defaultValue={country}
               render={() => (
                 <CountrySelector
+                  error={errors?.country?.message}
                   placeholder={t(`${translationNamespace}.placeholder`)}
                   onChange={(value) => {
                     setValue('country', value.iso2);
                     setCountryData(value);
+                    void trigger('country');
                   }}
                   selectedCountry={countryData}
                 />
