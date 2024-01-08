@@ -22,10 +22,12 @@ import {
 } from '@app/store/slices/CreateAssetToken';
 import { useCreateAssetTokenMutation } from '@app/store/api/tokens';
 import { type AssetTokenCreationRequestDTO } from '@app/common/types';
+import { useParams } from 'react-router-dom';
 const assetTokenNamespace = RouteNames.CREATE_ASSET_TOKEN;
 const steps = Object.values(CreateAssetTokenFlowSteps);
 const CreateAssetToken: React.FC = () => {
   const { t } = useTranslation();
+  const { assetId } = useParams();
 
   const [activeStepIndex, setActiveStepIndex] = useState<number>(0);
   const { tokenBasicInfo: tokenBasicInfoState } = useAppSelector((state) => state.createAssetToken);
@@ -46,9 +48,9 @@ const CreateAssetToken: React.FC = () => {
     setActiveStepIndex((prevStep) => prevStep - 1);
   };
   const submit = (data: ITokenPriceForm): void => {
-    console.log('all data', { tokenBasicInfoState, tokenConfigState, tokenPriceState: data });
     retainState(data);
     const apiPayload = {
+      assetId,
       tokenName: tokenBasicInfoState.tokenName,
       tokenSymbol: tokenBasicInfoState.tokenSymbol,
       totalSupply: tokenBasicInfoState.totalSupply,
@@ -106,7 +108,7 @@ const CreateAssetToken: React.FC = () => {
   return (
     <Box>
       <Stack mb={3}>
-        <Heading title={t(`${assetTokenNamespace}.create_new_asset`)} subTitle={''} />
+        <Heading title={t(`${assetTokenNamespace}.create_new_token`)} subTitle={''} />
       </Stack>
       <BackButton
         onClick={() => {

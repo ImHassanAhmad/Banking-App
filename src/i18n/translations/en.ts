@@ -485,7 +485,7 @@ const en: LanguageResource = {
     continue: 'Continue'
   },
   'create-asset-token': {
-    create_new_asset: 'Create new Asset',
+    create_new_token: 'Create new Token',
     continue: 'Continue',
     token_name: 'Token Name (On Block Chain)',
     token_symbol: 'Token Symbol (On Block Chain)',

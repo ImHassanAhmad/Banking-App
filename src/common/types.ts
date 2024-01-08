@@ -344,10 +344,14 @@ export type AssetRequestDto =
   | AssetDocumentsRequestDto
   | AssetSocialMediaRequestDto;
 
-export type AssetListResponse = AssetInformationRequestDto &
-  AssetDocumentsRequestDto &
-  AssetSocialMediaRequestDto &
-  BaseIdEntity;
+export interface AssetListResponse
+  extends AssetInformationRequestDto,
+    AssetDocumentsRequestDto,
+    AssetSocialMediaRequestDto,
+    BaseIdEntity {
+  status: AssetStatus;
+  token?: AssetTokenCreationResponseDTO;
+}
 
 export interface AssetLegalDocumentsRequestDto {
   assetId: string;
@@ -360,7 +364,7 @@ export interface AssetLegalDocumentsRequestDto {
 
 export enum AssetStatus {
   Created = 'Created',
-  PendingApproval = 'PendingApproval',
+  InReview = 'In_Review',
   Approved = 'Approved',
   Live = 'Live'
 }
@@ -371,6 +375,7 @@ export enum onBoardType {
 }
 
 export interface AssetTokenCreationRequestDTO {
+  assetId: string;
   tokenName: string;
   tokenSymbol: string;
   totalSupply?: number;
