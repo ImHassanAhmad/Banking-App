@@ -8,7 +8,7 @@ import { INFO_ICON } from '@app/assets/images';
 const Common: React.FC<CommonProps> = ({ title, subtitle }) => {
   return (
     <Stack gap={2}>
-      <Stack direction="row" alignItems="center" justifyContent="center">
+      <Stack direction="row" alignItems="center">
         <Box
           component={'img'}
           src={INFO_ICON}
