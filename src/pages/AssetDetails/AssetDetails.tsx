@@ -78,7 +78,7 @@ const AssetDetails: FC = () => {
         />
         <ButtonWithIcon
           sx={{ width: '20%', minWidth: '186px' }}
-          title={'Create Token'}
+          title={t(`${translationNamespace}.create_token`)}
           icon={ADD_ICON}
           handleClick={() => {
             navigate(`/${RouteNames.MANAGE_ASSETS}/${RouteNames.CREATE_ASSET_TOKEN}/${assetId}`);
@@ -93,13 +93,12 @@ const AssetDetails: FC = () => {
             width: '400px',
             objectFit: 'cover'
           }}
-          alt="The house from the offer."
           src="https://1000logos.net/wp-content/uploads/2023/01/Ethereum-logo.png"
         />
-        <Box p="20px 0">
+        <Box p="20px 0" width="100%">
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <Typography fontSize="22px" fontWeight="bold" color="grey" mb="30px">
-              Overview
+              {t(`${translationNamespace}.overview`)}
             </Typography>
             <EditIcon
               sx={{
@@ -120,10 +119,15 @@ const AssetDetails: FC = () => {
             />
           </Box>
 
-          <Box display="flex" gap="25px">
+          <Box display="flex" gap="15%">
             <Box display="flex" gap="10px">
               <Box>
-                {['Asset Id', 'Asset Name', 'Symbol', 'Submission Date'].map((text) => (
+                {[
+                  t(`${translationNamespace}.assetId`),
+                  t(`${translationNamespace}.assetName`),
+                  t(`${translationNamespace}.symbol`),
+                  t(`${translationNamespace}.submissionDate`)
+                ].map((text) => (
                   <Typography
                     key={text}
                     fontWeight="bold"
@@ -145,7 +149,12 @@ const AssetDetails: FC = () => {
             </Box>
             <Box display="flex" gap="10px">
               <Box>
-                {['Status', 'Price', 'Type', 'Issuance Date'].map((text) => (
+                {[
+                  t(`${translationNamespace}.status`),
+                  t(`${translationNamespace}.price`),
+                  t(`${translationNamespace}.type`),
+                  t(`${translationNamespace}.issuanceDate`)
+                ].map((text) => (
                   <Typography
                     key={text}
                     fontWeight="bold"
@@ -195,18 +204,7 @@ const AssetDetails: FC = () => {
       </Box>
       <Accordian
         header="Description"
-        content={
-          <Typography>
-            There are many variations of passages of Lorem Ipsum available, but the majority have
-            There are many variations of passages of Lorem Ipsum available, but the majority have
-            There are many variations of passages of Lorem Ipsum available, but the majority have
-            There are many variations of passages of Lorem Ipsum available, but the majority have
-            There are many variations of passages of Lorem Ipsum available, but the majority have
-            There are many variations of passages of Lorem Ipsum available, but the majority have
-            There are many variations of passages of Lorem Ipsum available, but the majority have
-            There are many variations of passages of Lorem Ipsum available, but the majority have
-          </Typography>
-        }
+        content={<Typography>{t(`${translationNamespace}.description`)}</Typography>}
       />
 
       <Box display="flex" gap="30px">
@@ -215,19 +213,22 @@ const AssetDetails: FC = () => {
           content={
             <Box display="flex" gap="30px">
               <Box>
-                {['Name', 'Symbol', 'Contact Address', 'Token Status', 'Last Updated at'].map(
-                  (text) => (
-                    <Typography
-                      key={text}
-                      fontWeight="bold"
-                      mb="20px"
-                      height="38px"
-                      alignItems="center"
-                      display="flex">
-                      {text}:
-                    </Typography>
-                  )
-                )}
+                {[
+                  t(`${translationNamespace}.name`),
+                  t(`${translationNamespace}.contactAdress`),
+                  t(`${translationNamespace}.tokenStatus`),
+                  t(`${translationNamespace}.lastUpdated`)
+                ].map((text) => (
+                  <Typography
+                    key={text}
+                    fontWeight="bold"
+                    mb="20px"
+                    height="38px"
+                    alignItems="center"
+                    display="flex">
+                    {text}:
+                  </Typography>
+                ))}
               </Box>
               <Box>
                 {['ABC Token', 'ABC', '0x32...456353655', 'Deployed', 'Mar 23, 2023'].map(
@@ -252,11 +253,11 @@ const AssetDetails: FC = () => {
             <Box display="flex" gap="30px">
               <Box>
                 {[
-                  'Total Supply',
-                  'Minted Supply',
-                  'Number of Holders',
-                  'Daily Purchases(Base Currency)',
-                  'Total Purchases(Base Currency)'
+                  t(`${translationNamespace}.totalSupply`),
+                  t(`${translationNamespace}.mintedSupply`),
+                  t(`${translationNamespace}.numberOfHolders`),
+                  t(`${translationNamespace}.dailyPurchases`),
+                  t(`${translationNamespace}.totalPurchases`)
                 ].map((text) => (
                   <Typography
                     key={text}
@@ -289,17 +290,19 @@ const AssetDetails: FC = () => {
       <Accordian
         header="Token Functionalities"
         content={
-          <Box display="flex" gap="30px">
+          <Box display="flex" gap="30px" flexWrap="wrap">
             {[
-              { title: 'Mint' },
-              { title: 'Transfer' },
-              { title: 'Pause' },
-              { title: 'UnPause' },
-              { title: 'Burn' },
-              { title: 'Block' },
-              { title: 'UnBlock' }
+              { title: t(`${translationNamespace}.mint`) },
+              { title: t(`${translationNamespace}.transfer`) },
+              { title: t(`${translationNamespace}.pause`) },
+              { title: t(`${translationNamespace}.unpause`) },
+              { title: t(`${translationNamespace}.burn`) },
+              { title: t(`${translationNamespace}.block`) },
+              { title: t(`${translationNamespace}.unblock`) }
             ].map(({ title }) => (
-              <Button key={title}>{title}</Button>
+              <Button key={title} sx={{ width: '100px' }}>
+                {title}
+              </Button>
             ))}
           </Box>
         }

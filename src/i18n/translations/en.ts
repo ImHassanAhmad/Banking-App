@@ -545,7 +545,35 @@ const en: LanguageResource = {
   },
   'asset-details': {
     title: 'Asset Details',
-    subtitle: 'Details of the selected asset'
+    subtitle: 'Details of the selected asset',
+    create_token: 'Create Token',
+    overview: 'Overview',
+    assetId: 'Asset Id',
+    assetName: 'Asset Name',
+    symbol: 'Symbol',
+    submissionDate: 'Submission Date',
+    description:
+      'There are many variations of passages of Lorem Ipsum available, but the majority have There are many variations of passages of Lorem Ipsum available, but the majority have There are many variations of passages of Lorem Ipsum available, but the majority have There are many variations of passages of Lorem Ipsum available, but the majority have',
+    status: 'Status',
+    price: 'Price',
+    type: 'Type',
+    issuanceDate: 'Issuance Date',
+    name: 'Name',
+    contactAdress: 'Contact Address',
+    tokenStatus: 'Token Status',
+    lastUpdated: 'Last Updated at',
+    totalSupply: 'Total Supply',
+    mintedSupply: 'Minted Supply',
+    numberOfHolders: 'Number of Holders',
+    dailyPurchases: 'Daily Purchases(Base Currency)',
+    totalPurchases: 'Total Purchases(Base Currency)',
+    mint: 'Mint',
+    transfer: 'Transfer',
+    pause: 'Pause',
+    unpause: 'UnPause',
+    burn: 'Burn',
+    block: 'Block',
+    unblock: 'UnBlock'
   }
 };
 
