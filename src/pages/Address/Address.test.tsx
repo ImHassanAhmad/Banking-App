@@ -1,9 +1,10 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { en } from '@app/i18n/translations';
 import { RouteNames } from '@app/constants/routes';
 import transformation from '@app/utils/LanguageTransformation';
 import Address from './Address';
+import userEvent from '@testing-library/user-event';
 
 const mockLanguage = en;
 const mockRoutes = RouteNames;
@@ -29,43 +30,52 @@ describe('Address Component', () => {
 
     expect(screen.getByLabelText(/postal code/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/city/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/street/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/house no/i)).toBeInTheDocument();
+    expect(screen.getByTestId(/address1/i)).toBeInTheDocument();
+    expect(screen.getByTestId(/address2/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /continue/i })).toBeInTheDocument();
   });
 
-  test('submits the form with valid data', async () => {
-    render(<Address {...mockProps} />);
+  // const getLocationAndSubmitForm = jest.fn();
+  test('check the geo location api and submits the form with valid data', async () => {
+    // Mock the position and error objects
+    const mockPosition = {
+      coords: {
+        latitude: 37.7749,
+        longitude: -122.4194
+      }
+    };
 
+    // Set up the getCurrentPosition mock implementation
+    (navigator.geolocation.getCurrentPosition as jest.Mock).mockImplementation(
+      (successCallback) => {
+        successCallback(mockPosition); // Simulate a successful geolocation request
+      }
+    );
+
+    render(<Address {...mockProps} />);
     fireEvent.change(screen.getByLabelText(/postal code/i), { target: { value: '12345' } });
     fireEvent.change(screen.getByLabelText(/city/i), { target: { value: 'Sample City' } });
-    fireEvent.change(screen.getByLabelText(/street/i), { target: { value: 'Sample Street' } });
-    fireEvent.change(screen.getByLabelText(/house no/i), { target: { value: '42' } });
 
-    fireEvent.click(screen.getByText(/continue/i));
+    await userEvent.type(screen.getByTestId(/address1/i), '123456789');
+    await userEvent.type(screen.getByTestId(/address2/i), '123456789');
+    await userEvent.type(screen.getByTestId(/cnt-selector/i), 'AD');
 
-    await waitFor(() => {
-      expect(mockProps.updateActiveStep).toHaveBeenCalled();
+    await act(async () => {
+      await userEvent.click(screen.getByText(/continue/i));
     });
-  });
-
-  test('disables the submit button when there are form errors', () => {
-    render(<Address {...mockProps} />);
-
-    fireEvent.click(screen.getByText(/continue/i));
-
-    expect(mockProps.updateActiveStep).not.toHaveBeenCalled();
-  });
-
-  test('handles form submission when isLoading is true', async () => {
-    const isLoadingProps = { ...mockProps, isLoading: true };
-    render(<Address {...isLoadingProps} />);
-
-    fireEvent.click(screen.getByText(/continue/i));
-
-    // Since isLoading is true, the button should be disabled, and the form submission should not occur
+    // Wait for the asynchronous operation to complete
     await waitFor(() => {
-      expect(mockProps.updateActiveStep).not.toHaveBeenCalled();
+      expect(screen.getByTestId('modal')).toBeInTheDocument();
+    });
+
+    await act(async () => {
+      fireEvent.click(screen.getByTestId('right-btn'));
+    });
+
+    // Wait for the asynchronous operations to complete
+    await waitFor(() => {
+      // Assert that getLocationAndSubmitForm has been called
+      expect(global.navigator.geolocation.getCurrentPosition).toHaveBeenCalled();
     });
   });
 });

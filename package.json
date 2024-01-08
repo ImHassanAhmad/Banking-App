@@ -183,6 +183,7 @@
       "!src/**/*.d.ts"
     ],
     "setupFiles": [
+      "<rootDir>/src/jest.setup.js",
       "<rootDir>/config/jest/jest.polyfills.js",
       "react-app-polyfill/jsdom"
     ],
