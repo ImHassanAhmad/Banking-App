@@ -17,6 +17,13 @@ import BackButton from '@app/components/BackButton';
 import { useNavigate, useParams } from 'react-router-dom';
 import ButtonWithIcon from '@app/components/ButtonWithIcon';
 import { ADD_ICON } from '@app/assets/images';
+import InvestorHoldings from '../InvestorHoldings';
+import type { InvestorHoldingDto } from '../InvestorHoldings/types';
+
+const dummyHoldings: InvestorHoldingDto[] = [
+  { id: '1', name: 'John Doe', amount: 5000 },
+  { id: '2', name: 'Jane Smith', amount: 8000 }
+];
 
 const SocialLink: FC<ISocialLinkProps> = ({ Icon }) => {
   const theme = useTheme();
@@ -297,6 +304,8 @@ const AssetDetails: FC = () => {
           </Box>
         }
       />
+
+      <Accordian header="Holders List" content={<InvestorHoldings holdings={dummyHoldings} />} />
     </Box>
   );
 };
