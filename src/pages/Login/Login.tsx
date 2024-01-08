@@ -19,7 +19,6 @@ import { LoginFlowSteps } from '@app/layout/LoginStepper/types';
 import WarningAlert from '@app/components/WarningAlert';
 import { AuthErrorLevel, type AuthFetchQueryError } from '@app/common/types';
 import { useAuthError } from '@app/context/AuthErrorContext';
-import ReCAPTCHA from 'react-google-recaptcha';
 
 const translationNamespace = RouteNames.LOGIN;
 
@@ -46,9 +45,6 @@ const Login: FC = () => {
   const [login, { isLoading }] = useLoginUserMutation();
   const recentlyRegistered = getQueryParam('recentlyRegistered', location);
 
-  const reRef = React.createRef<ReCAPTCHA>();
-  const SiteKey = process.env.REACT_APP_GOOGLE_RECAPTHA_SITEKEY;
-
   const {
     register,
     handleSubmit,
@@ -59,26 +55,16 @@ const Login: FC = () => {
   });
 
   const onSubmit = async (loginPayload: ILoginForm): Promise<void> => {
-    const captchaRef = reRef.current;
-
-    // Ensure the reCAPTCHA instance is available
-    if (captchaRef) {
-      const captchaToken = await captchaRef.executeAsync();
-
-      // Reset the reCAPTCHA response to allow it to be executed again
-      captchaRef.reset();
-
-      login({ ...loginPayload, captchaToken })
-        .unwrap()
-        .then((data: VerifyLoginOTPResponseDto) => {
-          setOtpId(data.otpId);
-          setEmail(loginPayload.email);
-          setActiveStep(LoginFlowSteps.LoginOtpVerify);
-        })
-        .catch(({ message, errorLevel }: AuthFetchQueryError) => {
-          updateError(activeStep, { title: message, message, errorLevel });
-        });
-    }
+    login({ ...loginPayload, captchaToken: 'captcha' })
+      .unwrap()
+      .then((data: VerifyLoginOTPResponseDto) => {
+        setOtpId(data.otpId);
+        setEmail(loginPayload.email);
+        setActiveStep(LoginFlowSteps.LoginOtpVerify);
+      })
+      .catch(({ message, errorLevel }: AuthFetchQueryError) => {
+        updateError(activeStep, { title: message, message, errorLevel });
+      });
   };
 
   return (
@@ -135,7 +121,6 @@ const Login: FC = () => {
             {error?.message && error.errorLevel !== AuthErrorLevel.System && (
               <WarningAlert message={error.message} />
             )}
-            <ReCAPTCHA sitekey={SiteKey ?? ''} size="invisible" ref={reRef} />
             <Stack width={'100%'} height={'5.4rem'} alignItems={'center'} justifyContent={'center'}>
               {isLoading ? (
                 <CircularProgress />

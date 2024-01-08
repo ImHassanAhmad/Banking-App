@@ -21,7 +21,6 @@ const SessionExpiry: React.FC<{ isOpen: boolean }> = ({ isOpen }: { isOpen: bool
       clearInterval(timer);
     };
   }, [time]);
-  console.log(time);
   return (
     <>
       <Dialog open={isOpen} sx={{ width: '420px', margin: '0 auto' }}>
