@@ -1,8 +1,8 @@
-import { IconButton, Typography } from '@mui/material';
+import { Box, IconButton, Typography } from '@mui/material';
 import { styled } from '@mui/system';
 import { useState, type FC } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import type { AccordionContentProps, IAccordion } from '../types';
+import type { AccordionContentProps, IAccordion } from '../../types';
 
 const AccordionWrapper = styled('div')({
   boxShadow: '0px 5px 10px rgba(0, 0, 0, 0.1)',
@@ -34,17 +34,19 @@ const Accordian: FC<IAccordion> = ({ header, content }) => {
   };
 
   return (
-    <AccordionWrapper>
-      <AccordionHeader onClick={toggleAccordion}>
-        <Typography fontSize="22px" fontWeight="bold" color="grey" mb="20px">
-          {header}
-        </Typography>
-        <IconButton size="small">
-          <ExpandMoreIcon />
-        </IconButton>
-      </AccordionHeader>
-      <AccordionContent expanded={expanded}>{content}</AccordionContent>
-    </AccordionWrapper>
+    <Box flex="1">
+      <AccordionWrapper>
+        <AccordionHeader onClick={toggleAccordion}>
+          <Typography fontSize="22px" fontWeight="bold" color="grey" mb="20px">
+            {header}
+          </Typography>
+          <IconButton size="small">
+            <ExpandMoreIcon />
+          </IconButton>
+        </AccordionHeader>
+        <AccordionContent expanded={expanded}>{content}</AccordionContent>
+      </AccordionWrapper>
+    </Box>
   );
 };
 

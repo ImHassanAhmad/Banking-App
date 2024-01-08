@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { Box, Stack } from '@mui/system';
 import { type FC } from 'react';
 import InstagramIcon from '@mui/icons-material/Instagram';
@@ -9,7 +9,14 @@ import LanguageIcon from '@mui/icons-material/Language';
 import EditIcon from '@mui/icons-material/Edit';
 import type { ISocialLinkProps } from './types';
 import { useTheme } from '@mui/material/styles';
-import Accordian from './Accordian';
+import Accordian from './components/Accordian';
+import Heading from '@app/components/Heading';
+import { RouteNames } from '@app/constants/routes';
+import { useTranslation } from 'react-i18next';
+import BackButton from '@app/components/BackButton';
+import { useNavigate, useParams } from 'react-router-dom';
+import ButtonWithIcon from '@app/components/ButtonWithIcon';
+import { ADD_ICON } from '@app/assets/images';
 
 const SocialLink: FC<ISocialLinkProps> = ({ Icon }) => {
   const theme = useTheme();
@@ -33,12 +40,44 @@ const SocialLink: FC<ISocialLinkProps> = ({ Icon }) => {
   );
 };
 
+const translationNamespace = RouteNames.ASSET_DETAILS;
+
 const AssetDetails: FC = () => {
   const theme = useTheme();
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const { assetId } = useParams();
 
   return (
-    <Box m="40px">
-      <Typography variant="h4">Asset Details</Typography>
+    <Box mt={4}>
+      <Stack>
+        <Heading
+          title={t(`${translationNamespace}.title`)}
+          subTitle={t(`${translationNamespace}.subtitle`)}
+        />
+      </Stack>
+      <Box
+        sx={{
+          display: 'flex',
+          margin: '20px 0',
+          width: '100%',
+          alignItems: 'center',
+          justifyContent: 'space-between'
+        }}>
+        <BackButton
+          onClick={() => {
+            navigate(`/${RouteNames.MANAGE_ASSETS}`);
+          }}
+        />
+        <ButtonWithIcon
+          sx={{ width: '20%', minWidth: '186px' }}
+          title={'Create Token'}
+          icon={ADD_ICON}
+          handleClick={() => {
+            navigate(`/${RouteNames.MANAGE_ASSETS}/${RouteNames.CREATE_ASSET_TOKEN}/${assetId}`);
+          }}
+        />
+      </Box>
       <Box m="40px 0" display="flex" gap="40px" height="400px">
         <Box
           component="img"
@@ -164,57 +203,13 @@ const AssetDetails: FC = () => {
       />
 
       <Box display="flex" gap="30px">
-        <Box flex="1">
-          <Accordian
-            header="Token Information"
-            content={
-              <Box display="flex" gap="30px">
-                <Box>
-                  {['Name', 'Symbol', 'Contact Address', 'Token Status', 'Last Updated at'].map(
-                    (text) => (
-                      <Typography
-                        key={text}
-                        fontWeight="bold"
-                        mb="20px"
-                        height="38px"
-                        alignItems="center"
-                        display="flex">
-                        {text}:
-                      </Typography>
-                    )
-                  )}
-                </Box>
-                <Box>
-                  {['ABC Token', 'ABC', '0x32...456353655', 'Deployed', 'Mar 23, 2023'].map(
-                    (text) => (
-                      <Typography
-                        key={text}
-                        mb="20px"
-                        height="38px"
-                        alignItems="center"
-                        display="flex">
-                        {text}
-                      </Typography>
-                    )
-                  )}
-                </Box>
-              </Box>
-            }
-          />
-        </Box>
-        <Box flex="1">
-          <Accordian
-            header="Token Stats"
-            content={
-              <Box display="flex" gap="30px">
-                <Box>
-                  {[
-                    'Total Supply',
-                    'Minted Supply',
-                    'Number of Holders',
-                    'Daily Purchases(Base Currency)',
-                    'Total Purchases(Base Currency)'
-                  ].map((text) => (
+        <Accordian
+          header="Token Information"
+          content={
+            <Box display="flex" gap="30px">
+              <Box>
+                {['Name', 'Symbol', 'Contact Address', 'Token Status', 'Last Updated at'].map(
+                  (text) => (
                     <Typography
                       key={text}
                       fontWeight="bold"
@@ -224,16 +219,12 @@ const AssetDetails: FC = () => {
                       display="flex">
                       {text}:
                     </Typography>
-                  ))}
-                </Box>
-                <Box>
-                  {[
-                    '2138984328936498132',
-                    '2138984328936498132',
-                    '2138984328936498132',
-                    '1234343',
-                    '12343354545'
-                  ].map((text) => (
+                  )
+                )}
+              </Box>
+              <Box>
+                {['ABC Token', 'ABC', '0x32...456353655', 'Deployed', 'Mar 23, 2023'].map(
+                  (text) => (
                     <Typography
                       key={text}
                       mb="20px"
@@ -242,13 +233,70 @@ const AssetDetails: FC = () => {
                       display="flex">
                       {text}
                     </Typography>
-                  ))}
-                </Box>
+                  )
+                )}
               </Box>
-            }
-          />
-        </Box>
+            </Box>
+          }
+        />
+        <Accordian
+          header="Token Stats"
+          content={
+            <Box display="flex" gap="30px">
+              <Box>
+                {[
+                  'Total Supply',
+                  'Minted Supply',
+                  'Number of Holders',
+                  'Daily Purchases(Base Currency)',
+                  'Total Purchases(Base Currency)'
+                ].map((text) => (
+                  <Typography
+                    key={text}
+                    fontWeight="bold"
+                    mb="20px"
+                    height="38px"
+                    alignItems="center"
+                    display="flex">
+                    {text}:
+                  </Typography>
+                ))}
+              </Box>
+              <Box>
+                {[
+                  '2138984328936498132',
+                  '2138984328936498132',
+                  '2138984328936498132',
+                  '1234343',
+                  '12343354545'
+                ].map((text) => (
+                  <Typography key={text} mb="20px" height="38px" alignItems="center" display="flex">
+                    {text}
+                  </Typography>
+                ))}
+              </Box>
+            </Box>
+          }
+        />
       </Box>
+      <Accordian
+        header="Token Functionalities"
+        content={
+          <Box display="flex" gap="30px">
+            {[
+              { title: 'Mint' },
+              { title: 'Transfer' },
+              { title: 'Pause' },
+              { title: 'UnPause' },
+              { title: 'Burn' },
+              { title: 'Block' },
+              { title: 'UnBlock' }
+            ].map(({ title }) => (
+              <Button key={title}>{title}</Button>
+            ))}
+          </Box>
+        }
+      />
     </Box>
   );
 };

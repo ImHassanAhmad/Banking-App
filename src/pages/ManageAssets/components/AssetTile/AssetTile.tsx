@@ -49,7 +49,8 @@ const AssetTile: React.FC<AssetListResponse> = ({
   return (
     <Card
       onClick={() => {
-        if (!token) navigate(`/${RouteNames.CREATE_ASSET_TOKEN}/${id}`);
+        navigate(`/${RouteNames.MANAGE_ASSETS + '/' + RouteNames.ASSET_DETAILS}/${id}`);
+        // if (!token) navigate(`/${RouteNames.CREATE_ASSET_TOKEN}/${id}`);
       }}
       sx={style}>
       <Stack

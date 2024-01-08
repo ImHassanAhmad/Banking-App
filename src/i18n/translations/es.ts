@@ -50,7 +50,8 @@ const es: LanguageResource = {
   'issuer-onboarding': {},
   dashboard: {},
   'manage-assets': {},
-  'reset-password': {}
+  'reset-password': {},
+  'asset-details': {}
 };
 
 export default es;

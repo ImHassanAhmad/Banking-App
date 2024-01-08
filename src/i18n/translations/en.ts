@@ -542,6 +542,10 @@ const en: LanguageResource = {
     email_input_label: 'Enter your e-mail address',
     password_input_label: 'New Password',
     repeat_password_input_label: 'Repeat Password'
+  },
+  'asset-details': {
+    title: 'Asset Details',
+    subtitle: 'Details of the selected asset'
   }
 };
 
