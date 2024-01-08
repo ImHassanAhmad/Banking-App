@@ -1,6 +1,8 @@
 import React from 'react';
 import { Card, Stack, Typography } from '@mui/material';
-import { AssetStatus } from '@app/common/types';
+import { type AssetListResponse } from '@app/common/types';
+import { useNavigate } from 'react-router-dom';
+import { RouteNames } from '@app/constants/routes';
 // import { type AssetsProps } from './types';
 
 const style = {
@@ -33,16 +35,23 @@ const styleDescriptionTypography = {
   whiteSpace: 'wrap'
 };
 
-const AssetTile: React.FC<any> = ({
+const AssetTile: React.FC<AssetListResponse> = ({
+  id,
   assetName,
   assetDescription,
   assetWebsite,
-  price = 0.001,
+  token,
   logo,
-  status = AssetStatus.Approved
+  status
 }) => {
+  const navigate = useNavigate();
+
   return (
-    <Card sx={style}>
+    <Card
+      onClick={() => {
+        if (!token) navigate(`/${RouteNames.CREATE_ASSET_TOKEN}/${id}`);
+      }}
+      sx={style}>
       <Stack
         style={{
           borderRadius: 1.25
@@ -69,11 +78,13 @@ const AssetTile: React.FC<any> = ({
       <Stack direction={'row'} gap={1}>
         <Stack direction={'column'} width={'100%'}>
           <Typography style={{ fontSize: '1.5rem' }} ml={1} mb={2}>
-            {status}
+            {status.replace('_', ' ')}
           </Typography>
         </Stack>
         <Stack direction={'column'} width={'100%'}>
-          <Typography style={{ fontSize: '1.5rem' }}>{price} USD</Typography>
+          <Typography style={{ fontSize: '1.5rem', textAlign: 'right', paddingRight: '10px' }}>
+            {token ? `${token.buyPrice} ${token.currency}` : '---'}
+          </Typography>
         </Stack>
       </Stack>
     </Card>

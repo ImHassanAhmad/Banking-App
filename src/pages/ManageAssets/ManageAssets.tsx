@@ -10,7 +10,7 @@ import { ADD_ICON } from '@app/assets/images';
 import AssetItem from './components/AssetTile/AssetTile';
 import { useNavigate } from 'react-router-dom';
 import { useListAssetsQuery } from '@app/store/api/asset';
-import { AssetStatus } from '@app/common/types';
+import { type AssetListResponse, AssetStatus } from '@app/common/types';
 
 const translationNamespace = RouteNames.MANAGE_ASSETS;
 
@@ -31,7 +31,7 @@ const assetsArr: AssetsProps[] = [
     assetWebsite: 'https://etherscan.io',
     logo: 'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png',
     price: 0.011,
-    status: AssetStatus.PendingApproval
+    status: AssetStatus.InReview
   },
   {
     assetName: 'BTC',
@@ -40,7 +40,7 @@ const assetsArr: AssetsProps[] = [
     assetWebsite: 'https://etherscan.io',
     logo: 'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png',
     price: 0.011,
-    status: AssetStatus.PendingApproval
+    status: AssetStatus.InReview
   },
   {
     assetName: 'BTC',
@@ -49,7 +49,7 @@ const assetsArr: AssetsProps[] = [
     assetWebsite: 'https://etherscan.io',
     logo: 'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png',
     price: 0.011,
-    status: AssetStatus.PendingApproval
+    status: AssetStatus.InReview
   }
 ];
 
@@ -80,8 +80,8 @@ const ManageAssets: React.FC = () => {
         />
       </Stack>
       <Stack direction={'row'} mt={2} sx={{ display: 'flex', flexWrap: 'wrap' }}>
-        {/* {data?.map((asset: AssetListResponse, i: number) => <AssetItem key={i} {...asset} />)} */}
-        {assetsArr?.map((asset: AssetsProps, i: number) => <AssetItem key={i} {...asset} />)}
+        {data?.map((asset: AssetListResponse, i: number) => <AssetItem key={i} {...asset} />)}
+        {/* {assetsArr?.map((asset: AssetsProps, i: number) => <AssetItem key={i} {...asset} />)} */}
       </Stack>
     </Stack>
   );

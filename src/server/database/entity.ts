@@ -1,3 +1,4 @@
+import { type AssetStatus } from '@app/common/types';
 import type {
   ICompanyStructureForm,
   IKycForm,
@@ -64,6 +65,7 @@ export interface AssetInformation extends BaseEntity {
   assetDescription: string;
   assetWebsite: string;
   logo: string;
+  status: AssetStatus;
 }
 
 export interface AssetDocuments extends BaseEntity {
@@ -100,6 +102,7 @@ export interface InvestorDetailsEntity extends BaseEntity {
 }
 
 export interface AssetTokenCreationEntity extends BaseEntity {
+  assetId: string;
   tokenName: string;
   tokenSymbol: string;
   totalSupply: number | null;

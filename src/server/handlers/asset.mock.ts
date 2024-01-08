@@ -4,13 +4,14 @@ import {
   type AssetDocumentsRequestDto,
   type AssetInformationRequestDto,
   type AssetResponseDto,
-  type AssetListResponse
+  type AssetListResponse,
+  AssetStatus
 } from '@app/common/types';
 import withErrorHandler from '../middleware/withErrorHandler';
 import { type HttpRequestResolverExtras } from 'msw/lib/core/handlers/HttpHandler';
 import { type ResponseResolverInfo } from 'msw/lib/core/handlers/RequestHandler';
 import { type MockAssetListResponse, type MockAssetResponse } from '../constants/common.const';
-import { assetService } from '../database/service';
+import { assetService, tokensService } from '../database/service';
 import * as yup from 'yup';
 import { type AssetEntity, type AssetInformation } from '../database/entity';
 import { Documents } from '@app/pages/CreateNewAsset/types';
@@ -62,6 +63,7 @@ const createAssetHandler: HttpHandler = http.post<PathParams, any, MockAssetResp
       (await assetService.add({
         ...assetRequestPayload,
         logo: assetRequestPayload.logo.name,
+        status: AssetStatus.Created,
         id
       })) as AssetInformation;
 
@@ -160,7 +162,15 @@ const listAssetHandler: HttpHandler = http.get<PathParams, any, MockAssetListRes
   '*/v1/sme/asset/list',
   withErrorHandler(async (): Promise<StrictResponse<MockAssetListResponse>> => {
     const assetList: AssetListResponse[] = (await assetService.getAll()) as AssetListResponse[];
-    return HttpResponse.json<AssetListResponse[]>(assetList);
+    const tokensList = await tokensService.getAll();
+    const assets = await Promise.all(
+      assetList.map((asset) => {
+        const index: number = tokensList.findIndex((_) => _.assetId === asset.id);
+        if (index > -1) asset = { ...asset, token: tokensList[index] } as any;
+        return asset;
+      })
+    );
+    return HttpResponse.json<AssetListResponse[]>(assets);
   })
 );
 

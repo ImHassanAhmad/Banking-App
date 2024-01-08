@@ -478,7 +478,7 @@ const en: LanguageResource = {
     placeholder: 'Select country'
   },
   'create-asset-token': {
-    create_new_asset: 'Create new Token',
+    create_new_token: 'Create new Token',
     continue: 'Continue',
     token_name: 'Token Name (On Block Chain)',
     token_symbol: 'Token Symbol (On Block Chain)',
