@@ -6,7 +6,6 @@ import type {
   FetchBaseQueryError
 } from '@reduxjs/toolkit/query';
 import { Mutex } from 'async-mutex';
-import { BASE_URL, REFRESH_TOKEN, SME_BASE_URL } from '@app/constants';
 import auth from '@app/utils/auth';
 import { isRejectedWithValue } from '@reduxjs/toolkit';
 import type { MiddlewareAPI, Middleware } from '@reduxjs/toolkit';
@@ -27,7 +26,6 @@ export const rtkQueryErrorLogger: Middleware = (api: MiddlewareAPI) => (next) =>
 };
 
 export const baseQuery = fetchBaseQuery({
-  baseUrl: BASE_URL,
   prepareHeaders: (headers) => {
     if (!headers.get('X-Access-Token')) {
       const token = auth.accessToken();
@@ -38,7 +36,6 @@ export const baseQuery = fetchBaseQuery({
 });
 
 export const smeBaseQuery = fetchBaseQuery({
-  baseUrl: SME_BASE_URL,
   prepareHeaders: (headers) => {
     headers.set('x-api-key', 'W1ttySMEToken');
     return headers;
@@ -87,7 +84,7 @@ export const baseQueryWithReauth: BaseQueryFn<
               url: 'external/v1/auth/refresh-session',
               method: 'POST',
               headers: {
-                'X-Access-Token': REFRESH_TOKEN
+                'X-Access-Token': ''
               }
             },
             api,
