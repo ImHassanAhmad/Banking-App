@@ -14,11 +14,13 @@ import { type CountrySelectOption } from '@app/common/types';
 const CountrySelector: React.FC<ICountrySelectorProps> = ({
   placeholder,
   selectedCountry,
+  error,
   onChange,
   isDisabled = false
 }) => {
   const theme: any = useTheme();
   const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
+
   return (
     <Autocomplete
       disabled={isDisabled}
@@ -73,16 +75,23 @@ const CountrySelector: React.FC<ICountrySelectorProps> = ({
               borderRadius: '1rem',
               background: theme.palette.grey[700],
               cursor: 'pointer',
-              '.MuiOutlinedInput-notchedOutline': { borderStyle: 'none' }
+              '.MuiOutlinedInput-notchedOutline': { borderStyle: 'none' },
+              '& input::placeholder': {
+                color: '#414141',
+                opacity: 1
+              }
             }}
             inputProps={{
               ...params.inputProps,
               style: {
                 marginLeft: selectedCountry ? '4rem' : ''
               },
+
               autoComplete: 'new-password',
               'data-testid': 'selector-content-input'
             }}
+            error={!!error}
+            helperText={error}
           />
           <img
             src={isPopupOpen ? SEARCH_ICON : ARROW_RIGHT}

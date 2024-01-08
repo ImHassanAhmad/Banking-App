@@ -71,7 +71,6 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
     onSuccess: (response: RegisterUserResponseDto) => void,
     onError: (error: AuthFetchQueryError) => void
   ): void => {
-    console.log('CONTEXT', message, errorLevel);
     if (!message) {
       onSuccess({ userId: '' });
       return;
@@ -134,9 +133,6 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
       case InvestorSignUpFlowSteps.IncomeRange:
         apiPayload.incomeRange = registerFormData.incomeRange;
         break;
-      case InvestorSignUpFlowSteps.TaxReporter:
-        apiPayload.peselNumber = registerFormData.peselNumber;
-        break;
       case InvestorSignUpFlowSteps.VerifyIdentity:
         apiPayload.idCardImage = registerFormData.idCardImage;
         apiPayload.addressProofImage = registerFormData.addressProofImage;
@@ -146,8 +142,11 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
         apiPayload.phoneNumberCountryCode = registerFormData.phoneNumberCountryCode;
         apiPayload.shortenPhoneNumber = registerFormData.shortenPhoneNumber;
         break;
-      case InvestorSignUpFlowSteps.Questionaire:
+      case InvestorSignUpFlowSteps.AboutOurServices:
         apiPayload.wittyNews = registerFormData.wittyNews;
+        break;
+      case InvestorSignUpFlowSteps.TaxReporter:
+        apiPayload.NICNumber = registerFormData.NICNumber;
         break;
       case InvestorSignUpFlowSteps.UsPerson:
         apiPayload.isUsResident = registerFormData.isUsResident;
@@ -170,7 +169,8 @@ export const InvestorSignUpStepperProvider: FC<PropsWithChildren> = ({ children 
       vis: true,
       visaTncAgreed: true,
       wittyTncAgreed: true,
-      privacyPolicy: true
+      privacyPolicy: true,
+      accountType: 'investor'
     };
     register({ ...apiPayload, ...userPayload })
       .unwrap()

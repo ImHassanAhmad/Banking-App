@@ -3,71 +3,89 @@ import { Box, Stack, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { RouteNames } from '@app/constants/routes';
 import Heading from '@app/components/Heading';
-import { type WithSignUpStepperContextProps } from '@app/common/types';
-import React, { useState } from 'react';
+import { type AuthFetchQueryError, type WithSignUpStepperContextProps } from '@app/common/types';
+import { type SubmitHandler, useForm, type FieldError } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import React, { useMemo, useState } from 'react';
+import { getCountryData } from 'countries-list';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import Textfield from '@app/components/Textfield';
 import SubmitButton from '@app/components/SubmitButton';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import { type SubmitHandler, useForm, type FieldError } from 'react-hook-form';
 
 const taxreporter = RouteNames.TAX_REPORTER;
+
 interface IForm {
-  peselNumber: string;
+  NICNumber: string;
 }
 
 const TaxReporter: React.FC<WithSignUpStepperContextProps> = ({
   updateActiveStep,
   registerUser,
-  userPayload: { peselNumber }
+  userPayload: { country, NICNumber }
 }) => {
   const { t } = useTranslation();
-  const [fieldErrors] = useState<FieldError>();
+  const [fieldErrors, setFieldErrors] = useState<FieldError>();
+
   const schema = yup
     .object()
     .shape({
-      peselNumber: yup.string().required()
+      NICNumber: yup.string().required('Number is required')
     })
     .required();
+
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm<IForm>({
+    defaultValues: {
+      NICNumber
+    },
     mode: 'onBlur',
     resolver: yupResolver(schema)
   });
 
-  const onSubmit: SubmitHandler<IForm> = async (userPayload: IForm) => {
+  const onSubmit: SubmitHandler<IForm> = async (data: IForm) => {
     registerUser({
       payload: {
-        ...userPayload,
+        ...data,
         dryRun: true
       },
       onSuccess: () => {
         updateActiveStep();
+      },
+      onError: (error: AuthFetchQueryError) => {
+        setFieldErrors({
+          type: 'disabled',
+          message: error.message
+        });
       }
     });
   };
+
+  const countryData = useMemo(() => getCountryData(country), [country]);
+
   return (
     <Stack mt={4} sx={{ width: '100%' }}>
       <Stack>
-        <Heading title={t(`${taxreporter}.title`)} subTitle={t(`${taxreporter}.subtitle`)} />
+        <Heading
+          title={t(`${taxreporter}.title`)}
+          subTitle={`${t(`${taxreporter}.subtitle`)} ${countryData?.name}.`}
+        />
       </Stack>
-      <Stack></Stack>
       <form
         onSubmit={(event) => {
           void handleSubmit(onSubmit)(event);
         }}>
         <Stack mt={3}>
-          {' '}
           <Textfield
-            name="peselNumber"
+            name="NICNumber"
             label={t(`${taxreporter}.number_name`)}
             register={register}
-            defaultValue={peselNumber}
-            errorValue={errors?.peselNumber ?? fieldErrors}
+            defaultValue={NICNumber}
+            errorValue={errors?.NICNumber ?? fieldErrors}
+            fullWidth
           />
         </Stack>
         <Stack mt={2}>
@@ -82,14 +100,10 @@ const TaxReporter: React.FC<WithSignUpStepperContextProps> = ({
               minHeight: 'max-content'
             }}>
             <ErrorOutlineIcon />
-
             <Typography variant="body2">{t(`${taxreporter}.stateserror`)}</Typography>
           </Box>
-          <SubmitButton
-            title={t(`${taxreporter}.continue`)}
-            sx={{ mt: 4 }}
-            disabled={!!Object.keys(errors).length}
-          />
+
+          <SubmitButton title={t(`${taxreporter}.continue`)} sx={{ mt: 4 }} />
         </Stack>
       </form>
     </Stack>

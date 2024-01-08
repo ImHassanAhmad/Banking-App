@@ -95,6 +95,10 @@ export interface IssuerDetailsEntity extends BaseEntity {
   kyc?: { form: IKycForm | null; uploadedFiles: IUploadedFilesEntity };
 }
 
+export interface InvestorDetailsEntity extends BaseEntity {
+  accountType?: 'investor';
+}
+
 export interface AssetTokenCreationEntity extends BaseEntity {
   tokenName: string;
   tokenSymbol: string;

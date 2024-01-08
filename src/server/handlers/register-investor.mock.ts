@@ -30,6 +30,8 @@ const userRegistrationSchema = yup.object<InvestorUserRequestDto>().shape({
   incomeRange: yup.string(),
   priceAndLimit: yup.string(),
   isUsResident: yup.string(),
+  NICNumber: yup.string(),
+  accountType: yup.string().oneOf(['investor']),
   sourceOfIncome: yup.array().of(yup.string()),
   idCardImage: yup.mixed(),
   addressProofImage: yup.mixed(),

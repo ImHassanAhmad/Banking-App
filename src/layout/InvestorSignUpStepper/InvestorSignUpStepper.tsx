@@ -8,7 +8,6 @@ import Address from '@app/pages/Address';
 import PhoneNumber from '@app/pages/PhoneNumber';
 import IncomeRange from '@app/pages/IncomeRange';
 import VerifyIdentity from '@app/pages/VerifyIdentity';
-import QuestionsList from '@app/pages/QuestionsList';
 import SourceOfIncome from '@app/pages/SourceOfIncome';
 import UsPerson from '@app/pages/USPerson';
 import SocialSecurityNumber from '@app/pages/SocialSecurityNumber';
@@ -17,7 +16,7 @@ import { InvestorSignUpFlowSteps } from './types';
 import { useInvestorSignUpStepper } from '@app/context/InvestorSignUpStepperContext';
 import BackButton from '@app/components/BackButton';
 import { type WithSignUpStepperContextProps } from '@app/common/types';
-
+import AboutServices from '@app/pages/AboutServices';
 import MobileCodeVerification from '@app/pages/MobileCodeVerification';
 import RegisterEmailCodeVerification from '@app/pages/RegisterEmailCodeVerification';
 import InvesterOccupation from '@app/pages/InvesterOccupation/InvesterOccupation';
@@ -57,8 +56,8 @@ const investorFlowComponent = (
       return PoliticalExposed;
     case InvestorSignUpFlowSteps.PoliticalExposedPerson:
       return PoliticalExposedPerson;
-    case InvestorSignUpFlowSteps.Questionaire:
-      return QuestionsList;
+    case InvestorSignUpFlowSteps.AboutOurServices:
+      return AboutServices;
     case InvestorSignUpFlowSteps.CreatePassword:
       return Password;
     case InvestorSignUpFlowSteps.EmailVerify:

@@ -37,10 +37,19 @@ export interface RegisterUserResponseDto {
 }
 
 export enum IncomeSources {
-  Revenue = 'revenue',
-  LoanCredits = 'loans_credits',
-  Donations = 'donations',
-  GoodSales = 'sales_of_goods',
+  Investor = 'investor',
+  SaleOfProperty = 'sale_of_property',
+  SelfEmployed = 'self_employed',
+  RetirementPension = 'retirement_pension',
+  FundsFromFamily = 'funds_from_family',
+  BusinessAndDividends = 'business_and_dividends',
+  Savings = 'savings',
+  Loans = 'loans',
+  StudentGrants = 'student_grant_loans',
+  Rental = 'rental',
+  StockTrading = 'stock_trading',
+  CryptoTrading = 'crypto_trading',
+  GamblingOrBetting = 'gambling_or_betting',
   Other = 'other'
 }
 export enum InvesterOccupation {
@@ -95,6 +104,7 @@ export interface SocialSecurityInformation {
   country: string;
   taxNumber: string;
   iso: TCountryCode;
+  isDefault?: boolean;
 }
 
 export interface InvestorUserRequestDto extends UserRequestDto {
@@ -114,6 +124,7 @@ export interface InvestorUserRequestDto extends UserRequestDto {
   incomeRange?: string;
   priceAndLimit?: boolean;
   isUsResident?: boolean;
+  NICNumber?: string;
   sourceOfIncome?: string[];
   investerOccupation?: string[];
   socialSecurityNumber?: SocialSecurityInformation[];

@@ -1,5 +1,4 @@
-import React, { type FC } from 'react';
-
+import { type FC, useEffect } from 'react';
 import OnboardingList from '@app/components/OnboardingList';
 import { BINARY_ANSWER_OPTIONS } from '@app/constants/issuer-onboarding';
 import { RouteNames } from '@app/constants/routes';
@@ -11,11 +10,24 @@ const transactionResource = RouteNames.US_Person;
 
 const UsPerson: FC<WithSignUpStepperContextProps> = ({
   updateActiveStep,
-  userPayload: { isUsResident },
+  userPayload: { isUsResident, country, NICNumber },
   updateUserPayload,
   registerUser
 }) => {
   const { t } = useTranslation();
+
+  useEffect(() => {
+    updateUserPayload({
+      socialSecurityNumber: [
+        {
+          country,
+          taxNumber: NICNumber,
+          iso: country,
+          isDefault: true
+        }
+      ]
+    });
+  }, [country, NICNumber]);
 
   const handleSubmit = (value: string): void => {
     const usResident = !!value.includes('Yes');

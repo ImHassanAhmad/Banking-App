@@ -1,4 +1,3 @@
-// AboutServices.tsx
 import React, { useState, useCallback } from 'react';
 import { Button, Stack } from '@mui/material';
 import { useTranslation } from 'react-i18next';

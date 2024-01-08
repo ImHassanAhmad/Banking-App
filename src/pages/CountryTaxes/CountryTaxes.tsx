@@ -26,7 +26,6 @@ const CountryTaxes: FC<WithSignUpStepperContextProps> = ({
   const addCountry = (): void => {
     goBack(activeStepIndex - 1);
   };
-
   const updateCountryTax = (code: string): void => {
     updateUserPayload({
       socialSecurityNumber: userPayload.socialSecurityNumber.filter(
@@ -44,6 +43,7 @@ const CountryTaxes: FC<WithSignUpStepperContextProps> = ({
             imageSrc={getCountryFlag(v.iso)}
             text={v.country}
             code={v.taxNumber}
+            isRemoveDisabled={v?.isDefault}
             onClick={(code) => {
               updateCountryTax(code);
             }}

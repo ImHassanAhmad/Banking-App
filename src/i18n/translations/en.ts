@@ -331,13 +331,19 @@ const en: LanguageResource = {
     title: 'Source of Income',
     subtitle:
       'Please tell us what is the source of funds that you will use to funds your W1tty Account',
-    revenue: 'Revenue',
-    loans_credits: 'Loans/credits',
-    donations: 'Donations',
-    dividend_from_branches: 'Dividend from branches',
-    financial_support: 'Financial support from state / international bodies',
-    sales_of_goods: 'Sales of goods',
-    other: 'Other',
+    loans: 'Loans',
+    student_grant_loans: 'Student grants and loans',
+    investor: 'Investor',
+    sale_of_property: 'Sale of property',
+    self_employed: 'Self-employed',
+    retirement_pension: 'Retirement pension',
+    funds_from_family: 'Funds from family members and relatives',
+    business_and_dividends: 'Business and dividends',
+    savings: 'Savings',
+    rental: 'Rental',
+    stock_trading: 'Stock trading',
+    crypto_trading: 'Crypto trading',
+    gambling_or_betting: 'Gambling and betting',
     continue: 'Continue'
   },
   'invester-occupation': {
@@ -366,14 +372,14 @@ const en: LanguageResource = {
     subtitle:
       'Whom of your close family members are asssociates have been elected to polimnent political positionsor assigned high profile public roles in the last 12 months?',
     stateserror: 'What does it mean?',
-    myself: 'MySelf',
+    myself: 'Myself',
     Myfamilymember: 'My family member',
     Mycloseassociate: 'My close associate',
     continue: 'Continue'
   },
   'tax-reporter': {
-    title: 'Your PESEL',
-    subtitle: 'FOR tax reporting purposes,please enter your PESEL in Poland.',
+    title: 'Your PESEL Number / National Identification Number',
+    subtitle: 'FOR tax reporting purposes,please enter your PESEL in',
     stateserror: 'Remember,its very important that the code is correct as per your documents.',
     number_name: '[Number Name]',
 
@@ -440,8 +446,9 @@ const en: LanguageResource = {
   'security-number': {
     title: 'Social Security Number',
     states: 'The United States',
-    statesdetail: 'Enter your Social Security Number (SSN) for the United States',
-    stateserror: 'Whats a SSN or its equivalent?',
+    states_detail: 'Enter your Social Security Number (SSN) for the United States',
+    states_error: 'Whats a SSN or its equivalent?',
+    input_label: 'Security Number',
     continue: 'Continue',
     placeholder: '#######'
   },
@@ -466,23 +473,9 @@ const en: LanguageResource = {
     postal_code: 'Postal Code',
     city: 'City',
     address1: 'Address 1',
-    address2: 'Address 2 ( optional )',
+    address2: 'Address 2 (optional)',
     continue: 'Continue',
     placeholder: 'Select country'
-  },
-  'questions-list': {
-    title: 'Questions',
-    subtitle: '',
-    news_promotions:
-      'I would like to keep up with W1TTY news, promotions and personalised deals via any of my provided information.',
-    agree: 'I’ve read and agree to ',
-    terms_conditions: 'Terms and Conditions',
-    privacy_policy: 'Privacy Policy',
-    visa_card_policy: 'VISA Card Terms & Conditions',
-    prices_limits: 'Prices & Limits',
-    select_all: 'Select All',
-    confirm: 'Confirm',
-    continue: 'Continue'
   },
   'create-asset-token': {
     create_new_asset: 'Create new Token',

@@ -1,5 +1,5 @@
 import { render, fireEvent, screen } from '@testing-library/react';
-import TermItem from './TermItem';
+import TermItem from './index';
 import { en } from '@app/i18n/translations';
 import { RouteNames } from '@app/constants/routes';
 import transformation from '@app/utils/LanguageTransformation';
