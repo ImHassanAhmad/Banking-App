@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useState, type FC } from 'react';
 import { Stack } from '@mui/material';
 import { useTranslation } from 'react-i18next';
