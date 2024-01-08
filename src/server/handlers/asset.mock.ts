@@ -12,7 +12,7 @@ import { type ResponseResolverInfo } from 'msw/lib/core/handlers/RequestHandler'
 import { type MockAssetListResponse, type MockAssetResponse } from '../constants/common.const';
 import { assetService } from '../database/service';
 import * as yup from 'yup';
-import { type AssetInformation } from '../database/entity';
+import { type AssetEntity, type AssetInformation } from '../database/entity';
 import { Documents } from '@app/pages/CreateNewAsset/types';
 
 const assetSchema = yup.object<AssetInformationRequestDto>().shape({
@@ -164,9 +164,30 @@ const listAssetHandler: HttpHandler = http.get<PathParams, any, MockAssetListRes
   })
 );
 
+const getAssetDetailsHandler: HttpHandler = http.get<PathParams, null, AssetEntity>(
+  '*/v1/sme/asset/details/:id',
+  async ({ params }) => {
+    const { id } = params;
+    // Validate if the ID is provided in the request parameters
+    if (!id) {
+      throw new yup.ValidationError('ID is required', null, 'id');
+    } else {
+      // Fetch the asset token details from the database using the service
+      const assetDetails = await assetService.getById(id as string);
+      // If the token with the given ID is not found, you can handle it accordingly
+      if (!assetDetails) {
+        throw new yup.ValidationError('Asset not found', null, 'id');
+      }
+      // Return the fetched asset token details as a response
+      return HttpResponse.json<AssetEntity>(assetDetails);
+    }
+  }
+);
+
 export const handlers = [
   createAssetHandler,
   uploadAssetLegalDocumentHandler,
   addSocialMediaLinksHandler,
-  listAssetHandler
+  listAssetHandler,
+  getAssetDetailsHandler
 ];
