@@ -2,7 +2,7 @@ import {
   type AuthFetchQueryError,
   AuthErrorLevel,
   type WithSignUpStepperContextProps
-} from '@app/common/types';
+} from '@app/types/types';
 import EmailCodeVerification from '@app/components/EmailCodeVerification/EmailCodeVerification';
 import { useAuthError } from '@app/context/AuthErrorContext';
 // import { InvestorSignUpFlowSteps } from '@app/layout/InvestorSignUpStepper/types';

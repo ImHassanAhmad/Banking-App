@@ -11,7 +11,7 @@ import * as yup from 'yup';
 import { useAuthError } from '@app/context/AuthErrorContext';
 import { type ChangePasswordRequest } from '../../types';
 import { useSaveChangePasswordMutation } from '@app/store/api/reset-password';
-import { type AuthFetchQueryError } from '@app/common/types';
+import { type AuthFetchQueryError } from '@app/types/types';
 import { useResetPasswordStepper } from '@app/context/ResetPasswordContext';
 
 const translationNamespace = RouteNames.RESET_PASSWORD;

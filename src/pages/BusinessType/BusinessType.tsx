@@ -1,7 +1,7 @@
 import React from 'react';
 import OnboardingList from '@app/components/OnboardingList';
 import { BUSINESS_TYPES } from '@app/constants/issuer-onboarding';
-import { type WithSignUpStepperContextProps } from '@app/common/types';
+import { type WithSignUpStepperContextProps } from '@app/types/types';
 
 const BusinessType: React.FC<WithSignUpStepperContextProps> = ({
   updateUserPayload,

@@ -1,15 +1,16 @@
+import type { UserEntity } from '@app/server/database/entity';
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { smeBaseQuery } from '../utils';
 import {
-  type VerifyLoginOTPRequestDto,
+  transformErrorResponse,
+  type AuthApiError,
+  type LoginRequest,
+  type RefreshSessionDto,
   type ResendLoginOtpRequestDto,
   type ResendLoginOtpResponseDto,
-  type VerifyLoginOTPResponseDto,
-  type RefreshSessionDto,
-  type LoginRequest
-} from 'types';
-import { type AuthApiError, transformErrorResponse } from '@app/common/types';
-import type { UserEntity } from '@app/server/database/entity';
+  type VerifyLoginOTPRequestDto,
+  type VerifyLoginOTPResponseDto
+} from '@app/types/types';
+import { smeBaseQuery } from '../utils';
 
 export const loginApi = createApi({
   reducerPath: 'login',

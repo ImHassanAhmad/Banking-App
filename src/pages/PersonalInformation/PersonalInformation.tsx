@@ -8,7 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Textfield from '@app/components/Textfield';
 import Calendar from '@app/components/Calendar';
-import { type AuthFetchQueryError, type WithSignUpStepperContextProps } from '@app/common/types';
+import { type AuthFetchQueryError, type WithSignUpStepperContextProps } from '@app/types/types';
 import SubmitButton from '@app/components/SubmitButton';
 
 interface IForm {

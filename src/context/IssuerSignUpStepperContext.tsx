@@ -14,10 +14,11 @@ import {
   type AuthFetchQueryError,
   AuthErrorLevel,
   onBoardType,
-  type IssuerUserRequestDto
-} from '@app/common/types';
+  type IssuerUserRequestDto,
+  type IErrorMessage
+} from '@app/types/types';
 import { useAuthError } from './AuthErrorContext';
-import { type IErrorMessage } from 'types';
+
 import AuthErrorWrapper from '@app/layout/AuthErrorWrapper';
 import { enumToIndexRecord, indexToEnumKeyRecord } from '@app/utils/enum';
 

@@ -4,7 +4,7 @@ import {
   type WithSignUpStepperContextProps,
   type AuthFetchQueryError,
   type RegisterUserRequestDto
-} from '@app/common/types';
+} from '@app/types/types';
 import Heading from '@app/components/Heading';
 import { NotSupportedModal } from '@app/components/Modals';
 import { NOT_SUPPORTED_MODES } from '@app/constants';

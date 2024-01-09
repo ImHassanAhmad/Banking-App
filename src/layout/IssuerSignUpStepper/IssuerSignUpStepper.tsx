@@ -17,9 +17,10 @@ import BusinessRevenue from '@app/pages/BusinessRevenue';
 import CompanyInformation from '@app/pages/CompanyInformation';
 import { useIssuerSignUpStepper } from '@app/context/IssuerSignUpStepperContext';
 import LegalRepresentative from '@app/pages/LegalRepresentative/LegalRepresentative';
-import { type WithSignUpStepperContextProps } from '@app/common/types';
+import { type WithSignUpStepperContextProps } from '@app/types/types';
 import BusinessType from '@app/pages/BusinessType/BusinessType';
 import SourceOfFunding from '@app/pages/SourceOfFunding';
+import TabTitle from '@app/components/TabTitle';
 
 const issuerFlowComponent = (
   activeStep: IssuerSignUpFlowSteps
@@ -75,6 +76,7 @@ const IssuerSignUpStepper: FC = () => {
   ].includes(activeStep);
   return (
     <Stack pt={5}>
+      <TabTitle title="Issuer Onboarding" />
       {hideBackButton ? (
         <></>
       ) : (

@@ -8,7 +8,7 @@ import {
   type AssetDocumentsRequestDto,
   type AssetSocialMediaRequestDto,
   type AssetListResponse
-} from '@app/common/types';
+} from '@app/types/types';
 import { Documents } from '@app/pages/CreateNewAsset/types';
 
 export const assetApi = createApi({

@@ -1,4 +1,4 @@
-import { type RegisterUserResponseDto as IUserId } from '@app/common/types';
+import { type RegisterUserResponseDto as IUserId } from '@app/types/types';
 
 export enum OtpCommunicationChannelType {
   SMS = 'SMS',

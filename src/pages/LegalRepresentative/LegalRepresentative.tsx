@@ -1,4 +1,4 @@
-import { type WithSignUpStepperContextProps } from '@app/common/types';
+import { type WithSignUpStepperContextProps } from '@app/types/types';
 import { InfoModal } from '@app/components/Modals';
 import OnboardingList from '@app/components/OnboardingList';
 import { BINARY_ANSWER_OPTIONS } from '@app/constants/issuer-onboarding';

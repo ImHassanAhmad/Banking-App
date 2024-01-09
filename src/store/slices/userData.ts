@@ -3,7 +3,7 @@ import {
   type IThemeMode,
   type SupportedCountriesIncorporation,
   type SupportedCountriesPhone
-} from '@app/common/types';
+} from '@app/types/types';
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState: {

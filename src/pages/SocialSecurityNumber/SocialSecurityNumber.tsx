@@ -13,7 +13,7 @@ import {
   type WithSignUpStepperContextProps,
   type CountrySelectOption,
   type SocialSecurityInformation
-} from '@app/common/types';
+} from '@app/types/types';
 import CountrySelector from '@app/components/CountrySelector';
 import { ALL_COUNTRIES } from '@app/constants/countries';
 import SubmitButton from '@app/components/SubmitButton';

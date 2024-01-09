@@ -7,7 +7,7 @@ import { type SubmitHandler, useForm, Controller, type FieldError } from 'react-
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Textfield from '@app/components/Textfield';
-import { type CountrySelectOption, type WithSignUpStepperContextProps } from '@app/common/types';
+import { type CountrySelectOption, type WithSignUpStepperContextProps } from '@app/types/types';
 import { ALL_COUNTRIES } from '@app/constants/countries';
 import CountrySelector from '@app/components/CountrySelector';
 import { ConfirmationModal, InfoModal } from '@app/components/Modals';

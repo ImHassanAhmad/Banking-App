@@ -11,7 +11,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { RouteNames } from '@app/constants/routes';
 import Heading from '@app/components/Heading';
-import { type WithSignUpStepperContextProps } from '@app/common/types';
+import { type WithSignUpStepperContextProps } from '@app/types/types';
 import React from 'react';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { EXPOSED_PERSON } from '@app/constants/investor-onboarding';

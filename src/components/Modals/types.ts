@@ -1,4 +1,4 @@
-import { type CountrySelectOption } from '@app/common/types';
+import { type CountrySelectOption } from '@app/types/types';
 import type React from 'react';
 
 export interface ModalWrapperProps {

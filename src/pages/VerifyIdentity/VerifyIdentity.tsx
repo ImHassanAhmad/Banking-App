@@ -11,10 +11,13 @@ import { RouteNames } from '@app/constants/routes';
 import { useTranslation } from 'react-i18next';
 import Heading from '@app/components/Heading';
 import FileInput from '@app/components/FileInput';
-import { type WithSignUpStepperContextProps, type AuthFetchQueryError } from '@app/common/types';
+import {
+  type WithSignUpStepperContextProps,
+  type AuthFetchQueryError,
+  AllowedFileFormats
+} from '@app/types/types';
 import { imageSrcToFile } from '@app/utils/imageSrcToFile';
 import { fileToImageSrc } from '@app/utils/fileToImageSrc';
-import { AllowedFileFormats } from '@app/common/types';
 import { createFileSchema } from '@app/utils/createFileSchema';
 import SubmitButton from '@app/components/SubmitButton';
 

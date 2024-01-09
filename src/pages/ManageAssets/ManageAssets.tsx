@@ -8,7 +8,7 @@ import { ADD_ICON } from '@app/assets/images';
 import AssetItem from './components/AssetTile/AssetTile';
 import { useNavigate } from 'react-router-dom';
 import { useListAssetsQuery } from '@app/store/api/asset';
-import { type AssetListResponse } from '@app/common/types';
+import { type AssetListResponse } from '@app/types/types';
 
 const translationNamespace = RouteNames.MANAGE_ASSETS;
 

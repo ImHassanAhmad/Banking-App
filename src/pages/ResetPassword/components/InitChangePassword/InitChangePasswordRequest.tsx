@@ -1,21 +1,25 @@
-import React, { type FC } from 'react';
-import { Grid, Stack, Button, CircularProgress } from '@mui/material';
-import Heading from '@app/components/Heading';
-import { RouteNames } from '@app/constants/routes';
-import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import Textfield from '@app/components/Textfield';
 import BackButton from '@app/components/BackButton';
+import Heading from '@app/components/Heading';
+import TabTitle from '@app/components/TabTitle';
+import Textfield from '@app/components/Textfield';
 import WarningAlert from '@app/components/WarningAlert';
-import { AuthErrorLevel, type AuthFetchQueryError } from '@app/common/types';
+import { RouteNames } from '@app/constants/routes';
 import { useAuthError } from '@app/context/AuthErrorContext';
-import { useInitPasswordRequestMutation } from '@app/store/api/reset-password';
-import { type VerifyLoginOTPResponseDto } from 'types';
 import { useResetPasswordStepper } from '@app/context/ResetPasswordContext';
 import { ResetPasswordFlowSteps } from '@app/layout/ResetPasswordStepper/types';
+import { useInitPasswordRequestMutation } from '@app/store/api/reset-password';
+import {
+  AuthErrorLevel,
+  type AuthFetchQueryError,
+  type VerifyLoginOTPResponseDto
+} from '@app/types/types';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Button, CircularProgress, Grid, Stack } from '@mui/material';
+import { type FC } from 'react';
+import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router';
+import * as yup from 'yup';
 
 interface ILoginForm {
   email: string;
@@ -67,6 +71,7 @@ const Login: FC = () => {
 
   return (
     <Stack mt={4} sx={{ width: '100%' }}>
+      <TabTitle title="Reset Password" />
       <BackButton
         onClick={() => {
           navigate(-1);

@@ -7,6 +7,7 @@ import { RouteNames } from '@app/constants/routes';
 import { useTranslation } from 'react-i18next';
 import Heading from '@app/components/Heading';
 import AuthOption from '@app/components/AuthOption';
+import TabTitle from '@app/components/TabTitle';
 
 const welcomeNamespace = RouteNames.WELCOME;
 
@@ -16,6 +17,7 @@ const Welcome: FC = () => {
 
   return (
     <Grid item lg={7} md={10} sm={10} xs={12}>
+      <TabTitle title="Welcome Page" />
       <Stack mt={12} data-testid="welcome-screen-wrapper">
         <Heading
           title={t(`${welcomeNamespace}.title`)}

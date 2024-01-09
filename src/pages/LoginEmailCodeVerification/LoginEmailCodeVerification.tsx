@@ -1,23 +1,30 @@
-import React, { useState } from 'react';
 import EmailCodeVerification from '@app/components/EmailCodeVerification/EmailCodeVerification';
-import { useLoginStepper } from '@app/context/LoginStepperContext';
-import { useResendLoginOtpMutation, useVerifyLoginOtpMutation } from '@app/store/api/login';
-import { useNavigate } from 'react-router-dom';
-import { type ResendLoginOtpResponseDto } from 'types';
-import { type AuthFetchQueryError, AuthErrorLevel, isIssuer, onBoardType } from '@app/common/types';
+import { Stack } from '@mui/material';
+import { RouteNames } from '@app/constants/routes';
 import { useAuthError } from '@app/context/AuthErrorContext';
+import { useLoginStepper } from '@app/context/LoginStepperContext';
 import { LoginFlowSteps } from '@app/layout/LoginStepper/types';
 import type { IssuerDetailsEntity, UserEntity } from '@app/server/database/entity';
-import { RouteNames } from '@app/constants/routes';
+import { useResendLoginOtpMutation, useVerifyLoginOtpMutation } from '@app/store/api/login';
 import { useLazyGetIssuerDetailsQuery } from '@app/store/api/onboarding';
-import { setUser, setPostOnboardingCompleted } from '@app/store/slices/userData';
 import { useAppDispatch } from '@app/store/hooks';
 import {
   setCompanyStructure,
   setLegalRepresentatives,
   setStep
 } from '@app/store/slices/issuerOnboarding';
+import { setPostOnboardingCompleted, setUser } from '@app/store/slices/userData';
+import {
+  AuthErrorLevel,
+  isIssuer,
+  onBoardType,
+  type AuthFetchQueryError,
+  type ResendLoginOtpResponseDto
+} from '@app/types/types';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { PostOnboardingFlowSteps } from '../IssuerOnboarding/types';
+import TabTitle from '@app/components/TabTitle';
 
 const LoginEmailCodeVerification: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -97,23 +104,27 @@ const LoginEmailCodeVerification: React.FC = () => {
   };
 
   return (
-    <EmailCodeVerification
-      onBackButtonClick={() => {
-        setActiveStep(LoginFlowSteps.Login);
-      }}
-      email={email}
-      isInvalid={isInvalid}
-      codeSent={codeRequested}
-      onCodeComplete={(code) => {
-        verifyOtp(code);
-      }}
-      onResendVerification={() => {
-        resendVerification();
-      }}
-      onCountDownComplete={() => {
-        setCodeRequested(false);
-      }}
-    />
+    <Stack>
+      <TabTitle title="Email Verification" />
+
+      <EmailCodeVerification
+        onBackButtonClick={() => {
+          setActiveStep(LoginFlowSteps.Login);
+        }}
+        email={email}
+        isInvalid={isInvalid}
+        codeSent={codeRequested}
+        onCodeComplete={(code) => {
+          verifyOtp(code);
+        }}
+        onResendVerification={() => {
+          resendVerification();
+        }}
+        onCountDownComplete={() => {
+          setCodeRequested(false);
+        }}
+      />
+    </Stack>
   );
 };
 

@@ -4,7 +4,7 @@ import UploadDocuments from '../UploadDocuments';
 import { RouteNames } from '@app/constants/routes';
 import { useTranslation } from 'react-i18next';
 import { Documents } from '../../types';
-import { AllowedFileFormats } from '@app/common/types';
+import { AllowedFileFormats } from '@app/types/types';
 import { useCreateNewAssetStepper } from '@app/context/CreateNewAssetStepperContext';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -14,7 +14,7 @@ import {
   type AssetResponseDto,
   type AssetDocumentsRequestDto,
   type RequestError
-} from '@app/common/types';
+} from '@app/types/types';
 import { useUploadAssetLegalDocumentsMutation } from '@app/store/api/asset';
 import { createFileSchema } from '@app/utils/createFileSchema';
 

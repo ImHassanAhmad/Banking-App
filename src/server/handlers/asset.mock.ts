@@ -6,7 +6,7 @@ import {
   type AssetResponseDto,
   type AssetListResponse,
   AssetStatus
-} from '@app/common/types';
+} from '@app/types/types';
 import withErrorHandler from '../middleware/withErrorHandler';
 import { type HttpRequestResolverExtras } from 'msw/lib/core/handlers/HttpHandler';
 import { type ResponseResolverInfo } from 'msw/lib/core/handlers/RequestHandler';

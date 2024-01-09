@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, Stack, Typography } from '@mui/material';
-import { type AssetListResponse } from '@app/common/types';
+import { type AssetListResponse } from '@app/types/types';
 import { useNavigate } from 'react-router-dom';
 import { RouteNames } from '@app/constants/routes';
 

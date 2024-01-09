@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
 import EmailCodeVerification from '@app/components/EmailCodeVerification/EmailCodeVerification';
-import { type ResendLoginOtpResponseDto } from 'types';
-import { type AuthFetchQueryError, AuthErrorLevel } from '@app/common/types';
 import { useAuthError } from '@app/context/AuthErrorContext';
-import type { UserEntity } from '@app/server/database/entity';
 import { useResetPasswordStepper } from '@app/context/ResetPasswordContext';
 import { ResetPasswordFlowSteps } from '@app/layout/ResetPasswordStepper/types';
+import type { UserEntity } from '@app/server/database/entity';
 import {
   useResendResetPasswordOtpMutation,
   useVerifyResetPasswordOtpMutation
 } from '@app/store/api/reset-password';
+import {
+  AuthErrorLevel,
+  type AuthFetchQueryError,
+  type ResendLoginOtpResponseDto
+} from '@app/types/types';
+import React, { useState } from 'react';
 
 const ResetPasswordCodeVerification: React.FC = () => {
   const [isInvalid, setOtpValidity] = useState<boolean>(false);

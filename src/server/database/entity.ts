@@ -1,4 +1,4 @@
-import { type AssetStatus } from '@app/common/types';
+import { type AssetStatus } from '@app/types/types';
 import type {
   ICompanyStructureForm,
   IKycForm,

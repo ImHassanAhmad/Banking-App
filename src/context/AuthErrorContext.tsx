@@ -1,7 +1,7 @@
 import { type LoginFlowSteps } from '@app/layout/LoginStepper/types';
 import { type IssuerSignUpFlowSteps } from '@app/layout/IssuerSignUpStepper/types';
 import { createContext, useState, useContext, type FC, type PropsWithChildren } from 'react';
-import { type IErrorMessage } from 'types';
+import { type IErrorMessage } from '@app/types/types';
 import { type InvestorSignUpFlowSteps } from '@app/layout/InvestorSignUpStepper/types';
 
 export type AuthPageSteps = LoginFlowSteps | IssuerSignUpFlowSteps | InvestorSignUpFlowSteps | any;

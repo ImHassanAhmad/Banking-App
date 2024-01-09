@@ -9,7 +9,7 @@ import { type SubmitHandler, useForm, type FieldError } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import EmailField from '@app/components/EmailField/EmailField';
-import { type WithSignUpStepperContextProps, type AuthFetchQueryError } from '@app/common/types';
+import { type WithSignUpStepperContextProps, type AuthFetchQueryError } from '@app/types/types';
 import { ModalNames } from '@app/constants/modals';
 import SubmitButton from '@app/components/SubmitButton';
 

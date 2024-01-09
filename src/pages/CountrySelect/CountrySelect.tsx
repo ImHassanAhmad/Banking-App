@@ -5,7 +5,7 @@ import { RouteNames } from '@app/constants/routes';
 import { useTranslation } from 'react-i18next';
 import PrivacyTerms from '@app/components/PrivacyTerms';
 import { NotSupportedModal } from '@app/components/Modals';
-import { type WithSignUpStepperContextProps, type CountrySelectOption } from '@app/common/types';
+import { type WithSignUpStepperContextProps, type CountrySelectOption } from '@app/types/types';
 import { NOT_SUPPORTED_MODES } from '@app/constants';
 import CountrySelector from '@app/components/CountrySelector';
 import { ALL_COUNTRIES } from '@app/constants/countries';

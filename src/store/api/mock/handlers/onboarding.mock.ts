@@ -1,7 +1,7 @@
 import { http, type HttpHandler, HttpResponse, type PathParams, type StrictResponse } from 'msw';
 import constants from '../constants';
 import { type AuthingDictionaryResponseType } from '@app/store/api/onboarding';
-import { type RegisterUserRequestDto, type RegisterUserResponseDto } from '@app/common/types';
+import { type RegisterUserRequestDto, type RegisterUserResponseDto } from '@app/types/types';
 import * as yup from 'yup';
 import { type ResponseResolverInfo } from 'msw/lib/core/handlers/RequestHandler';
 import { type HttpRequestResolverExtras } from 'msw/lib/core/handlers/HttpHandler';

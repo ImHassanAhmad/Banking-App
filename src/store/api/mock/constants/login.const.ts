@@ -1,9 +1,9 @@
-import { type OnboardingError } from '@app/common/types';
 import {
-  type ResendLoginOtpResponseDto,
+  type OnboardingError,
   type RefreshSessionDto,
+  type ResendLoginOtpResponseDto,
   type VerifyLoginOTPResponseDto
-} from 'types';
+} from '@app/types/types';
 import { type ValidationError } from 'yup';
 
 export const MOCK_LOGIN_EMAIL = 'test@witty.tech';

@@ -10,7 +10,7 @@ import auth from '@app/utils/auth';
 import { isRejectedWithValue } from '@reduxjs/toolkit';
 import type { MiddlewareAPI, Middleware } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
-import { type AccessTokenRefreshResponse } from '@app/common/types';
+import { type AccessTokenRefreshResponse } from '@app/types/types';
 
 // create a new mutex
 const mutex = new Mutex();

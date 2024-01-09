@@ -3,7 +3,7 @@ import { Box, Button, Stack, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { RouteNames } from '@app/constants/routes';
 import Heading from '@app/components/Heading';
-import { type WithSignUpStepperContextProps } from '@app/common/types';
+import { type WithSignUpStepperContextProps } from '@app/types/types';
 import React from 'react';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { BINARY_ANSWER_OPTIONS } from '@app/constants/issuer-onboarding';

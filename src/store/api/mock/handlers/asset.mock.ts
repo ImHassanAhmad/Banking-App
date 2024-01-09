@@ -4,7 +4,7 @@ import {
   type AssetLegalDocumentsRequestDto,
   type AssetRequestDto,
   type AssetResponseDto
-} from '@app/common/types';
+} from '@app/types/types';
 import { type MockAssetCreationResponse } from '../constants/asset.const';
 import withErrorHandler from '../middleware/withErrorHandler';
 import { type HttpRequestResolverExtras } from 'msw/lib/core/handlers/HttpHandler';

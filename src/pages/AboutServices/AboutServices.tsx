@@ -5,7 +5,7 @@ import Heading from '@app/components/Heading';
 import { RouteNames } from '@app/constants/routes';
 import TermItem from './components/TermItem';
 import { type TermCheckListType } from './types';
-import { type WithSignUpStepperContextProps } from '@app/common/types';
+import { type WithSignUpStepperContextProps } from '@app/types/types';
 
 const aboutOurServicesNamespace = RouteNames.ABOUT_OUR_SERVICES;
 

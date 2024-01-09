@@ -6,7 +6,7 @@ import {
   type AuthApiError,
   type AssetTokenCreationRequestDTO,
   type AssetTokenCreationResponseDTO
-} from '@app/common/types';
+} from '@app/types/types';
 export const assetTokenApi = createApi({
   reducerPath: 'assetToken',
   baseQuery: smeBaseQuery,
