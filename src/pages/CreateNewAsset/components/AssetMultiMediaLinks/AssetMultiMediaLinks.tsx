@@ -13,7 +13,7 @@ import {
   type AssetResponseDto,
   type RequestError,
   type AssetSocialMediaRequestDto
-} from '@app/common/types';
+} from '@app/types/types';
 import { useAddSocialMediaLinksMutation } from '@app/store/api/asset';
 
 const createNewAssetNamespace = RouteNames.CREATE_NEW_ASSET;

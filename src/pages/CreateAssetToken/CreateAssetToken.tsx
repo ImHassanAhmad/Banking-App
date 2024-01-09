@@ -21,7 +21,7 @@ import {
   setTokenPrice
 } from '@app/store/slices/CreateAssetToken';
 import { useCreateAssetTokenMutation } from '@app/store/api/tokens';
-import { type AssetTokenCreationRequestDTO } from '@app/common/types';
+import { type AssetTokenCreationRequestDTO } from '@app/types/types';
 import { useNavigate, useParams } from 'react-router-dom';
 const assetTokenNamespace = RouteNames.CREATE_ASSET_TOKEN;
 const steps = Object.values(CreateAssetTokenFlowSteps);

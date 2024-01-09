@@ -4,7 +4,7 @@ import { type FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RevenueRange } from '@app/constants/revenue-range';
 import { Stack } from '@mui/material';
-import { type WithSignUpStepperContextProps } from '@app/common/types';
+import { type WithSignUpStepperContextProps } from '@app/types/types';
 
 const transactionResource = RouteNames.INCOME_RANGE;
 

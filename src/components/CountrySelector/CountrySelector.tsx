@@ -9,7 +9,7 @@ import styles from './styles.module.scss';
 import { Box } from '@mui/system';
 import { ALL_COUNTRIES } from '@app/constants/countries';
 import { type ICountrySelectorProps } from './types';
-import { type CountrySelectOption } from '@app/common/types';
+import { type CountrySelectOption } from '@app/types/types';
 
 const CountrySelector: React.FC<ICountrySelectorProps> = ({
   placeholder,

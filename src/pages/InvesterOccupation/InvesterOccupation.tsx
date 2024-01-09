@@ -1,14 +1,13 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, type FC } from 'react';
-import { Stack } from '@mui/material';
-import { useTranslation } from 'react-i18next';
-import { RouteNames } from '@app/constants/routes';
 import Heading from '@app/components/Heading';
-import { type CheckList } from '../InvesterOccupation/types';
-import { type WithSignUpStepperContextProps } from '@app/common/types';
-import { InvesterOccupation } from '@app/common/types';
-import IncomeSourceItem from '../SourceOfIncome/components/IncomeSourceItem';
 import SubmitButton from '@app/components/SubmitButton';
+import { RouteNames } from '@app/constants/routes';
+import { InvesterOccupation, type WithSignUpStepperContextProps } from '@app/types/types';
+import { Stack } from '@mui/material';
+import { useState, type FC } from 'react';
+import { useTranslation } from 'react-i18next';
+import { type CheckList } from '../InvesterOccupation/types';
+import IncomeSourceItem from '../SourceOfIncome/components/IncomeSourceItem';
 
 const investeroccupations = RouteNames.INVESTER_OCCUPATION;
 const occupationSourcesArray: string[] = Object.values(InvesterOccupation);

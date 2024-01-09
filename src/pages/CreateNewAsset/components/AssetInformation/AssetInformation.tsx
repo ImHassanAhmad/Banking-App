@@ -22,7 +22,7 @@ import {
   type AssetInformationRequestDto,
   type RequestError,
   AllowedImageFormats
-} from '@app/common/types';
+} from '@app/types/types';
 import { useCreateAssetMutation } from '@app/store/api/asset';
 import { createFileSchema } from '@app/utils/createFileSchema';
 

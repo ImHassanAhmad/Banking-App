@@ -12,7 +12,7 @@ import {
   useInvestorSignUpStepper
 } from '@app/context/InvestorSignUpStepperContext';
 import { type IssuerSignUpStepperContextProps } from '@app/context/IssuerSignUpStepperContext';
-import { onBoardType } from '@app/common/types';
+import { onBoardType } from '@app/types/types';
 
 var mockAllCountres = ALL_COUNTRIES;
 const mockLanguage = en;

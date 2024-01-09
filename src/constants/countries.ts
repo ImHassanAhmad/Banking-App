@@ -1,5 +1,5 @@
 import { getCountryFlag } from '@app/assets/flags';
-import { type CountrySelectOption } from '@app/common/types';
+import { type CountrySelectOption } from '@app/types/types';
 import { countries, getCountryData, type TCountryCode } from 'countries-list';
 
 const countryCodes = Object.keys(countries) as TCountryCode[];

@@ -3,7 +3,7 @@ import { Box, Stack, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { RouteNames } from '@app/constants/routes';
 import Heading from '@app/components/Heading';
-import { type AuthFetchQueryError, type WithSignUpStepperContextProps } from '@app/common/types';
+import { type AuthFetchQueryError, type WithSignUpStepperContextProps } from '@app/types/types';
 import { type SubmitHandler, useForm, type FieldError } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';

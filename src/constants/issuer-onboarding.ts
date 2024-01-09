@@ -1,7 +1,7 @@
 import { type ICategories } from '@app/components/OnboardingList/types';
 import { BusinessCategoryType } from '@app/pages/BusinessCategory/types';
 import { BusinessTypes } from '@app/pages/BusinessType/types';
-import { type Category } from 'types';
+import { type Category } from '@app/types/types';
 
 export const BUSINESS_CATEGORY: Category[] = [
   {

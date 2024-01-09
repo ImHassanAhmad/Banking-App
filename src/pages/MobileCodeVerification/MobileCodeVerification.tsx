@@ -14,7 +14,7 @@ import {
   AuthErrorLevel,
   type WithSignUpStepperContextProps,
   type AuthFetchQueryError
-} from '@app/common/types';
+} from '@app/types/types';
 import WarningAlert from '@app/components/WarningAlert';
 import { useAuthError } from '@app/context/AuthErrorContext';
 

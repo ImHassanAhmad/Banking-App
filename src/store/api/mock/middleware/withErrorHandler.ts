@@ -1,4 +1,4 @@
-import { type OnboardingError, type AccountError } from '@app/common/types';
+import { type OnboardingError, type AccountError } from '@app/types/types';
 import { HttpResponse, type PathParams } from 'msw';
 import { type HttpRequestResolverExtras } from 'msw/lib/core/handlers/HttpHandler';
 import { type ResponseResolverInfo } from 'msw/lib/core/handlers/RequestHandler';

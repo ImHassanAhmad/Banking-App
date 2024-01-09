@@ -1,4 +1,4 @@
-import { type AuthFetchQueryError, type WithSignUpStepperContextProps } from '@app/common/types';
+import { type AuthFetchQueryError, type WithSignUpStepperContextProps } from '@app/types/types';
 import Heading from '@app/components/Heading';
 import { RouteNames } from '@app/constants/routes';
 import { yupResolver } from '@hookform/resolvers/yup';

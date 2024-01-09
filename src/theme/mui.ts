@@ -1,4 +1,4 @@
-import type { IThemeMode } from '@app/common/types';
+import type { IThemeMode } from '@app/types/types';
 // eslint-disable-next-line no-restricted-imports
 import type { PaletteOptions } from '@mui/material/styles/createPalette';
 import { type ThemeOptions, createTheme } from '@mui/material';

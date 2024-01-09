@@ -12,7 +12,7 @@ import {
   AuthErrorLevel,
   type WithSignUpStepperContextProps,
   type UserRequestDto
-} from '@app/common/types';
+} from '@app/types/types';
 import WarningAlert from '@app/components/WarningAlert';
 import SubmitButton from '@app/components/SubmitButton';
 

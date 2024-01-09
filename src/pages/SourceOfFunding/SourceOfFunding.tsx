@@ -6,7 +6,7 @@ import { RouteNames } from '@app/constants/routes';
 import Heading from '@app/components/Heading';
 import { type CheckList } from './types';
 import { FUNDING_SOURCES } from '@app/constants/funding-source';
-import { type WithSignUpStepperContextProps } from '@app/common/types';
+import { type WithSignUpStepperContextProps } from '@app/types/types';
 
 const sourceOfFundingNamespace = RouteNames.SOURCE_OF_FUNDING;
 

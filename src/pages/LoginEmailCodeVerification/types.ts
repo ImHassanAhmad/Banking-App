@@ -1,4 +1,4 @@
-import { type RegisterUserResponseDto as IUserId, type AuthApiError } from '@app/common/types';
+import { type RegisterUserResponseDto as IUserId, type AuthApiError } from '@app/types/types';
 import {
   type VerifyPhoneResponseDto,
   type VerifyPhoneRequestDto,

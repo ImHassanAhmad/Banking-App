@@ -8,7 +8,7 @@ import {
   transformErrorResponse,
   type AuthApiError,
   type InvestorUserRequestDto
-} from '@app/common/types';
+} from '@app/types/types';
 import type {
   IssuerDetailsRequestDto,
   ResendEmailConfirmationRequestDto,

@@ -1,24 +1,29 @@
-import { Grid, Stack, Button, Typography, CircularProgress } from '@mui/material';
-import Heading from '@app/components/Heading';
-import React, { type FC } from 'react';
-import PasswordField from '@app/components/PasswordField';
-import { RouteNames } from '@app/constants/routes';
-import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import { type VerifyLoginOTPResponseDto, type ILoginForm } from '@app/types/types';
-import Textfield from '@app/components/Textfield';
-import { getQueryParam } from '@app/utils/queryParams';
-import { useLocation } from 'react-router-dom';
 import BackButton from '@app/components/BackButton';
-import { useLoginUserMutation } from '@app/store/api/login';
+import Heading from '@app/components/Heading';
+import PasswordField from '@app/components/PasswordField';
+import TabTitle from '@app/components/TabTitle';
+import Textfield from '@app/components/Textfield';
+import WarningAlert from '@app/components/WarningAlert';
+import { RouteNames } from '@app/constants/routes';
+import { useAuthError } from '@app/context/AuthErrorContext';
 import { useLoginStepper } from '@app/context/LoginStepperContext';
 import { LoginFlowSteps } from '@app/layout/LoginStepper/types';
-import WarningAlert from '@app/components/WarningAlert';
-import { AuthErrorLevel, type AuthFetchQueryError } from '@app/common/types';
-import { useAuthError } from '@app/context/AuthErrorContext';
+import { useLoginUserMutation } from '@app/store/api/login';
+import {
+  AuthErrorLevel,
+  type AuthFetchQueryError,
+  type ILoginForm,
+  type VerifyLoginOTPResponseDto
+} from '@app/types/types';
+import { getQueryParam } from '@app/utils/queryParams';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Button, CircularProgress, Grid, Stack, Typography } from '@mui/material';
+import { type FC } from 'react';
+import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router';
+import { useLocation } from 'react-router-dom';
+import * as yup from 'yup';
 
 const translationNamespace = RouteNames.LOGIN;
 
@@ -69,6 +74,7 @@ const Login: FC = () => {
 
   return (
     <Stack mt={4} sx={{ width: '100%' }}>
+      <TabTitle title="Login Page" />
       <BackButton
         onClick={() => {
           recentlyRegistered ? navigate('/') : navigate(-1);

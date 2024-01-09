@@ -1,17 +1,18 @@
-import { createApi } from '@reduxjs/toolkit/query/react';
-import { smeBaseQuery } from '../utils';
 import {
-  type VerifyLoginOTPResponseDto,
-  type ResendLoginOtpResponseDto,
-  type ResendLoginOtpRequestDto
-} from 'types';
-import { type AuthApiError, transformErrorResponse } from '@app/common/types';
+  type ChangePasswordRequest,
+  type InitChangePasswordRequest,
+  type ResetPasswordOtpRequest
+} from '@app/pages/ResetPassword/types';
 import type { UserEntity } from '@app/server/database/entity';
 import {
-  type ResetPasswordOtpRequest,
-  type InitChangePasswordRequest,
-  type ChangePasswordRequest
-} from '@app/pages/ResetPassword/types';
+  transformErrorResponse,
+  type AuthApiError,
+  type ResendLoginOtpRequestDto,
+  type ResendLoginOtpResponseDto,
+  type VerifyLoginOTPResponseDto
+} from '@app/types/types';
+import { createApi } from '@reduxjs/toolkit/query/react';
+import { smeBaseQuery } from '../utils';
 
 export const resetPasswordApi = createApi({
   reducerPath: 'reset-password',

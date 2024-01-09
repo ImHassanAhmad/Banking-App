@@ -9,7 +9,7 @@ import {
   useEffect
 } from 'react';
 import { useAuthError } from './AuthErrorContext';
-import { type IErrorMessage } from 'types';
+import { type IErrorMessage } from '@app/types/types';
 import AuthErrorWrapper from '@app/layout/AuthErrorWrapper';
 import { ResetPasswordFlowSteps } from '@app/layout/ResetPasswordStepper/types';
 

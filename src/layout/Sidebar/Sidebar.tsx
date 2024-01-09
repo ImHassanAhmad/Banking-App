@@ -1,6 +1,6 @@
 import { type ReactElement, type FC } from 'react';
 import { useSelector } from 'react-redux';
-import { onBoardType } from '@app/common/types';
+import { onBoardType } from '@app/types/types';
 import InvestorSidebar from './InvestorSidebar';
 import IssuerSidebar from './IssuerSidebar';
 

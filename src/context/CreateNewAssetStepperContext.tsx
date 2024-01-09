@@ -6,7 +6,7 @@ import {
   type AssetDocumentsRequestDto,
   type AssetInformationRequestDto,
   type AssetRequestDto
-} from '@app/common/types';
+} from '@app/types/types';
 
 export interface AssetPayload {
   [CreateNewAssetSteps.AssetInformation]: AssetInformationRequestDto;

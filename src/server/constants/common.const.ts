@@ -4,7 +4,7 @@ import {
   type OnboardingError,
   type AssetResponseDto,
   type AssetListResponse
-} from '@app/common/types';
+} from '@app/types/types';
 import { type ApiError } from '../middleware/withErrorHandler';
 
 export const SOMETHING_WENT_WRONG: string = 'Something went wrong.';

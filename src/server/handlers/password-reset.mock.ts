@@ -15,7 +15,7 @@ import {
   type InitChangePasswordRequest,
   type ResetPasswordOtpRequest
 } from '@app/pages/ResetPassword/types';
-import { type ResendLoginOtpRequestDto } from 'types';
+import { type ResendLoginOtpRequestDto } from '@app/types/types';
 
 const initRequestSchema: yup.ObjectSchema<InitChangePasswordRequest> = yup.object().shape({
   email: yup.string().email().required()

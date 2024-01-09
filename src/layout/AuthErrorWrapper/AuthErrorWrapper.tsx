@@ -1,7 +1,7 @@
 import React from 'react';
 import ErrorOrWarningModal from '@app/components/Modals/ErrorOrWarningModal';
 import { type FC, type PropsWithChildren } from 'react';
-import { AuthErrorLevel } from '@app/common/types';
+import { AuthErrorLevel } from '@app/types/types';
 import { useAuthError } from '@app/context/AuthErrorContext';
 import { type AuthErrorWrapperProps } from './types';
 

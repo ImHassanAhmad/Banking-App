@@ -9,7 +9,7 @@ import CountryCard from '@app/components/CountryCard/CountryCard';
 import {
   type SocialSecurityInformation,
   type WithSignUpStepperContextProps
-} from '@app/common/types';
+} from '@app/types/types';
 import { getCountryFlag } from '@app/assets/flags';
 import SubmitButton from '@app/components/SubmitButton';
 

@@ -4,7 +4,7 @@ import { BINARY_ANSWER_OPTIONS } from '@app/constants/issuer-onboarding';
 import { RouteNames } from '@app/constants/routes';
 import { Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { type WithSignUpStepperContextProps } from '@app/common/types';
+import { type WithSignUpStepperContextProps } from '@app/types/types';
 
 const transactionResource = RouteNames.US_Person;
 

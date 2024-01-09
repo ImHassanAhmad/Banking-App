@@ -1,13 +1,12 @@
-import React, { useState, type FC } from 'react';
-import { Stack } from '@mui/material';
-import { useTranslation } from 'react-i18next';
-import { RouteNames } from '@app/constants/routes';
 import Heading from '@app/components/Heading';
-import IncomeSourceItem from './components/IncomeSourceItem';
-import { type CheckList } from '../SourceOfFunding/types';
-import { type WithSignUpStepperContextProps } from '@app/common/types';
-import { IncomeSources } from '@app/common/types';
 import SubmitButton from '@app/components/SubmitButton';
+import { RouteNames } from '@app/constants/routes';
+import { IncomeSources, type WithSignUpStepperContextProps } from '@app/types/types';
+import { Stack } from '@mui/material';
+import { useState, type FC } from 'react';
+import { useTranslation } from 'react-i18next';
+import { type CheckList } from '../SourceOfFunding/types';
+import IncomeSourceItem from './components/IncomeSourceItem';
 
 const sourceOfFundingNamespace = RouteNames.SOURCE_OF_INCOME;
 const incomeSourcesArray: string[] = Object.values(IncomeSources);

@@ -15,7 +15,7 @@ import CountryTaxes from '@app/pages/CountryTaxes';
 import { InvestorSignUpFlowSteps } from './types';
 import { useInvestorSignUpStepper } from '@app/context/InvestorSignUpStepperContext';
 import BackButton from '@app/components/BackButton';
-import { type WithSignUpStepperContextProps } from '@app/common/types';
+import { type WithSignUpStepperContextProps } from '@app/types/types';
 import AboutServices from '@app/pages/AboutServices';
 import MobileCodeVerification from '@app/pages/MobileCodeVerification';
 import RegisterEmailCodeVerification from '@app/pages/RegisterEmailCodeVerification';
@@ -23,6 +23,7 @@ import InvesterOccupation from '@app/pages/InvesterOccupation/InvesterOccupation
 import PoliticalExposed from '@app/pages/PoliticalExposed';
 import TaxReporter from '@app/pages/TaxReporter';
 import PoliticalExposedPerson from '@app/pages/PoliticallyExposedPerson/PoliticallyExposedPerson';
+import TabTitle from '@app/components/TabTitle';
 
 const investorFlowComponent = (
   activeStep: InvestorSignUpFlowSteps
@@ -76,6 +77,7 @@ const IssuerSignUpStepper: FC = () => {
   const InvestorFlowComponent = investorFlowComponent(activeStep);
   return (
     <Stack>
+      <TabTitle title="Investor Onboarding" />
       <BackButton
         onClick={() => {
           activeStepIndex ? goBack(activeStepIndex - 1) : navigate(-1);

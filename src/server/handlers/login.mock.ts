@@ -3,7 +3,7 @@ import {
   type VerifyLoginOTPRequestDto,
   type LoginRequest,
   type ResendLoginOtpRequestDto
-} from 'types';
+} from '@app/types/types';
 import { userService } from '../database/service';
 import * as yup from 'yup';
 import withErrorHandler, { ApiError } from '../middleware/withErrorHandler';

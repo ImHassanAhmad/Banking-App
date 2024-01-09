@@ -8,6 +8,7 @@ import Heading from '@app/components/Heading';
 import AuthOption from '@app/components/AuthOption';
 import BackButton from '@app/components/BackButton';
 import { useNavigate } from 'react-router-dom';
+import TabTitle from '@app/components/TabTitle';
 
 const userTypeNamespace = RouteNames.ONBOARDING;
 
@@ -18,6 +19,7 @@ const OnboardingUserType: FC = () => {
   return (
     <Grid item lg={7} md={10} sm={10} xs={12}>
       <Stack mt={4}>
+        <TabTitle title="Account Types" />
         <BackButton />
         <Stack mt={4} data-testid="welcome-screen-wrapper">
           <Heading

@@ -7,7 +7,7 @@ import { type HttpRequestResolverExtras } from 'msw/lib/core/handlers/HttpHandle
 import { userService } from '../database/service';
 import { type RegisterIssuerRequest } from '../database/type';
 import { type Investor } from '../database/entity';
-import { type InvestorUserRequestDto } from '@app/common/types';
+import { type InvestorUserRequestDto } from '@app/types/types';
 
 const userRegistrationSchema = yup.object<InvestorUserRequestDto>().shape({
   email: yup.string().email(),

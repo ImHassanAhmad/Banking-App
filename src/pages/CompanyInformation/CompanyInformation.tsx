@@ -10,7 +10,7 @@ import * as yup from 'yup';
 import Textfield from '@app/components/Textfield';
 import Loader from '@app/components/Loader';
 import Calendar from '@app/components/Calendar';
-import { type WithSignUpStepperContextProps } from '@app/common/types';
+import { type WithSignUpStepperContextProps } from '@app/types/types';
 
 interface IForm {
   companyName: string;

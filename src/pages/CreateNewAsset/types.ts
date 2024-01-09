@@ -1,6 +1,6 @@
 import type React from 'react';
 import { enumToIndexRecord } from '@app/utils/enum';
-import { type AssetDocumentsRequestDto } from '@app/common/types';
+import { type AssetDocumentsRequestDto } from '@app/types/types';
 import { type Control, type FieldError } from 'react-hook-form';
 
 export interface UploadDocumentsProps {

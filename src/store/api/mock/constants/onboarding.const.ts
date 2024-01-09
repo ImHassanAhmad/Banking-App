@@ -1,9 +1,9 @@
 import {
-  type OnboardingError,
   type AccountError,
-  type RegisterUserResponseDto
-} from '@app/common/types';
-import { type VerifyLoginOTPResponseDto } from 'types';
+  type OnboardingError,
+  type RegisterUserResponseDto,
+  type VerifyLoginOTPResponseDto
+} from '@app/types/types';
 import { type ApiError } from '../middleware/withErrorHandler';
 
 export const MOCK_LOGIN_EMAIL = 'test@witty.tech';

@@ -7,7 +7,7 @@ import {
   type VerifyLoginOTPResponseDto,
   type RefreshSessionDto,
   type ResendLoginOtpResponseDto
-} from 'types';
+} from '@app/types/types';
 import {
   type MockVerifyLoginOtpResponse,
   type MockLoginResponse,
