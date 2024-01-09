@@ -142,6 +142,7 @@ const Address: FC<WithSignUpStepperContextProps> = ({
 
             <Textfield
               name="address1"
+              data-testid="address1"
               label={t(`${translationNamespace}.address1`)}
               register={register}
               defaultValue={address1}
@@ -151,6 +152,7 @@ const Address: FC<WithSignUpStepperContextProps> = ({
 
             <Textfield
               name="address2"
+              data-testid="address2"
               label={t(`${translationNamespace}.address2`)}
               register={register}
               defaultValue={address2}

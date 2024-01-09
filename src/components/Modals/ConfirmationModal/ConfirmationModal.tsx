@@ -23,6 +23,7 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
           <Common title={title} subtitle={subtitle} />
           <Stack direction={'row'} alignItems={'center'} justifyContent={'space-between'}>
             <Button
+              data-testid="left-btn"
               sx={{ textTransform: 'uppercase', width: '45%' }}
               onClick={() => {
                 if (leftButtonOnclickHandler) leftButtonOnclickHandler();
@@ -30,6 +31,7 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
               {leftButtonText}
             </Button>
             <Button
+              data-testid="right-btn"
               sx={{ textTransform: 'uppercase', width: '45%' }}
               onClick={() => {
                 if (rightButtonOnclickHandler) rightButtonOnclickHandler();
