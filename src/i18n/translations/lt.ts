@@ -51,6 +51,7 @@ const lt: LanguageResource = {
   dashboard: {},
   'manage-assets': {},
   'reset-password': {},
+  'agent-detail': {},
   'asset-details': {}
 };
 

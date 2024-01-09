@@ -543,6 +543,14 @@ const en: LanguageResource = {
     password_input_label: 'New Password',
     repeat_password_input_label: 'Repeat Password'
   },
+  'agent-detail': {
+    title_add_agent: 'New Agent',
+    subtitle_add_agent: 'Add new agent here',
+    agent_name: 'Name',
+    agent_email: 'Email',
+    agent_address: 'Address',
+    agent_permissions: 'Permissions'
+  },
   'asset-details': {
     title: 'Asset Details',
     subtitle: 'Details of the selected asset',

@@ -3,7 +3,6 @@ import { Card, Stack, Typography } from '@mui/material';
 import { type AssetListResponse } from '@app/common/types';
 import { useNavigate } from 'react-router-dom';
 import { RouteNames } from '@app/constants/routes';
-// import { type AssetsProps } from './types';
 
 const style = {
   top: 2,
@@ -24,7 +23,8 @@ const styleImgLogo = {
 
 const styleTypography = {
   fontSize: '1.6rem',
-  fontWeight: '560px'
+  fontWeight: 550,
+  fontStyle: 'bold'
 };
 
 const styleDescriptionTypography = {
@@ -78,7 +78,7 @@ const AssetTile: React.FC<AssetListResponse> = ({
       </Stack>
       <Stack direction={'row'} gap={1}>
         <Stack direction={'column'} width={'100%'}>
-          <Typography style={{ fontSize: '1.5rem' }} ml={1} mb={2}>
+          <Typography style={{ fontSize: '1.5rem', fontWeight: 550 }} ml={1} mb={2}>
             {status.replace('_', ' ')}
           </Typography>
         </Stack>

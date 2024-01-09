@@ -19,6 +19,7 @@ import ButtonWithIcon from '@app/components/ButtonWithIcon';
 import { ADD_ICON } from '@app/assets/images';
 import InvestorHoldings from '../InvestorHoldings';
 import type { InvestorHoldingDto } from '../InvestorHoldings/types';
+import AgentListing from '@app/components/AgentListing';
 
 const dummyHoldings: InvestorHoldingDto[] = [
   { id: '1', name: 'John Doe', amount: 5000 },
@@ -309,6 +310,7 @@ const AssetDetails: FC = () => {
       />
 
       <Accordian header="Holders List" content={<InvestorHoldings holdings={dummyHoldings} />} />
+      <Accordian header="Agent Listing" content={<AgentListing />} />
     </Box>
   );
 };
