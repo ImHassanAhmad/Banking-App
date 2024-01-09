@@ -8,24 +8,44 @@ import {
   TableHead,
   TableRow,
   TablePagination,
-  Typography
+  Typography,
+  Paper
 } from '@mui/material';
-import { type InvestorHoldingDto, headers } from './types';
+import { type InvestorHoldingDto, headers, type InvestorHoldingColumns } from './types';
 
 interface InvestorHoldingsTableProps {
   holdings: InvestorHoldingDto[];
+  columns: InvestorHoldingColumns[];
   onRowClick?: (e: any) => void;
 }
 
 const dummyHoldings: InvestorHoldingDto[] = [
-  { id: '1', name: 'John Doe', amount: 5000 },
-  { id: '2', name: 'Jane Smith', amount: 8000 }
+  {
+    holder_id: '1',
+    holder_name: 'John Doe',
+    holder_address: '123 Main St',
+    holder_amount: '5000',
+    holder_holdings: 'ABC Company',
+    transfered: '2022-03-15'
+  },
+  {
+    holder_id: '2',
+    holder_name: 'Jane Smith',
+    holder_address: '456 Oak Ave',
+    holder_amount: '8000',
+    holder_holdings: 'XYZ Corporation',
+    transfered: '2022-04-20'
+  }
 ];
 
 const rowsPerPageOptions = [5, 10, 25];
 
-const InvestorHoldingsTable: React.FC<InvestorHoldingsTableProps> = ({ holdings, onRowClick }) => {
-  const { tableheading, NoHoldings } = useStyles();
+const InvestorHoldingsTable: React.FC<InvestorHoldingsTableProps> = ({
+  columns,
+  holdings,
+  onRowClick
+}) => {
+  const { NoHoldings } = useStyles();
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0]);
@@ -40,13 +60,12 @@ const InvestorHoldingsTable: React.FC<InvestorHoldingsTableProps> = ({ holdings,
   };
 
   const displayedHoldings = holdings.length > 0 ? holdings : dummyHoldings;
-  const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, displayedHoldings.length - page * rowsPerPage);
 
   return (
-    <>
+    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       <TableContainer>
         <Table
+          stickyHeader
           component={Card}
           sx={{
             boxShadow: 'none',
@@ -54,16 +73,9 @@ const InvestorHoldingsTable: React.FC<InvestorHoldingsTableProps> = ({ holdings,
           }}>
           <TableHead>
             <TableRow sx={{ color: 'gray' }}>
-              {headers.map((header) => (
-                <TableCell
-                  key={header.id}
-                  align="center"
-                  sx={
-                    header.isSpecial
-                      ? { fontSize: '12px', textAlign: 'left', color: 'gray' }
-                      : tableheading
-                  }>
-                  {header.id}
+              {headers.map((header, id) => (
+                <TableCell key={header.id} align="center" sx={{ textTransform: 'capitalize' }}>
+                  {columns[id].title}
                 </TableCell>
               ))}
             </TableRow>
@@ -90,29 +102,15 @@ const InvestorHoldingsTable: React.FC<InvestorHoldingsTableProps> = ({ holdings,
                       borderBottom: '2px solid rgb(224,224,224)',
                       padding: '3px'
                     }}>
-                    {headers.map((header) => {
-                      console.log('here all eaders', header);
-                      return (
-                        <TableCell key={header.id} align="center">
-                          <Typography variant="body2">
-                            {header.id === 'id'
-                              ? holding.id
-                              : header.id === 'name'
-                              ? holding.name ?? '-'
-                              : header.id === 'amount'
-                              ? holding.amount
-                              : ''}
-                          </Typography>
-                        </TableCell>
-                      );
-                    })}
+                    {headers.map((header) => (
+                      <TableCell key={header.id} align="center">
+                        <Typography variant="body2">
+                          {holding[header.id as keyof InvestorHoldingDto] ?? '-'}
+                        </Typography>
+                      </TableCell>
+                    ))}
                   </TableRow>
                 ))
-            )}
-            {emptyRows > 0 && (
-              <TableRow style={{ height: 53 * emptyRows }}>
-                <TableCell colSpan={headers.length} />
-              </TableRow>
             )}
           </TableBody>
         </Table>
@@ -126,16 +124,11 @@ const InvestorHoldingsTable: React.FC<InvestorHoldingsTableProps> = ({ holdings,
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
-    </>
+    </Paper>
   );
 };
 
 const useStyles = (): any => ({
-  secondaryText: { color: '#454745', fontSize: '14px', textAlign: 'left' },
-  tableheading: {
-    fontSize: '12px',
-    color: 'gray'
-  },
   NoHoldings: {
     color: ' var(--on-surface-secondary, rgba(0, 0, 0, 0.72))',
     fontFamily: 'PP Neue Montreal',

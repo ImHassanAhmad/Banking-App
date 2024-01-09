@@ -1,6 +1,6 @@
 import { http, type HttpHandler, HttpResponse, type PathParams, type StrictResponse } from 'msw';
 import * as yup from 'yup';
-import withErrorHandler, { ApiError } from '../middleware/withErrorHandler';
+import withErrorHandler from '../middleware/withErrorHandler';
 import { type ResponseResolverInfo } from 'msw/lib/core/handlers/RequestHandler';
 import { type HttpRequestResolverExtras } from 'msw/lib/core/handlers/HttpHandler';
 import { issuerDetailsService } from '../database/service';
