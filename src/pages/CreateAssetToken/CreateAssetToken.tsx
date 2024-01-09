@@ -22,10 +22,11 @@ import {
 } from '@app/store/slices/CreateAssetToken';
 import { useCreateAssetTokenMutation } from '@app/store/api/tokens';
 import { type AssetTokenCreationRequestDTO } from '@app/common/types';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 const assetTokenNamespace = RouteNames.CREATE_ASSET_TOKEN;
 const steps = Object.values(CreateAssetTokenFlowSteps);
 const CreateAssetToken: React.FC = () => {
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const { assetId } = useParams();
 
@@ -112,7 +113,8 @@ const CreateAssetToken: React.FC = () => {
       </Stack>
       <BackButton
         onClick={() => {
-          if (activeStepIndex === 0) return;
+          if (activeStepIndex === 0)
+            navigate(`/${RouteNames.MANAGE_ASSETS}/${RouteNames.ASSET_DETAILS}/${assetId}`);
           setActiveStepIndex((prevStep) => prevStep - 1);
         }}
       />

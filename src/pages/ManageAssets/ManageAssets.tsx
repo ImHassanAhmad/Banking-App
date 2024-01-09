@@ -75,7 +75,7 @@ const ManageAssets: React.FC = () => {
           title={'Create New Asset'}
           icon={ADD_ICON}
           handleClick={() => {
-            navigate(`/${RouteNames.CREATE_NEW_ASSET}`);
+            navigate(RouteNames.CREATE_NEW_ASSET);
           }}
         />
       </Stack>

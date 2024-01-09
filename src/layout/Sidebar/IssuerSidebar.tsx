@@ -45,31 +45,31 @@ const IssuerSidebar: FC = () => {
         icon={HOME_ICON}
         title="Home"
         route={RouteNames.DASHBOARD}
-        active={pathname === `/${RouteNames.DASHBOARD}`}
+        active={pathname.includes(`/${RouteNames.DASHBOARD}`)}
       />
       <SidebarItem
         icon={ACCOUNTS_ICON}
         title="Manage Assets"
         route={RouteNames.MANAGE_ASSETS}
-        active={pathname === `/${RouteNames.MANAGE_ASSETS}`}
+        active={pathname.includes(`/${RouteNames.MANAGE_ASSETS}`)}
       />
       <SidebarItem
         icon={GLOBAL_ICON}
         title="Primary Market"
         route={RouteNames.MANAGE_ASSETS}
-        active={false && pathname === `/${RouteNames.MANAGE_ASSETS}`}
+        active={false && pathname.includes(`/${RouteNames.MANAGE_ASSETS}`)}
       />
       <SidebarItem
         icon={UNION_ICON}
         title="Secondary Market"
         route={RouteNames.MANAGE_ASSETS}
-        active={false && pathname === `/${RouteNames.MANAGE_ASSETS}`}
+        active={false && pathname.includes(`/${RouteNames.MANAGE_ASSETS}`)}
       />
       <SidebarItem
         icon={MORE_ICON}
         title="Manage Wallet"
         route={RouteNames.MANAGE_ASSETS}
-        active={false && pathname === `/${RouteNames.MANAGE_ASSETS}`}
+        active={false && pathname.includes(`/${RouteNames.MANAGE_ASSETS}`)}
       />
       <Footer />
     </Box>

@@ -39,5 +39,6 @@ export const RouteNames = {
   ISSUER_ONBOARDING: 'issuer-onboarding',
   DASHBOARD: 'dashboard',
   MANAGE_ASSETS: 'manage-assets',
+  ASSET_DETAILS: 'asset-details',
   RESET_PASSWORD: 'reset-password'
 } as const;
