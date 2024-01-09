@@ -28,6 +28,8 @@ export const publicRoutes: IRouteConfig[] = [
   { path: RouteNames.ISSUER_SIGNUP, element: IssuerSignUpStepper },
   { path: RouteNames.LOGIN, element: Login },
   { path: RouteNames.NOT_FOUND, element: NotFound },
+  { path: RouteNames.CREATE_NEW_ASSET, element: CreateNewAsset },
+  { path: RouteNames.CREATE_ASSET_TOKEN, element: CreateAssetToken, params: '/:assetId' },
   { path: RouteNames.RESET_PASSWORD, element: ResetPasswordStepper }
 ];
 
