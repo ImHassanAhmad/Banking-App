@@ -17,13 +17,35 @@ import BackButton from '@app/components/BackButton';
 import { useNavigate, useParams } from 'react-router-dom';
 import ButtonWithIcon from '@app/components/ButtonWithIcon';
 import { ADD_ICON } from '@app/assets/images';
-import InvestorHoldings from '../InvestorHoldings';
-import type { InvestorHoldingDto } from '../InvestorHoldings/types';
-import AgentListing from '@app/components/AgentListing';
+import InvestorHoldings from './components/InvestorHolding';
+import type { InvestorHoldingDto } from './components/InvestorHolding/types';
+import AgentListing from './components/AgentListing';
 
+const holdingColumns = [
+  { id: 'holder_id', title: 'Holder ID' },
+  { id: 'holder_name', title: 'Holder Name' },
+  { id: 'holder_address', title: 'Holder Address' },
+  { id: 'holder_amount', title: 'Holder Amount' },
+  { id: 'holder_holdings', title: 'Holder Holdings' },
+  { id: 'transfered', title: 'Transferred On' }
+];
 const dummyHoldings: InvestorHoldingDto[] = [
-  { id: '1', name: 'John Doe', amount: 5000 },
-  { id: '2', name: 'Jane Smith', amount: 8000 }
+  {
+    holder_id: '1',
+    holder_name: 'John Doe',
+    holder_address: '123 Main St',
+    holder_amount: '5000',
+    holder_holdings: 'ABC Company',
+    transfered: '2022-03-15'
+  },
+  {
+    holder_id: '2',
+    holder_name: 'Jane Smith',
+    holder_address: '456 Oak Ave',
+    holder_amount: '8000',
+    holder_holdings: 'XYZ Corporation',
+    transfered: '2022-04-20'
+  }
 ];
 
 const SocialLink: FC<ISocialLinkProps> = ({ Icon }) => {
@@ -309,7 +331,10 @@ const AssetDetails: FC = () => {
         }
       />
 
-      <Accordian header="Holders List" content={<InvestorHoldings holdings={dummyHoldings} />} />
+      <Accordian
+        header="Holders List"
+        content={<InvestorHoldings holdings={dummyHoldings} columns={holdingColumns} />}
+      />
       <Accordian header="Agent Listing" content={<AgentListing />} />
     </Box>
   );

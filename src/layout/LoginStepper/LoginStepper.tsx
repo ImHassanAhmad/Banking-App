@@ -22,16 +22,18 @@ const LoginStepper: FC = () => {
   const { activeStep } = useLoginStepper();
 
   return (
-    <Stepper
-      activeStep={LoginFlowStepsIndices[activeStep]}
-      sx={{
-        alignItems: 'flex-start',
-        '&.MuiStepper-root': {
-          alignItems: 'flex-start'
-        }
-      }}>
-      {loginFlowComponent(activeStep)}
-    </Stepper>
+    <>
+      <Stepper
+        activeStep={LoginFlowStepsIndices[activeStep]}
+        sx={{
+          alignItems: 'flex-start',
+          '&.MuiStepper-root': {
+            alignItems: 'flex-start'
+          }
+        }}>
+        {loginFlowComponent(activeStep)}
+      </Stepper>
+    </>
   );
 };
 
